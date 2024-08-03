@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1641fce1f89d3d42b08bcb7a12233ab, type: 3}
+  m_Name: Swift 8
+  m_EditorClassIdentifier: 
+  type: 2
+  tag: 0
+  sort: 1
+  index: 20027
+  level: 0
+  magicCost: 22
+  magicName: "\uD035\uB4DC\uB85C\uC6B0"
+  magicDesc: "\uD2B9\uC815 \uAC1C\uC218\uC758 \uBE14\uB85D\uC744 \uC6D0\uD558\uB294
+    \uBAA8\uC591\uC73C\uB85C \uAD50\uCCB4\uD55C\uB2E4"
+  iconSprite: {fileID: 21300000, guid: 7749c9af80374474d81a825109302130, type: 3}
+  magicMaxLevel: 5
+  requireSlateLevel: 3
+  magicLength: 0
+  magicWidth: 0
+  magicEffectTarget: 1
+  magicValue: 3

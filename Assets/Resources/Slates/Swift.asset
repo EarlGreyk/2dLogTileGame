@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4319b0fa2c810943a55fbbe5aa9fb85, type: 3}
+  m_Name: Swift
+  m_EditorClassIdentifier: 
+  slateName: "\uC7AC\uBE60\uB984\uC758 \uC11D\uD310"
+  magics:
+  - {fileID: 11400000, guid: b6ccb12591887da40b2beb9053314afb, type: 2}
+  - {fileID: 11400000, guid: cde7f2f9aadefe043a144613e7a0b5f7, type: 2}
+  - {fileID: 11400000, guid: fcc82237bdd78b74683e37c1805f0f45, type: 2}
+  - {fileID: 11400000, guid: a0a766034dbba7e40946179464f53707, type: 2}
+  - {fileID: 11400000, guid: f931eba941d8caf4b90fdd5a70cff23c, type: 2}
+  - {fileID: 11400000, guid: 423f9728e9c014540b6b95fb98a03159, type: 2}
+  - {fileID: 11400000, guid: 6891c14e7981796448eb8dd6560352d3, type: 2}
+  - {fileID: 11400000, guid: 5c1fd43775c62a6428bacaa6ed591af4, type: 2}
+  - {fileID: 11400000, guid: e290effd2597bae479c9f68cc51536de, type: 2}
+  - {fileID: 11400000, guid: f1429774d4ceaa9499971fb31ce1a51f, type: 2}
+  tag: "\uC7AC\uBE60\uB984"
+  enable: 1
+  blocks:
+  - {fileID: 11400000, guid: 2ada1a679a1b86e49939855aee6c5f97, type: 2}
