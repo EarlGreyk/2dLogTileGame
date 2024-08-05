@@ -28,5 +28,15 @@ public class UnitSpawner : MonoBehaviour
         return unit.GetComponent<PlayerUnit>();
     }
 
+    public MonsterUnit SpawnMonster(Vector3Int tilePosition, GameObject unitPrefab)
+    {
+        Vector3 worldPosition = UnitMap.CellToWorld(tilePosition);
+
+        // À¯´Ö »ý¼º
+        GameObject unit = Instantiate(unitPrefab, worldPosition, Quaternion.identity);
+        unit.transform.SetParent(UnitMap.transform);
+        return unit.GetComponent<MonsterUnit>();
+    }
+
 
 }

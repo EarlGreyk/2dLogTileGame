@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
 
     private bool isPlayer;
     private bool isMonster;
+
+
+    private List<MonsterUnit> monsterUnits;
+    private List<MonsterUnit> monsterActionUnits;
     
 
     private void Awake()
@@ -62,6 +66,15 @@ public class GameManager : MonoBehaviour
     {
         //테스트용 start구문입니다. 
         setPlayer();
+        //몬스터를 생성해야 하는 prefabs를 가져오거나 몬스터를 찾아서 대입한후 그 몬스터를 소환하도록 해야합니다.
+        setMonster();
+
+        //게임 최초 시작시 플레이어의 턴입니다.
+        onPlayerAction();
+    }
+    private void Update()
+    {
+        
     }
 
     private void setPlayer()
@@ -69,25 +82,36 @@ public class GameManager : MonoBehaviour
         //유닛을 생성할때 SettingData에서 UnitStatus를 받아와서 적용시키면됩니다.
         GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
         playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(0, 0, 0),  unitPrefabs);
-
-        
-
-
-
     }
 
     private void setMonster()
     {
-
+        GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Monster/monster1");
+        playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(2, 0, 0), unitPrefabs);
     }
 
-    private void Update()
+
+    public void onPlayerAction()
     {
-
-        
+        isPlayer = true;
+        isMonster = false;
+        //플레이어가 행동 가능함으로써 플레이어의 권한을 전부 다시 주어야 합니다.
     }
 
-    
-    
+    public void onMonsterAction()
+    {
+        isMonster = false;
+        isPlayer = true;
+        //플레이어가 행동 불가능함으로써 플레이어의 권한을 일부 뺏어야합니다.
+    }
+  
+    ////몬스터 행동 관리입니다.
+    ///
+
+    public void addActionMonster(MonsterUnit monster)
+    {
+        if(monsterUnits.Contains(monster))
+            monsterActionUnits.Add(monster);
+    }
 
 }

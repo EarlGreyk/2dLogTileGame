@@ -163,7 +163,6 @@ public class SkillZone : MonoBehaviour
             int y = pos.y - 2 + hitTilePos.y;
             Vector3Int tilepos = new Vector3Int(x, y);
 
-            Debug.Log(tilepos);
             if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY)
             {
                 x = x + lengthX;

@@ -33,21 +33,21 @@ public class PlayerResource : MonoBehaviour
 
     //플레이어 블록 패널 리스트
     [SerializeField]
-    private List<BlockPanel> playerBlockPanel = new List<BlockPanel>();
+    private List<MovePanel> playerBlockPanel = new List<MovePanel>();
 
     //마나 소비 리스트
     [SerializeField]
-    private List<BlockPanel> playerChargePanelList = new List<BlockPanel>();
+    private List<MovePanel> playerChargePanelList = new List<MovePanel>();
 
     //태울 블록 리스트
-    private List<BlockPanel> ChargeBlockList = new List<BlockPanel>();
+    private List<MovePanel> ChargeBlockList = new List<MovePanel>();
 
     //태운 마나 가시성 text
     [SerializeField]
     private TextMeshProUGUI ChargetMana;
 
     //사용하고 있는 블록패널
-    public BlockPanel currentBlock;
+    public MovePanel currentBlock;
 
     //스킬 패널 
     [SerializeField]
@@ -168,7 +168,7 @@ public class PlayerResource : MonoBehaviour
         }
         
     }
-    public void ManaBlockEnable(BlockPanel blockpanel)
+    public void ManaBlockEnable(MovePanel blockpanel)
     {
         if (ChargeBlockList.Contains(blockpanel))
         {

@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-public class BlockPanel : MonoBehaviour
+public class MovePanel : MonoBehaviour
 {
     
     public Block block; // 패널 참조
-    public BattleZone Map; // 타일참조
+    public MoveZone Map; // 타일참조
 
     public Image image;
     /// <summary>
@@ -33,7 +33,7 @@ public class BlockPanel : MonoBehaviour
         int x = (int)GameManager.instance.PlayerUnit.transform.position.x;
         int y = (int)GameManager.instance.PlayerUnit.transform.position.y;
         Vector3Int cellPos = new Vector3Int(x,y);
-        GameManager.instance.MoveZone.enabled = true;
+        GameManager.instance.MoveZone.gameObject.SetActive(true);
         PlayerResource.instance.currentBlock = this;
         Map.SetBlock(this, cellPos);
     }

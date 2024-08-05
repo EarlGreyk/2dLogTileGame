@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,7 +21,7 @@ public class MoveZone : MonoBehaviour
             PlayerResource.instance.currentBlock = null;
             breakMoveTile();
 
-            this.enabled = false;
+            gameObject.SetActive(false);
 
             return;
         }
@@ -54,13 +55,14 @@ public class MoveZone : MonoBehaviour
 
     public void breakMoveTile()
     {
+        Debug.Log("비활성화");
         //타일 롤백.
         for (int i = 0; i < movePos.Count; i++)
         {
             tilemap.SetTile(movePos[i], null);
         }
         movePos.Clear();
-        this.enabled = false;
+        gameObject.SetActive(false);
     }
    
     //플레이어가 클릭을 하면 클릭한 좌표를 받아와 동작합니다.
@@ -80,9 +82,62 @@ public class MoveZone : MonoBehaviour
         }
         movePos.Clear();
 
-        
-        this.enabled = false;
+
+        gameObject.SetActive(false);
     }
-    
+
+    public void SetBlock(MovePanel _blockPanel, Vector3Int _sellpos)
+    {
+        //배틀존 setblock작동
+        //2,2가 중앙블록이며 현재 위치값에서 더하기 빼기로 체크해야함
+        bool isMove = false;
+
+        List<PatternData.PatternPoint> pattern = _blockPanel.block.BlockInfo.Pattern;
+        int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0) / 2;
+        int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1) / 2;
+        foreach (var pos in pattern)
+        {
+            //중간값이 2,2이기 떄문에 -2씩 연산
+            int x = pos.x - 2 + _sellpos.x;
+            int y = pos.y - 2 + _sellpos.y;
+            Vector3Int tilepos = new Vector3Int(x, y);
+            if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY)
+            {
+                x = x + lengthX;
+                y = y + lengthY;
+                if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
+                {
+                    breakMoveTile();
+                    return;
+                }
+                else
+                {
+                    //변경 시킨 타일을 하위 객체인 MoveZone으로 옮겨야함.
+                    enableMoveTile(tilepos);
+                    isMove = true;
+
+                    //현재 이동 좌표가 플레이어와 같은지 아닌지를 한번이라도 체크합니다.
+                    //if (GameManager.instance.PlayerUnit.transform.position.x == battleTiles[x, y].gridPos.x && GameManager.instance.PlayerUnit.transform.position.y == battleTiles[x, y].gridPos.y)
+                    //{
+                    //}
+                }
+
+            }
+            else
+            {
+                Debug.Log($"타일맵 해당 좌표값 {x},{y} 은 타일맵 밖에 존재함");
+                breakMoveTile();
+                return;
+            }
+
+        }
+
+        if (isMove == false)
+        {
+            breakMoveTile();
+            return;
+        }
+
+    }
 
 }
