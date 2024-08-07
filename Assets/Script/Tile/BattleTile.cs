@@ -16,6 +16,7 @@ public class BattleTile : TileBase
     public Tile originTile;
     public Tile changeTile;
     public Vector2Int gridPos;
+    public Unit onUnit;
     public BattleTile(Vector2Int _gridPos)
     {
         type = tileType.None;

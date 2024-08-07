@@ -34,6 +34,28 @@ public class BattleZone : MonoBehaviour
         }
         battleTiles[3, 3].type = BattleTile.tileType.Break;
     }
+    /// <summary>
+    /// 유닛이 생성되거나 유닛이 이동될때 BattleZone에 해당 유닛을 넣어줍니다.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+
+    public void setTileUnit(Vector3 pos,Unit unit)
+    {
+        Vector3Int unitPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+        int x = unitPos.x - 2;
+        int y = unitPos.y - 2;
+
+        battleTiles[x, y].onUnit = unit;
+    }
+    public void removeTileUnit(Vector3 pos,Unit unit)
+    {
+        Vector3Int unitPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+        int x = unitPos.x - 2;
+        int y = unitPos.y - 2;
+        if (battleTiles[x, y].onUnit == unit)
+            battleTiles[x, y].onUnit = null;
+    }
 
     
 }

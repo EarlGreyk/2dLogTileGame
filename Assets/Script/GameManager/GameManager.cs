@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
 
     private List<MonsterUnit> monsterUnits;
     private List<MonsterUnit> monsterActionUnits;
+
+    private int lampLight = 100;
     
 
     private void Awake()
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        
+        /// LampLight[등불] + 플레이어의 패배 승리 조건을 감지  및 AI행동을 감지해야합니다.
     }
 
     private void setPlayer()
@@ -113,5 +115,21 @@ public class GameManager : MonoBehaviour
         if(monsterUnits.Contains(monster))
             monsterActionUnits.Add(monster);
     }
+    public void reamoveActionMonster(MonsterUnit monster)
+    {
+        if(monsterUnits.Contains(monster)) 
+            monsterActionUnits.Remove(monster);
+    }
+
+    public void actionCountSet()
+    {
+        lampLight--;
+        for (int i = 0; i < monsterUnits.Count; i++)
+        {
+            monsterUnits[i].ActionCount--;
+        }
+    }
+
+    
 
 }

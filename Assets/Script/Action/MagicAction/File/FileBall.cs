@@ -4,7 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class FileBall : MagicAcion
+public class FileBall : Effect
 {
     private void Start()
     {
