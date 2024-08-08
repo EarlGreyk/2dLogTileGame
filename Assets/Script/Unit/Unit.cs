@@ -68,8 +68,11 @@ public class Unit :MonoBehaviour
 {
 
     public UnitStatus status;
-   
 
+    public virtual void Start()
+    {
+        GameManager.instance.BattleZone.setTileUnit(transform.position, this);
+    }
     public void ApplyNodeEffect(LuneNode node)
     {
         node.ApplyEffect(this);

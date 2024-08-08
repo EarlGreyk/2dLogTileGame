@@ -36,7 +36,9 @@ public class SkillZone : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && hitTilePos != new Vector3Int(0, 0, 10))
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
+        if (Input.GetMouseButtonDown(0) && hitTilePos != new Vector3Int(0, 0, 10) && tilemap.HasTile(cellPosition))
         {
             UseSkill();
             return;
@@ -46,8 +48,6 @@ public class SkillZone : MonoBehaviour
             SkillStop();
             return;
         }
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
 
         if (tilemap.HasTile(cellPosition))
         {
@@ -168,7 +168,7 @@ public class SkillZone : MonoBehaviour
                 x = x + lengthX;
                 y = y + lengthY;
 
-                if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
+                if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break )
                 {
                     Debug.Log($"position ({x}, {y}) ¾ÈµÊ! ");
                     breakSkillTile(tilepos);

@@ -219,9 +219,6 @@ public class PlayerResource : MonoBehaviour
         currentBlock.gameObject.SetActive(false);
         playerCurBlockList.Remove(currentBlock.block);
         playerRemoveBlockList.Add(currentBlock.block);
-
-        Debug.Log($"현재 손패 : { playerCurBlockList.Count}");
-        Debug.Log($"현재 버림패 : { playerRemoveBlockList.Count}");
     }
 
 

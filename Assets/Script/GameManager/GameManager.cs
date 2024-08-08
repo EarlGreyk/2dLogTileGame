@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -89,7 +90,8 @@ public class GameManager : MonoBehaviour
     private void setMonster()
     {
         GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Monster/monster1");
-        playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(2, 0, 0), unitPrefabs);
+        MonsterUnit monster = unitSpawner.SpawnMonster(new Vector3Int(2, 0, 0), unitPrefabs);
+
     }
 
 

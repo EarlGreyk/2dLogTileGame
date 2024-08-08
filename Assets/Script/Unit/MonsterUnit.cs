@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
 using Random = UnityEngine.Random;
 
 public class MonsterUnit : Unit
 {
+    [SerializeField]
     private PatternData movePattenData;
+    [SerializeField]
     private PatternData attackRangePattenData;
 
     /// <summary>
@@ -36,20 +39,21 @@ public class MonsterUnit : Unit
     //몬스터가 현재 사용하는 액션
     private MonsterAction currentAction;
 
+    //사용하는 액션의 위치.
+    private Vector3Int targetPos;
+
     private bool isAction = false;
 
     public bool IsAction { get { return isAction; } set { isAction = value; } }
-   
 
 
 
-    private void Start()
+    public override void Start()
     {
-
-        GameManager.instance.BattleZone.setTileUnit(transform.position,this);
+        base.Start();
         ActionCheck();
-        
     }
+
 
  
 
@@ -66,7 +70,6 @@ public class MonsterUnit : Unit
         if (currentAction == null)
         {
             //이동
-            movePosSet();
             ActionCheck();
             return;
 
@@ -85,9 +88,13 @@ public class MonsterUnit : Unit
         //사용이 완료 되엇음으로 actionCount를 올리고 GameManager에 완료되엇다고 신호를 보내줍니다.
         GameManager.instance.reamoveActionMonster(this);
     }
-    private void movePosSet()
+    /// <summary>
+    /// 몬스터 유닛이 사용해야할 지점의 좌표를 설정합니다. 이는 사용하는 기술에 따라 다릅니다.
+    /// </summary>
+    private void targetPosSet()
     {
-
+        ///플레이어와 유닛의 최단거리를 비교하여 작동합니다.
+        ///몬스터의 MovePatten의 데이터를 가져온다음 그 내에서 플레이어와 가장 가까운 좌표로 이동합니다.
     }
 
     //아래의 함수는 액션을 선택하고 설정합니다.
@@ -140,8 +147,11 @@ public class MonsterUnit : Unit
             actionCount = moveCount;
             currentAction = null;
         }
-        int random = Random.Range(0, actionList.Count);
-        currentAction = actionList[random];
+        if(actionList.Count > 0)
+        {
+            int random = Random.Range(0, actionList.Count);
+            currentAction = actionList[random];
+        }
     }
 
 

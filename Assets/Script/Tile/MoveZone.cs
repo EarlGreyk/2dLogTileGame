@@ -70,7 +70,9 @@ public class MoveZone : MonoBehaviour
     public void setMovePos(Vector3Int cellPos)
     {
         //플레이어 이동
+        GameManager.instance.BattleZone.removeTileUnit(GameManager.instance.PlayerUnit.transform.position, GameManager.instance.PlayerUnit);
         GameManager.instance.PlayerUnit.transform.position = cellPos;
+        GameManager.instance.BattleZone.setTileUnit(cellPos,GameManager.instance.PlayerUnit);
         
 
         //이동에 성공했음으로 플레이어의 블록 매니저에 접근하여 블록을 제거합니다.
@@ -88,9 +90,10 @@ public class MoveZone : MonoBehaviour
 
     public void SetBlock(MovePanel _blockPanel, Vector3Int _sellpos)
     {
+        //기존 블록 타일 소거.
+        breakMoveTile();
         //배틀존 setblock작동
         //2,2가 중앙블록이며 현재 위치값에서 더하기 빼기로 체크해야함
-        bool isMove = false;
 
         List<PatternData.PatternPoint> pattern = _blockPanel.block.BlockInfo.Pattern;
         int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0) / 2;
@@ -105,37 +108,14 @@ public class MoveZone : MonoBehaviour
             {
                 x = x + lengthX;
                 y = y + lengthY;
-                if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
+
+                if (GameManager.instance.BattleZone.BattleTiles[x, y].type != BattleTile.tileType.Break && GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == null)
                 {
-                    breakMoveTile();
-                    return;
-                }
-                else
-                {
-                    //변경 시킨 타일을 하위 객체인 MoveZone으로 옮겨야함.
                     enableMoveTile(tilepos);
-                    isMove = true;
-
-                    //현재 이동 좌표가 플레이어와 같은지 아닌지를 한번이라도 체크합니다.
-                    //if (GameManager.instance.PlayerUnit.transform.position.x == battleTiles[x, y].gridPos.x && GameManager.instance.PlayerUnit.transform.position.y == battleTiles[x, y].gridPos.y)
-                    //{
-                    //}
                 }
 
             }
-            else
-            {
-                Debug.Log($"타일맵 해당 좌표값 {x},{y} 은 타일맵 밖에 존재함");
-                breakMoveTile();
-                return;
-            }
 
-        }
-
-        if (isMove == false)
-        {
-            breakMoveTile();
-            return;
         }
 
     }
