@@ -12,10 +12,24 @@ public class BagicLune : LuneNode
         Health,
         Damage,
         ElementalDamage,
-        Defence
-           
+        Defence,
+        DamageReduction,
+        DiscoveryPower,
+        BrainStrom,
+        Creativity,
+        CriticalChance,
+        CriticalMultiplier
+
     }
+
+    public enum ValueType
+    {
+        Chance,
+        Multiplier
+    }
+
     public EffectType effectType;
+    public ValueType type;
     public int effectValue;
 
         
