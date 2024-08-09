@@ -91,7 +91,6 @@ public class MoveZone : MonoBehaviour
     public void SetBlock(MovePanel _blockPanel, Vector3Int _sellpos)
     {
         //기존 블록 타일 소거.
-        breakMoveTile();
         //배틀존 setblock작동
         //2,2가 중앙블록이며 현재 위치값에서 더하기 빼기로 체크해야함
 
