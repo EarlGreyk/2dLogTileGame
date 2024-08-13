@@ -23,8 +23,7 @@ MonoBehaviour:
   iconSprite: {fileID: 0}
   magicMaxLevel: 0
   requireSlateLevel: 0
-  magicLength: 0
-  magicWidth: 0
-  patternData: {fileID: 11400000, guid: c9f3c787bf238e64bab65f39f1ac5a04, type: 2}
+  magicRange: {fileID: 11400000, guid: 356f73a1b64b89740a2f2390a36006cd, type: 2}
+  magicAoe: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
   magicEffectTarget: 0
   magicValue: 0

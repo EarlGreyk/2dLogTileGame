@@ -9,7 +9,10 @@ public class SkillZone : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField]
+    private Grid grid;
+    [SerializeField]
     private Tilemap tilemap;
+    public Tilemap Tilemap { get { return tilemap; } }
 
     public Magic currentMagic;
     public GameObject currentMagicEffect;
@@ -19,6 +22,9 @@ public class SkillZone : MonoBehaviour
     //나중에 밑에 리스트 통합시켜야함.
     private List<Vector3Int> checkTilePos = new List<Vector3Int>();
     private List<int> checkTileType = new List<int>();
+
+    private List<Vector3Int> checkTileRange = new List<Vector3Int>();
+    
 
 
     /// <summary>
@@ -38,7 +44,7 @@ public class SkillZone : MonoBehaviour
     {
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
-        if (Input.GetMouseButtonDown(0) && hitTilePos != new Vector3Int(0, 0, 10) && tilemap.HasTile(cellPosition))
+        if (Input.GetMouseButtonDown(0) && tilemap.HasTile(cellPosition))
         {
             UseSkill();
             return;
@@ -63,14 +69,14 @@ public class SkillZone : MonoBehaviour
                 ResetBlock();
                 return;
             }
-            if (hitTilePos == new Vector3Int(0, 0, 10))
+            if (hitTilePos == new Vector3Int(0, 0, 10) && checkTileRange.Contains(cellPosition))
             {
                 ResetBlock();
                 hitTilePos = cellPosition;
                 OnMouseChangeBlock();
                 return;
             }
-            if (hitTilePos != cellPosition)
+            if (hitTilePos != cellPosition && checkTileRange.Contains(cellPosition))
             {
                 ResetBlock();
                 hitTilePos = cellPosition;
@@ -82,44 +88,44 @@ public class SkillZone : MonoBehaviour
 
     public void SettingSkillZone(Magic magic,GameObject magicEffect)
     {
+
+
+        // Grid의 셀 크기 (스케일)
+        Vector3 scale = grid.transform.localScale;
+
         currentMagic = magic;
         currentMagicEffect = magicEffect;
 
-        BoundsInt bounds = tilemap.cellBounds;
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        List<PatternData.PatternPoint> pattern = magic.MagicRange.points;
+        int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
+        int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
+        int unitx = Mathf.FloorToInt(GameManager.instance.PlayerUnit.transform.position.x );
+        int unity = Mathf.FloorToInt(GameManager.instance.PlayerUnit.transform.position.y );
+        Vector3Int unitPos = new Vector3Int(unitx, unity);
+        foreach (var pos in pattern)
         {
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            //중간값이 2,2이기 떄문에 -2씩 연산
+            int x = Mathf.FloorToInt((pos.x - 2) + unitPos.x / scale.x) ;
+            int y = Mathf.FloorToInt((pos.y - 2) + unitPos.y / scale.y) ;
+            Vector3Int tilepos = new Vector3Int(x, y);
+            if (x < lengthX && y < lengthY)
             {
-                Vector3Int position = new Vector3Int(x, y, 0);
-                CompareTile(position);
+                if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
+                {
+                    breakSkillTile(tilepos);
+                }else
+                {
+                    noneSkillTile(tilepos);
+                    checkTileRange.Add(tilepos);
+                }
+                
+
             }
         }
+
     }
 
 
-    private void CompareTile(Vector3Int _sellpos)
-    {
-        //배틀존에 존재하는 값과 비교하여 해당 배틀존에 플레이어가 있다면 해당 스킬 블록을 변경해야합니다.
-        int x = 0;
-        int y = 0;
-
-        
-        if (Math.Abs(_sellpos.x) <= GameManager.instance.BattleZone.BattleTiles.GetLength(0) / 2 && Math.Abs(_sellpos.y) <= GameManager.instance.BattleZone.BattleTiles.GetLength(1) / 2)
-        {
-            x = _sellpos.x + GameManager.instance.BattleZone.BattleTiles.GetLength(0) / 2;
-            y = _sellpos.y + GameManager.instance.BattleZone.BattleTiles.GetLength(1) / 2;
-
-            if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
-            {
-                breakSkillTile(_sellpos);
-                return;
-            }
-
-            noneSkillTile(_sellpos);
-
-
-        }
-    }
     /// <summary>
     /// 가상 블록을 아무것도 아닌 상태로 변경합니다.
     /// </summary>
@@ -152,10 +158,10 @@ public class SkillZone : MonoBehaviour
     {
         //패턴 데이터에 따라 Block을 수정해야합니다.
         tilemap.SetTile(hitTilePos, NoneTile);
-        List<PatternData.PatternPoint> pattern = currentMagic.PatternData.points;
+        List<PatternData.PatternPoint> pattern = currentMagic.MagicAoe.points;
 
-        int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0) / 2;
-        int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1) / 2;
+        int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
+        int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
         foreach (var pos in pattern)
         {
             //중간값이 2,2이기 떄문에 -2씩 연산
@@ -165,9 +171,6 @@ public class SkillZone : MonoBehaviour
 
             if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY)
             {
-                x = x + lengthX;
-                y = y + lengthY;
-
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break )
                 {
                     Debug.Log($"position ({x}, {y}) 안됨! ");
@@ -200,9 +203,17 @@ public class SkillZone : MonoBehaviour
         for(int i =0; i<checkTilePos.Count; i++)
         {
             if (checkTileType[i] == 0)
+            {
                 breakSkillTile(checkTilePos[i]);
-            else
+            }
+            if(checkTileType[i] == 1 && checkTileRange.Contains(checkTilePos[i]))
+            {
                 noneSkillTile(checkTilePos[i]);
+            }
+            else
+            {
+                tilemap.SetTile(checkTilePos[i], null);
+            }
                 
         }
 
@@ -228,6 +239,17 @@ public class SkillZone : MonoBehaviour
     public void SkillStop()
     {
         PlayerResource.instance.currentBlock = null;
+        for(int i =0; i<checkTileRange.Count; i ++)
+        {
+            tilemap.SetTile(checkTileRange[i], null);
+        }
+        for(int i =0; i<checkTilePos.Count; i++)
+        {
+            tilemap.SetTile(checkTilePos[i], null);
+        }
+        checkTileRange.Clear();
+        checkTilePos.Clear();
+        checkTileType.Clear();
         gameObject.SetActive(false);
     }
 

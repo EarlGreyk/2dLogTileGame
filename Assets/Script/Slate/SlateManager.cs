@@ -63,8 +63,6 @@ public class SlateManager : MonoBehaviour
         
         
         int count = slateDic[key].Count;
-        Debug.Log($"{key} 카테고리 개수 : {count}");
-
         slateScrollClear();
 
         slateList = slateDic[key];
@@ -108,7 +106,6 @@ public class SlateManager : MonoBehaviour
                 string key = GetCategoryKey(slate);
                 if (!slateDic.ContainsKey(key))
                 {
-                    Debug.Log($"생성{key}");
                     slateDic[key] = new List<Slate>();
                 }
                 slateDic[key].Add(slate);

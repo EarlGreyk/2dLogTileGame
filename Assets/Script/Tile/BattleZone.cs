@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,6 +11,8 @@ using UnityEngine.UIElements;
 public class BattleZone : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
+    private Grid grid;
     private Tilemap tilemap; // 타일맵 참조
     private BattleTile[,] battleTiles = new BattleTile[15,7];
 
@@ -20,10 +23,21 @@ public class BattleZone : MonoBehaviour
     private Vector2Int west;   
     private Vector2Int east;
 
-    private void Start()
+    [SerializeField]
+    private Sprite breakTileSprite;
+    [SerializeField]
+    private Sprite sponeTileSprite;
+
+    private Vector3Int playerSponePos;
+    public Vector3Int PlayerSponePos { get { return playerSponePos; } }
+
+    private void Awake()
     {
         //타일맵이 변경 될 수 있음으로 타일맵의 크기를 조정해줍니다.
         tilemap = GetComponent<Tilemap>();
+        Vector3 scale = grid.transform.localScale;
+
+        // 그리드의 스케일 가져오기
         Vector3Int min = new Vector3Int(int.MaxValue, int.MaxValue, int.MaxValue);
         Vector3Int max = new Vector3Int(int.MinValue, int.MinValue, int.MinValue);
 
@@ -47,18 +61,43 @@ public class BattleZone : MonoBehaviour
         BoundsInt bouns = new BoundsInt(min, max - min + Vector3Int.one);
         tilemap.size = bouns.size;
 
+        BoundsInt bounds = tilemap.cellBounds;
+        TileBase[] allTiles = tilemap.GetTilesBlock(bounds);
+
         int rows = bouns.size.x;
         int cols = bouns.size.y;
+
         battleTiles = new BattleTile[rows, cols];
-        Debug.Log($"{rows},{cols}");
-        for(int i = 0; i<rows; i++)
+
+        for (int i = 0; i<rows; i++)
         {
             for(int j = 0; j<cols; j++)
             {
-                battleTiles[i, j] = new BattleTile(new Vector2Int(i-(rows/2),j-(cols/2)));
+                Vector3Int gridPos = new Vector3Int(
+                Mathf.FloorToInt((i ) * scale.x),Mathf.FloorToInt((j ) * scale.y),0);
+                TileBase tile = allTiles[i + j * rows];
+                battleTiles[i, j] = new BattleTile(gridPos);
+                if (tile != null)
+                {
+                    Sprite sprite = ((Tile)tile).sprite;
+
+                    if (sprite != null && sprite == breakTileSprite)
+                    {
+                        battleTiles[i, j].type = BattleTile.tileType.Break;
+                    }
+                    if (sprite != null && sprite == sponeTileSprite)
+                    {
+                        playerSponePos = battleTiles[i, j].gridPos;
+                    }
+                }else
+                {
+                    Debug.Log(tile);
+                }
+
+
+
             }
         }
-        battleTiles[3, 3].type = BattleTile.tileType.Break;
     }
     /// <summary>
     /// 유닛이 생성되거나 유닛이 이동될때 BattleZone에 해당 유닛을 넣어줍니다.
@@ -68,14 +107,12 @@ public class BattleZone : MonoBehaviour
 
     public void setTileUnit(Vector3 pos,Unit unit)
     {
+        Vector3 scale = grid.transform.localScale;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
-        Debug.Log(unitPos);
-
-        int lengthX = battleTiles.GetLength(0) / 2;
-        int lengthY = battleTiles.GetLength(1) / 2;
-        int x = unitPos.x  + lengthX;
-        int y = unitPos.y + lengthY;
+        
+        int x = Mathf.FloorToInt(unitPos.x / scale.x);
+        int y = Mathf.FloorToInt(unitPos.y / scale.y);
 
         Debug.Log($"{unit.gameObject.name}의 배열 좌표값 : {x} {y}");
         if (battleTiles[x, y].onUnit == null)
@@ -88,10 +125,10 @@ public class BattleZone : MonoBehaviour
 
         Debug.Log(unitPos);
 
-        int lengthX = battleTiles.GetLength(0) / 2;
-        int lengthY = battleTiles.GetLength(1) / 2;
-        int x = unitPos.x + lengthX;
-        int y = unitPos.y + lengthY;
+
+
+        int x = unitPos.x /2;
+        int y = unitPos.y /2;
         if (battleTiles[x, y].onUnit == unit)
             battleTiles[x, y].onUnit = null;
     }

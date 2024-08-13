@@ -84,13 +84,13 @@ public class GameManager : MonoBehaviour
     {
         //유닛을 생성할때 SettingData에서 UnitStatus를 받아와서 적용시키면됩니다.
         GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
-        playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(0, 0, 0),  unitPrefabs);
+        playerUnit = unitSpawner.SpawnPlayer(BattleZone.PlayerSponePos,  unitPrefabs);
     }
 
     private void setMonster()
     {
         GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Monster/monster1");
-        MonsterUnit monster = unitSpawner.SpawnMonster(new Vector3Int(2, 0, 0), unitPrefabs);
+        MonsterUnit monster = unitSpawner.SpawnMonster(new Vector3Int(10, 5, 0), unitPrefabs);
 
     }
 

@@ -15,8 +15,15 @@ MonoBehaviour:
   type: 0
   tag: 0
   sort: 0
-  grade: 0
+  index: 0
   level: 0
+  magicCost: 0
   magicName: 
   magicDesc: 
   iconSprite: {fileID: 0}
+  magicMaxLevel: 0
+  requireSlateLevel: 0
+  magicRange: {fileID: 11400000, guid: 356f73a1b64b89740a2f2390a36006cd, type: 2}
+  magicAoe: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
+  magicEffectTarget: 0
+  magicValue: 0

@@ -51,7 +51,6 @@ public class MonsterUnit : Unit
     public override void Start()
     {
         base.Start();
-        ActionCheck();
     }
 
 

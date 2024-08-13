@@ -74,17 +74,15 @@ public class Magic : ScriptableObject
     private int requireSlateLevel;
     public int RequireSlateLevel { get { return requireSlateLevel; } }
 
-    [SerializeField] // 세로
-    private int magicLength;
-    public int MagicLength { get { return magicLength; } }
-
-    [SerializeField] // 세로
-    private int magicWidth;
-    public int MagicWidth { get { return magicWidth; } }
 
     [SerializeField]
-    private PatternData patternData;
-    public PatternData PatternData { get { return patternData; } }
+    private PatternData magicRange;
+
+    public PatternData MagicRange { get { return magicRange; } }
+
+    [SerializeField]
+    private PatternData magicAoe;
+    public PatternData MagicAoe { get { return magicAoe; } }
 
     [SerializeField] 
     private int magicEffectTarget;
