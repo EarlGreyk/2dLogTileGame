@@ -49,6 +49,10 @@ public class GameManager : MonoBehaviour
     private List<MonsterUnit> monsterActionUnits;
 
     private int lampLight = 100;
+    [SerializeField]
+    private GameObject hpCanvas;
+
+    public GameObject HPCanvas { get { return hpCanvas; } }
     
 
     private void Awake()
@@ -85,11 +89,13 @@ public class GameManager : MonoBehaviour
         //유닛을 생성할때 SettingData에서 UnitStatus를 받아와서 적용시키면됩니다.
         GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
         playerUnit = unitSpawner.SpawnPlayer(BattleZone.PlayerSponePos,  unitPrefabs);
+        CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
+        
     }
 
     private void setMonster()
     {
-        GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Monster/monster1");
+        GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Monster/monster_1");
         MonsterUnit monster = unitSpawner.SpawnMonster(new Vector3Int(10, 5, 0), unitPrefabs);
 
     }

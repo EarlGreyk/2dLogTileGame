@@ -14,6 +14,7 @@ public class BattleZone : MonoBehaviour
     [SerializeField]
     private Grid grid;
     private Tilemap tilemap; // 타일맵 참조
+    public Tilemap Tilemap {  get { return tilemap; } }
     private BattleTile[,] battleTiles = new BattleTile[15,7];
 
     public BattleTile[,] BattleTiles { get { return battleTiles; } }
