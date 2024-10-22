@@ -20,10 +20,10 @@ MonoBehaviour:
   magicCost: 8
   magicName: "\uD654\uC5FC\uD3ED\uBC1C"
   magicDesc: "\uBC94\uC704\uB0B4\uC5D0 \uD654\uC5FC\uD3ED\uBC1C\uC744 \uC77C\uC73C\uD0B4"
-  iconSprite: {fileID: 21300000, guid: 66eb32c73d649cd4f9fbd5f3e032498f, type: 3}
-  magicMaxLevel: 5
+  iconSprite: {fileID: 21300000, guid: 4f32bb2fbe1fc5e479cd95b81f6ab9a0, type: 3}
+  gold: 1500
   requireSlateLevel: 2
-  magicLength: 3
-  magicWidth: 4
+  magicRange: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
+  magicAoe: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
   magicEffectTarget: 0
   magicValue: 22

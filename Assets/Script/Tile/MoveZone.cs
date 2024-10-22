@@ -55,16 +55,16 @@ public class MoveZone : MonoBehaviour
         movePos.Add(center);
     }
 
-    public void breakMoveTile()
+    public void breakMoveTile(bool istrue = false)
     {
-        Debug.Log("비활성화");
         //타일 롤백.
         for (int i = 0; i < movePos.Count; i++)
         {
             tilemap.SetTile(movePos[i], null);
         }
         movePos.Clear();
-        gameObject.SetActive(false);
+        if(istrue!=true)
+            gameObject.SetActive(false);
     }
    
     //플레이어가 클릭을 하면 클릭한 좌표를 받아와 동작합니다.
@@ -98,23 +98,24 @@ public class MoveZone : MonoBehaviour
             Mathf.FloorToInt(movePos[i].y ),
             0
              );
-            Debug.Log($"롤백 : {rollbackPos}");
             tilemap.SetTile(rollbackPos, null);
         }
         movePos.Clear();
 
-
+        GameManager.instance.LampUpdate(1);
         gameObject.SetActive(false);
     }
 
     public void SetBlock(MovePanel _blockPanel, Vector3Int _sellpos)
     {
+        CameraSetting.instance.blockModeOff();
         //기존 블록 타일 소거.
+        breakMoveTile(true);
         //배틀존 setblock작동
         //2,2가 중앙블록이며 현재 위치값에서 더하기 빼기로 체크해야함
         Vector3 scale = grid.transform.localScale;
 
-
+       
         List<PatternData.PatternPoint> pattern = _blockPanel.block.BlockInfo.Pattern;
         foreach (var pos in pattern)
         {

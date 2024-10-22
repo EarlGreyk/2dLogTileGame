@@ -28,15 +28,7 @@ MonoBehaviour:
   enable: 1
   blocks:
   - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
-  - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
+  - {fileID: 11400000, guid: 791e2a6a14b54c14a9c0fc2e66fe5cee, type: 2}
+  - {fileID: 11400000, guid: 2ada1a679a1b86e49939855aee6c5f97, type: 2}
+  - {fileID: 11400000, guid: 791e2a6a14b54c14a9c0fc2e66fe5cee, type: 2}
+  SlateSprite: {fileID: 21300000, guid: f458f9b278b801249ab120abc4a8a3c7, type: 3}

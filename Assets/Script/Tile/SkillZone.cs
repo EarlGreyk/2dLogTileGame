@@ -88,7 +88,7 @@ public class SkillZone : MonoBehaviour
 
     public void SettingSkillZone(Magic magic,GameObject magicEffect)
     {
-
+        CameraSetting.instance.blockModeOff();
 
         // Grid의 셀 크기 (스케일)
         Vector3 scale = grid.transform.localScale;
@@ -156,6 +156,7 @@ public class SkillZone : MonoBehaviour
     /// </summary>
     public void OnMouseChangeBlock()
     {
+
         //패턴 데이터에 따라 Block을 수정해야합니다.
         tilemap.SetTile(hitTilePos, NoneTile);
         List<PatternData.PatternPoint> pattern = currentMagic.MagicAoe.points;
@@ -225,9 +226,11 @@ public class SkillZone : MonoBehaviour
 
     public void UseSkill()
     {
+
         GameManager.instance.PlayerActionManager.SettingSkillAction
             (currentMagic,currentMagicEffect,hitTilePos, checkTilePos);
 
+        GameManager.instance.LampUpdate(1);
         SkillStop();
     }
     

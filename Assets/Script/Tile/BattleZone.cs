@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static UnityEngine.UI.CanvasScaler;
 
 public class BattleZone : MonoBehaviour
 {
@@ -27,13 +28,20 @@ public class BattleZone : MonoBehaviour
     [SerializeField]
     private Sprite breakTileSprite;
     [SerializeField]
-    private Sprite sponeTileSprite;
+    private Sprite playerSponeTileSprite;
+    [SerializeField]
+    private Sprite monsterSponeTileSprite;
 
     private Vector3Int playerSponePos;
     public Vector3Int PlayerSponePos { get { return playerSponePos; } }
 
+
+    private List<Vector3Int> monsterSponePosList = new List<Vector3Int>();
+    public List<Vector3Int> MonsterSponePosList { get { return monsterSponePosList; } }
+
     private void Awake()
     {
+        grid = GameManager.instance.Grid;
         //타일맵이 변경 될 수 있음으로 타일맵의 크기를 조정해줍니다.
         tilemap = GetComponent<Tilemap>();
         Vector3 scale = grid.transform.localScale;
@@ -85,12 +93,21 @@ public class BattleZone : MonoBehaviour
                     if (sprite != null && sprite == breakTileSprite)
                     {
                         battleTiles[i, j].type = BattleTile.tileType.Break;
+                        
                     }
-                    if (sprite != null && sprite == sponeTileSprite)
+                    if (sprite != null && sprite == playerSponeTileSprite)
                     {
                         playerSponePos = battleTiles[i, j].gridPos;
+                        Debug.Log($"{battleTiles[i, j].gridPos} 유닛의 위치");
                     }
-                }else
+                    if (sprite != null && sprite == monsterSponeTileSprite)
+                    {
+                        monsterSponePosList.Add(battleTiles[i, j].gridPos);
+                        Debug.Log($"{battleTiles[i, j].gridPos} 몬스터의 위치");  
+
+                    }
+                }
+                else
                 {
                     Debug.Log(tile);
                 }
@@ -114,24 +131,46 @@ public class BattleZone : MonoBehaviour
         
         int x = Mathf.FloorToInt(unitPos.x / scale.x);
         int y = Mathf.FloorToInt(unitPos.y / scale.y);
-
-        Debug.Log($"{unit.gameObject.name}의 배열 좌표값 : {x} {y}");
         if (battleTiles[x, y].onUnit == null)
             battleTiles[x, y].onUnit = unit;
 
     }
     public void removeTileUnit(Vector3 pos,Unit unit)
     {
+        Vector3 scale = grid.transform.localScale;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
-        Debug.Log(unitPos);
 
 
 
-        int x = unitPos.x /2;
-        int y = unitPos.y /2;
+
+        int x = Mathf.FloorToInt(unitPos.x / scale.x);
+        int y = Mathf.FloorToInt(unitPos.y / scale.y);
         if (battleTiles[x, y].onUnit == unit)
             battleTiles[x, y].onUnit = null;
+    }
+
+
+
+    public Unit SerchTileUnit(Vector3 pos)
+    {
+        Unit serchUnit = null;
+        Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
+
+
+
+
+
+        int x = unitPos.x ;
+        int y = unitPos.y ;
+
+        if (battleTiles[x, y].onUnit != null)
+            serchUnit = battleTiles[x, y].onUnit;
+
+        if(serchUnit != null)
+            Debug.Log(serchUnit.name);
+
+        return serchUnit;
     }
 
     

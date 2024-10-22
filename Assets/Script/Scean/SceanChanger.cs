@@ -26,6 +26,16 @@ public class SceanChanger : MonoBehaviour
 
     public void SceanChange(string sceanName)
     {
+        
+        StartCoroutine(SceanDelay(sceanName));
+    }
+
+
+
+    IEnumerator SceanDelay(string sceanName)
+    {
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(sceanName);
+        yield break;
     }
 }

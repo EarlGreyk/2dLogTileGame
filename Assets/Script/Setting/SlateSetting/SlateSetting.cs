@@ -17,32 +17,34 @@ public class SlateSetting : MonoBehaviour
 
     private List<Slate> enableslateList = new List<Slate>();
 
-    private SlateUI CurentSlateUI;
+    private SlateUI curentSlateUI;
+
+    public SlateUI CurrentSlateUI { get { return curentSlateUI; } }
 
     public void SlateUiSet(SlateUI slateUI)
     {
-        CurentSlateUI = slateUI;
+        curentSlateUI = slateUI;
     }
     public void SlateSet(SlateUI slateUI)
     {
      
-        if(CurentSlateUI != null)
+        if(curentSlateUI != null)
         {
-            CurentSlateUI.SlateSet(slateUI.Slate);
+            curentSlateUI.SlateSet(slateUI.Slate);
 
-            if(CurentSlateUI == firstSlate)
+            if(curentSlateUI == firstSlate)
             {
                 SettingData.firstSlate = slateUI.Slate;
             }
-            if (CurentSlateUI == secondSlate)
+            if (curentSlateUI == secondSlate)
             {
                 SettingData.secondSlate = slateUI.Slate;
             }
-            if (CurentSlateUI == thirdSlate)
+            if (curentSlateUI == thirdSlate)
             {
                 SettingData.thirdSlate = slateUI.Slate;
             }
-            if (CurentSlateUI == fourthSlate)
+            if (curentSlateUI == fourthSlate)
             {
                 SettingData.fourthSlate = slateUI.Slate;
             }

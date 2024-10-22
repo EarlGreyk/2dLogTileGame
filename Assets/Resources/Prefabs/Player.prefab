@@ -97,9 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cabc6d4d6afc6f4996757383197cb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpbar: {fileID: 1405926418342992566, guid: 2eb867907a103784686b5e6154986f7f, type: 3}
+  HPbar: {fileID: 1405926418342992566, guid: 2eb867907a103784686b5e6154986f7f, type: 3}
   Icon: {fileID: 6249719591106751477, guid: 4611aae8ec57d854486a3fa6c066ede9, type: 3}
-  canvas: {fileID: 0}
-  rectHpbar: {fileID: 0}
-  rectIcon: {fileID: 0}
-  hpbarHight: 1.5
+  baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
