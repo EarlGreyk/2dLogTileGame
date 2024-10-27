@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class LuneSetting : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class LuneSetting : MonoBehaviour
 {
     public enum LuneType
     {
@@ -21,6 +21,10 @@ public class LuneSetting : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public List<LuneSetting> ConnectedNodes;
 
     private bool luneEnable;
+
+    public bool LuneEnable { get { return luneEnable; } set { luneEnable = value; } }
+
+
 
     private void Start()
     {
@@ -45,38 +49,23 @@ public class LuneSetting : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     }
 
 
-    public void LuneEnable()
-    {
-        if (luneEnable)
-        {
-            LuneManager.instance.luneTotalStatus.effectUp(selectedBasicLune.effectType.ToString(), -selectedBasicLune.effectValue);
-        }
-        else
-        {
-            LuneManager.instance.luneTotalStatus.effectUp(selectedBasicLune.effectType.ToString(), selectedBasicLune.effectValue);
-        }
-        luneEnable = !luneEnable;
+    
 
 
-
-    }
-
-
-    public void OnPointerEnter( PointerEventData eventData )
+    public void LuneSelect(RectTransform rectTransform )
     {
         switch (luneType)
         {
             case LuneType.Basic:
-                LuneManager.instance.LuneUi.onSet(eventData.position, selectedBasicLune);
+                LuneManager.instance.LuneUi.onSet(selectedBasicLune);
                 break;
             case LuneType.Major:
-                LuneManager.instance.LuneUi.onSet(eventData.position, selectedMajorLune);
+                LuneManager.instance.LuneUi.onSet(selectedMajorLune);
                 break;
         }
+
+        LuneManager.instance.LuneSelect(rectTransform, this);
         
     }
-    public void OnPointerExit( PointerEventData eventData ) 
-    {
-        LuneManager.instance.LuneUi.offSet();
-    }
+   
 }
