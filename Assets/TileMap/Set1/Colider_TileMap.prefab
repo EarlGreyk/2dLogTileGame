@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 6920457599636489176}
   - component: {fileID: 2280467129919756915}
   m_Layer: 0
-  m_Name: TileMap
+  m_Name: Colider_TileMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
