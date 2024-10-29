@@ -43,11 +43,12 @@ public class LuneManager : MonoBehaviour
     }
     private void Start()
     {
-        luneTotalStatus = new UnitStatus();
+        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("Unit/Status/Player");
+        luneTotalStatus = new UnitStatus(playerStatus);
     }
     public void luneSet()
     {
-        SettingData.playerStatus.effectCopy(luneTotalStatus);
+        SettingData.LuneStatus.effectCopy(luneTotalStatus);
     }
 
     public void LuneEnableButton()

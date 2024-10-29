@@ -9,6 +9,8 @@ public class PlayerUnit : Unit
     public override void Start()
     {
         base.Start();
+
+        status.effectAdd(SettingData.LuneStatus);
     }
     
 

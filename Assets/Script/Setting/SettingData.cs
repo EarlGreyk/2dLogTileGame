@@ -17,7 +17,7 @@ public static class SettingData
 
 
 
-    public static UnitStatus playerStatus;
+    public static UnitStatus LuneStatus;
 
     public static bool Load = false;
 

@@ -83,7 +83,7 @@ public class GameManagerSaveData
             roundInfo.Add(gameManager.RoundInfo[i]);
         }
 
-        
+
     }
 
 
@@ -100,28 +100,40 @@ public class BlockManagerSaveData
         BlockSaveData blockData = null;
         for (int i = 0; i < blockManage.EquipBlocks.Count; i++)
         {
-            if(blockManage.EquipBlocks[i].Block != null)
+            if (blockManage.EquipBlocks[i].Block != null)
             {
                 blockData = new BlockSaveData(blockManage.EquipBlocks[i].Block);
                 if (blockData != null)
                     equipBlockDatas.Add(blockData);
             }
-            
+
         }
 
         Debug.Log(blockManage.InventoryBlocks.Count);
 
-        for (int i =0; i<blockManage.InventoryBlocks.Count; i++)
+        for (int i = 0; i < blockManage.InventoryBlocks.Count; i++)
         {
-            if(blockManage.InventoryBlocks[i].Block != null)
+            if (blockManage.InventoryBlocks[i].Block != null)
             {
                 blockData = new BlockSaveData(blockManage.InventoryBlocks[i].Block);
                 Debug.Log(blockData);
                 if (blockData != null)
                     inventoryBlockDatas.Add(blockData);
             }
-            
+
         }
+    }
+}
+
+[System.Serializable]
+public class LuneData
+{
+    public int dealth;
+    public int damage;
+    public int elementalDamage;
+    public LuneData(UnitStatus status)
+    {
+
     }
 }
 
@@ -240,6 +252,11 @@ public class SaveLoadManager : MonoBehaviour
 
 
         SettingData.Load = true;
+    }
+
+    public void LuneNodeLoad()
+    {
+
     }
 
 

@@ -77,6 +77,17 @@ public class UnitStatus
         MagicChian = copyTemp.MagicChian;
         MagicCount = copyTemp.MagicCount;
     }
+    public void effectAdd(UnitStatus addTemp)
+    {
+        Health += addTemp.Health;
+        Damage += addTemp.Damage;
+        ElementalDamage += addTemp.ElementalDamage;
+        Defense += addTemp.Defense;
+        ItemChan += addTemp.ItemChan;
+        BlockChan += addTemp.BlockChan;
+        MagicChian += addTemp.MagicChian;
+        MagicCount += addTemp.MagicCount;
+    }
 
 }
 

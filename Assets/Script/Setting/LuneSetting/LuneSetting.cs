@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -63,6 +64,23 @@ public class LuneSetting : MonoBehaviour
                 LuneManager.instance.LuneUi.onSet(selectedMajorLune);
                 break;
         }
+        Vector2 totalPosition = rectTransform.anchoredPosition;
+        RectTransform UIRect = LuneManager.instance.LuneUi.GetComponent<RectTransform>();
+        Vector2 UIPosition = UIRect.anchoredPosition;
+        if(totalPosition.x<0)
+        {
+            if (UIPosition.x < 0)
+                UIPosition.x *= -1;
+  
+        }else
+        {
+            if (UIPosition.x > 0)
+                UIPosition.x *= -1;
+        }
+        UIRect.anchoredPosition = UIPosition;
+        
+
+
 
         LuneManager.instance.LuneSelect(rectTransform, this);
         

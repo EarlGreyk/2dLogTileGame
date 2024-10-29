@@ -17,8 +17,8 @@ public class UnitStatusObject : ScriptableObject
     private int elementalDamage;
     public int ElementalDamage {  get { return elementalDamage; } }
     [SerializeField]
-    private int defense {  get { return defense; } }
-    public int Defense { get; }
+    private int defense;
+    public int Defense { get { return defense; } }
     public int ItemChan { get; }
     public int BlockChan { get; }
     public int MagicChian { get; }
