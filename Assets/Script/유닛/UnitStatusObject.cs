@@ -8,20 +8,20 @@ public class UnitStatusObject : ScriptableObject
 {
     // Start is called before the first frame update
     [SerializeField]
-    private int health;
-    public int Health { get { return  health; }  }
+    private float health;
+    public float Health { get { return  health; }  }
     [SerializeField]
-    private int damage;
-    public int Damage { get { return damage; } }
+    private float damage;
+    public float Damage { get { return damage; } }
     [SerializeField]
-    private int elementalDamage;
-    public int ElementalDamage {  get { return elementalDamage; } }
+    private float elementalDamage;
+    public float ElementalDamage {  get { return elementalDamage; } }
     [SerializeField]
-    private int defense;
-    public int Defense { get { return defense; } }
-    public int ItemChan { get; }
-    public int BlockChan { get; }
-    public int MagicChian { get; }
-    public int MagicCount { get; }
+    private float defense;
+    public float Defense { get { return defense; } }
+    public float ItemChan { get; }
+    public float BlockChan { get; }
+    public float MagicChian { get; }
+    public float MagicCount { get; }
 
 }

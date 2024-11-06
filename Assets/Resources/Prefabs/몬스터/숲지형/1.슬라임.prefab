@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8001474763171313830}
   - component: {fileID: 3882220592335119873}
   - component: {fileID: 360150549573762598}
+  - component: {fileID: -6424533642964141347}
   m_Layer: 0
   m_Name: "1.\uC2AC\uB77C\uC784"
   m_TagString: Untagged
@@ -97,11 +98,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1a3d284590730449933cdcb8c288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPbar: {fileID: 1405926418342992566, guid: 2eb867907a103784686b5e6154986f7f, type: 3}
+  HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
   Icon: {fileID: 6249719591106751477, guid: 4611aae8ec57d854486a3fa6c066ede9, type: 3}
-  baseStatus: {fileID: 11400000, guid: 577ccd95826e9e44fb920f2c3b2ee9c0, type: 2}
+  baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
+  hpbar: {fileID: 0}
   movePattenData: {fileID: 11400000, guid: 356f73a1b64b89740a2f2390a36006cd, type: 2}
   attackRangePattenData: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
-  actionList: []
+  ratioStatus: {fileID: 11400000, guid: 577ccd95826e9e44fb920f2c3b2ee9c0, type: 2}
+  magicList:
+  - {fileID: 11400000, guid: eb4e59deefa650c42a238da0716cf57f, type: 2}
+  currentAction: {fileID: -6424533642964141347}
   maxActionCount: 2
-  ActionPanel: {fileID: 5508413948136024874, guid: fe784ef126882824d98679a52db73991, type: 3}
+--- !u!114 &-6424533642964141347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118946393443849972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b91913126025eb4a8d1d9b22d137d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

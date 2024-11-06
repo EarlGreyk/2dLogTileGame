@@ -97,11 +97,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1a3d284590730449933cdcb8c288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPbar: {fileID: 1405926418342992566, guid: 2eb867907a103784686b5e6154986f7f, type: 3}
+  HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
   Icon: {fileID: 4118946393443849972}
-  baseStatus: {fileID: 11400000, guid: 577ccd95826e9e44fb920f2c3b2ee9c0, type: 2}
+  baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
+  hpbar: {fileID: 0}
   movePattenData: {fileID: 11400000, guid: 356f73a1b64b89740a2f2390a36006cd, type: 2}
   attackRangePattenData: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
-  actionList: []
+  ratioStatus: {fileID: 11400000, guid: a6f3c9d6cdccd96419136aa8a06e3ad4, type: 2}
+  magicList: []
+  currentAction: {fileID: 0}
   maxActionCount: 2
-  ActionPanel: {fileID: 5508413948136024874, guid: fe784ef126882824d98679a52db73991, type: 3}

@@ -58,6 +58,8 @@ public class LuneUi : MonoBehaviour
 
     private void ApplyTextSet(BagicLune node)
     {
+
+        Debug.Log(LuneManager.instance.luneTotalStatus);
         if(node.effectType == BagicLune.EffectType.Health)
             luneApplyValue.text = "Ã¼·Â : " + LuneManager.instance.luneTotalStatus.Health.ToString() +" + " +  node.effectValue.ToString(); 
         if(node.effectType == BagicLune.EffectType.Damage)

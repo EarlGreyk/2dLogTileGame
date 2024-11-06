@@ -176,7 +176,7 @@ public class PlayerResource : MonoBehaviour
 
         for (int i = 0; i < playerBlockPanel.Count; i++)
         {
-            BlockDrow();
+            BlockDrow(true);
         }
 
         
@@ -226,7 +226,7 @@ public class PlayerResource : MonoBehaviour
     /// <summary>
     /// µå·Î¿ì
     /// </summary>
-    public void BlockDrow()
+    public void BlockDrow(bool start)
     {
         if (playerCurBlockList.Count >= 7)
         {
@@ -248,18 +248,18 @@ public class PlayerResource : MonoBehaviour
         temp = playerDrowBlockList[playerDrowBlockList.Count-1];
         playerDrowBlockList.Remove(temp);
         playerCurBlockList.Add(temp);
-        for(int i =0;i<playerBlockPanel.Count;i++)
+        for (int i = 0; i < playerBlockPanel.Count; i++)
         {
             if (!playerBlockPanel[i].gameObject.activeSelf)
             {
-                Debug.Log(temp);
                 playerBlockPanel[i].BlockSet(temp);
                 playerBlockPanel[i].transform.SetAsLastSibling();
                 break;
             }
-            
+
         }
-        GameManager.instance.LampUpdate(1);
+        if(!start)
+            GameManager.instance.LampUpdate(1);
         
     }
 
@@ -277,7 +277,7 @@ public class PlayerResource : MonoBehaviour
         }
         for (int i = 0; i < playerBlockPanel.Count; i++)
         {
-            BlockDrow();
+            BlockDrow(true);
         }
     }
     /// <summary>

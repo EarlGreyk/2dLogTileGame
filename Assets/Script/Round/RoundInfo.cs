@@ -11,8 +11,7 @@ public class RoundInfo : ScriptableObject
 
     public List<GameObject> MonsterList { get { return monsterList; } }
 
-    [SerializeField]
-    private List<Vector3Int> regenPosList = new List<Vector3Int>();
+
     
   
 

@@ -80,7 +80,6 @@ public class BlockManage : MonoBehaviour
     /// <param name="block"></장착해야할 블록>
     public void EquipSet(Block block)
     {
-        Debug.Log("블록 장착");
         for (int i = 0; i < equipBlocks.Count; i++)
         {
             if (equipBlocks[i].Block == null)
@@ -94,7 +93,6 @@ public class BlockManage : MonoBehaviour
             }
         }
 
-        Debug.Log("블록이 가득찬 상태입니다");
         
         
         

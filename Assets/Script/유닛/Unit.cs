@@ -4,18 +4,19 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using static System.Collections.Specialized.BitVector32;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class UnitStatus
 {
     public float Health { get; set; }
     public float MaxHealth { get; set; }
-    public int Damage { get; set; }
-    public int ElementalDamage { get; set; } // 加己 单固瘤
-    public int Defense { get; set; }
-    public int ItemChan { get; set; }
-    public int BlockChan { get; set; }
-    public int MagicChian { get; set; }
-    public int MagicCount { get; set; }
+    public float Damage { get; set; }
+    public float ElementalDamage { get; set; } // 加己 单固瘤
+    public float Defense { get; set; }
+    public float ItemChan { get; set; }
+    public float BlockChan { get; set; }
+    public float MagicChian { get; set; }
+    public float MagicCount { get; set; }
     public UnitStatus()
     {
         Health = 0;
@@ -88,6 +89,17 @@ public class UnitStatus
         MagicChian += addTemp.MagicChian;
         MagicCount += addTemp.MagicCount;
     }
+    public void effectRatio(UnitStatusObject ratioTemp)
+    {
+        Health *= ratioTemp.Health;
+        Damage *= ratioTemp.Damage;
+        ElementalDamage *= ratioTemp.ElementalDamage;
+        Defense *= ratioTemp.Defense;
+        ItemChan *= ratioTemp.ItemChan;
+        BlockChan *= ratioTemp.BlockChan;
+        MagicChian *= ratioTemp.MagicChian;
+        MagicCount *= ratioTemp.MagicCount;
+    }
 
 }
 
@@ -98,9 +110,9 @@ public class Unit :MonoBehaviour
     public GameObject HPbar;
     public GameObject Icon;
     public UnitStatusObject baseStatus;
+    public UnitHpBar hpbar;
     private GameObject uicanvas;
     private RectTransform uicanvasRectTransform;
-    private UnitHpBar hpbar;
 
 
     public virtual void Start()

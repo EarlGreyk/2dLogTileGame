@@ -63,7 +63,6 @@ public class UnitSpawner : MonoBehaviour
         int x = Mathf.FloorToInt(worldPosition.x / scale.x);
         int y = Mathf.FloorToInt(worldPosition.y / scale.y);
         Vector3Int unitPos = new Vector3Int(x, y, 0);
-        Debug.Log("À¯´ÖÀÇ À§Ä¡" + unitPos);
 
 
         return unitPos;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using UnityEngine;
 
@@ -126,13 +127,16 @@ public class BlockManagerSaveData
 }
 
 [System.Serializable]
-public class LuneData
+public class LuneEnableData
 {
-    public int dealth;
-    public int damage;
-    public int elementalDamage;
-    public LuneData(UnitStatus status)
+    public List<bool> luneEnable = new List<bool>();
+    
+    public LuneEnableData(LuneManager luneManager)
     {
+        for (int i = 0; i < luneManager.LuneSettings.Count; i++)
+        {
+            luneEnable.Add(luneManager.LuneSettings[i].LuneEnable);
+        }
 
     }
 }
@@ -150,6 +154,7 @@ public class SaveLoadManager : MonoBehaviour
     private string gameManagerPath;
     private string playerResourcePath;
     private string blockManagerPath;
+    private string luneEnablePath;
 
     //로드파일
     private PlayerResourceSaveData playerResourceData;
@@ -161,6 +166,11 @@ public class SaveLoadManager : MonoBehaviour
 
     private BlockManagerSaveData blockManagerSaveData;
     public BlockManagerSaveData BlockManagerSaveData { get {return blockManagerSaveData; } }
+
+    private LuneEnableData luneEnableData;
+    
+    public LuneEnableData LuneEnableData { get {return luneEnableData; } }
+
 
 
     private void Awake()
@@ -183,6 +193,7 @@ public class SaveLoadManager : MonoBehaviour
         gameManagerPath = Application.persistentDataPath + "/saveGameManagerData.json";
         playerResourcePath = Application.persistentDataPath + "/savePlayerResourceData.json";
         blockManagerPath = Application.persistentDataPath + "/saveBlockManagerData.json";
+        luneEnablePath = Application.persistentDataPath + "/saveluneEnableData.json";
 
 
     }
@@ -193,6 +204,10 @@ public class SaveLoadManager : MonoBehaviour
         SavePlayerResource();
         SaveGameManager();
         SaveBlockManager();
+    }
+    public void LuneSave()
+    {
+        SaveLuneEnable();
     }
 
     private void SavePlayerResource()
@@ -216,10 +231,20 @@ public class SaveLoadManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(blockManagerPath, json);
     }
+    private void SaveLuneEnable()
+    {
+        Debug.Log(LuneManager.instance);
+        LuneEnableData saveData = new LuneEnableData(LuneManager.instance);
+        string json = JsonUtility.ToJson(saveData);
+        File.WriteAllText(luneEnablePath, json);
+
+    }
     
         
 
-
+    /// <summary>
+    /// 게임이 시작되면 로드됩니다.
+    /// </summary>
     public void Load()
     {
         playerResourceData = LoadPlayerResource();
@@ -253,10 +278,25 @@ public class SaveLoadManager : MonoBehaviour
 
         SettingData.Load = true;
     }
-
+    /// <summary>
+    /// 게임 셋팅 단계에서 (룬)을 최근에 작업한걸로 로드합니다.
+    /// </summary>
     public void LuneNodeLoad()
     {
-
+        luneEnableData = LoadLuneEnableData();
+        if (luneEnableData == null)
+            return;
+        
+        
+        for(int i =0;i<luneEnableData.luneEnable.Count;i++)
+        {
+            if(luneEnableData.luneEnable[i])
+            {
+                LuneManager.instance.LuneSettings[i].LuneEnable = luneEnableData.luneEnable[i];
+                LuneManager.instance.LuneEnable(LuneManager.instance.LuneSettings[i]);
+            }
+        }
+        
     }
 
 
@@ -297,6 +337,19 @@ public class SaveLoadManager : MonoBehaviour
         else
         {
             Debug.Log("로드할 파일이 없습니다.");
+            return null;
+        }
+    }
+
+    private LuneEnableData LoadLuneEnableData()
+    {
+        if(File.Exists(luneEnablePath))
+        {
+            string json = File.ReadAllText(luneEnablePath);
+            return JsonUtility.FromJson<LuneEnableData>(json);
+        }
+        {
+            Debug.Log("로드할 파일이 없습니다");
             return null;
         }
     }

@@ -12,7 +12,7 @@ public class PlayerUnit : Unit
 
         status.effectAdd(SettingData.LuneStatus);
     }
-    
+
 
 
 

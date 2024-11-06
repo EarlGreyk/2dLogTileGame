@@ -81,7 +81,7 @@ public class MoveZone : MonoBehaviour
             Mathf.FloorToInt(cellPos.x * scale.x),
             Mathf.FloorToInt(cellPos.y * scale.y),
             0);
-        Debug.Log($"{currentPos} , 셀위치 고려값 : {scaledCellPos}");
+        Debug.Log($"유닛의 현재 위치 : {currentPos} , 이동해야하는 셀위치 고려값 : {scaledCellPos}");
         //플레이어 이동
         GameManager.instance.BattleZone.removeTileUnit(currentPos, GameManager.instance.PlayerUnit);
         GameManager.instance.PlayerUnit.transform.position = scaledCellPos;
@@ -120,12 +120,11 @@ public class MoveZone : MonoBehaviour
         foreach (var pos in pattern)
         {
             //중간값이 2,2이기 떄문에 -2씩 연산
-            Debug.Log(pos);
             int x = Mathf.FloorToInt((pos.x - 2)  + _sellpos.x / scale.x);
             int y = Mathf.FloorToInt((pos.y - 2)  + _sellpos.y / scale.y);
-            Vector3Int tilepos = new Vector3Int(x, y,0);
-            Debug.Log(tilepos);
-            if(x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1))
+            Vector3Int tilepos = new Vector3Int(x, y, 0);
+
+            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) && x>=0 && y>=0)
             {
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].type != BattleTile.tileType.Break && GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == null)
                 {

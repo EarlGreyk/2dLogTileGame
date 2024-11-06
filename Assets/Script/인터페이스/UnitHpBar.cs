@@ -17,6 +17,7 @@ public class UnitHpBar : MonoBehaviour
     public GameObject canvas;
     public Image fillImage;
     public TextMeshProUGUI hptext;
+    public TextSet actiontext;
 
 
 
@@ -50,7 +51,14 @@ public class UnitHpBar : MonoBehaviour
         rectIcon = Instantiate(Icon, canvas.transform).GetComponent<RectTransform>();
        
         if (action != null)
-            rectAction = Instantiate(action, canvas.transform).GetComponent<RectTransform>();
+        {
+            GameObject obj = Instantiate(action, canvas.transform);
+            rectAction = obj.GetComponent<RectTransform>();
+            actiontext = obj.GetComponent<TextSet>();
+
+
+        }
+            
 
         // 향후 화면 비율을 위한 계산진행
         // 0. 비율구하기
@@ -130,6 +138,10 @@ public class UnitHpBar : MonoBehaviour
             fillImage.fillAmount = monster.status.Health / monster.status.MaxHealth;
         }
         
+    }
+    public void ActionSet(List<string> text)
+    {
+        actiontext.targetTextSet(text);
     }
     private void OnDestroy()
     {

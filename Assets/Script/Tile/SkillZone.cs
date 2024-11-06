@@ -170,7 +170,9 @@ public class SkillZone : MonoBehaviour
             int y = pos.y - 2 + hitTilePos.y;
             Vector3Int tilepos = new Vector3Int(x, y);
 
-            if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY)
+            Debug.Log(x);
+            Debug.Log(y);
+            if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY && x>=0 && y>=0)
             {
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break )
                 {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LuneSetting : MonoBehaviour
 {
@@ -25,10 +26,16 @@ public class LuneSetting : MonoBehaviour
 
     public bool LuneEnable { get { return luneEnable; } set { luneEnable = value; } }
 
+    public Image LuneImage;
+   
+
+    
+
 
 
     private void Start()
     {
+        LuneImage = GetComponent<Image>();
         switch (luneType)
         {
             case LuneType.Basic:

@@ -10,6 +10,7 @@ public class MonsterAIManager : MonoBehaviour
     private Queue<MonsterUnit> actionMonsters = new Queue<MonsterUnit>();
 
     private MonsterUnit currentMonster;
+    public MonsterUnit CurrentMonster { get { return currentMonster; } set { currentMonster = value; } }
 
 
     public void MonsterSet(MonsterUnit monster)
@@ -71,7 +72,6 @@ public class MonsterAIManager : MonoBehaviour
             currentMonster = actionMonsters.Peek();
             actionMonsters.Dequeue();
             currentMonster.monsterAction();
-            currentMonster = null;
 
         }
             
