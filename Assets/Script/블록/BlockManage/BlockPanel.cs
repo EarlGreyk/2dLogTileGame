@@ -28,9 +28,10 @@ public class BlockPanel : MonoBehaviour
     /// <param name="block"></param>
     public void Set(Block block)
     {
+ 
+        blockImage.sprite = block.BlockInfo.sprite; 
+        mana.text = block.mana.ToString();
         this.block = block;
-        blockImage.sprite = this.block.BlockInfo.sprite;
-        mana.text = this.block.mana.ToString();
         gameObject.SetActive(true);
     }
     /// <summary>

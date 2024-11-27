@@ -8,26 +8,45 @@ using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class UnitStatus
 {
+    //체력
     public float Health { get; set; }
     public float MaxHealth { get; set; }
+    //무속성 데미지 배율
     public float Damage { get; set; }
+    //속성 데미지
     public float ElementalDamage { get; set; } // 속성 데미지
+    //보호막 생성배율
     public float Defense { get; set; }
+    //보상시 재화 증가율
     public float ItemChan { get; set; }
-    public float BlockChan { get; set; }
-    public float MagicChian { get; set; }
+    /// <summary>
+    /// 기원(드로우)시 블록 획득율
+    /// </summary>
+    public float BlockGain { get; set; }
+    /// <summary>
+    /// 마나 획득시 한번더 획득할 배율
+    /// </summary>
+    public float MagicChan { get; set; }
+
+    //마나 획득시 추가 획득율
     public float MagicCount { get; set; }
+
+    public float CriChan { get; set; }
+
+    public float CriMul {  get; set; }
     public UnitStatus()
     {
         Health = 0;
         MaxHealth = 0;
-        Damage = 0;
-        ElementalDamage = 0;
-        Defense = 0;
-        ItemChan = 0;
-        BlockChan = 0; 
-        MagicChian = 0;
+        Damage = 1;
+        ElementalDamage = 1;
+        Defense = 1;
+        ItemChan = 1;
+        BlockGain = 1; 
+        MagicChan = 0;
         MagicCount = 0;
+        CriChan = 0;
+        CriMul = 1.5f;
     }
     public UnitStatus(UnitStatusObject status)
     {
@@ -37,12 +56,12 @@ public class UnitStatus
         ElementalDamage = status.ElementalDamage;
         Defense = status.Defense;
         ItemChan = 0;
-        BlockChan = 0; 
-        MagicChian = 0;
+        BlockGain = 0; 
+        MagicChan = 0;
         MagicCount = 0;
     }
 
-    public void effectUp(string effectString, int effectValue)
+    public void effectUp(string effectString, float effectValue)
     {
         switch(effectString)
         {
@@ -56,9 +75,9 @@ public class UnitStatus
                 break;
             case "ItemChan":ItemChan += effectValue;
                 break;
-            case "BlockChan": BlockChan += effectValue;
+            case "BlockChan": BlockGain += effectValue;
                 break;
-            case "MagicChain": MagicChian += effectValue;
+            case "MagicChain": MagicChan += effectValue;
                 break;
             case "MagicCount": MagicCount += effectValue;
                 break;
@@ -70,34 +89,37 @@ public class UnitStatus
     public void effectCopy(UnitStatus copyTemp)
     {
         Health = copyTemp.Health;
+        MaxHealth = copyTemp.Health;
         Damage = copyTemp.Damage;
         ElementalDamage = copyTemp.ElementalDamage;
         Defense = copyTemp.Defense;
         ItemChan = copyTemp.ItemChan;
-        BlockChan = copyTemp.BlockChan;
-        MagicChian = copyTemp.MagicChian;
+        BlockGain = copyTemp.BlockGain;
+        MagicChan = copyTemp.MagicChan;
         MagicCount = copyTemp.MagicCount;
     }
     public void effectAdd(UnitStatus addTemp)
     {
         Health += addTemp.Health;
+        MaxHealth += addTemp.Health;
         Damage += addTemp.Damage;
         ElementalDamage += addTemp.ElementalDamage;
         Defense += addTemp.Defense;
         ItemChan += addTemp.ItemChan;
-        BlockChan += addTemp.BlockChan;
-        MagicChian += addTemp.MagicChian;
+        BlockGain += addTemp.BlockGain;
+        MagicChan += addTemp.MagicChan;
         MagicCount += addTemp.MagicCount;
     }
     public void effectRatio(UnitStatusObject ratioTemp)
     {
         Health *= ratioTemp.Health;
+        MaxHealth = Health;
         Damage *= ratioTemp.Damage;
         ElementalDamage *= ratioTemp.ElementalDamage;
         Defense *= ratioTemp.Defense;
         ItemChan *= ratioTemp.ItemChan;
-        BlockChan *= ratioTemp.BlockChan;
-        MagicChian *= ratioTemp.MagicChian;
+        BlockGain *= ratioTemp.BlockChan;
+        MagicChan *= ratioTemp.MagicChian;
         MagicCount *= ratioTemp.MagicCount;
     }
 
@@ -121,6 +143,8 @@ public class Unit :MonoBehaviour
         GameObject obj = Instantiate(HPbar, GameManager.instance.HPCanvas.transform);
         hpbar = obj.GetComponent<UnitHpBar>();
         hpbar.HpbarSet(this);
+        Debug.Log(transform.position + name);
+        
         GameManager.instance.BattleZone.setTileUnit(transform.position, this);
         uicanvas = GameManager.instance.HPCanvas;
         uicanvasRectTransform = uicanvas.GetComponent<RectTransform>();

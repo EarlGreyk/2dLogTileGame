@@ -26,8 +26,7 @@ public class SkillSlot : MonoBehaviour
         this.magic = magic;
         magicImage.sprite = magic.IconSprite;
         magicCost.text = magic.MagicCost.ToString();
-
-        magicEffect = Resources.Load<GameObject>("MagicAction/" + magic.Tag.ToString() +"/"+ magic.MagicName );
+        magicEffect = magic.MagicEffectPrefab;
         gameObject.SetActive( true );
     }
 

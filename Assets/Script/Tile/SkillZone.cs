@@ -15,6 +15,7 @@ public class SkillZone : MonoBehaviour
     public Tilemap Tilemap { get { return tilemap; } }
 
     public Magic currentMagic;
+
     public GameObject currentMagicEffect;
 
     private Vector3Int hitTilePos = new Vector3Int(0,0,10);
@@ -104,11 +105,10 @@ public class SkillZone : MonoBehaviour
         Vector3Int unitPos = new Vector3Int(unitx, unity);
         foreach (var pos in pattern)
         {
-            //중간값이 2,2이기 떄문에 -2씩 연산
-            int x = Mathf.FloorToInt((pos.x - 2) + unitPos.x / scale.x) ;
-            int y = Mathf.FloorToInt((pos.y - 2) + unitPos.y / scale.y) ;
+            int x = Mathf.FloorToInt((pos.x - 3) + unitPos.x / scale.x) ;
+            int y = Mathf.FloorToInt((pos.y - 3) + unitPos.y / scale.y) ;
             Vector3Int tilepos = new Vector3Int(x, y);
-            if (x < lengthX && y < lengthY)
+            if (x < lengthX && y < lengthY && x>=0 && y>=0)
             {
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
                 {
@@ -165,9 +165,8 @@ public class SkillZone : MonoBehaviour
         int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
         foreach (var pos in pattern)
         {
-            //중간값이 2,2이기 떄문에 -2씩 연산
-            int x = pos.x - 2 + hitTilePos.x;
-            int y = pos.y - 2 + hitTilePos.y;
+            int x = pos.x - 3 + hitTilePos.x;
+            int y = pos.y - 3 + hitTilePos.y;
             Vector3Int tilepos = new Vector3Int(x, y);
 
             Debug.Log(x);

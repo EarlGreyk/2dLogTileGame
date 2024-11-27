@@ -18,8 +18,8 @@ public class Slate : ScriptableObject
     public string Tag { get { return tag; } }
 
     [SerializeField]
-    private bool enable;
-    public bool Enable { get { return enable; } }
+    private bool enable = false;
+    public bool Enable { get { return enable; } set { enable = value; } }
 
     [SerializeField]
     public List<BlockInfo> blocks;
@@ -27,10 +27,13 @@ public class Slate : ScriptableObject
     [SerializeField]
     public Sprite SlateSprite;
 
+    /// <summary>
+    /// 활성화에 필요한 플레이어 레벨 입니다.
+    /// </summary>
+    [SerializeField]
+    private int enableLevel;
 
-
-
-
+    public int EnableLevel { get { return enableLevel; } }
 
 
 

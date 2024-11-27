@@ -35,8 +35,11 @@ public class CameraSetting : MonoBehaviour
 
     public void Update()
     {
-
-        if(!mapMode)
+        if (Input.GetKey(KeyCode.Space))
+        {
+            changeMode();
+        }
+        if (!mapMode)
         {
             float scrollData = Input.GetAxis("Mouse ScrollWheel");
             Vector3 move = Vector3.zero;
@@ -83,10 +86,6 @@ public class CameraSetting : MonoBehaviour
                 move += transform.right;
             }
 
-            if (Input.GetKey(KeyCode.Space))
-            {
-                changeMode();
-            }
 
             // 카메라 위치를 이동시키기 위해 속도와 델타 타임을 곱함
             camera.transform.position += move * moveSpeed * Time.deltaTime;
@@ -134,6 +133,7 @@ public class CameraSetting : MonoBehaviour
             Debug.Log("타일맵의 정중앙 월드 좌표: " + centerWorldPosition);
             camera.transform.position = centerWorldPosition + new Vector3(0,0,-1);
             camera.orthographicSize = 25;
+            blockModeOn();
         }
 
     }

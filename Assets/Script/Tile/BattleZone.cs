@@ -98,13 +98,10 @@ public class BattleZone : MonoBehaviour
                     if (sprite != null && sprite == playerSponeTileSprite)
                     {
                         playerSponePos = battleTiles[i, j].gridPos;
-                        Debug.Log($"{battleTiles[i, j].gridPos} 유닛의 위치");
                     }
                     if (sprite != null && sprite == monsterSponeTileSprite)
                     {
                         monsterSponePosList.Add(battleTiles[i, j].gridPos);
-                        Debug.Log($"{battleTiles[i, j].gridPos} 몬스터의 위치");  
-
                     }else
                     {
                         
@@ -134,7 +131,6 @@ public class BattleZone : MonoBehaviour
         
         int x = Mathf.FloorToInt(unitPos.x / scale.x);
         int y = Mathf.FloorToInt(unitPos.y / scale.y);
-        Debug.Log($"설정 해야하는 배열값 {x},{y}");
         if (battleTiles[x, y].onUnit == null)
             battleTiles[x, y].onUnit = unit;
 
@@ -150,7 +146,6 @@ public class BattleZone : MonoBehaviour
 
         int x = Mathf.FloorToInt(unitPos.x / scale.x);
         int y = Mathf.FloorToInt(unitPos.y / scale.y);
-        Debug.Log($"지워야 하는 배열값 {x},{y}");
         if (battleTiles[x, y].onUnit == unit)
             battleTiles[x, y].onUnit = null;
     }
@@ -169,7 +164,7 @@ public class BattleZone : MonoBehaviour
         int x = unitPos.x ;
         int y = unitPos.y ;
 
-        if (battleTiles[x, y].onUnit != null)
+        if (battleTiles[x, y].onUnit != null) 
             serchUnit = battleTiles[x, y].onUnit;
 
         if(serchUnit != null)

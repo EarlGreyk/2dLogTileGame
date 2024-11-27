@@ -4,7 +4,8 @@ using UnityEngine;
 [CustomEditor(typeof(PatternData))]
 public class PatternDataEditor : Editor
 {
-    private const int MaxValue = 5; // 5x5 그리드
+    private const int MaxValue = 7; // 5x5 그리드
+
 
     public override void OnInspectorGUI()
     {

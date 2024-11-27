@@ -86,7 +86,7 @@ public class UnitHpBar : MonoBehaviour
         Vector3 worldPos = new Vector3(monster.transform.position.x, monster.transform.position.y - hpbarHight, monster.transform.position.z);
         rectHpbar.position = worldPos;
         float scaleMultiplier = 0.5f / Camera.main.orthographicSize;
-        rectHpbar.localScale = Vector3.one * scaleMultiplier;
+        rectHpbar.localScale = Vector3.one * (scaleMultiplier/2);        
     }
 
     public void UpdateIconPosition()
@@ -128,7 +128,7 @@ public class UnitHpBar : MonoBehaviour
         Vector3 worldPos = new Vector3(monster.transform.position.x, monster.transform.position.y + actionHight, monster.transform.position.z);
         rectAction.position = worldPos;
         float scaleMultiplier = 0.5f / Camera.main.orthographicSize;
-        rectAction.localScale = Vector3.one * scaleMultiplier;
+        rectAction.localScale = Vector3.one * (scaleMultiplier/2);
     }
     public void HpTextSet()
     {

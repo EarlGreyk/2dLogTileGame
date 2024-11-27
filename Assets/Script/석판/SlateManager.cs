@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 
 /// <summary>
 /// 석판 도감 클래스입니다.
+/// 이름 혼동에 오류가 있어 SlateManager->SlateCollection으로 변경해야합니다.
 /// </summary>
 public class SlateManager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class SlateManager : MonoBehaviour
 
     private void LoadAllSlates()
     {
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
+        Slate[] allSlates = Resources.LoadAll<Slate>("Slate");
         foreach (Slate slate in allSlates)
         {
             string key = GetCategoryKey(slate); 
@@ -101,7 +102,7 @@ public class SlateManager : MonoBehaviour
 
     private void EnableSlate()
     {
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
+        Slate[] allSlates = Resources.LoadAll<Slate>("Slate");
         foreach (Slate slate in allSlates)
         {
             if (slate.Enable)

@@ -15,6 +15,7 @@ public class BlockInfo : ScriptableObject
 
     public List<PatternData.PatternPoint> Pattern { get { return patternData.points; } }
 
+    
     [SerializeField]
     private int mana;
     public int Mana { get { return mana; } }
@@ -25,6 +26,19 @@ public class BlockInfo : ScriptableObject
     public int Upmana { get { return upmana; } }
 
     public Sprite sprite;
+
+    [SerializeField]
+    private BlockInfo nextBlock;
+
+    [SerializeField]
+    private int upGold;
+
+    [SerializeField]
+    private int removeGold;
+
+    [SerializeField]
+    private int equipGold;
+
 
 }
 

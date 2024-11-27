@@ -110,7 +110,6 @@ public class BlockManagerSaveData
 
         }
 
-        Debug.Log(blockManage.InventoryBlocks.Count);
 
         for (int i = 0; i < blockManage.InventoryBlocks.Count; i++)
         {
@@ -141,6 +140,33 @@ public class LuneEnableData
     }
 }
 
+[System.Serializable]
+public class LightManagerSaveData
+{
+    public List<string> lampFireName = new List<string>();
+    public LightManagerSaveData(LampManage lampManage)
+    {
+        for(int i =0; i < lampManage.EquipLampLight.Count; i++)
+        {
+            lampFireName.Add(lampManage.EquipLampLight[i].FireData.name);
+        }
+        
+    }
+
+}
+
+[System.Serializable]
+public class PlayerLevelManagerSaveData
+{
+    public int level;
+    public int currentExp;
+    public PlayerLevelManagerSaveData(PlayerLevelManager playerLevelManager)
+    {
+        level = playerLevelManager.Level;
+        currentExp = playerLevelManager.CurrentExp;
+    }
+}
+
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -155,6 +181,8 @@ public class SaveLoadManager : MonoBehaviour
     private string playerResourcePath;
     private string blockManagerPath;
     private string luneEnablePath;
+    private string lightManagerPath;
+    private string playerLevelManagerPath;
 
     //로드파일
     private PlayerResourceSaveData playerResourceData;
@@ -171,6 +199,12 @@ public class SaveLoadManager : MonoBehaviour
     
     public LuneEnableData LuneEnableData { get {return luneEnableData; } }
 
+    private LightManagerSaveData lightManagerSaveData;
+
+    public LightManagerSaveData LightManagerSave { get {return lightManagerSaveData; } }
+
+    private PlayerLevelManagerSaveData playerLevelManagerSaveData;
+    public PlayerLevelManagerSaveData PlayerLevelManagerSaveData { get { return playerLevelManagerSaveData; } }
 
 
     private void Awake()
@@ -187,15 +221,15 @@ public class SaveLoadManager : MonoBehaviour
 
     private void Start()
     {
-
-
         //초기경로지정
         gameManagerPath = Application.persistentDataPath + "/saveGameManagerData.json";
         playerResourcePath = Application.persistentDataPath + "/savePlayerResourceData.json";
         blockManagerPath = Application.persistentDataPath + "/saveBlockManagerData.json";
         luneEnablePath = Application.persistentDataPath + "/saveluneEnableData.json";
+        lightManagerPath = Application.persistentDataPath + "/savelightManagerData.json";
 
 
+        Load();
     }
 
 
@@ -204,10 +238,15 @@ public class SaveLoadManager : MonoBehaviour
         SavePlayerResource();
         SaveGameManager();
         SaveBlockManager();
+        SavelightManager();
     }
     public void LuneSave()
     {
         SaveLuneEnable();
+    }
+    public void PlayerLevelSave()
+    {
+        SavePlayerLevel();
     }
 
     private void SavePlayerResource()
@@ -231,27 +270,41 @@ public class SaveLoadManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(blockManagerPath, json);
     }
+
+    private void SavelightManager()
+    {
+        LightManagerSaveData saveData = new LightManagerSaveData(LampManage.Instance);
+        string json = JsonUtility.ToJson(saveData);
+        File.WriteAllText(lightManagerPath, json);
+
+        Debug.Log("lightManager저장");
+    }
     private void SaveLuneEnable()
     {
-        Debug.Log(LuneManager.instance);
         LuneEnableData saveData = new LuneEnableData(LuneManager.instance);
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(luneEnablePath, json);
 
     }
-    
-        
+    private void SavePlayerLevel()
+    {
+        PlayerLevelManagerSaveData saveData = new PlayerLevelManagerSaveData(PlayerLevelManager.instance);
+        string json = JsonUtility.ToJson(saveData);
+        File.WriteAllText(playerLevelManagerPath, json);
+    }
+
+
 
     /// <summary>
     /// 게임이 시작되면 로드됩니다.
     /// </summary>
     public void Load()
     {
+        Debug.Log("로오드");
         playerResourceData = LoadPlayerResource();
         if(playerResourceData != null)
         {
             SettingData.firstSlate = Resources.Load<Slate>("Slates/"+ playerResourceData.firstSlateData.slateName);
-            Debug.Log(Resources.Load<Slate>("Slates/" + playerResourceData.firstSlateData.slateName));
             SettingData.secondSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
             SettingData.thirdSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
             SettingData.fourthSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
@@ -271,7 +324,10 @@ public class SaveLoadManager : MonoBehaviour
         blockManagerSaveData = LoadBlockManager();
         if (blockManagerSaveData == null)
             return;
-        
+
+        lightManagerSaveData = LoadLightManage();
+        if (lightManagerSaveData == null)
+            return;
 
 
 
@@ -295,8 +351,15 @@ public class SaveLoadManager : MonoBehaviour
                 LuneManager.instance.LuneSettings[i].LuneEnable = luneEnableData.luneEnable[i];
                 LuneManager.instance.LuneEnable(LuneManager.instance.LuneSettings[i]);
             }
-        }
-        
+        }  
+    }
+    /// <summary>
+    /// 플레이어 레벨 로드
+    /// </summary>
+    
+    public void PlayerLevelLoad()
+    {
+        playerLevelManagerSaveData = LoadPlayerLevelManager();
     }
 
 
@@ -347,6 +410,30 @@ public class SaveLoadManager : MonoBehaviour
         {
             string json = File.ReadAllText(luneEnablePath);
             return JsonUtility.FromJson<LuneEnableData>(json);
+        }
+        {
+            Debug.Log("로드할 파일이 없습니다");
+            return null;
+        }
+    }
+    private LightManagerSaveData LoadLightManage()
+    {
+        if (File.Exists(lightManagerPath))
+        {
+            string json = File.ReadAllText(lightManagerPath);
+            return JsonUtility.FromJson<LightManagerSaveData>(json);
+        }
+        {
+            Debug.Log("로드할 파일이 없습니다");
+            return null;
+        }
+    }
+    private PlayerLevelManagerSaveData LoadPlayerLevelManager()
+    {
+        if (File.Exists(lightManagerPath))
+        {
+            string json = File.ReadAllText(playerLevelManagerPath);
+            return JsonUtility.FromJson<PlayerLevelManagerSaveData>(json);
         }
         {
             Debug.Log("로드할 파일이 없습니다");

@@ -85,6 +85,8 @@ public class PlayerResource : MonoBehaviour
     private TextMeshProUGUI manaText;
     [SerializeField]
     private Image manaFillImage;
+    [SerializeField]
+    
     
     
 
@@ -124,11 +126,10 @@ public class PlayerResource : MonoBehaviour
         {
             gold = SaveLoadManager.instance.PlayerResourceData.gold;
             SlateSaveData savedata = null;
-            //panelSet(SaveLoadManager.instance.PlayerResourceData);
             if (firstSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.firstSlateData;
-                firstSlateLevel = savedata.slatelevel;
+                firstSlateLevel = savedata.slatelevel+1;
                 for (int i =0; i< savedata.slatelevel;i++)
                 {
                     if (firstSlate.Magics[i].Sort == Magic.MagicSort.Active)
@@ -139,7 +140,7 @@ public class PlayerResource : MonoBehaviour
             if (secondSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.secondSlateData;
-                secondSlateLevel = savedata.slatelevel;
+                secondSlateLevel = savedata.slatelevel+1;
                 for (int i = 0; i < savedata.slatelevel; i++)
                 {
                    
@@ -151,7 +152,7 @@ public class PlayerResource : MonoBehaviour
             if (thirdSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.thirdSlateData;
-                thirdSlateLevel = savedata.slatelevel; 
+                thirdSlateLevel = savedata.slatelevel+1; 
                 for (int i = 0; i < savedata.slatelevel; i++)
                 {
                     
@@ -163,7 +164,7 @@ public class PlayerResource : MonoBehaviour
             if (fourthSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.fourSlateData;
-                fourSlateLevel = savedata.slatelevel;
+                fourSlateLevel = savedata.slatelevel+1;
                 for (int i = 0; i < savedata.slatelevel; i++)
                 {
                     if (fourthSlate.Magics[i].Sort == Magic.MagicSort.Active)
@@ -179,11 +180,13 @@ public class PlayerResource : MonoBehaviour
             BlockDrow(true);
         }
 
-        
+
 
 
 
         //임시설정
+        mana = 20;
+        maxMana = 20;
         
        
 
@@ -354,8 +357,10 @@ public class PlayerResource : MonoBehaviour
         {
             if (!playerChargePanelList[i].gameObject.activeSelf)
                 break;
-             playerChargePanelList[i].BlockImage.color = Color.white;
+            playerChargePanelList[i].BlockImage.color = Color.white;
         }
+        mpbarSet();
+
         GameManager.instance.LampUpdate(1);
     }
     
@@ -395,7 +400,7 @@ public class PlayerResource : MonoBehaviour
 
 
 
-    private void mpbarSet()
+    public void mpbarSet()
     {
         manaText.text = mana.ToString() + " / " + maxMana.ToString();
         manaFillImage.fillAmount = mana / maxMana;

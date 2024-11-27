@@ -19,7 +19,6 @@ public class LuneSetting : MonoBehaviour
     [HideInInspector]
     public MajorLune selectedMajorLune;
 
-    public LuneSetting parentNode;
     public List<LuneSetting> ConnectedNodes;
 
     private bool luneEnable;

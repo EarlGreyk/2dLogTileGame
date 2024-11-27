@@ -12,11 +12,16 @@ public class BagicLune : LuneNode
         Health,
         Damage,
         ElementalDamage,
-        Defence
+        Defence,
+        BlockChan,
+        MagicChan,
+        MagicCount,
+        CriChan,
+        CriMul
            
     }
     public EffectType effectType;
-    public int effectValue;
+    public float effectValue;
 
         
 

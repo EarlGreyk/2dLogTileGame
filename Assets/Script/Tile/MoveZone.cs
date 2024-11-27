@@ -120,8 +120,8 @@ public class MoveZone : MonoBehaviour
         foreach (var pos in pattern)
         {
             //중간값이 2,2이기 떄문에 -2씩 연산
-            int x = Mathf.FloorToInt((pos.x - 2)  + _sellpos.x / scale.x);
-            int y = Mathf.FloorToInt((pos.y - 2)  + _sellpos.y / scale.y);
+            int x = Mathf.FloorToInt((pos.x - 3)  + _sellpos.x / scale.x);
+            int y = Mathf.FloorToInt((pos.y - 3)  + _sellpos.y / scale.y);
             Vector3Int tilepos = new Vector3Int(x, y, 0);
 
             if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) && x>=0 && y>=0)

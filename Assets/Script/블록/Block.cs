@@ -20,7 +20,7 @@ public class Block
         level = saveData.level;
         mana =saveData.mana;
         upmana=saveData.upmana;
-        BlockInfo = Resources.Load<BlockInfo>("Block/"+saveData.blockInfoName);
+        BlockInfo = Resources.Load<BlockInfo>("블록정보/"+saveData.blockInfoName);
     }
     public void LevelUp()
     {

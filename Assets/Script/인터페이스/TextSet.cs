@@ -24,5 +24,12 @@ public class TextSet : MonoBehaviour
         {
             targetTextList[i].text = TextList[i];
         }
+
     }
+
+
+
+    
+
 }
+

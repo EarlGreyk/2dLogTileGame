@@ -85,8 +85,8 @@ public class Magic : ScriptableObject
     public PatternData MagicAoe { get { return magicAoe; } }
 
     [SerializeField] 
-    private int magicEffectTarget;
-    public int MagicEffectTarget { get { return magicEffectTarget; } }
+    private GameObject magicEffectPrefab;
+    public GameObject MagicEffectPrefab { get { return magicEffectPrefab; } }
 
 
     /// <summary>

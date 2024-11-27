@@ -11,6 +11,15 @@ using Random = UnityEngine.Random;
 
 public class MonsterUnit : Unit
 {
+    public enum Position
+    {
+        Melee,
+        Range,
+        Surport
+    }
+    public Position position;
+
+
     [SerializeField]
     private PatternData movePattenData;
     [SerializeField]
@@ -53,16 +62,25 @@ public class MonsterUnit : Unit
     /// </summary>
     private int moveCount;
     //몬스터가 사용하는 액션 종류
+    //공격 및 유닛에게 사용하는 서포트 마법이 들어갑니다.
     [SerializeField]
-    private List<MonsterMagic> magicList = new List<MonsterMagic>();
+    private List<MonsterMagic> attackMagicList = new List<MonsterMagic>();
 
-    //몬스터가 현재 사용하는 액션
+    //방어 마법이 들어갑니다.
+    [SerializeField]
+    private List<MonsterMagic> defenceMagicList = new List<MonsterMagic>();
+
+    //몬스터가 현재 사용하는 액션[마법]
     [SerializeField]
     private MonsterAction currentAction;
 
+    public MonsterAction CurrentAcion { get { return currentAction; } }
+
     //사용하는 액션의 위치.
-    private Vector3Int targetPos;
-    public Vector3Int TargetPos { get { return targetPos; } }
+    private List<Vector3Int> targetPosList = new List<Vector3Int>();
+
+    public List<Vector3Int> TargetPosList { get { return targetPosList; } }
+
     private List<Vector3Int> movePosPath;
 
     public List<Vector3Int> MovePosPath { get { return movePosPath; } }
@@ -87,15 +105,23 @@ public class MonsterUnit : Unit
         status.effectRatio(ratioStatus);
         hpbar.HpTextSet();
         ActionCheck();
-        
+       
+
+    }
+    private void OnMouseDown()
+    {
+        Debug.Log("나를 지켜봐줘!!!!!");
+        GameManager.instance.BlockModeZone.unitBlockSet(this);
     }
 
 
- 
+
+
 
 
 
     //actionCount 가 0이면 실행합니다.
+    //이는 몬스터 AI메니저에서 실행합니다.
     public void monsterAction()
     {
         //행동 시작
@@ -114,6 +140,7 @@ public class MonsterUnit : Unit
     }
  
     //아래의 함수는 액션을 선택하고 설정합니다.
+    //몬스터의 기본적인 AI입니다.
 
     public void ActionCheck()
     {
@@ -130,10 +157,10 @@ public class MonsterUnit : Unit
         foreach (var pos in pattern)
         {
             //중간값이 2,2이기 떄문에 -2씩 연산
-            int x = Mathf.FloorToInt((pos.x - 2) + unitPos.x / GameManager.instance.Grid.transform.localScale.x);
-            int y = Mathf.FloorToInt((pos.y - 2) + unitPos.y / GameManager.instance.Grid.transform.localScale.y);
+            int x = Mathf.FloorToInt((pos.x - 3) + unitPos.x / GameManager.instance.Grid.transform.localScale.x);
+            int y = Mathf.FloorToInt((pos.y - 3) + unitPos.y / GameManager.instance.Grid.transform.localScale.y);
             Vector3Int tilepos = new Vector3Int(x, y, 0);
-            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1))
+            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) & x>=0 & y>=0)
             {
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == GameManager.instance.PlayerUnit)
                 {
@@ -158,22 +185,35 @@ public class MonsterUnit : Unit
     /// 몬스터는 다음 행동을 미리 알려주어야 하기 때문에 행동이 끝나면 
     /// 함수를 작동 시켜야합니다.
     /// </summary>
-    private void ActionSet(bool move)
+    protected virtual void ActionSet(bool move)
     {
-        if(move)
+        if (move)
         {
-            Debug.Log("공격범위내에 플레이어가 없습니다. 이동을 시작합니다");
             currentAction.currentMagic = null;
             ActionCount = maxActionCount;
-            //List<string> text = new List<string>() { "이동", ActionCount.ToString() };
         }
-        else if(magicList.Count > 0)
+        else
         {
-            
-            int random = Random.Range(0, magicList.Count);
-            currentAction.currentMagic = magicList[random];
-            ActionCount = currentAction.currentMagic.MagicCost;
-            //List<string> text = new List<string>() { currentAction.currentMagic.MagicName, ActionCount.ToString() };
+            int random = Random.Range(0, 10);
+            bool dcheck = false;
+
+            if (random > 7 && (status.Health / status.MaxHealth) < 0.6 && defenceMagicList.Count > 0)
+                dcheck = true;
+
+            if (!dcheck)
+            {
+                random = Random.Range(0, attackMagicList.Count);
+                currentAction.currentMagic = attackMagicList[random];
+                ActionCount = currentAction.currentMagic.MagicCost;
+            }
+            else
+            {
+                random = Random.Range(0, defenceMagicList.Count);
+                currentAction.currentMagic = defenceMagicList[random];
+                ActionCount = currentAction.currentMagic.MagicCost;
+                return;
+            }
+
         }
         targetPosSet();
     }
@@ -186,23 +226,30 @@ public class MonsterUnit : Unit
    
 
 
-    private void targetPosSet()
+    protected void targetPosSet()
     {
+        //타겟리스트 초기화
+        targetPosList.Clear();
+        //
+
         Vector3 unitPos = new Vector3(transform.position.x / GameManager.instance.Grid.transform.localScale.x,
                 transform.position.y / GameManager.instance.Grid.transform.localScale.y, 0);
         Vector3 playerPos = new Vector3(
             GameManager.instance.PlayerUnit.transform.position.x / GameManager.instance.Grid.transform.localScale.x,
             GameManager.instance.PlayerUnit.transform.position.y / GameManager.instance.Grid.transform.localScale.y,
             0);
+
+            ///이동 타겟지점 설정
         if (currentAction.currentMagic == null)
         {
+            
 
             List<PatternData.PatternPoint> pattern = movePattenData.points;
 
             List<Vector3Int> validPositions = movePattenData.points.Select(p =>
             {
-                int x = Mathf.FloorToInt((p.x - 2) + unitPos.x);
-                int y = Mathf.FloorToInt((p.y - 2) + unitPos.y);
+                int x = Mathf.FloorToInt((p.x - 3) + unitPos.x);
+                int y = Mathf.FloorToInt((p.y - 3) + unitPos.y);
                 return new Vector3Int(x, y, 0);
             }).ToList();
 
@@ -211,7 +258,7 @@ public class MonsterUnit : Unit
             Vector3Int closestPosition = FindClosestPositionWithPattern(new Vector3Int((int)unitPos.x, (int)unitPos.y, 0), new Vector3Int((int)playerPos.x, (int)playerPos.y, 0), pattern);
             if (closestPosition != unitPos)
             {
-                this.targetPos = closestPosition;
+                this.targetPosList.Add(closestPosition);
                 movePosPath = FindPathWithBFS(new Vector3Int((int)unitPos.x, (int)unitPos.y, 0), closestPosition, validPositions);
             }
             else
@@ -221,18 +268,84 @@ public class MonsterUnit : Unit
         }
         else
         {
-            // 액션값이 있다면 해당 액션값에서의 공격범위내에 유닛이 있다는 것이니 플레이어의 유닛 지점을 저장해야합니다.
-            this.targetPos = new Vector3Int((int)playerPos.x, (int)playerPos.y,0);
+            // 액션값이 있다면 해당 액션값에서의 공격범위내에 유닛이 있다는 것이니 타겟이 되는 대상자의 지점을 체크해야합니다.
+            //서포팅 기술은 추가로 체크해야합니다.
+            // 타겟이 다중인 기술은 현재 자신의 유닛을 위치를 기점으로 랜덤한 범위를 산출해야합니다.
+            if(currentAction.currentMagic.MagicCount <=1 && currentAction.currentMagic.AoeType == MonsterMagic.MagicAoeType.Target)
+            {
+                //1인공격 타입입니다.
+                if(currentAction.currentMagic.Type == MonsterMagic.MagicType.Attack)
+                {
+                    targetPosList.Add(new Vector3Int((int)playerPos.x, (int)playerPos.y,0));
+                }
+            }
+            else if(currentAction.currentMagic.MagicCount>=1 && currentAction.currentMagic.AoeType == MonsterMagic.MagicAoeType.LocAoe)
+            {
+                List<PatternData.PatternPoint> pattern = currentAction.currentMagic.MagicRange.points;
+
+                Debug.Log("카운트 만큼 랜덤탐색");
+                List<Vector3Int> validPositions = currentAction.currentMagic.MagicRange.points.Select(p =>
+                {
+                    int x = Mathf.FloorToInt((p.x - 3) + unitPos.x);
+                    int y = Mathf.FloorToInt((p.y - 3) + unitPos.y);
+                    return new Vector3Int(x, y, 0);
+                }).ToList();
+
+
+                // BFS를 사용하여 유닛이 공격 위치를 탐색
+                for(int i =0;i<currentAction.currentMagic.MagicCount;i++)
+                {
+                    Vector3Int RandomPosition = FindRandomPositionWithPattern(new Vector3Int((int)unitPos.x, (int)unitPos.y, 0), validPositions);
+                    if (RandomPosition != unitPos)
+                    {
+                        this.targetPosList.Add(RandomPosition);
+                    }
+                    else
+                    {
+                        Debug.Log("경로를 찾을 수 없습니다.");
+                    }
+                }
+               
+            }
+
+
+            
         }
     }
 
 
+    private Vector3Int FindRandomPositionWithPattern(Vector3Int start, List<Vector3Int> PosionList)
+    {
+        List<Vector3Int> PositionList = new List<Vector3Int>();
+        Vector3Int RandomPosition = start;
+        
+        foreach (var pos in PosionList)
+        {
+
+            if (pos.x >= 0 && pos.y >= 0 && pos.x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && pos.y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
+                GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].type != BattleTile.tileType.Break &&
+                GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].onUnit == null)
+            {
+                PositionList.Add(new Vector3Int(pos.x, pos.y, 0));
+            }
+        }
+        Debug.Log(PosionList);
+        int random = Random.Range(0, PositionList.Count);
+
+        RandomPosition = PositionList[random];
+
+
+
+        return RandomPosition;
+    }
+
+
     /// <summary>
-    /// 최단거리를 찾습니다.
+    /// 최단거리를 탐색하기전에 탐색 범위를 제한합니다.
     /// </summary>
-    /// <param name="start"></param>
-    /// <param name="goal"></param>
-    /// <param name="pattern"></param>
+    /// <param name="start"></범위 탐색의 시작점>
+    /// <param name="goal"></도착점 이 도착점은 범위 탐색 밖에서 탐색해도 되는 위치입니다.>
+    /// <param name="pattern"></탐색해야하는 범위>
     /// <returns></returns>
 
     private Vector3Int FindClosestPositionWithPattern(Vector3Int start, Vector3Int goal, List<PatternData.PatternPoint> pattern)
@@ -242,8 +355,8 @@ public class MonsterUnit : Unit
 
         foreach (var pos in pattern)
         {
-            int newX = Mathf.FloorToInt((pos.x - 2) + start.x);
-            int newY = Mathf.FloorToInt((pos.y - 2) + start.y);
+            int newX = Mathf.FloorToInt((pos.x - 3) + start.x);
+            int newY = Mathf.FloorToInt((pos.y - 3) + start.y);
 
             if (newX >= 0 && newY >= 0 && newX < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && newY < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
                 GameManager.instance.BattleZone.BattleTiles[newX, newY].type != BattleTile.tileType.Break &&
@@ -263,7 +376,7 @@ public class MonsterUnit : Unit
 
 
     /// <summary>
-    /// 해당 지점까지의 경로를 찾습니다.
+    /// 해당 지점까지의 최단경로를 찾습니다.
     /// </summary>
     /// <param name="start"></param>
     /// <param name="goal"></param>
@@ -331,11 +444,11 @@ public class MonsterUnit : Unit
     private void ActionMove()
     {
 
-        if (!GameManager.instance.BattleZone.SerchTileUnit(targetPos))
+        if (!GameManager.instance.BattleZone.SerchTileUnit(targetPosList[0]))
         {
             Vector3Int scaledCellPos = new Vector3Int(
-            Mathf.FloorToInt(targetPos.x * GameManager.instance.Grid.transform.localScale.x),
-            Mathf.FloorToInt(targetPos.y * GameManager.instance.Grid.transform.localScale.y),
+            Mathf.FloorToInt(targetPosList[0].x * GameManager.instance.Grid.transform.localScale.x),
+            Mathf.FloorToInt(targetPosList[0].y * GameManager.instance.Grid.transform.localScale.y),
             0);
             GameManager.instance.BattleZone.removeTileUnit(transform.position, this);
             transform.position = scaledCellPos;

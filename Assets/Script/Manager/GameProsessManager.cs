@@ -162,7 +162,6 @@ public class GameProsessManager : MonoBehaviour
             rewardPanel.SetActive(false);
             prosessPanel.SetActive(false);
             rewardGetPanel.SetActive(false);
-            SaveLoadManager.instance.Save();
             PopUpManager.instance.LastClosePopUp();
 
         }
@@ -234,20 +233,20 @@ public class GameProsessManager : MonoBehaviour
 
     public void changeMode(string mode)
     {
-        if(mode == "battle")
+        if (mode == "battle")
         {
-            for(int i =0; i<battleUIList.Count; i++)
+            for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(true);
             }
-            for(int i =0; i<restUIList.Count; i++)
+            for (int i = 0; i < restUIList.Count; i++)
             {
                 restUIList[i].SetActive(false);
             }
             GameManager.instance.roundSet();
             PlayerResource.instance.BlockReset();
         }
-        if(mode == "rest")
+        if (mode == "rest")
         {
             PlayerResource.instance.BlockReset();
             for (int i = 0; i < battleUIList.Count; i++)
@@ -259,5 +258,7 @@ public class GameProsessManager : MonoBehaviour
                 restUIList[i].SetActive(true);
             }
         }
+        SaveLoadManager.instance.Save();
     }
+    
 }

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b47c6ffc979b4564e9657991de4978b5, type: 3}
+  m_Name: "1[\uC784\uC2DC]"
+  m_EditorClassIdentifier: 
+  monsterList:
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  regenPosList:
+  - {x: 10, y: 5, z: 0}
+  - {x: 15, y: 4, z: 0}
+  - {x: 13, y: 8, z: 0}
+  - {x: 14, y: 2, z: 0}

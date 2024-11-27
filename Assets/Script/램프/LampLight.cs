@@ -6,17 +6,27 @@ using UnityEngine.UI;
 
 public class LampLight : MonoBehaviour
 {
-    private LampFire fire;
-    public LampFire Fire;
+    
+    private LampFireData fireData;
+
+    public LampFireData FireData { get { return fireData; } set { fireData = value; } }
     [SerializeField]
-    private Image LightIcon;
+    private Image fireIcon;
     [SerializeField]
-    private TextMeshProUGUI LightDesc;
+    private TextMeshProUGUI fireDesc;
     // Start is called before the first frame update
 
-    public void LampLightSet(LampFire fire)
+
+   
+
+    
+
+    public void LampLightDataSet(LampFireData fireData)
     {
-        this.fire = fire;
+        Debug.Log(fireData);
+        this.fireData = fireData;
+        fireIcon.sprite = fireData.FireIcon;    
+        fireDesc.text = fireData.FileDesc;
         
 
     }

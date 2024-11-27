@@ -45,7 +45,7 @@ public class LuneManager : MonoBehaviour
     }
     private void Start()
     {
-        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("Unit/Status/UnitBase_Player");
+        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("유닛정보/Status/UnitBase_Player");
 
         luneTotalStatus = new UnitStatus(playerStatus);
         SaveLoadManager.instance.LuneNodeLoad();
@@ -65,10 +65,16 @@ public class LuneManager : MonoBehaviour
     public void LuneEnableButton()
     {
 
-        if (selectLune.parentNode != null && selectLune.parentNode.LuneEnable == false)
+        if (selectLune.ConnectedNodes.Count > 0)
         {
-            Debug.Log("룬 오류");
-            return;
+            for (int i = 0; i < selectLune.ConnectedNodes.Count; i++)
+            {
+                if (!selectLune.ConnectedNodes[i].LuneEnable)
+                {
+                    return;
+                }
+
+            }
         }
         Debug.Log("활성화");
         //실스텍적용 
@@ -130,20 +136,29 @@ public class LuneManager : MonoBehaviour
 
         Debug.Log(totalPosition);
 
-        // 부모가 있는 동안 반복
-        LuneSetting pNode = lune.parentNode;
-
-        RectTransform currentParent = null;
-        
-
-        while (pNode != null )
+        if(lune.ConnectedNodes.Count > 0 )
         {
-            currentParent = pNode.transform as RectTransform;
-            totalPosition += currentParent.anchoredPosition;
-            pNode = pNode.parentNode;
+            // 부모가 있는 동안 반복
+            LuneSetting pNode = lune.ConnectedNodes[lune.ConnectedNodes.Count - 1];
 
-            Debug.Log("부모");
+            RectTransform currentParent = null;
+
+
+            while (pNode != null)
+            {
+                currentParent = pNode.transform as RectTransform;
+                totalPosition += currentParent.anchoredPosition;
+                if (pNode.ConnectedNodes.Count > 0)
+                    pNode = pNode.ConnectedNodes[pNode.ConnectedNodes.Count - 1];
+                else
+                    break;
+
+                Debug.Log("부모");
+            }
+
+
         }
+
 
         // X와 Y 좌표 반전
         Vector2 invertedPosition = new Vector2(-totalPosition.x, -totalPosition.y);

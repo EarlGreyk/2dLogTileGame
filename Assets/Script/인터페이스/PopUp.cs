@@ -39,6 +39,8 @@ public class PopUp : MonoBehaviour
     IEnumerator ImageOpen(float time)
     {
         //애니메이션 동작 넣기
+
+        //해당 팝업이 활성화 되어있는지 체크하고 작동.
         if (!Pop.activeSelf)
         {
             PopUpManager.instance.PopupPush(this);

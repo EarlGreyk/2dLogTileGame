@@ -10,7 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8001474763171313830}
   - component: {fileID: 3882220592335119873}
-  - component: {fileID: 360150549573762598}
+  - component: {fileID: 7934034534332400851}
+  - component: {fileID: 8702821533243289094}
+  - component: {fileID: 5049668596444049614}
   m_Layer: 0
   m_Name: "10\uB178\uC608\uB4E4\uC758 \uC8FC\uC778 \uC0E4\uC0E4"
   m_TagString: Untagged
@@ -85,7 +87,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &360150549573762598
+--- !u!114 &7934034534332400851
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,16 +96,59 @@ MonoBehaviour:
   m_GameObject: {fileID: 4118946393443849972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1a3d284590730449933cdcb8c288b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 92a43ae4f1d18d84eaad406cf9934c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
-  Icon: {fileID: 4118946393443849972}
+  Icon: {fileID: 6249719591106751477, guid: 3b373ed590dc22d4e85ac97ee4bdf4a9, type: 3}
   baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
   hpbar: {fileID: 0}
-  movePattenData: {fileID: 11400000, guid: 356f73a1b64b89740a2f2390a36006cd, type: 2}
-  attackRangePattenData: {fileID: 11400000, guid: f75dd2e4635a0ff449dc41f4da104f7c, type: 2}
+  position: 0
+  movePattenData: {fileID: 11400000, guid: 3fa9e8bae545a484a884330e74445031, type: 2}
+  attackRangePattenData: {fileID: 11400000, guid: c9f3c787bf238e64bab65f39f1ac5a04, type: 2}
   ratioStatus: {fileID: 11400000, guid: a6f3c9d6cdccd96419136aa8a06e3ad4, type: 2}
-  magicList: []
-  currentAction: {fileID: 0}
-  maxActionCount: 2
+  attackMagicList:
+  - {fileID: 11400000, guid: 7ceba040c4366b84ebb63a6012d66263, type: 2}
+  defenceMagicList: []
+  currentAction: {fileID: 8702821533243289094}
+  maxActionCount: 3
+  specailMagicList:
+  - {fileID: 11400000, guid: 9e43971fb12ae4e42b0fe97fb3f8dd03, type: 2}
+--- !u!114 &8702821533243289094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118946393443849972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b91913126025eb4a8d1d9b22d137d0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!61 &5049668596444049614
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118946393443849972}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 5, y: 5}
+    newSize: {x: 5, y: 5}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5}
+  m_EdgeRadius: 0
