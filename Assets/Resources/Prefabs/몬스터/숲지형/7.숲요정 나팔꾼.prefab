@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
-  Icon: {fileID: 6249719591106751477, guid: 1891de82e02720c4282a606b8f39dd91, type: 3}
+  Sprite: {fileID: 21300000, guid: e87c1b933c0966f4a815e40fa6e05799, type: 3}
   baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
   hpbar: {fileID: 0}
   position: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
   defenceMagicList: []
   currentAction: {fileID: 515146850109146097}
   maxActionCount: 2
+  KillGold: 2000
 --- !u!114 &515146850109146097
 MonoBehaviour:
   m_ObjectHideFlags: 0

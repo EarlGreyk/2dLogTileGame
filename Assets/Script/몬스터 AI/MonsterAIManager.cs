@@ -22,12 +22,13 @@ public class MonsterAIManager : MonoBehaviour
     public void MonsterRevmoe(MonsterUnit monster)
     {
         monsters.Remove(monster);
-        GameManager.instance.GameProsessManager.killMonsterAdd(monster.Icon.name);
+        GameManager.instance.GameProsessManager.killMonsterAdd(monster.Sprite.name,monster.KillGold);
         if (monsters.Count == 0)
         {
-            GameManager.instance.GameProsessManager.ProsessSet();
-
-
+            if (GameManager.instance.Stage == 3 & GameManager.instance.Round == 10)
+                GameManager.instance.PlayerWin();
+            else
+                GameManager.instance.GameProsessManager.ProsessSet();
         }
     }
 
@@ -36,6 +37,10 @@ public class MonsterAIManager : MonoBehaviour
         if (currentMonster == null && actionMonsters.Count > 0)
         {
             AiEnable();
+        }
+        if( currentMonster == null && actionMonsters.Count == 0)
+        {
+            GameManager.instance.onPlayerAction();
         }
 
         if(Input.GetKeyDown(KeyCode.P))

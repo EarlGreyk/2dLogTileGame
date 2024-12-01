@@ -12,8 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4319b0fa2c810943a55fbbe5aa9fb85, type: 3}
   m_Name: Curse
   m_EditorClassIdentifier: 
-  slateName: "\uC800\uC8FC \uC11D\uD310"
-  magics: []
+  slateName: "\uB9F9\uB3C5\uC758 \uC11D\uD310"
+  magics:
+  - {fileID: 11400000, guid: 52c5e88e8839923488adb64050b3e62b, type: 2}
+  - {fileID: 11400000, guid: ea02b06ba05318e40b10f516405c9620, type: 2}
+  - {fileID: 11400000, guid: 838a7ab0342c0854d80819f62635062e, type: 2}
+  - {fileID: 11400000, guid: 9051c81571aded24c9ea7c3007b18c64, type: 2}
+  - {fileID: 11400000, guid: e1d0b819c3830e640b8a852147b79076, type: 2}
+  - {fileID: 11400000, guid: 2344fe9ef6cb624499dce56c5481a056, type: 2}
+  - {fileID: 11400000, guid: 7fc047145ff049e4a974f543d2895e2a, type: 2}
+  - {fileID: 11400000, guid: 7b03a9c1a66d7604eb59a02b64323d0b, type: 2}
+  - {fileID: 11400000, guid: bb94343f22378e842b7dd6e78a0094fe, type: 2}
+  - {fileID: 11400000, guid: 8bb91e066f433644a8b503786b02e9c0, type: 2}
   tag: "\uC800\uC8FC"
   enable: 1
-  blocks: []
+  blocks:
+  - {fileID: 11400000, guid: c8479ae7d745f304daf73edc40c0e130, type: 2}
+  - {fileID: 11400000, guid: c8479ae7d745f304daf73edc40c0e130, type: 2}
+  - {fileID: 11400000, guid: 50e24184931292e4fb523f13a3fac54b, type: 2}
+  - {fileID: 11400000, guid: 50e24184931292e4fb523f13a3fac54b, type: 2}
+  - {fileID: 11400000, guid: 50e24184931292e4fb523f13a3fac54b, type: 2}
+  - {fileID: 11400000, guid: 50e24184931292e4fb523f13a3fac54b, type: 2}
+  - {fileID: 11400000, guid: 50e24184931292e4fb523f13a3fac54b, type: 2}
+  SlateSprite: {fileID: 21300000, guid: 51ddfe94efa9c57489b37a788fbd37cb, type: 3}
+  enableLevel: 1

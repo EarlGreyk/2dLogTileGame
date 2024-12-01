@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,9 +58,8 @@ public class GameProsessManager : MonoBehaviour
     private Image rewardExpImage;
 
 
-    private Dictionary<string,int> killMonsterDic = new Dictionary<string, int>();
+    private Dictionary<string, Tuple<int, int>> killMonsterDic = new Dictionary<string, Tuple<int, int>>();
 
-    //아래 두개의 변수는 따로 분할해주어도 됩니다.
 
     [SerializeField]
     private GameObject KillMonsterInfoPrefabs;
@@ -66,11 +67,53 @@ public class GameProsessManager : MonoBehaviour
     [SerializeField]
     private Transform killMonsterInfoParents;
 
+    [SerializeField]
+    private GameObject GameEndPanel;
+    [SerializeField]
+    private TextMeshProUGUI GameEndText;
+    [SerializeField]
+    private TextMeshProUGUI GameStageText;
+    [SerializeField]
+    private TextMeshProUGUI GameExpText;
 
+    private int exp;
+
+
+
+
+
+    public void GameEnd(bool win, int stage, int round)
+    {
+        StartCoroutine(ObjectDelay());
+    
+        
+        exp = stage * round * 30;
+        if (win)
+        {
+            GameEndText.text = "승리";
+        }else
+        {
+            GameEndText.text = "패배";
+        }
+        GameStageText.text = "진행한 스테이지 : " + stage + " - " + round;
+        GameExpText.text = "획득한 경험치 : " + exp;
+    }
+
+    IEnumerator ObjectDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        prosessPop.gameObject.SetActive(true);
+        GameEndPanel.SetActive(true);
+        //
+        yield return null;
+        yield break;
+
+    }
 
 
     public void ProsessSet()
     {
+        
         PopUpManager.instance.PopupPush(prosessPop);
         roundText.text = $"{GameManager.instance.Round} 클리어";
         VaribleSet(1);
@@ -93,15 +136,16 @@ public class GameProsessManager : MonoBehaviour
         rewardExpImage.fillAmount = 0;
     }
 
-    public void killMonsterAdd(string name)
+    public void killMonsterAdd(string name,int KillGold)
     {
         if(killMonsterDic.ContainsKey(name))
         {
-            killMonsterDic[name] += 1;
+            var currentValue = killMonsterDic[name];
+            killMonsterDic[name] = Tuple.Create(currentValue.Item1 + 1, currentValue.Item2 + KillGold); ;
         }
         else
         {
-            killMonsterDic.Add(name, 1);
+            killMonsterDic.Add(name, Tuple.Create(1,KillGold));
         }
 
     }
@@ -115,7 +159,7 @@ public class GameProsessManager : MonoBehaviour
             Debug.Log(item);
             GameObject killinfo = Instantiate(KillMonsterInfoPrefabs, killMonsterInfoParents);
             KillMonsterInfo killMonsterInfo = killinfo.GetComponent<KillMonsterInfo>();
-            killMonsterInfo.InfoSet(item, killMonsterDic[item], killMonsterInfoParents);
+            killMonsterInfo.InfoSet(item, killMonsterDic[item].Item1, killMonsterDic[item].Item2, killMonsterInfoParents);
         }
         
 
@@ -129,6 +173,11 @@ public class GameProsessManager : MonoBehaviour
             rewardPanel.SetActive(false);
             prosessPanel.SetActive(false);
             KillInfoSet();
+
+            foreach (var item in killMonsterDic.Keys)
+            {
+                PlayerResource.instance.Gold += killMonsterDic[item].Item2;
+            }
             return;
 
         }
@@ -143,16 +192,22 @@ public class GameProsessManager : MonoBehaviour
         }
         if (value == 2 || value == 3)
         {
-            changeMode("rest");
             rewardPanel.SetActive(false);
             prosessPanel.SetActive(false);
             if(value ==2 )
             {
-                rewardRound(); rewardPanel.SetActive(true); ; return;
+                rewardRound();
+                //rewardPanel.SetActive(true);
+                PopUpManager.instance.LastClosePopUp();
+                changeMode("rest");
+                return;
             }    
             if(value == 3)
             {
-                fightRound(); PopUpManager.instance.LastClosePopUp(); return;
+                fightRound(); 
+                PopUpManager.instance.LastClosePopUp();
+                changeMode("battle");
+                return;
             }            
             
         }
@@ -164,6 +219,14 @@ public class GameProsessManager : MonoBehaviour
             rewardGetPanel.SetActive(false);
             PopUpManager.instance.LastClosePopUp();
 
+        }
+
+        if(value == 999)
+        {
+            PlayerLevelManager.instance.ExpUp(exp);
+            SaveLoadManager.instance.DeleteLoad();
+            SceanChanger.instance.SceanChange("MainScean");
+            return;
         }
     }
     /// <summary>
@@ -208,7 +271,7 @@ public class GameProsessManager : MonoBehaviour
 
     public void rewardRound()
     {
-        GameManager.instance.Round++;
+        GameManager.instance.RoundUpdate();
         GameManager.instance.RoundInfo.Add("보상");
         roundInfo[GameManager.instance.Round -1].color = Color.blue;
 
@@ -216,7 +279,7 @@ public class GameProsessManager : MonoBehaviour
 
     public void fightRound()
     {
-        GameManager.instance.Round++;
+        GameManager.instance.RoundUpdate();
         GameManager.instance.RoundInfo.Add("전투");
         roundInfo[GameManager.instance.Round -1].color = Color.red;
     }
@@ -227,14 +290,13 @@ public class GameProsessManager : MonoBehaviour
         {
             roundInfo[i].color = Color.white;
         }
-        GameManager.instance.Stage++;
-        GameManager.instance.RoundInfo.Clear();
     }
 
     public void changeMode(string mode)
     {
         if (mode == "battle")
         {
+            Debug.Log("배틀");
             for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(true);
@@ -243,7 +305,7 @@ public class GameProsessManager : MonoBehaviour
             {
                 restUIList[i].SetActive(false);
             }
-            GameManager.instance.roundSet();
+            GameManager.instance.RoundSet();
             PlayerResource.instance.BlockReset();
         }
         if (mode == "rest")

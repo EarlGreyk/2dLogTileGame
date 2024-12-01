@@ -10,23 +10,34 @@ public class PlayerLevelManager : MonoBehaviour
     private int level;
     public int Level { get { return level; } }
 
-    private int currentExp;
-    public int CurrentExp { get { return currentExp; } }
+    private float currentExp;
+    public float CurrentExp { get { return currentExp; } }
 
-    private int maxExp;
+    private float maxExp;
 
     [SerializeField]
     private Image expFillImage;
 
+    private int runeStone;
+
+    public int RuneStone { get { return runeStone; } }
+
     private void Awake()
     {
         if(instance == null )
-           instance = this;
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
         {
+
             Destroy( instance.gameObject );
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
+            
+        
     }
 
     private void Start()
@@ -37,65 +48,42 @@ public class PlayerLevelManager : MonoBehaviour
         {
             level = 1;
             currentExp = 0;
+            runeStone = 0;
          
         }
         else
         {
             level = saveData.level;
             currentExp = saveData.currentExp;
+            runeStone = saveData.runestone;
         }
-        maxExp = level * 1000;
+        maxExp = level * 100 + 200;
         expFillImage.fillAmount = currentExp / maxExp;
-
-        SlateDataSet();
-        LightFireDataSet();
     }
+
+
 
     /// <summary>
     /// 게임이 종료되고 메인씬으로 돌아왔을때 경험치를 올리거나 레벨업 시킵니다.
     /// </summary>
-    public void ExpUp(int exp)
+    public void ExpUp(float exp)
     {
+        Debug.Log(exp);
         currentExp += exp;
-        while (currentExp < maxExp)
+        while (currentExp > maxExp)
         {
             currentExp -= maxExp;
-            maxExp = level * 1000;
+            maxExp = level * 100 + 200;
+            runeStone += (10 + level * 1);
             level++;
         }
+        SaveLoadManager.instance.PlayerLevelSave();
     }
 
 
 
     //자신의 현재 레벨에 맞는 석판을 활성화 합니다.
-    private void SlateDataSet()
-    {
-        Slate[] slates = Resources.LoadAll<Slate>("Slates");
+  
 
-        for (int i = 0; i < slates.Length; i++)
-        {
-            if(Level >= slates[i].EnableLevel)
-            {
-                slates[i].Enable = true;
-            }
-
-        }
-            
-    }
-
-    //자신의 현재 레벨에 맞는 등불 불빛을 활성화 합니다.
-    private void LightFireDataSet()
-    {
-        LampFireData[] lampFireData = Resources.LoadAll<LampFireData>("램프정보");
-
-
-        for( int i = 0; i< lampFireData.Length; i++)
-        {
-            if (Level>=lampFireData[i].EnableLevel)
-            {
-                lampFireData[i].Enable = true;
-            }
-        }
-    }
 
 }

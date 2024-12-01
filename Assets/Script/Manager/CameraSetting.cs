@@ -20,6 +20,9 @@ public class CameraSetting : MonoBehaviour
 
     private Vector3 resetPos;
 
+    [SerializeField]
+    private RectTransform hpcanvasRect;
+
     private void Awake()
     {
         if (instance == null)
@@ -29,6 +32,9 @@ public class CameraSetting : MonoBehaviour
     private void Start()
     {
         camera = GetComponent<Camera>();
+        hpcanvasRect.position = new Vector2(Screen.width / 2 , Screen.height / 2 + (Screen.height /20));
+        hpcanvasRect.sizeDelta = new Vector2(Screen.width, Screen.height/2 + 140);
+
     }
 
 

@@ -37,10 +37,9 @@ public class PlayerActionManager : MonoBehaviour
         for (int i = 0; i < targetPos.Count; i++)
         {
             target = GameManager.instance.BattleZone.SerchTileUnit(targetPos[i]);
-            if(target != null)
+            if (target != null && target != GameManager.instance.PlayerUnit)
             {
                 target.HitDamage(magic.MagicValue);
-                Debug.Log(target);
             }
             
         }

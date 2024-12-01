@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -11,16 +12,12 @@ using UnityEngine;
 public class BlockSaveData
 {
     public int level;
-    public int mana;
-    public int upmana;
     public string blockInfoName;
     public BlockSaveData(Block block)
     {
         if(block !=null)
         {
             level = block.level;
-            mana = block.mana;
-            upmana = block.upmana;
             blockInfoName = block.BlockInfo.name;
         }
     }
@@ -48,20 +45,22 @@ public class PlayerResourceSaveData
     public SlateSaveData thirdSlateData;
     public SlateSaveData fourSlateData;
     public int gold;
+    public float mana;
+    public float maxMana;
 
     public PlayerResourceSaveData(PlayerResource playerResource)
     {
-        //for(int i =0; i <playerResource.PlayerBlockList.Count; i++)
-        //{
-        //    BlockSaveData blockData = new BlockSaveData(playerResource.PlayerBlockList[i]);
-        //    playerBlockDataList.Add(blockData);
-        //}
-
-        firstSlateData = new SlateSaveData(playerResource.FirstSlate, playerResource.FirstSlateLevel);
-        secondSlateData = new SlateSaveData(playerResource.SecondSlate, playerResource.SecondSlateLevel);
-        thirdSlateData = new SlateSaveData(playerResource.ThirdSlate, playerResource.ThirdSlateLevel);
-        fourSlateData = new SlateSaveData(playerResource.FourthSlate, playerResource.FourSlateLevel);
+        if(playerResource.FirstSlate !=null)
+            firstSlateData = new SlateSaveData(playerResource.FirstSlate, playerResource.FirstSlateLevel);
+        if(playerResource.SecondSlate !=null)
+            secondSlateData = new SlateSaveData(playerResource.SecondSlate, playerResource.SecondSlateLevel);
+        if (playerResource.ThirdSlate != null)
+            thirdSlateData = new SlateSaveData(playerResource.ThirdSlate, playerResource.ThirdSlateLevel);
+        if (playerResource.FourthSlate != null)
+            fourSlateData = new SlateSaveData(playerResource.FourthSlate, playerResource.FourSlateLevel);
         gold = playerResource.Gold;
+        mana = playerResource.Mana;
+        maxMana = playerResource.MaxMana;
     }
 }
 
@@ -159,11 +158,13 @@ public class LightManagerSaveData
 public class PlayerLevelManagerSaveData
 {
     public int level;
-    public int currentExp;
+    public float currentExp;
+    public int runestone;
     public PlayerLevelManagerSaveData(PlayerLevelManager playerLevelManager)
     {
         level = playerLevelManager.Level;
         currentExp = playerLevelManager.CurrentExp;
+        runestone = playerLevelManager.RuneStone;
     }
 }
 
@@ -171,6 +172,10 @@ public class PlayerLevelManagerSaveData
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager instance;
+
+
+    [SerializeField]
+    public Button LoadGameButton;
 
 
 
@@ -217,19 +222,18 @@ public class SaveLoadManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-    }
-
-    private void Start()
-    {
-        //초기경로지정
         gameManagerPath = Application.persistentDataPath + "/saveGameManagerData.json";
         playerResourcePath = Application.persistentDataPath + "/savePlayerResourceData.json";
         blockManagerPath = Application.persistentDataPath + "/saveBlockManagerData.json";
         luneEnablePath = Application.persistentDataPath + "/saveluneEnableData.json";
         lightManagerPath = Application.persistentDataPath + "/savelightManagerData.json";
+        playerLevelManagerPath = Application.persistentDataPath + "/saveplayerLevelManagerData.json";
 
+    }
 
-        Load();
+    private void OnEnable()
+    {
+        LoadSetting();
     }
 
 
@@ -293,32 +297,76 @@ public class SaveLoadManager : MonoBehaviour
         File.WriteAllText(playerLevelManagerPath, json);
     }
 
+    public void NewGame()
+    {
+        SettingData.Load = false;
+    }
+
+    public void LoadGame()
+    {
+
+        SettingData.firstSlate = Resources.Load<Slate>("Slates/" + playerResourceData.firstSlateData.slateName);
+        SettingData.secondSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
+        SettingData.thirdSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
+        SettingData.fourthSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
+
+        SettingData.Stage = gameManagerData.stage;
+        SettingData.Round = gameManagerData.round;
+
+        SettingData.Load = true;
+    }
+    /// <summary>
+    /// 게임이 지거나 승리했을때 저장되어 있는 파일을 삭제합니다.
+    /// 플레이어의 레벨 , 룬의 저장정보는 변하지 않습니다.
+    /// </summary>
+    public void DeleteLoad()
+    {
+        // 파일이 존재하면 삭제
+        if (File.Exists(gameManagerPath))
+        {
+            File.Delete(gameManagerPath);
+            Debug.Log("Game Manager Data 삭제 완료");
+        }
+
+        if (File.Exists(playerResourcePath))
+        {
+            File.Delete(playerResourcePath);
+            Debug.Log("Player Resource Data 삭제 완료");
+        }
+
+        if (File.Exists(blockManagerPath))
+        {
+            File.Delete(blockManagerPath);
+            Debug.Log("Block Manager Data 삭제 완료");
+        }
+
+        if (File.Exists(lightManagerPath))
+        {
+            File.Delete(lightManagerPath);
+            Debug.Log("Light Manager Data 삭제 완료");
+        }
+    }
+        
+
+
 
 
     /// <summary>
     /// 게임이 시작되면 로드됩니다.
+    /// 로드 파일이 있는지 체크하여 전부다 있을시 버튼을 활성화 시킵니다.
+    ///
     /// </summary>
-    public void Load()
+    public void LoadSetting()
     {
-        Debug.Log("로오드");
         playerResourceData = LoadPlayerResource();
-        if(playerResourceData != null)
-        {
-            SettingData.firstSlate = Resources.Load<Slate>("Slates/"+ playerResourceData.firstSlateData.slateName);
-            SettingData.secondSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
-            SettingData.thirdSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
-            SettingData.fourthSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
-
-
-        }
-        else{ return;}
+        if(playerResourceData == null)
+            return;
+ 
 
         gameManagerData = LoadGameManager();
-        if(gameManagerData != null)
-        {
-            SettingData.Stage = gameManagerData.stage;
-            SettingData.Round = gameManagerData.round;
-        }else { return; }
+        if(gameManagerData == null)
+            return;   
+ 
 
 
         blockManagerSaveData = LoadBlockManager();
@@ -329,11 +377,12 @@ public class SaveLoadManager : MonoBehaviour
         if (lightManagerSaveData == null)
             return;
 
+        LoadGameButton.interactable = true;
+        
 
 
-
-        SettingData.Load = true;
     }
+   
     /// <summary>
     /// 게임 셋팅 단계에서 (룬)을 최근에 작업한걸로 로드합니다.
     /// </summary>
@@ -430,13 +479,14 @@ public class SaveLoadManager : MonoBehaviour
     }
     private PlayerLevelManagerSaveData LoadPlayerLevelManager()
     {
-        if (File.Exists(lightManagerPath))
+
+        if (File.Exists(playerLevelManagerPath))
         {
             string json = File.ReadAllText(playerLevelManagerPath);
             return JsonUtility.FromJson<PlayerLevelManagerSaveData>(json);
         }
         {
-            Debug.Log("로드할 파일이 없습니다");
+            Debug.Log("로드할 플레이어 레벨이 없습니다");
             return null;
         }
     }

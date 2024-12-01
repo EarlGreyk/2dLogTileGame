@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
-using UnityEngine.UI;
-using static System.Collections.Specialized.BitVector32;
-using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class UnitStatus
 {
@@ -130,7 +127,7 @@ public class Unit :MonoBehaviour
 
     public UnitStatus status;
     public GameObject HPbar;
-    public GameObject Icon;
+    public Sprite Sprite;
     public UnitStatusObject baseStatus;
     public UnitHpBar hpbar;
     private GameObject uicanvas;
@@ -143,7 +140,6 @@ public class Unit :MonoBehaviour
         GameObject obj = Instantiate(HPbar, GameManager.instance.HPCanvas.transform);
         hpbar = obj.GetComponent<UnitHpBar>();
         hpbar.HpbarSet(this);
-        Debug.Log(transform.position + name);
         
         GameManager.instance.BattleZone.setTileUnit(transform.position, this);
         uicanvas = GameManager.instance.HPCanvas;
@@ -159,7 +155,6 @@ public class Unit :MonoBehaviour
         {
 
             hpbar.rectHpbar.gameObject.SetActive(true);
-            hpbar.rectIcon.gameObject.SetActive(false);
             hpbar.UpdateHpbarPosition();
 
             if (hpbar.rectAction != null)
@@ -172,8 +167,6 @@ public class Unit :MonoBehaviour
         else
         {
             hpbar.rectHpbar.gameObject.SetActive(false);
-            hpbar.rectIcon.gameObject.SetActive(true);
-            hpbar.UpdateIconPosition();
             if (hpbar.rectAction != null)
             {
                 hpbar.rectAction.gameObject.SetActive(false);
@@ -195,7 +188,7 @@ public class Unit :MonoBehaviour
     }
 
 
-    public void HitDamage(int Damage)
+    public virtual void HitDamage(float Damage)
     {
         status.Health -= Damage;
         hpbar.HpTextSet();

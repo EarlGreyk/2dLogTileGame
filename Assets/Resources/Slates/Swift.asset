@@ -24,7 +24,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c1fd43775c62a6428bacaa6ed591af4, type: 2}
   - {fileID: 11400000, guid: e290effd2597bae479c9f68cc51536de, type: 2}
   - {fileID: 11400000, guid: f1429774d4ceaa9499971fb31ce1a51f, type: 2}
-  tag: "\uC7AC\uBE60\uB984"
-  enable: 1
+  tag: "\uC601\uAC10"
+  enable: 0
   blocks:
   - {fileID: 11400000, guid: 2ada1a679a1b86e49939855aee6c5f97, type: 2}
+  SlateSprite: {fileID: 0}
+  enableLevel: 3

@@ -43,14 +43,23 @@ public class LampFireData : ScriptableObject
     /// 플레이어의 모든 스텟을 받아야합니다.
     /// </summary>
     [SerializeField]
-    private enum fireType
+    public enum fireType
     {
         DopChance,
         MagicChian,
         MagicCount
 
     }
+    [SerializeField]
     private fireType firetype;
+
+    public fireType FireType { get { return firetype; } }
+
+
+    [SerializeField]
+    private float value;
+
+    public float Value { get { return value; } }
 
 
 

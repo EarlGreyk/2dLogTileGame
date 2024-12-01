@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f79c1b53f2ecab41a43ac7727088044, type: 3}
+  m_Name: 60011
+  m_EditorClassIdentifier: 
+  fireName: "\uC778\uB3C4\uD558\uB294 \uBD88\uAE38"
+  fireGrade: 1
+  fileDesc: "\uD68D\uB4DD\uD558\uB294 \uACE8\uB4DC\uB7C9 \uC99D\uAC00"
+  fireIcon: {fileID: 21300000, guid: 5432821e8efdd9a43b521cac779376b4, type: 3}
+  firetype: 0
+  value: 0
+  enable: 1
+  enableLevel: 2

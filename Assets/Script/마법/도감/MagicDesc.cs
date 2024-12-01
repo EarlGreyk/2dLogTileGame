@@ -22,20 +22,25 @@ public class MagicDesc : MonoBehaviour
     private TextMeshProUGUI nameText;
 
 
+    private void OnEnable()
+    {
+        descImage.sprite = null;
+        descText.text = null;
+        nameText.text = null;
 
+    }
 
 
     public void DescSet(MagicUI UI)
     {
         if (UI.Magic == null)
         {
-            Debug.Log("설정할 마법이 없음.");
             return;
         }
             
         descImage.sprite = UI.Magic.IconSprite;
         descText.text = UI.Magic.MagicDesc;
-        nameText.text = UI.Magic.name;
+        nameText.text = UI.Magic.MagicName;
 
     }
 

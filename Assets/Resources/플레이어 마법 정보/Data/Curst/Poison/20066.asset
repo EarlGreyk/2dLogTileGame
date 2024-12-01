@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1641fce1f89d3d42b08bcb7a12233ab, type: 3}
+  m_Name: 20066
+  m_EditorClassIdentifier: 
+  type: 0
+  tag: 5
+  sort: 1
+  index: 0
+  level: 0
+  magicCost: 8
+  magicName: "\uB3C5 \uB9C8\uC2A4\uD130\uB9AC"
+  magicDesc: "\uB3C5 \uC2A4\uD0AC\uC758 \uC804\uCCB4 \uB370\uBBF8\uC9C0\uB97C \uC99D\uAC00\uC2DC\uD0A8\uB2E4"
+  iconSprite: {fileID: 21300000, guid: 3bf8ceb569cbc4f409fa6df7f5c4f436, type: 3}
+  gold: 0
+  requireSlateLevel: 1
+  magicRange: {fileID: 0}
+  magicAoe: {fileID: 0}
+  magicEffectPrefab: {fileID: 6445666186361868711, guid: 9deea548c44c9ac4e94d6932a0d85eaf, type: 3}
+  magicValue: 3
+  magicDuration: 0

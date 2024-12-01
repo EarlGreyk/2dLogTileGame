@@ -4,6 +4,7 @@ using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 게임의 흐름을 관장합니다.
@@ -59,15 +60,17 @@ public class GameManager : MonoBehaviour
 
 
     private bool isPlayer;
+    public bool IsPlayer {  get { return isPlayer; } }
     private bool isMonster;
+    public bool IsMonater { get { return isMonster; } }
 
     private int lampLight = 100;
 
     public int LampLight { get { return lampLight; } set { lampLight = value; } }
 
-    private int stage = 0;
+    private int stage = 1;
     public int Stage { get { return stage; } set { stage = value; } }
-    private int round = 0;
+    private int round = 1;
     public int Round { get { return round; } set { round = value; } }
 
     private List<string> roundInfo = new List<string>();
@@ -82,8 +85,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI lamptext;
-    
-    
+
+    [SerializeField]
+    private TextMeshProUGUI roundText;
+
     
 
     private void Awake()
@@ -92,7 +97,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -102,14 +106,23 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        stage = SettingData.Stage;
-        round = SettingData.Round;
-        roundSet();
+        RoundUpdate(SettingData.Stage, SettingData.Round);
+        RoundSet();
 
 
-        
 
     }
+
+    private void Update()
+    {
+        if (PlayerUnit != null)
+            return;
+
+
+        PlayerLose();
+        Destroy(gameObject);
+    }
+
     private void setField()
     {
         if(battleZone != null)
@@ -146,9 +159,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
 
     private void setMonster()
-    {
-        Debug.Log("라운드 몬스터 생성");
-        
+    {   
         monsterRoundInfo = Resources.Load<RoundInfo>("Round/" + stage.ToString()+"/"+round.ToString());
         if(monsterRoundInfo != null)
         {
@@ -188,13 +199,15 @@ public class GameManager : MonoBehaviour
         isPlayer = true;
         isMonster = false;
         //플레이어가 행동 가능함으로써 플레이어의 권한을 전부 다시 주어야 합니다.
+        blockModeZone.ModeSetting(false);
     }
 
     public void onMonsterAction()
     {
-        isMonster = false;
-        isPlayer = true;
+        isPlayer = false;
+        isMonster = true;
         //플레이어가 행동 불가능함으로써 플레이어의 권한을 일부 뺏어야합니다.
+        blockModeZone.ModeSetting(false);
     }
     public void stopAction()
     {
@@ -207,14 +220,33 @@ public class GameManager : MonoBehaviour
 
     public void LampUpdate(int light)
     {
-        lampLight -= light;
+        lampLight += light;
         lamptext.text = lampLight.ToString();
         MonsterAIManager.MonsterCount();
+    }
+    public void RoundUpdate(int stage = 0, int round = 1)
+    {
+        if(stage !=0)
+        {
+            this.stage = stage;
+            this.round = round;
+        }else
+        {
+            this.round += round;
+
+            if (this.round > 10)
+            {
+                this.round = 1;
+                this.stage++;
+                roundInfo.Clear();
+            }
+        }
+        roundText.text = this.stage.ToString() + " - " + this.round.ToString();
     }
 
     ////휴식이 종료되어 라운드를 새로 시작합니다.
     ///
-    public void roundSet()
+    public void RoundSet()
     {
         setField();
         onPlayerAction();
@@ -222,13 +254,22 @@ public class GameManager : MonoBehaviour
         setPlayer();
     }
 
+    
+
+
+    
+
     /// <summary>
     /// 라운드에서 승리해서 진행합니다.
     /// </summary>
 
     public void PlayerWin()
     {
-
+        GameProsessManager.GameEnd(true,stage,round);
+    }
+    public void PlayerLose()
+    {
+        GameProsessManager.GameEnd(false,stage, round);
     }
 
 }

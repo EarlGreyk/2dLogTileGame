@@ -17,8 +17,8 @@ public class BlockInfo : ScriptableObject
 
     
     [SerializeField]
-    private int mana;
-    public int Mana { get { return mana; } }
+    private int[] mana;
+    public int[] Mana { get { return mana; } }
 
     [SerializeField]
     private int upmana;
@@ -28,16 +28,25 @@ public class BlockInfo : ScriptableObject
     public Sprite sprite;
 
     [SerializeField]
-    private BlockInfo nextBlock;
+    private int[] upgold;
 
-    [SerializeField]
-    private int upGold;
+    public int[] Upgold { get { return upgold; } }
 
     [SerializeField]
     private int removeGold;
 
+    public int RemoveGold { get { return removeGold; } }
+
     [SerializeField]
     private int equipGold;
+
+    public int EquipGold { get { return equipGold; } }
+
+    [SerializeField]
+    private int[] equipCost;
+    
+    public int[] EquipCost {  get { return equipCost; } }
+
 
 
 }

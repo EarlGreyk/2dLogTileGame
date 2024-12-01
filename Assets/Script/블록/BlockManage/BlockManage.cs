@@ -40,9 +40,13 @@ public class BlockManage : MonoBehaviour
     [SerializeField]
     private BlockPanel removeBlockPanel;
     [SerializeField]
+    private TextMeshProUGUI removeBlockGold;
+    [SerializeField]
     private BlockPanel equipBlockPanel;
+    [SerializeField]
+    private TextMeshProUGUI equipBlockGold;
 
-  
+
 
 
     private void Awake()
@@ -74,7 +78,7 @@ public class BlockManage : MonoBehaviour
     }
 
     /// <summary>
-    /// 블록을 장착합니다.
+    /// 석판을 이용하여 블록을 장착합니다.
     /// 이후 플레이어 자원에서 추가로 관리해줍니다.
     /// </summary>
     /// <param name="block"></장착해야할 블록>
@@ -97,10 +101,14 @@ public class BlockManage : MonoBehaviour
         
         
     }
+
+    /// <summary>
+    /// 인벤토리에서 블록을 장착합니다.
+    /// </summary>
     public void EquipSet()
     {
         PopUpManager.instance.LastClosePopUp();
-        Debug.Log("블록 장착");
+        /// 해당 블록을 장착 으로 넘깁니다.
         for (int i = 0; i < equipBlocks.Count; i++)
         {
             if (equipBlocks[i].Block == null)
@@ -114,6 +122,7 @@ public class BlockManage : MonoBehaviour
             }
         }
 
+        ///블록을 장착하여 인벤토리에서 지웁니다.
         for(int i =0; i<inventoryBlocks.Count; i++)
         {
             if (inventoryBlocks[i].Block == equipBlockPanel.Block)
@@ -122,8 +131,9 @@ public class BlockManage : MonoBehaviour
                 break;
             }
         }
+        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.EquipGold;
 
-      
+
     }
     public void EquipRemove()
     {
@@ -138,6 +148,7 @@ public class BlockManage : MonoBehaviour
                 break;
             }
         }
+        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.RemoveGold;
         
     }
     
@@ -172,11 +183,14 @@ public class BlockManage : MonoBehaviour
     public void RemoveBlockPanelSet(BlockPanel blockPanel)
     {
         removeBlockPanel.Set(blockPanel.Block);
+        removeBlockGold.text = blockPanel.Block.BlockInfo.RemoveGold.ToString();
+
     }
 
     public void EquipBlockPanelSt(BlockPanel blockPanel)
     {
         equipBlockPanel.Set(blockPanel.Block);
+        equipBlockGold.text = blockPanel.Block.BlockInfo.EquipGold.ToString();
     }   
    
 

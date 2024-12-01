@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1186713719847153193}
   - component: {fileID: 1186713719847153192}
   - component: {fileID: 1186713719847153195}
-  - component: {fileID: 3657641434490481413}
+  - component: {fileID: 2859780974105829494}
   m_Layer: 0
   m_Name: FileBall
   m_TagString: Untagged
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186713719847153194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.15, y: 0.34, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -107,7 +107,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3657641434490481413
+--- !u!114 &2859780974105829494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,11 +116,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 1186713719847153194}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c221b23d4e51a46b8187b883ae3ec4, type: 3}
+  m_Script: {fileID: 11500000, guid: a32945083374c1c499da4a1b132ce716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
-  endtime: 0
-  magicEffect: {fileID: 0}
-  targetPos: []
-  effect: []
+  endtime: 1.5
+  soundClip: {fileID: 8300000, guid: f17742bfd6d972d4abdfa266e013be35, type: 3}

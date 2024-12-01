@@ -66,13 +66,25 @@ public class SlateManage : MonoBehaviour
 
 
         if (selctSlate == PlayerResource.instance.FirstSlate)
+        {
+            firstSlate.SlateLevelUp();
             PlayerResource.instance.FirstSlateLevel++;
+        }
         else if (selctSlate == PlayerResource.instance.SecondSlate)
+        {
+            secondSlate.SlateLevelUp();
             PlayerResource.instance.SecondSlateLevel++;
+        }
         else if (selctSlate == PlayerResource.instance.ThirdSlate)
+        {
+            thirdSlate.SlateLevelUp();
             PlayerResource.instance.ThirdSlateLevel++;
+        }
         else if (selctSlate != PlayerResource.instance.FourthSlate)
+        {
+            fourthSlate.SlateLevelUp();
             PlayerResource.instance.FourSlateLevel++;
+        }
         else
             Debug.Log("오류 : 선택한 Slate가 소유하고있는 1,2,3,4 Slate가 아닙니다.");
 

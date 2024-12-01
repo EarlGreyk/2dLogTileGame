@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -34,7 +35,7 @@ public class MonsterUnit : Unit
     public int ActionCount 
     { get { return actionCount; }
         set
-        { 
+        {
             actionCount = value;
             if(actionCount > 0)
             {
@@ -93,6 +94,9 @@ public class MonsterUnit : Unit
     public int maxActionCount;
 
 
+
+    public int KillGold;
+
     
 
 
@@ -110,7 +114,6 @@ public class MonsterUnit : Unit
     }
     private void OnMouseDown()
     {
-        Debug.Log("나를 지켜봐줘!!!!!");
         GameManager.instance.BlockModeZone.unitBlockSet(this);
     }
 
@@ -127,8 +130,9 @@ public class MonsterUnit : Unit
         //행동 시작
         //몬스터가 행동을 시작하기 위해서 게임 매니저에 보내서 작동을 한다고 선언합니다.
         isAction = true;
+        GameManager.instance.BlockModeZone.unitBlockSet(this);
         if (currentAction.currentMagic == null)
-            ActionMove();
+            StartCoroutine(ActionMove());
         else
             currentAction.onAction();
 
@@ -441,9 +445,11 @@ public class MonsterUnit : Unit
     /// 이동 액션입니다.
     /// 만약 내가 가야하는 경로에 유닛이 있다면 재탐색 이후 다시 해당 함수를 시행합니다.
     /// </summary>
-    private void ActionMove()
-    {
+    /// 
 
+    IEnumerator ActionMove()
+    {
+        yield return new WaitForSeconds(0.5f);
         if (!GameManager.instance.BattleZone.SerchTileUnit(targetPosList[0]))
         {
             Vector3Int scaledCellPos = new Vector3Int(
@@ -457,8 +463,10 @@ public class MonsterUnit : Unit
         }else
         {
             targetPosSet();
-            ActionMove();
+            monsterAction();
         }
+        yield return null;
+        yield break;
 
         
 

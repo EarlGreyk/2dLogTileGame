@@ -19,7 +19,6 @@ public class BlockModeZone : MonoBehaviour
     {
         if(value)
         {
-            gameObject.SetActive(true);
             for (int i = 0; i < GameManager.instance.MonsterAIManager.Monsters.Count; i++)
             {
                 unitBlockSet(GameManager.instance.MonsterAIManager.Monsters[i]);
@@ -34,7 +33,6 @@ public class BlockModeZone : MonoBehaviour
     }
     public void unitBlockSet(MonsterUnit unit)
     {
-        Debug.Log("유닛 블록 경로 활성화 하기전 사전에 보여주고 있는 타일을 제거합니다.");
         breakTile();
 
         if(unit.CurrentAcion.currentMagic == null)

@@ -26,8 +26,8 @@ public class SceanChanger : MonoBehaviour
 
     public void SceanChange(string sceanName)
     {
-        
         StartCoroutine(SceanDelay(sceanName));
+
     }
 
 
@@ -36,6 +36,14 @@ public class SceanChanger : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(sceanName);
+        if (sceanName == "GameScean")
+        {
+            SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
+        }
+        if (sceanName == "MainScean")
+        {
+            SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Lobby", Sound.SoundType.Bgm);
+        }
         yield break;
     }
 }

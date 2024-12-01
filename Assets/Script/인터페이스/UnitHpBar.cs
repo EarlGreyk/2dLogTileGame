@@ -12,7 +12,6 @@ public class UnitHpBar : MonoBehaviour
 {
 
     public Unit monster;
-    public GameObject Icon;
     public GameObject action;
     public GameObject canvas;
     public Image fillImage;
@@ -22,7 +21,6 @@ public class UnitHpBar : MonoBehaviour
 
 
     public RectTransform rectHpbar;
-    public RectTransform rectIcon;
     public RectTransform rectAction;
     public RectTransform canvasRectTransform;
 
@@ -43,12 +41,10 @@ public class UnitHpBar : MonoBehaviour
 
     public void HpbarSet(Unit unit)
     {
-        Icon = unit.Icon;
 
         canvas = GameManager.instance.HPCanvas;
         canvasRectTransform = canvas.GetComponent<RectTransform>();
         rectHpbar = gameObject.GetComponent<RectTransform>();
-        rectIcon = Instantiate(Icon, canvas.transform).GetComponent<RectTransform>();
        
         if (action != null)
         {
@@ -116,8 +112,6 @@ public class UnitHpBar : MonoBehaviour
             Mathf.Clamp(localPoint.y, -canvasSize.y, canvasSize.y)
         );
 
-        // 6. 아이콘의 로컬 위치 업데이트
-        rectIcon.localPosition = new Vector3(clampedPosition.x, clampedPosition.y, 0);
 
 
     }
@@ -145,8 +139,8 @@ public class UnitHpBar : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Destroy(rectAction.gameObject);
-        Destroy(rectIcon.gameObject);
+        if(rectAction != null)
+            Destroy(rectAction.gameObject);
     }
 
 }

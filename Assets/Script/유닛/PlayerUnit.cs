@@ -14,6 +14,10 @@ public class PlayerUnit : Unit
     }
 
 
+    public override void HitDamage(float Damage)
+    {
+        base.HitDamage(Damage);
+    }
 
 
 }

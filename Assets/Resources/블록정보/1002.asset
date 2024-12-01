@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: 1002
   m_EditorClassIdentifier: 
   blockName: 
-  patternData: {fileID: 11400000, guid: 2686a358055e7cd4b97a619866b1603b, type: 2}
-  mana: 2
+  patternData: {fileID: 11400000, guid: 356f73a1b64b89740a2f2390a36006cd, type: 2}
+  mana: 020000000300000005000000
   upmana: 1
   sprite: {fileID: 21300000, guid: 8eddb87b14a4d6946b3fd40eab060eb6, type: 3}
-  nextBlock: {fileID: 11400000, guid: 0ff1f673397ef6e4699c68a83fc5e481, type: 2}
-  upGold: 0
-  removeGold: 0
-  equipGold: 0
+  upgold: c4090000401f0000
+  removeGold: 800
+  equipGold: 500
+  equipCost: 020000000400000005000000

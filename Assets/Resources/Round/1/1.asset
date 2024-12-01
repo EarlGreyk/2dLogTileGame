@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterList:
   - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  - {fileID: 4118946393443849972, guid: b2cdd4aa6c5ff444f95375ff9d12fa9c, type: 3}
+  regenPosList:
+  - {x: 10, y: 5, z: 0}
+  - {x: 15, y: 4, z: 0}
+  - {x: 13, y: 8, z: 0}
+  - {x: 14, y: 2, z: 0}

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LuneSetting : MonoBehaviour
@@ -48,11 +46,11 @@ public class LuneSetting : MonoBehaviour
 
     private void Bagic()
     {
-        
+        LuneImage.sprite = selectedBasicLune.LuneSprite;
     }
     private void Major()
     {
-
+        LuneImage.sprite = selectedMajorLune.LuneSprite;
     }
 
 

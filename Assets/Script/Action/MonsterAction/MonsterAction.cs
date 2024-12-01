@@ -124,7 +124,8 @@ public class MonsterAction : MonoBehaviour
         {
             for (int i = 0; i < hitunits.Count; i++)
             {
-                hitunits[i].HitDamage(currentMagic.MagicValue);
+                if (hitunits[i] == GameManager.instance.PlayerUnit)
+                    hitunits[i].HitDamage(currentMagic.MagicValue);
             }
         }else if(currentMagic.Type == MonsterMagic.MagicType.Surport)
         {

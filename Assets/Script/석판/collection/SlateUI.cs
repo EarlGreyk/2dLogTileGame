@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
@@ -9,6 +10,8 @@ public class SlateUI : MonoBehaviour
 {
     private Slate slate;
     public Slate Slate { get { return slate; } set { slate = value; } }
+
+    public int SlateLevel;
     
 
     [SerializeField]
@@ -17,12 +20,20 @@ public class SlateUI : MonoBehaviour
 
     [SerializeField]
     private Image SlateImage;
+
+    [SerializeField]
+    private TextMeshProUGUI SlateNameText;
+
+    [SerializeField]
+    private TextMeshProUGUI SlateLevelText;
   
 
 
 
     public void SlateSet(Slate slate)
-    { 
+    {
+        SlateNameText.text = slate.SlateName;
+        SlateLevelText.text = SlateLevel.ToString();
         this.slate = slate;
         this.magics = slate.Magics;
         if(slate.SlateSprite != null )
@@ -32,8 +43,12 @@ public class SlateUI : MonoBehaviour
         {
             SlateImage.sprite = null;
         }
-            
 
+    }
+  
+    public void SlateLevelUp()
+    {
+        SlateLevel++;
     }
 
     public void MagicDescSet(MagicUI magic)

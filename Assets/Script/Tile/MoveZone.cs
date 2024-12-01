@@ -18,6 +18,8 @@ public class MoveZone : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.IsPlayer == false)
+            return;
         if(Input.GetButtonDown("Cancel"))
         {
             PlayerResource.instance.currentBlock = null;
@@ -36,8 +38,7 @@ public class MoveZone : MonoBehaviour
 
             if (clickedTile != null)
             {
-                setMovePos(cellPosition);
-                
+                setMovePos(cellPosition);   
             }
             else
             {
@@ -71,7 +72,6 @@ public class MoveZone : MonoBehaviour
     //이동을 하면 즉시 해당 클래스를 비활성화 시켜 Update의 반복을 막습니다.
     public void setMovePos(Vector3Int cellPos)
     {
-
         // Grid의 셀 크기 (스케일)
         Vector3 scale = grid.transform.localScale;
         //현재 플레이어 위치 잡기.
@@ -81,7 +81,6 @@ public class MoveZone : MonoBehaviour
             Mathf.FloorToInt(cellPos.x * scale.x),
             Mathf.FloorToInt(cellPos.y * scale.y),
             0);
-        Debug.Log($"유닛의 현재 위치 : {currentPos} , 이동해야하는 셀위치 고려값 : {scaledCellPos}");
         //플레이어 이동
         GameManager.instance.BattleZone.removeTileUnit(currentPos, GameManager.instance.PlayerUnit);
         GameManager.instance.PlayerUnit.transform.position = scaledCellPos;
@@ -102,12 +101,17 @@ public class MoveZone : MonoBehaviour
         }
         movePos.Clear();
 
-        GameManager.instance.LampUpdate(1);
-        gameObject.SetActive(false);
+        GameManager.instance.LampUpdate(-1);
+        breakMoveTile();
     }
 
     public void SetBlock(MovePanel _blockPanel, Vector3Int _sellpos)
     {
+        if (GameManager.instance.IsPlayer == false)
+        {
+            ErrorManager.instance.ErrorSet("당신의 턴이 아닙니다");
+            return;
+        }
         CameraSetting.instance.blockModeOff();
         //기존 블록 타일 소거.
         breakMoveTile(true);

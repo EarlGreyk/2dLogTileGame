@@ -30,7 +30,7 @@ public class BlockPanel : MonoBehaviour
     {
  
         blockImage.sprite = block.BlockInfo.sprite; 
-        mana.text = block.mana.ToString();
+        mana.text = block.BlockInfo.Mana[block.level - 1].ToString();
         this.block = block;
         gameObject.SetActive(true);
     }
@@ -39,12 +39,12 @@ public class BlockPanel : MonoBehaviour
     /// </summary>
     public void nextSet()
     {
-        mana.text = (block.mana + 1).ToString();
+        mana.text = block.BlockInfo.Mana[block.level].ToString();
     }
     public void LevelUp()
     {
         block.LevelUp();
-        mana.text = block.mana.ToString();
+        mana.text = block.BlockInfo.Mana[block.level - 1].ToString();
     }
     public void Clear()
     {

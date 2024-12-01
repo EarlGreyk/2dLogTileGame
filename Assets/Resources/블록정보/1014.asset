@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 549edc1e974a9cb4791506a9d2ea2a15, type: 3}
+  m_Name: 1014
+  m_EditorClassIdentifier: 
+  blockName: 
+  patternData: {fileID: 11400000, guid: 2c63ec11cdf8dff468363eee5e3d1829, type: 2}
+  mana: 030000000400000005000000
+  upmana: 1
+  sprite: {fileID: 21300000, guid: d96f3e26dcb68634b81f200cf9bfea28, type: 3}
+  upgold: b80b0000581b0000
+  removeGold: 800
+  equipGold: 500
+  equipCost: 020000000200000003000000

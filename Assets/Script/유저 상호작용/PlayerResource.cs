@@ -9,9 +9,11 @@ using UnityEngine.UI;
 public class PlayerResource : MonoBehaviour
 {
     public static PlayerResource instance;
-    private int mana;
-    private int maxMana;
-    private int tempMana;
+    private float mana;
+    public float Mana { get { return mana; } }
+    private float maxMana;
+    public float MaxMana {  get { return maxMana; } }
+    private float tempMana;
     //플레이어 장착하고 있는 총 덱 리스트
     private List<Block> playerBlockList = new List<Block>();
     public List<Block> PlayerBlockList {  get { return playerBlockList; } }
@@ -76,8 +78,15 @@ public class PlayerResource : MonoBehaviour
 
 
     //플레이어 골드. 
-    private int gold = 0;
-    public int Gold { get { return gold; } set { gold = value; } }
+    private int gold;
+    public int Gold { get { return gold; } 
+        set 
+        { 
+            gold = value;
+            for(int i =0; i<goldTextList.Count; i++)
+                goldTextList[i].text = gold.ToString();
+        } }
+
 
 
     // Manabar
@@ -85,7 +94,10 @@ public class PlayerResource : MonoBehaviour
     private TextMeshProUGUI manaText;
     [SerializeField]
     private Image manaFillImage;
+
+    //goldTExt
     [SerializeField]
+    private List<TextMeshProUGUI> goldTextList = new List<TextMeshProUGUI>();
     
     
     
@@ -106,70 +118,101 @@ public class PlayerResource : MonoBehaviour
         fourthSlate = SettingData.fourthSlate;
         if(SettingData.Load == false)
         {
-            panelSet(firstSlate);
-            panelSet(secondSlate);
-            panelSet(thirdSlate);
-            panelSet(fourthSlate);
-            //초기 주문 설정
             if (firstSlate != null)
             {
+                panelSet(firstSlate);
                 MagicSet(firstSlate.Magics[0]);
             }
             if (secondSlate != null)
+            {
+                panelSet(secondSlate);
                 MagicSet(secondSlate.Magics[0]);
+            }
+
             if (thirdSlate != null)
+            {
+                panelSet(thirdSlate);
                 MagicSet(thirdSlate.Magics[0]);
+            }
             if (fourthSlate != null)
+            {
+                panelSet(fourthSlate);
                 MagicSet(fourthSlate.Magics[0]);
+            }
+                
+
+            Gold = 0;
+            mana = 20;
+            maxMana = 20;
         }
         else
         {
-            gold = SaveLoadManager.instance.PlayerResourceData.gold;
+            Gold = SaveLoadManager.instance.PlayerResourceData.gold;
+            mana = SaveLoadManager.instance.PlayerResourceData.mana;
+            maxMana = SaveLoadManager.instance.PlayerResourceData.maxMana;
             SlateSaveData savedata = null;
             if (firstSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.firstSlateData;
-                firstSlateLevel = savedata.slatelevel+1;
-                for (int i =0; i< savedata.slatelevel;i++)
+                if (savedata != null)
                 {
-                    if (firstSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                        MagicSet(firstSlate.Magics[i]);
+                    firstSlateLevel = savedata.slatelevel + 1;
+                    for (int i = 0; i < firstSlateLevel; i++)
+                    {
+                        Debug.Log(firstSlate.Magics[0].Sort);
+                        if (firstSlate.Magics[i].Sort == Magic.MagicSort.Active)
+                            MagicSet(firstSlate.Magics[i]);
+                    }
                 }
+               
                 
             }
             if (secondSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.secondSlateData;
-                secondSlateLevel = savedata.slatelevel+1;
-                for (int i = 0; i < savedata.slatelevel; i++)
+                if (savedata != null)
                 {
-                   
-                    if (secondSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                        MagicSet(secondSlate.Magics[i]);
+                    secondSlateLevel = savedata.slatelevel + 1;
+                    for (int i = 0; i < secondSlateLevel; i++)
+                    {
+
+                        if (secondSlate.Magics[i].Sort == Magic.MagicSort.Active)
+                            MagicSet(secondSlate.Magics[i]);
+                    }
                 }
+               
 
             }
             if (thirdSlate != null)
             {
                 savedata = SaveLoadManager.instance.PlayerResourceData.thirdSlateData;
-                thirdSlateLevel = savedata.slatelevel+1; 
-                for (int i = 0; i < savedata.slatelevel; i++)
+                if(savedata != null)
                 {
-                    
-                   if(thirdSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                        MagicSet(thirdSlate.Magics[i]);
+                    thirdSlateLevel = savedata.slatelevel + 1;
+                    for (int i = 0; i < thirdSlateLevel; i++)
+                    {
+
+                        if (thirdSlate.Magics[i].Sort == Magic.MagicSort.Active)
+                            MagicSet(thirdSlate.Magics[i]);
+                    }
                 }
+                
 
             }
             if (fourthSlate != null)
             {
+                
                 savedata = SaveLoadManager.instance.PlayerResourceData.fourSlateData;
-                fourSlateLevel = savedata.slatelevel+1;
-                for (int i = 0; i < savedata.slatelevel; i++)
+                if(savedata != null)
                 {
-                    if (fourthSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                        MagicSet(fourthSlate.Magics[i]);
+                    fourSlateLevel = savedata.slatelevel + 1;
+                    for (int i = 0; i < fourSlateLevel; i++)
+                    {
+                        if (fourthSlate.Magics[i].Sort == Magic.MagicSort.Active)
+                            MagicSet(fourthSlate.Magics[i]);
+                    }
                 }
+               
 
             }
         }
@@ -181,12 +224,7 @@ public class PlayerResource : MonoBehaviour
         }
 
 
-
-
-
-        //임시설정
-        mana = 20;
-        maxMana = 20;
+        
         
        
 
@@ -201,14 +239,6 @@ public class PlayerResource : MonoBehaviour
             BlockManage.instance.EquipSet(block);   
         }  
     }
-    //private void panelSet(PlayerResourceSaveData saveData)
-    //{
-    //    for (int i = 0; i < saveData.playerBlockDataList.Count; i++)
-    //    {
-    //        Block block = new Block(saveData.playerBlockDataList[i]);
-    //        BlockManage.instance.EquipSet(block);
-    //    }
-    //}
     /// <summary>
     /// 블록을 추가합니다.
     /// BlockManage와 연동되는 함수입니다.
@@ -231,11 +261,17 @@ public class PlayerResource : MonoBehaviour
     /// </summary>
     public void BlockDrow(bool start)
     {
-        if (playerCurBlockList.Count >= 7)
+        if (GameManager.instance.IsPlayer == false)
         {
-            Debug.Log("손패가 최대치입니다.");
+            ErrorManager.instance.ErrorSet("당신의 턴이 아닙니다");
             return;
         }
+        if (playerCurBlockList.Count >= 7)
+        {
+            ErrorManager.instance.ErrorSet("손패가 최대치 입니다");
+            return;
+        }
+        
 
         Block temp; 
         if(playerDrowBlockList.Count < 1) 
@@ -262,7 +298,7 @@ public class PlayerResource : MonoBehaviour
 
         }
         if(!start)
-            GameManager.instance.LampUpdate(1);
+            GameManager.instance.LampUpdate(-1);
         
     }
 
@@ -335,7 +371,17 @@ public class PlayerResource : MonoBehaviour
     /// </summary>
     public void PlayerManaSet()
     {
-        mana += tempMana;
+        if (GameManager.instance.IsPlayer == false)
+        {
+            ErrorManager.instance.ErrorSet("당신의 턴이 아닙니다");
+            return;
+        }
+        if (maxMana < mana + tempMana)
+        {
+            ErrorManager.instance.ErrorSet("획득 가능한 마나가 최대 마나 수치를 넘깁니다");
+            return;
+        }
+        mpbarUpdate(tempMana);
         tempMana = 0;
         for(int i =0; i<ChargeBlockList.Count; i++)
         {
@@ -346,7 +392,6 @@ public class PlayerResource : MonoBehaviour
                     playerBlockPanel[k].gameObject.SetActive(false);
                     playerCurBlockList.Remove(playerBlockPanel[k].block);
                     playerDrowBlockList.Add(playerBlockPanel[k].block);
-                    Debug.Log($"{i},{k} : {ChargeBlockList[i].Block.BlockInfo.sprite}와{playerBlockPanel[k].block.BlockInfo.sprite}같음 ");
                     break;
                 }
             }
@@ -359,9 +404,8 @@ public class PlayerResource : MonoBehaviour
                 break;
             playerChargePanelList[i].BlockImage.color = Color.white;
         }
-        mpbarSet();
 
-        GameManager.instance.LampUpdate(1);
+        GameManager.instance.LampUpdate(-1);
     }
     
     /// <summary>
@@ -382,7 +426,10 @@ public class PlayerResource : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// 플레이어 마법 설정
+    /// </summary>
+    /// <param name="magic"></설정할 마법>
 
 
     public void MagicSet(Magic magic)
@@ -400,9 +447,13 @@ public class PlayerResource : MonoBehaviour
 
 
 
-    public void mpbarSet()
+    public void mpbarUpdate(float value)
     {
+        mana += value;
         manaText.text = mana.ToString() + " / " + maxMana.ToString();
-        manaFillImage.fillAmount = mana / maxMana;
+
+        float fill = mana / maxMana;
+        manaFillImage.fillAmount = fill;
     }
+
 }

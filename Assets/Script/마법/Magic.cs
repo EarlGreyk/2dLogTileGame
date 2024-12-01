@@ -96,6 +96,15 @@ public class Magic : ScriptableObject
     private int magicValue;
     public int MagicValue { get { return magicValue; } }
 
+    /// <summary>
+    /// 마법 지속턴수. 0이면 해당 턴에 종료.
+    /// 해당 변수가 1 이상일 경우 상태이상 기술
+    /// </summary>
+    [SerializeField]
+    private int magicDuration;
+    public int MagicDuration { get { return magicDuration; } }
+
+
 
 
 

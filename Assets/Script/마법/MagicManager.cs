@@ -14,7 +14,13 @@ public class MagicManager : MonoBehaviour
 
     public virtual void Set(SlateUI slateUI)
     {
+        if(PlayerLevelManager.instance.Level< slateUI.Slate.EnableLevel)
+        {
+            ErrorManager.instance.ErrorSet("레벨이 부족합니다");
+            return;
+        }
         magicListSet(slateUI.Slate.Magics);
+        magicDescSet(null);
     }
 
     public void magicListSet(List<Magic> magics)

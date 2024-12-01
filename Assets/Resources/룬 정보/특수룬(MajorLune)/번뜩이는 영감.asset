@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb75f295da6de345a1994377f5cde7f, type: 3}
   m_Name: "\uBC88\uB729\uC774\uB294 \uC601\uAC10"
   m_EditorClassIdentifier: 
-  LuneName: "\uBC88\uB729\uC774\uB294 \uC601\uAC10"
+  LuneName: "\uACF5\uACA9 \uAC15\uD654"
   LuneDesc: "\uC601\uAC10 \uD655\uC728\uC744 \uC99D\uAC00\uC2DC\uD0B5\uB2C8\uB2E4."
   LunePrice: 0
+  LuneSprite: {fileID: 0}
   effectKeys: []
   effectValues: 

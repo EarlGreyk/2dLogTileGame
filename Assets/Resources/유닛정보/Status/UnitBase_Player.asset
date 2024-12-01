@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa1252c3b5a32b446a7565e401804d17, type: 3}
   m_Name: UnitBase_Player
   m_EditorClassIdentifier: 
-  health: 100
+  health: 50
   damage: 5
   elementalDamage: 5
   defense: 0

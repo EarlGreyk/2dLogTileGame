@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1641fce1f89d3d42b08bcb7a12233ab, type: 3}
+  m_Name: Fire 9
+  m_EditorClassIdentifier: 
+  type: 0
+  tag: 4
+  sort: 0
+  index: 20010
+  level: 0
+  magicCost: 36
+  magicName: "\uC6B4\uC11D\uB099\uD558"
+  magicDesc: "\uC6B4\uC11D\uC744 \uB099\uD558\uC2DC\uCF1C \uAC15\uD55C \uD654\uC5FC\uD3ED\uBC1C\uC744
+    \uC77C\uC73C\uD0B4"
+  iconSprite: {fileID: 21300000, guid: d572a08652458ce4e8fefe8d382221a6, type: 3}
+  gold: 0
+  requireSlateLevel: 10
+  magicRange: {fileID: 11400000, guid: 374939d92edc0a64c9cb7862ad17e841, type: 2}
+  magicAoe: {fileID: 11400000, guid: a3ab0152415155a408779959a6b6eb75, type: 2}
+  magicEffectPrefab: {fileID: 0}
+  magicValue: 150
+  magicDuration: 0

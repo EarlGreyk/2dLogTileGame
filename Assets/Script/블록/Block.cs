@@ -6,25 +6,28 @@ public class Block
 {
     public int level;
     public int mana;
-    public int upmana;
+    public int cost;
     public BlockInfo BlockInfo;
     public Block(BlockInfo blockInfo)
     {
         level = 1;
         BlockInfo = blockInfo;
-        mana = blockInfo.Mana;        
-        upmana = blockInfo.Upmana;
+        cost = blockInfo.EquipCost[level - 1];
+        mana = blockInfo.Mana[level - 1] ;        
     }
     public Block(BlockSaveData saveData)
     {
         level = saveData.level;
-        mana =saveData.mana;
-        upmana=saveData.upmana;
         BlockInfo = Resources.Load<BlockInfo>("블록정보/"+saveData.blockInfoName);
+        if(BlockInfo !=null)
+        {
+            mana = BlockInfo.Mana[level - 1];
+            cost = BlockInfo.EquipCost[level - 1];
+        }
     }
     public void LevelUp()
     {
         level++;
-        mana += upmana;
+        mana = BlockInfo.Mana[level - 1];
     }
 }

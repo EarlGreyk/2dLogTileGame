@@ -23,6 +23,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a4c3623d5f84e7e438afc4f3b1221754, type: 2}
   - {fileID: 11400000, guid: 1d8f51f348b6561468313f5a9870f84d, type: 2}
   - {fileID: 11400000, guid: 941e60507423ee745ab4fe83469a8823, type: 2}
-  tag: "\uBCF4\uD638\uB9C9"
-  enable: 1
+  tag: "\uBC29\uC5B4"
+  enable: 0
   blocks: []
+  SlateSprite: {fileID: 0}
+  enableLevel: 3

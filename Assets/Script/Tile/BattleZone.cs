@@ -109,7 +109,6 @@ public class BattleZone : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log(tile);
                 }
 
 
@@ -167,8 +166,6 @@ public class BattleZone : MonoBehaviour
         if (battleTiles[x, y].onUnit != null) 
             serchUnit = battleTiles[x, y].onUnit;
 
-        if(serchUnit != null)
-            Debug.Log(serchUnit.name);
 
         return serchUnit;
     }

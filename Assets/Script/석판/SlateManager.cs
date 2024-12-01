@@ -38,7 +38,8 @@ public class SlateManager : MonoBehaviour
 
     private void LoadAllSlates()
     {
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slate");
+        SlateDataSet();
+        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
         foreach (Slate slate in allSlates)
         {
             string key = GetCategoryKey(slate); 
@@ -84,7 +85,14 @@ public class SlateManager : MonoBehaviour
 
     private void slateScrollSet(SlateUI slateUI,Slate slate)
     {
-        slateUI.SlateSet(slate);
+        if(slate.Enable)
+        {
+            slateUI.SlateSet(slate);
+        }
+        else
+        {
+            //비활성화 된 석판을 도감으로 보여줄때 예외 처리를 어떻게 해야할지 생각해야합니다.
+        }
     }
 
     private void slateScrollClear()
@@ -102,7 +110,8 @@ public class SlateManager : MonoBehaviour
 
     private void EnableSlate()
     {
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slate");
+        SlateDataSet();
+        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
         foreach (Slate slate in allSlates)
         {
             if (slate.Enable)
@@ -148,6 +157,22 @@ public class SlateManager : MonoBehaviour
     public void OnDisable()
     {
         slateScrollClear();
+    }
+
+
+    private void SlateDataSet()
+    {
+        Slate[] slates = Resources.LoadAll<Slate>("Slates");
+
+        for (int i = 0; i < slates.Length; i++)
+        {
+            if (PlayerLevelManager.instance.Level >= slates[i].EnableLevel)
+            {
+                slates[i].Enable = true;
+            }
+
+        }
+
     }
 
 }

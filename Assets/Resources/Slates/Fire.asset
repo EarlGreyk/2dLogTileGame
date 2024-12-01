@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3936a535852f6514b92d208a1076ff2f, type: 2}
   - {fileID: 11400000, guid: 95c7b2e95a8094243ba55cfb9886d5fd, type: 2}
   - {fileID: 11400000, guid: d8e468c06b69bb345afad76907edea9d, type: 2}
-  tag: "\uD654\uC5FC"
+  tag: "\uACF5\uACA9"
   enable: 1
   blocks:
   - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
@@ -32,4 +32,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e756a4b3e901737419cdf571b5e90dbb, type: 2}
   - {fileID: 11400000, guid: 791e2a6a14b54c14a9c0fc2e66fe5cee, type: 2}
   - {fileID: 11400000, guid: 791e2a6a14b54c14a9c0fc2e66fe5cee, type: 2}
+  - {fileID: 11400000, guid: 791e2a6a14b54c14a9c0fc2e66fe5cee, type: 2}
+  - {fileID: 11400000, guid: 791e2a6a14b54c14a9c0fc2e66fe5cee, type: 2}
   SlateSprite: {fileID: 21300000, guid: f458f9b278b801249ab120abc4a8a3c7, type: 3}
+  enableLevel: 1

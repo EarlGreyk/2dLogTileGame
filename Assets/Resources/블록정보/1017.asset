@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockName: 
   patternData: {fileID: 11400000, guid: bc949025ca7f0474084197d71b6ba673, type: 2}
-  mana: 1
+  mana: 020000000400000005000000
   upmana: 1
   sprite: {fileID: 21300000, guid: d96f3e26dcb68634b81f200cf9bfea28, type: 3}
-  nextBlock: {fileID: 0}
-  upGold: 2000
+  upgold: c4090000401f0000
   removeGold: 300
   equipGold: 0
+  equipCost: 020000000400000005000000

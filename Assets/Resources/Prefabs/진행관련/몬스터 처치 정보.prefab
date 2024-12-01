@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f636c99b4a93e964f95c38f46ec57fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterIcon: {fileID: 435673914273592025}
+  monsterIcon: {fileID: 435673913566521804}
   killCount: {fileID: 435673914253533472}
   killGold: {fileID: 435673914711982584}
 --- !u!1 &435673914342721106

@@ -23,7 +23,6 @@ public class LampLight : MonoBehaviour
 
     public void LampLightDataSet(LampFireData fireData)
     {
-        Debug.Log(fireData);
         this.fireData = fireData;
         fireIcon.sprite = fireData.FireIcon;    
         fireDesc.text = fireData.FileDesc;

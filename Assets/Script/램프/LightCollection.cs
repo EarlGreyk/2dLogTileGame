@@ -34,10 +34,11 @@ public class LightCollection : MonoBehaviour
 
     private void LoadAllFires()
     {
-        LampFireData[] allLampFireData = Resources.LoadAll<LampFireData>("램프정보");
+        LightFireDataSet();
+        LampFireData[] allLampFireData = Resources.LoadAll<LampFireData>("램프 정보");
         foreach (LampFireData fireData in allLampFireData)
         {
-            int key = fireData.FireGrade;
+            int key = fireData.EnableLevel;
             if (!slateDic.ContainsKey(key))
             {
                 Debug.Log($"생성{key}");
@@ -92,6 +93,21 @@ public class LightCollection : MonoBehaviour
     public void OnDisable()
     {
         fireScrollClear();
+    }
+
+    //자신의 현재 레벨에 맞는 등불 불빛을 활성화 합니다.
+    private void LightFireDataSet()
+    {
+        LampFireData[] lampFireData = Resources.LoadAll<LampFireData>("램프정보");
+
+
+        for (int i = 0; i < lampFireData.Length; i++)
+        {
+            if (PlayerLevelManager.instance.Level >= lampFireData[i].EnableLevel)
+            {
+                lampFireData[i].Enable = true;
+            }
+        }
     }
 
 }

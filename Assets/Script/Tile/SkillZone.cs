@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
 
 public class SkillZone : MonoBehaviour
 {
@@ -18,7 +16,7 @@ public class SkillZone : MonoBehaviour
 
     public GameObject currentMagicEffect;
 
-    private Vector3Int hitTilePos = new Vector3Int(0,0,10);
+    private Vector3Int hitTilePos = new Vector3Int(0,0,100);
 
     //나중에 밑에 리스트 통합시켜야함.
     private List<Vector3Int> checkTilePos = new List<Vector3Int>();
@@ -43,6 +41,9 @@ public class SkillZone : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.IsPlayer == false)
+            return;
+
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int cellPosition = tilemap.WorldToCell(mouseWorldPos);
         if (Input.GetMouseButtonDown(0) && tilemap.HasTile(cellPosition))
@@ -58,19 +59,20 @@ public class SkillZone : MonoBehaviour
 
         if (tilemap.HasTile(cellPosition))
         {
+            hitTilePos = new Vector3Int(0, 0, 100);
             if (hitTilePos == cellPosition)
             {
-                Debug.Log("같은 지역을 반환중입니다.");
+                ErrorManager.instance.ErrorSet("해당 구역은 스킬 사용 범위를 벗어납니다");
                 return;
             }
             if (tilemap.GetTile(cellPosition) == BreakTile)
             {
                 Debug.Log("해당 구역은 스킬을 사용 할 수 없는 지역입니다.");
-                hitTilePos = new Vector3Int(0,0,10);
+                hitTilePos = new Vector3Int(0,0,100);
                 ResetBlock();
                 return;
             }
-            if (hitTilePos == new Vector3Int(0, 0, 10) && checkTileRange.Contains(cellPosition))
+            if (hitTilePos == new Vector3Int(0, 0, 100) && checkTileRange.Contains(cellPosition))
             {
                 ResetBlock();
                 hitTilePos = cellPosition;
@@ -89,6 +91,12 @@ public class SkillZone : MonoBehaviour
 
     public void SettingSkillZone(Magic magic,GameObject magicEffect)
     {
+        if (GameManager.instance.IsPlayer == false)
+        {
+            ErrorManager.instance.ErrorSet("당신의 턴이 아닙니다");
+            return;
+        }
+            
         CameraSetting.instance.blockModeOff();
 
         // Grid의 셀 크기 (스케일)
@@ -169,8 +177,6 @@ public class SkillZone : MonoBehaviour
             int y = pos.y - 3 + hitTilePos.y;
             Vector3Int tilepos = new Vector3Int(x, y);
 
-            Debug.Log(x);
-            Debug.Log(y);
             if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY && x>=0 && y>=0)
             {
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break )
@@ -227,11 +233,16 @@ public class SkillZone : MonoBehaviour
 
     public void UseSkill()
     {
-
+        if (PlayerResource.instance.Mana < currentMagic.MagicCost)
+        {
+            ErrorManager.instance.ErrorSet("마법을 사용할 마나가 부족합니다");
+            return;
+        }
         GameManager.instance.PlayerActionManager.SettingSkillAction
             (currentMagic,currentMagicEffect,hitTilePos, checkTilePos);
 
-        GameManager.instance.LampUpdate(1);
+        GameManager.instance.LampUpdate(-1);
+        PlayerResource.instance.mpbarUpdate(-currentMagic.MagicCost);
         SkillStop();
     }
     
@@ -251,6 +262,7 @@ public class SkillZone : MonoBehaviour
         {
             tilemap.SetTile(checkTilePos[i], null);
         }
+        hitTilePos = new Vector3Int(0, 0, 100);
         checkTileRange.Clear();
         checkTilePos.Clear();
         checkTileType.Clear();
