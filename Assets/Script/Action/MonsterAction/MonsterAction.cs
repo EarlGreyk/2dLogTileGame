@@ -31,7 +31,6 @@ public class MonsterAction : MonoBehaviour
         if (currentmagic == null)
             return;
         StartCoroutine(Action());
-
         if(currentMagic.AoeType == MonsterMagic.MagicAoeType.Target)
         {
             List<PatternData.PatternPoint> pattern = currentMagic.MagicAoe.points;
@@ -55,7 +54,6 @@ public class MonsterAction : MonoBehaviour
                         if (GameManager.instance.BattleZone.BattleTiles[x, y].onUnit != null)
                             hitunits.Add(GameManager.instance.BattleZone.BattleTiles[x, y].onUnit);
                     }
-
 
                 }
                 else
@@ -90,8 +88,6 @@ public class MonsterAction : MonoBehaviour
                             if (GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == null)
                                 hitPos.Add(tilepos);
                         }
-
-
                     }
                     else
                     {
@@ -147,9 +143,6 @@ public class MonsterAction : MonoBehaviour
     {
         unit.ActionCheck();
     }
-
-
-
 
     /// <summary>
     /// 액션에 사용하는 코루틴 문입니다.

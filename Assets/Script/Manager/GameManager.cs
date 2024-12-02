@@ -169,15 +169,10 @@ public class GameManager : MonoBehaviour
                 MonsterUnit monster = unitSpawner.SpawnMonster(BattleZone.MonsterSponePosList[i], unitPrefabs);
                 monster.transform.position = unitSpawner.PosUnitSet(BattleZone.MonsterSponePosList[i]);
             }
-            
-            
-
         }else
         {
             Debug.Log("라운드 정보가 집계되지 않고있습니다.");
         }
-
-
 
     }
     /// <summary>
@@ -244,7 +239,7 @@ public class GameManager : MonoBehaviour
         roundText.text = this.stage.ToString() + " - " + this.round.ToString();
     }
 
-    ////휴식이 종료되어 라운드를 새로 시작합니다.
+    ////라운드를 시작합니다.
     ///
     public void RoundSet()
     {

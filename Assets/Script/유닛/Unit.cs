@@ -58,31 +58,7 @@ public class UnitStatus
         MagicCount = 0;
     }
 
-    public void effectUp(string effectString, float effectValue)
-    {
-        switch(effectString)
-        {
-            case "Health": Health += effectValue;
-                break;
-            case "Damage": Damage += effectValue;
-                break;
-            case "ElementalDamage": ElementalDamage += effectValue;
-                break;
-            case "Defence":Defense += effectValue;
-                break;
-            case "ItemChan":ItemChan += effectValue;
-                break;
-            case "BlockChan": BlockGain += effectValue;
-                break;
-            case "MagicChain": MagicChan += effectValue;
-                break;
-            case "MagicCount": MagicCount += effectValue;
-                break;
-
-        }
-        Debug.Log($"룬증가 방어력 : {Defense}");
-
-    }
+ 
     public void effectCopy(UnitStatus copyTemp)
     {
         Health = copyTemp.Health;
@@ -118,6 +94,39 @@ public class UnitStatus
         BlockGain *= ratioTemp.BlockChan;
         MagicChan *= ratioTemp.MagicChian;
         MagicCount *= ratioTemp.MagicCount;
+    }
+    public void effectUp(string effectString, float effectValue)
+    {
+        switch (effectString)
+        {
+            case "Health":
+                Health += effectValue;
+                break;
+            case "Damage":
+                Damage += effectValue;
+                break;
+            case "ElementalDamage":
+                ElementalDamage += effectValue;
+                break;
+            case "Defence":
+                Defense += effectValue;
+                break;
+            case "ItemChan":
+                ItemChan += effectValue;
+                break;
+            case "BlockChan":
+                BlockGain += effectValue;
+                break;
+            case "MagicChain":
+                MagicChan += effectValue;
+                break;
+            case "MagicCount":
+                MagicCount += effectValue;
+                break;
+
+        }
+        Debug.Log($"룬증가 방어력 : {Defense}");
+
     }
 
 }

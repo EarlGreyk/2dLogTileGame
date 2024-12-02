@@ -33,7 +33,7 @@ public class MagicDesc : MonoBehaviour
 
     public void DescSet(MagicUI UI)
     {
-        if (UI.Magic == null)
+        if (UI== null)
         {
             return;
         }

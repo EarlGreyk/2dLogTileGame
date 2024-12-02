@@ -13,13 +13,9 @@ public static class SettingData
     public static Slate thirdSlate;
     public static Slate fourthSlate;
 
-
-
     public static UnitStatus LuneStatus = new UnitStatus();
 
     public static bool Load = false;
-
-
 
     public static void BgmVolumeSave(float voulme)
     {
@@ -37,8 +33,5 @@ public static class SettingData
     {
         return PlayerPrefs.GetFloat("Effect", 0.5f);
     }
-
-
-
 
 }

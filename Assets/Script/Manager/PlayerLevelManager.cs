@@ -82,7 +82,6 @@ public class PlayerLevelManager : MonoBehaviour
 
 
 
-    //자신의 현재 레벨에 맞는 석판을 활성화 합니다.
   
 
 

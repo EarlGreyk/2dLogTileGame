@@ -26,6 +26,7 @@ public class SlateManager : MonoBehaviour
     [SerializeField]
     private MagicManager magicManager;
 
+
     private void Awake()
     {
         if (diction)
@@ -35,7 +36,6 @@ public class SlateManager : MonoBehaviour
 
 
     }
-
     private void LoadAllSlates()
     {
         SlateDataSet();
@@ -51,7 +51,28 @@ public class SlateManager : MonoBehaviour
             slateDic[key].Add(slate);
         }
     }
-    
+    /////
+    /// 아래는 Slate설정할때 쓰는 추가적인 함수입니다.
+    ////
+    private void EnableSlate()
+    {
+        SlateDataSet();
+        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
+        foreach (Slate slate in allSlates)
+        {
+            if (slate.Enable)
+            {
+                string key = GetCategoryKey(slate);
+                if (!slateDic.ContainsKey(key))
+                {
+                    slateDic[key] = new List<Slate>();
+                }
+                slateDic[key].Add(slate);
+            }
+
+        }
+    }
+
     private string GetCategoryKey(Slate slate)
     {
         return slate.Tag; 
@@ -65,9 +86,7 @@ public class SlateManager : MonoBehaviour
             Debug.Log("탐색할것이 없습니다");
             return;
         }
-            
-        
-        
+
         int count = slateDic[key].Count;
         slateScrollClear();
 
@@ -104,28 +123,7 @@ public class SlateManager : MonoBehaviour
     }
 
 
-    /////
-    /// 아래는 Slate설정할때 쓰는 추가적인 함수입니다.
-    ////
 
-    private void EnableSlate()
-    {
-        SlateDataSet();
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
-        foreach (Slate slate in allSlates)
-        {
-            if (slate.Enable)
-            {
-                string key = GetCategoryKey(slate);
-                if (!slateDic.ContainsKey(key))
-                {
-                    slateDic[key] = new List<Slate>();
-                }
-                slateDic[key].Add(slate);
-            }
-                
-        }
-    }
 
     //중복된 슬레이트를 받아오지 못하도록 목록에서 제거합니다.
     public void DicSlateRemove(SlateUI slateUi)

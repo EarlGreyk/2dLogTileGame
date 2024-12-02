@@ -16,6 +16,7 @@ public class MoveZone : MonoBehaviour
     private List<Vector3Int> movePos = new List<Vector3Int>();
 
 
+
     private void Update()
     {
         if (GameManager.instance.IsPlayer == false)
@@ -70,6 +71,7 @@ public class MoveZone : MonoBehaviour
    
     //플레이어가 클릭을 하면 클릭한 좌표를 받아와 동작합니다.
     //이동을 하면 즉시 해당 클래스를 비활성화 시켜 Update의 반복을 막습니다.
+
     public void setMovePos(Vector3Int cellPos)
     {
         // Grid의 셀 크기 (스케일)
@@ -128,17 +130,17 @@ public class MoveZone : MonoBehaviour
             int y = Mathf.FloorToInt((pos.y - 3)  + _sellpos.y / scale.y);
             Vector3Int tilepos = new Vector3Int(x, y, 0);
 
-            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) && x>=0 && y>=0)
+            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) &&
+                y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) && x>=0 && y>=0)
             {
-                if (GameManager.instance.BattleZone.BattleTiles[x, y].type != BattleTile.tileType.Break && GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == null)
+                if (GameManager.instance.BattleZone.BattleTiles[x, y].type != BattleTile.tileType.Break &&
+                    GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == null)
                 {
                     enableMoveTile(tilepos);
                 }
             }
-           
 
         }
-
     }
 
 }

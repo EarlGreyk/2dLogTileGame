@@ -281,7 +281,6 @@ public class SaveLoadManager : MonoBehaviour
         string json = JsonUtility.ToJson(saveData);
         File.WriteAllText(lightManagerPath, json);
 
-        Debug.Log("lightManagerÀúÀå");
     }
     private void SaveLuneEnable()
     {

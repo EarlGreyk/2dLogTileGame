@@ -154,27 +154,23 @@ public class MonsterUnit : Unit
         //현재 몬스터 유닛의 공격 사거리에들어와 있는지를 체크합니다.
         //이는 이동을 할지 액션 공격을 할지를 선정합니다. [인식범위]
         bool isCheck = false;
-
         Vector3Int unitPos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
         List<PatternData.PatternPoint> pattern = attackRangePattenData.points;
-
         foreach (var pos in pattern)
         {
             //중간값이 2,2이기 떄문에 -2씩 연산
             int x = Mathf.FloorToInt((pos.x - 3) + unitPos.x / GameManager.instance.Grid.transform.localScale.x);
             int y = Mathf.FloorToInt((pos.y - 3) + unitPos.y / GameManager.instance.Grid.transform.localScale.y);
             Vector3Int tilepos = new Vector3Int(x, y, 0);
-            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) & x>=0 & y>=0)
+            if (x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) 
+                & x>=0 & y>=0)
             {
                 if (GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == GameManager.instance.PlayerUnit)
                 {
                     isCheck = true;
                 }
             }
-
-
         }
-
         if(isCheck)
         {
             ActionSet(false);
@@ -326,7 +322,8 @@ public class MonsterUnit : Unit
         foreach (var pos in PosionList)
         {
 
-            if (pos.x >= 0 && pos.y >= 0 && pos.x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && pos.y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
+            if (pos.x >= 0 && pos.y >= 0 && pos.x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && 
+                pos.y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
                 GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].type != BattleTile.tileType.Break &&
                 GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].onUnit == null)
             {
@@ -362,7 +359,8 @@ public class MonsterUnit : Unit
             int newX = Mathf.FloorToInt((pos.x - 3) + start.x);
             int newY = Mathf.FloorToInt((pos.y - 3) + start.y);
 
-            if (newX >= 0 && newY >= 0 && newX < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && newY < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
+            if (newX >= 0 && newY >= 0 && newX < GameManager.instance.BattleZone.BattleTiles.GetLength(0) &&
+                newY < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
                 GameManager.instance.BattleZone.BattleTiles[newX, newY].type != BattleTile.tileType.Break &&
                 GameManager.instance.BattleZone.BattleTiles[newX, newY].onUnit == null)
             {
