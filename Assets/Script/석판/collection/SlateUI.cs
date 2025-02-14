@@ -8,14 +8,14 @@ using UnityEngine.UI;
 /// </summary>
 public class SlateUI : MonoBehaviour
 {
-    private Slate slate;
-    public Slate Slate { get { return slate; } set { slate = value; } }
+    private SlateScriptableObejct slate;
+    public SlateScriptableObejct Slate { get { return slate; } set { slate = value; } }
 
     public int SlateLevel;
-    
+
 
     [SerializeField]
-    private List<Magic> magics = new List<Magic>();
+    private MagicScriptableObejct[] magics;
 
 
     [SerializeField]
@@ -30,12 +30,12 @@ public class SlateUI : MonoBehaviour
 
 
 
-    public void SlateSet(Slate slate)
+    public void SlateSet(SlateScriptableObejct slate)
     {
         SlateNameText.text = slate.SlateName;
         SlateLevelText.text = SlateLevel.ToString();
         this.slate = slate;
-        this.magics = slate.Magics;
+        this.magics = slate.SlateMagics;
         if(slate.SlateSprite != null )
         {
             SlateImage.sprite = slate.SlateSprite;

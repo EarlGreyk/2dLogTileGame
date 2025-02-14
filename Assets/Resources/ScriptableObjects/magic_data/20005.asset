@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5742674d9fd04a84e87a89bf5ecd7b11, type: 3}
+  m_Name: 20005
+  m_EditorClassIdentifier: 
+  id: 20005
+  MagicName: "\uAF2C\uB9C8 \uD654\uC5FC\uAD6C"
+  MagicType: 3
+  MagicDesc: "\uD654\uC5FC\uAD6C\uC758 \uBC94\uC704\uB97C \uB370\uBBF8\uC9C0 \uBC94\uC704
+    ID\uB85C \uBCC0\uACBD\uD55C\uB2E4"
+  MagicRequiredMana: 0
+  MagicRequiredStep: 2
+  MagicValue: 0
+  MagicCastingRange: {fileID: 0}
+  MagicDamageRange: {fileID: 11400000, guid: 7f0121c215185a743909b30238322eeb, type: 2}
+  MagicDuration: 0
+  MagicApplies: 214e0000
+  MagicSprite: {fileID: 0}

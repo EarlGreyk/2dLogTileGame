@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class SkillSlot : MonoBehaviour
 {
     //
-    private Magic magic;
-    public Magic Magic { get { return magic; }}
+    private MagicScriptableObejct magic;
+    public MagicScriptableObejct Magic { get { return magic; }}
 
     [SerializeField]
     private Image magicImage;
@@ -21,11 +21,11 @@ public class SkillSlot : MonoBehaviour
 
 
 
-    public void magicSet(Magic magic)
+    public void magicSet(MagicScriptableObejct magic)
     {
         this.magic = magic;
-        magicImage.sprite = magic.IconSprite;
-        magicCost.text = magic.MagicCost.ToString();
+        magicImage.sprite = magic.MagicSprite;
+        magicCost.text = magic.MagicRequiredMana.ToString();
         magicEffect = magic.MagicEffectPrefab;
         gameObject.SetActive( true );
     }

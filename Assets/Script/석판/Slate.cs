@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Slate", order = 1)]
-public class Slate : ScriptableObject
+public class SlateDumy : ScriptableObject
 {
     [SerializeField]
     private string slateName;

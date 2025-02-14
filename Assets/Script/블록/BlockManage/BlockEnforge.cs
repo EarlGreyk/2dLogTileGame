@@ -36,7 +36,7 @@ public class BlockEnforge : MonoBehaviour
         enforeceBlockPanel.BlockImage.color = Color.red;
 
         currentEnforgeBlock.Set(blockpanel.Block);
-        enforghGold.text = enforeceBlockPanel.Block.BlockInfo.Upgold[enforeceBlockPanel.Block.level - 1].ToString();
+        enforghGold.text = enforeceBlockPanel.Block.BlockInfo.BlockEnforceGold[enforeceBlockPanel.Block.level - 1].ToString();
         nextEnforgeBlock.Set(blockpanel.Block);
         nextEnforgeBlock.nextSet();
 
@@ -45,7 +45,7 @@ public class BlockEnforge : MonoBehaviour
     public void EnforceBlock()
     {
         Debug.Log("강화");
-        if(PlayerResource.instance.Gold < enforeceBlockPanel.Block.BlockInfo.Upgold[enforeceBlockPanel.Block.level-1] )
+        if(PlayerResource.instance.Gold < enforeceBlockPanel.Block.BlockInfo.BlockEnforceGold[enforeceBlockPanel.Block.level-1] )
         {
             ErrorManager.instance.ErrorSet("골드가 부족합니다");
             return;

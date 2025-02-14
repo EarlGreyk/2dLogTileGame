@@ -33,6 +33,13 @@ public class PopUp : MonoBehaviour
             PopUpManager.instance.PopupChange(Pop);
         }
     }
+    public void OnOffPop()
+    {
+        if(Pop != null)
+        {
+            PopUpManager.instance.PopupOnOff(pop);
+        }
+    }
 
 
 

@@ -38,7 +38,7 @@ public class MagicDesc : MonoBehaviour
             return;
         }
             
-        descImage.sprite = UI.Magic.IconSprite;
+        descImage.sprite = UI.Magic.MagicSprite;
         descText.text = UI.Magic.MagicDesc;
         nameText.text = UI.Magic.MagicName;
 

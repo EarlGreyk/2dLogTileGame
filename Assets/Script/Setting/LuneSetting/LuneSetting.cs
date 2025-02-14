@@ -1,21 +1,17 @@
+using JetBrains.Annotations;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LuneSetting : MonoBehaviour
 {
-    public enum LuneType
-    {
-        Basic,
-        Major
-    }
-    [HideInInspector]
-    public LuneType luneType;
 
-    [HideInInspector]
-    public BagicLune selectedBasicLune;
-    [HideInInspector]
-    public MajorLune selectedMajorLune;
+
+
+    
+    public LuneScriptableObejct LuneData;
+ 
 
     public List<LuneSetting> ConnectedNodes;
 
@@ -24,6 +20,7 @@ public class LuneSetting : MonoBehaviour
     public bool LuneEnable { get { return luneEnable; } set { luneEnable = value; } }
 
     public Image LuneImage;
+
    
 
     
@@ -33,41 +30,40 @@ public class LuneSetting : MonoBehaviour
     private void Start()
     {
         LuneImage = GetComponent<Image>();
-        switch (luneType)
+
+    
+        if(LuneData != null)
         {
-            case LuneType.Basic:
-                Bagic();
-                break;
-            case LuneType.Major:
-                Major();
-                break;
+            LuneImage.sprite = LuneData.LuneSprite;
+            for(int i = 0; i < ConnectedNodes.Count; i++)
+            {
+                ConnectedNodes[i].LuneDataSetting(LuneData.luneScriptableObejcts[i]);
+            }
         }
+
+
+
     }
 
-    private void Bagic()
+    /// <summary>
+    /// 소형 노드들이 메인룬에게서 데이터를 받을떄 사용됩니다.
+    /// </summary>
+    public void LuneDataSetting(LuneScriptableObejct lunedata)
     {
-        LuneImage.sprite = selectedBasicLune.LuneSprite;
-    }
-    private void Major()
-    {
-        LuneImage.sprite = selectedMajorLune.LuneSprite;
+        LuneData = lunedata;
+        if(lunedata.LuneSprite != null)
+            LuneImage.sprite = lunedata.LuneSprite;
     }
 
+   
 
     
 
 
     public void LuneSelect(RectTransform rectTransform )
     {
-        switch (luneType)
-        {
-            case LuneType.Basic:
-                LuneManager.instance.LuneUi.onSet(selectedBasicLune);
-                break;
-            case LuneType.Major:
-                LuneManager.instance.LuneUi.onSet(selectedMajorLune);
-                break;
-        }
+        LuneManager.instance.LuneUi.onSet(LuneData);
+
         Vector2 totalPosition = rectTransform.anchoredPosition;
         RectTransform UIRect = LuneManager.instance.LuneUi.GetComponent<RectTransform>();
         Vector2 UIPosition = UIRect.anchoredPosition;

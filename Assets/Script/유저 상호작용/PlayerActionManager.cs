@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerActionManager : MonoBehaviour
 {
-    private Magic magic;
+    private MagicScriptableObejct magic;
     private GameObject magicEffect;
     private Vector3Int hitPoint;
     private List<Vector3Int> targetPos;    
@@ -14,7 +14,7 @@ public class PlayerActionManager : MonoBehaviour
    
      
     
-    public void SettingSkillAction(Magic magic ,GameObject magicEffect,Vector3Int hitPoint ,List<Vector3Int> targetPos)
+    public void SettingSkillAction(MagicScriptableObejct magic ,GameObject magicEffect,Vector3Int hitPoint ,List<Vector3Int> targetPos)
     {
         this.magic = magic;
         this.magicEffect = magicEffect;

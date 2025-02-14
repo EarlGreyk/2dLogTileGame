@@ -134,20 +134,46 @@ public class BattleZone : MonoBehaviour
             battleTiles[x, y].onUnit = unit;
 
     }
+    /// <summary>
+    /// 유닛이 파괴되거나 유닛이 이동될때 BattleZone에 해당 유닛을 제거합니다.
+    /// 유닛이 파괴되거나 이동을 완료되었음으로 해당 유닛의 가이동처리를 제거해야합니다.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
     public void removeTileUnit(Vector3 pos,Unit unit)
     {
         Vector3 scale = grid.transform.localScale;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
 
-
-
-
         int x = Mathf.FloorToInt(unitPos.x / scale.x);
         int y = Mathf.FloorToInt(unitPos.y / scale.y);
         if (battleTiles[x, y].onUnit == unit)
             battleTiles[x, y].onUnit = null;
+
+        removeTempTile(pos);
     }
+    public void setTempTile(Vector3 pos)
+    {
+        Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
+
+        Debug.Log(pos);
+        int x = unitPos.x;
+        int y = unitPos.y;
+        battleTiles[x, y].tempTile = true;
+    }
+
+    public void removeTempTile(Vector3 pos)
+    {
+        Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
+
+
+        int x = unitPos.x;
+        int y = unitPos.y;
+        battleTiles[x, y].tempTile = false;
+    }
+
+
 
 
 
@@ -155,9 +181,6 @@ public class BattleZone : MonoBehaviour
     {
         Unit serchUnit = null;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
-
-
-
 
 
         int x = unitPos.x ;

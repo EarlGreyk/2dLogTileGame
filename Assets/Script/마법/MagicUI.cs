@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class MagicUI : MonoBehaviour
 {
 
-    private Magic magic;
+    private MagicScriptableObejct magic;
 
 
-    public Magic Magic { get { return magic; } set { magic = value; MagicSet(); } }
+    public MagicScriptableObejct Magic { get { return magic; } set { magic = value; MagicSet(); } }
 
     [SerializeField]
     private Image magicImage;
@@ -27,7 +27,7 @@ public class MagicUI : MonoBehaviour
     {
         if (magic != null)
         {
-            magicImage.sprite = magic.IconSprite;
+            magicImage.sprite = magic.MagicSprite;
         }
         
     }

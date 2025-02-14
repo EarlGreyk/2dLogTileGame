@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8668c6fd7d0c5ec4eb054ef0ac14f7a6, type: 3}
+  m_Name: 5014
+  m_EditorClassIdentifier: 
+  id: 5014
+  Tag: 1
+  Name: "\uB300\uC7A5\uC758 \uBA54\uB2EC"
+  Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130\uC758 \uCCB4\uB825\uC774 20% \uC0C1\uC2B9\uD55C\uB2E4"
+  value: 0.2
+  Sprite: {fileID: 21300000, guid: b2fc36b98ae0abb48852c383b4d523e2, type: 3}

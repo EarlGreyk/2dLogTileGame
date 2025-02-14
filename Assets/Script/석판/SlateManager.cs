@@ -15,9 +15,9 @@ public class SlateManager : MonoBehaviour
     private ScrollView dictionaryView;
 
 
-    private Dictionary<string,List<Slate>> slateDic = new Dictionary<string,List<Slate>>();
+    private Dictionary<int,List<SlateScriptableObejct>> slateDic = new Dictionary<int,List<SlateScriptableObejct>>();
 
-    private List<Slate> slateList = new List<Slate>();
+    private List<SlateScriptableObejct> slateList = new List<SlateScriptableObejct>();
 
     [SerializeField]
     private List<GameObject> slateObject = new List<GameObject>();
@@ -39,14 +39,14 @@ public class SlateManager : MonoBehaviour
     private void LoadAllSlates()
     {
         SlateDataSet();
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
-        foreach (Slate slate in allSlates)
+        SlateScriptableObejct[] allSlates = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data");
+        foreach (SlateScriptableObejct slate in allSlates)
         {
-            string key = GetCategoryKey(slate); 
+            int key = GetCategoryKey(slate); 
             if (!slateDic.ContainsKey(key))
             {
                 Debug.Log($"»ý¼º{key}");
-                slateDic[key] = new List<Slate>();
+                slateDic[key] = new List<SlateScriptableObejct>();
             }
             slateDic[key].Add(slate);
         }
@@ -57,15 +57,15 @@ public class SlateManager : MonoBehaviour
     private void EnableSlate()
     {
         SlateDataSet();
-        Slate[] allSlates = Resources.LoadAll<Slate>("Slates");
-        foreach (Slate slate in allSlates)
+        SlateScriptableObejct[] allSlates = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data");
+        foreach (SlateScriptableObejct slate in allSlates)
         {
             if (slate.Enable)
             {
-                string key = GetCategoryKey(slate);
+                int key = GetCategoryKey(slate);
                 if (!slateDic.ContainsKey(key))
                 {
-                    slateDic[key] = new List<Slate>();
+                    slateDic[key] = new List<SlateScriptableObejct>();
                 }
                 slateDic[key].Add(slate);
             }
@@ -73,13 +73,13 @@ public class SlateManager : MonoBehaviour
         }
     }
 
-    private string GetCategoryKey(Slate slate)
+    private int GetCategoryKey(SlateScriptableObejct slate)
     {
-        return slate.Tag; 
+        return slate.SlateType; 
     }
 
 
-    public void slateSerach(string key)
+    public void slateSerach(int key)
     {
         if (!slateDic.ContainsKey(key))
         {
@@ -94,7 +94,6 @@ public class SlateManager : MonoBehaviour
 
         for(int i = 0; i < slateList.Count; i++) 
         {
-            slateObject[i].SetActive(true);
             slateScrollSet(slateObject[i].GetComponent<SlateUI>(), slateList[i]);
         }
         
@@ -102,11 +101,12 @@ public class SlateManager : MonoBehaviour
     }
 
 
-    private void slateScrollSet(SlateUI slateUI,Slate slate)
+    private void slateScrollSet(SlateUI slateUI,SlateScriptableObejct slate)
     {
         if(slate.Enable)
         {
             slateUI.SlateSet(slate);
+            slateUI.gameObject.SetActive(true);
         }
         else
         {
@@ -131,7 +131,7 @@ public class SlateManager : MonoBehaviour
         if (slateUi.Slate == null)
             return;
 
-        Slate removeSlate = slateUi.Slate;
+        SlateScriptableObejct removeSlate = slateUi.Slate;
         if(slateDic.ContainsKey(GetCategoryKey(slateUi.Slate)))
         {
             var slates = slateDic[GetCategoryKey(slateUi.Slate)];
@@ -145,7 +145,7 @@ public class SlateManager : MonoBehaviour
     {
         if (slateSetting.CurrentSlateUI.Slate == null)
             return;
-        string key = GetCategoryKey(slateSetting.CurrentSlateUI.Slate);
+        int key = GetCategoryKey(slateSetting.CurrentSlateUI.Slate);
         Debug.Log(slateSetting.CurrentSlateUI.Slate);
         slateDic[key].Add(slateSetting.CurrentSlateUI.Slate);
     
@@ -160,7 +160,7 @@ public class SlateManager : MonoBehaviour
 
     private void SlateDataSet()
     {
-        Slate[] slates = Resources.LoadAll<Slate>("Slates");
+        SlateScriptableObejct[] slates = Resources.LoadAll<SlateScriptableObejct>("Slates");
 
         for (int i = 0; i < slates.Length; i++)
         {

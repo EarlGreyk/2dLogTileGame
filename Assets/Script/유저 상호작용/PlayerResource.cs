@@ -31,15 +31,15 @@ public class PlayerResource : MonoBehaviour
 
 
     //플레이어 Slate리스트
-    private Slate firstSlate;
-    public Slate FirstSlate { get { return firstSlate; } }
+    private SlateScriptableObejct firstSlate;
+    public SlateScriptableObejct FirstSlate { get { return firstSlate; } }
     
-    private Slate secondSlate;
-    public Slate SecondSlate { get { return secondSlate; } }
-    private Slate thirdSlate;
-    public Slate ThirdSlate { get { return thirdSlate; } }
-    private Slate fourthSlate;
-    public Slate FourthSlate { get {return fourthSlate; } }
+    private SlateScriptableObejct secondSlate;
+    public SlateScriptableObejct SecondSlate { get { return secondSlate; } }
+    private SlateScriptableObejct thirdSlate;
+    public SlateScriptableObejct ThirdSlate { get { return thirdSlate; } }
+    private SlateScriptableObejct fourthSlate;
+    public SlateScriptableObejct FourthSlate { get {return fourthSlate; } }
 
     private int firstSlateLevel = 0;
     public int FirstSlateLevel {  get { return firstSlateLevel; } set { firstSlateLevel = value; } }    
@@ -121,23 +121,23 @@ public class PlayerResource : MonoBehaviour
             if (firstSlate != null)
             {
                 panelSet(firstSlate);
-                MagicSet(firstSlate.Magics[0]);
+                MagicSet(firstSlate.SlateMagics[0]);
             }
             if (secondSlate != null)
             {
                 panelSet(secondSlate);
-                MagicSet(secondSlate.Magics[0]);
+                MagicSet(secondSlate.SlateMagics[0]);
             }
 
             if (thirdSlate != null)
             {
                 panelSet(thirdSlate);
-                MagicSet(thirdSlate.Magics[0]);
+                MagicSet(thirdSlate.SlateMagics[0]);
             }
             if (fourthSlate != null)
             {
                 panelSet(fourthSlate);
-                MagicSet(fourthSlate.Magics[0]);
+                MagicSet(fourthSlate.SlateMagics[0]);
             }
                 
 
@@ -159,9 +159,8 @@ public class PlayerResource : MonoBehaviour
                     firstSlateLevel = savedata.slatelevel + 1;
                     for (int i = 0; i < firstSlateLevel; i++)
                     {
-                        Debug.Log(firstSlate.Magics[0].Sort);
-                        if (firstSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                            MagicSet(firstSlate.Magics[i]);
+                        if (firstSlate.SlateMagics[i].MagicType == 0)
+                            MagicSet(firstSlate.SlateMagics[i]);
                     }
                 }
                
@@ -176,8 +175,8 @@ public class PlayerResource : MonoBehaviour
                     for (int i = 0; i < secondSlateLevel; i++)
                     {
 
-                        if (secondSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                            MagicSet(secondSlate.Magics[i]);
+                        if (secondSlate.SlateMagics[i].MagicType == 0)
+                            MagicSet(secondSlate.SlateMagics[i]);
                     }
                 }
                
@@ -192,8 +191,8 @@ public class PlayerResource : MonoBehaviour
                     for (int i = 0; i < thirdSlateLevel; i++)
                     {
 
-                        if (thirdSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                            MagicSet(thirdSlate.Magics[i]);
+                        if (thirdSlate.SlateMagics[i].MagicType == 0)
+                            MagicSet(thirdSlate.SlateMagics[i]);
                     }
                 }
                 
@@ -208,8 +207,8 @@ public class PlayerResource : MonoBehaviour
                     fourSlateLevel = savedata.slatelevel + 1;
                     for (int i = 0; i < fourSlateLevel; i++)
                     {
-                        if (fourthSlate.Magics[i].Sort == Magic.MagicSort.Active)
-                            MagicSet(fourthSlate.Magics[i]);
+                        if (fourthSlate.SlateMagics[i].MagicType == 0)
+                            MagicSet(fourthSlate.SlateMagics[i]);
                     }
                 }
                
@@ -231,11 +230,11 @@ public class PlayerResource : MonoBehaviour
 
     }
 
-    private void panelSet(Slate slate)
+    private void panelSet(SlateScriptableObejct slate)
     {
-        for (int i = 0; i < slate.blocks.Count; i++)
+        for (int i = 0; i < slate.Blocks.Length; i++)
         {
-            Block block = new Block(slate.blocks[i]);
+            Block block = new Block(slate.Blocks[i]);
             BlockManage.instance.EquipSet(block);   
         }  
     }
@@ -432,7 +431,7 @@ public class PlayerResource : MonoBehaviour
     /// <param name="magic"></설정할 마법>
 
 
-    public void MagicSet(Magic magic)
+    public void MagicSet(MagicScriptableObejct magic)
     {
         for (int i = 0; i < playerSkillPanel.Count; i++)
         {

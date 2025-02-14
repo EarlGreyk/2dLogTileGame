@@ -12,7 +12,7 @@ public class SkillZone : MonoBehaviour
     private Tilemap tilemap;
     public Tilemap Tilemap { get { return tilemap; } }
 
-    public Magic currentMagic;
+    public MagicScriptableObejct currentMagic;
 
     public GameObject currentMagicEffect;
 
@@ -89,7 +89,7 @@ public class SkillZone : MonoBehaviour
         }
     }
 
-    public void SettingSkillZone(Magic magic,GameObject magicEffect)
+    public void SettingSkillZone(MagicScriptableObejct magic,GameObject magicEffect)
     {
         if (GameManager.instance.IsPlayer == false)
         {
@@ -105,7 +105,7 @@ public class SkillZone : MonoBehaviour
         currentMagic = magic;
         currentMagicEffect = magicEffect;
 
-        List<PatternData.PatternPoint> pattern = magic.MagicRange.points;
+        List<PatternData.PatternPoint> pattern = magic.MagicCastingRange.points;
         int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
         int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
         int unitx = Mathf.FloorToInt(GameManager.instance.PlayerUnit.transform.position.x );
@@ -167,7 +167,7 @@ public class SkillZone : MonoBehaviour
 
         //패턴 데이터에 따라 Block을 수정해야합니다.
         tilemap.SetTile(hitTilePos, NoneTile);
-        List<PatternData.PatternPoint> pattern = currentMagic.MagicAoe.points;
+        List<PatternData.PatternPoint> pattern = currentMagic.MagicCastingRange.points;
 
         int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
         int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
@@ -233,7 +233,7 @@ public class SkillZone : MonoBehaviour
 
     public void UseSkill()
     {
-        if (PlayerResource.instance.Mana < currentMagic.MagicCost)
+        if (PlayerResource.instance.Mana < currentMagic.MagicRequiredMana)
         {
             ErrorManager.instance.ErrorSet("마법을 사용할 마나가 부족합니다");
             return;
@@ -242,7 +242,7 @@ public class SkillZone : MonoBehaviour
             (currentMagic,currentMagicEffect,hitTilePos, checkTilePos);
 
         GameManager.instance.LampUpdate(-1);
-        PlayerResource.instance.mpbarUpdate(-currentMagic.MagicCost);
+        PlayerResource.instance.mpbarUpdate(-currentMagic.MagicRequiredMana);
         SkillStop();
     }
     

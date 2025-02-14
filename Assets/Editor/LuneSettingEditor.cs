@@ -1,4 +1,4 @@
-using System.Linq;
+    using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using static LuneSetting;
@@ -14,20 +14,17 @@ public class LuneSettingEditor : Editor
 
         DrawDefaultInspector();
 
-        luneSetting.luneType = (LuneType)EditorGUILayout.EnumPopup("Lune Type", luneSetting.luneType);
+        LuneScriptableObejct newLuneData =  DrawScriptableObjectPopup<LuneScriptableObejct>("Select Basic Lune", luneSetting.LuneData);
 
-        // LuneType에 따른 ScriptableObject 선택 UI
-        switch (luneSetting.luneType)
+        // 선택된 LuneData가 기존의 LuneData와 다르면 갱신
+        if (newLuneData != luneSetting.LuneData)
         {
-            case LuneType.Basic:
-                luneSetting.selectedBasicLune = DrawScriptableObjectPopup<BagicLune>("Select Basic Lune", luneSetting.selectedBasicLune);
-                luneSetting.selectedMajorLune = null; // Ensure the other type is null
-                break;
-            case LuneType.Major:
-                luneSetting.selectedMajorLune = DrawScriptableObjectPopup<MajorLune>("Select Major Lune", luneSetting.selectedMajorLune);
-                luneSetting.selectedBasicLune = null; // Ensure the other type is null
-                break;
+            luneSetting.LuneData = newLuneData;
+
+            // 변경 사항 저장
+            EditorUtility.SetDirty(luneSetting);
         }
+
 
         // 변경 사항 저장
         if (GUI.changed)
@@ -37,7 +34,7 @@ public class LuneSettingEditor : Editor
     }
 
     // 특정 타입의 ScriptableObject 목록을 드로우하는 메소드
-    private T DrawScriptableObjectPopup<T>(string label, T selectedObject) where T : ScriptableObject
+    private T DrawScriptableObjectPopup<T>(string label, T selectedObject) where T : LuneScriptableObejct
     {
         string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}");
         T[] objects = guids.Select(guid => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(guid))).ToArray();

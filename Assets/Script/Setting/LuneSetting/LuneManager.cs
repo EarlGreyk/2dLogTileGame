@@ -45,10 +45,14 @@ public class LuneManager : MonoBehaviour
     }
     private void Start()
     {
-        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("유닛정보/Status/UnitBase_Player");
+        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("ScriptableObjects/유닛정보/Status/UnitBase_Player");
 
-        luneTotalStatus = new UnitStatus(playerStatus);
-        SaveLoadManager.instance.LuneNodeLoad();
+        if(playerStatus != null)
+        {
+            luneTotalStatus = new UnitStatus(playerStatus);
+            SaveLoadManager.instance.LuneNodeLoad();
+        }
+
     }
     public void luneSet()
     {
@@ -80,25 +84,12 @@ public class LuneManager : MonoBehaviour
         //실스텍적용 
         if (selectLune.LuneEnable)
         {
-            if(selectLune.luneType == LuneSetting.LuneType.Basic)
-            {
-                luneTotalStatus.effectUp(selectLune.selectedBasicLune.effectType.ToString(), -selectLune.selectedBasicLune.effectValue);
-            }else if(selectLune.luneType == LuneSetting.LuneType.Major)
-            {
-                //luneTotalStatus.effectUp(selectLune.selectedMajorLune.effectType.ToString(), selectLune.selectedBasicLune.effectValue);
-            }
-            
+            luneTotalStatus.effectUp(selectLune.LuneData.effectType.ToString(), -selectLune.LuneData.effectValue);
+
         }
         else
         {
-            if (selectLune.luneType == LuneSetting.LuneType.Basic)
-            {
-                luneTotalStatus.effectUp(selectLune.selectedBasicLune.effectType.ToString(), selectLune.selectedBasicLune.effectValue);
-            }
-            else if (selectLune.luneType == LuneSetting.LuneType.Major)
-            {
-                //luneTotalStatus.effectUp(selectLune.selectedMajorLune.effectType.ToString(), selectLune.selectedBasicLune.effectValue);
-            }
+            luneTotalStatus.effectUp(selectLune.LuneData.effectType.ToString(), selectLune.LuneData.effectValue);
         }
         selectLune.LuneEnable = !selectLune.LuneEnable;
         if(selectLune.LuneEnable)
@@ -121,10 +112,7 @@ public class LuneManager : MonoBehaviour
         if (!lune.LuneEnable)
             return;
 
-        if (lune.luneType == LuneSetting.LuneType.Basic)
-        {
-            luneTotalStatus.effectUp(lune.selectedBasicLune.effectType.ToString(), lune.selectedBasicLune.effectValue);
-        }
+        luneTotalStatus.effectUp(lune.LuneData.effectType.ToString(), lune.LuneData.effectValue);
         lune.LuneImage.color = Color.red;
     }
 
@@ -134,7 +122,6 @@ public class LuneManager : MonoBehaviour
 
         Vector2 totalPosition = targetRect.anchoredPosition;
 
-        Debug.Log(totalPosition);
 
         if(lune.ConnectedNodes.Count > 0 )
         {

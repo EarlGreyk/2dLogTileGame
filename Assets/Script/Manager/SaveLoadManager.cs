@@ -28,7 +28,7 @@ public class SlateSaveData
 {
     public string slateName;
     public int slatelevel;
-    public SlateSaveData(Slate slate,int level)
+    public SlateSaveData(SlateScriptableObejct slate,int level)
     {
         slateName = slate.name;
         slatelevel = level;
@@ -304,10 +304,10 @@ public class SaveLoadManager : MonoBehaviour
     public void LoadGame()
     {
 
-        SettingData.firstSlate = Resources.Load<Slate>("Slates/" + playerResourceData.firstSlateData.slateName);
-        SettingData.secondSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
-        SettingData.thirdSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
-        SettingData.fourthSlate = Resources.Load<Slate>("Slates/" + playerResourceData.secondSlateData.slateName);
+        SettingData.firstSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.firstSlateData.slateName);
+        SettingData.secondSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.secondSlateData.slateName);
+        SettingData.thirdSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.secondSlateData.slateName);
+        SettingData.fourthSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.secondSlateData.slateName);
 
         SettingData.Stage = gameManagerData.stage;
         SettingData.Round = gameManagerData.round;

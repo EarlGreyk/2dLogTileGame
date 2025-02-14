@@ -131,7 +131,7 @@ public class BlockManage : MonoBehaviour
                 break;
             }
         }
-        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.EquipGold;
+        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.BlockEquipGold;
 
 
     }
@@ -148,7 +148,7 @@ public class BlockManage : MonoBehaviour
                 break;
             }
         }
-        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.RemoveGold;
+        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.BlockRemovalGold;
         
     }
     
@@ -183,14 +183,14 @@ public class BlockManage : MonoBehaviour
     public void RemoveBlockPanelSet(BlockPanel blockPanel)
     {
         removeBlockPanel.Set(blockPanel.Block);
-        removeBlockGold.text = blockPanel.Block.BlockInfo.RemoveGold.ToString();
+        removeBlockGold.text = blockPanel.Block.BlockInfo.BlockRemovalGold.ToString();
 
     }
 
     public void EquipBlockPanelSt(BlockPanel blockPanel)
     {
         equipBlockPanel.Set(blockPanel.Block);
-        equipBlockGold.text = blockPanel.Block.BlockInfo.EquipGold.ToString();
+        equipBlockGold.text = blockPanel.Block.BlockInfo.BlockEquipGold.ToString();
     }   
    
 

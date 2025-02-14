@@ -19,16 +19,15 @@ public class MagicManager : MonoBehaviour
             ErrorManager.instance.ErrorSet("레벨이 부족합니다");
             return;
         }
-        magicListSet(slateUI.Slate.Magics);
+        magicListSet(slateUI.Slate.SlateMagics);
         magicDescSet(null);
     }
 
-    public void magicListSet(List<Magic> magics)
+    public void magicListSet(MagicScriptableObejct[] magics)
     {
         for(int i =0; i < magicUIList.Count; i++)
         {
-            Debug.Log($"{i} , {magics.Count}");
-            if (i >= magics.Count)
+            if (i >= magics.Length)
                 return;
             magicUIList[i].Magic = magics[i];
         }

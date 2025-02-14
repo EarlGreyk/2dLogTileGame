@@ -56,8 +56,21 @@ public class PopUpManager : MonoBehaviour
         popUpChange = popGo;
         popUpChange.SetActive(true);
 
+    }
 
-
+    /// <summary>
+    /// esc로 캔슬하지 않고 Onoff가 필요할떄 사용됩니다.
+    /// </summary>
+    /// <param name="pop"></param>
+    public void PopupOnOff(GameObject pop)
+    {
+        if(pop.gameObject.activeSelf)
+        {
+            pop.gameObject.SetActive(false);
+        }else
+        {
+            pop.gameObject.SetActive(true);
+        }
     }
 
 

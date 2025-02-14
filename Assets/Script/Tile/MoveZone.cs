@@ -121,8 +121,8 @@ public class MoveZone : MonoBehaviour
         //2,2가 중앙블록이며 현재 위치값에서 더하기 빼기로 체크해야함
         Vector3 scale = grid.transform.localScale;
 
-       
-        List<PatternData.PatternPoint> pattern = _blockPanel.block.BlockInfo.Pattern;
+
+        List<PatternData.PatternPoint> pattern = _blockPanel.block.BlockInfo.BlockPatternData.points;
         foreach (var pos in pattern)
         {
             //중간값이 2,2이기 떄문에 -2씩 연산

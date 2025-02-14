@@ -18,7 +18,7 @@ public class SlateManage : MonoBehaviour
     private SlateUI fourthSlate;
 
 
-    private Slate selctSlate;
+    private SlateScriptableObejct selctSlate;
 
 
 
@@ -35,7 +35,7 @@ public class SlateManage : MonoBehaviour
     /// </summary>
     public void SelectSlate(SlateUI slateui)
     {
-        Slate slate = slateui.Slate;
+        SlateScriptableObejct slate = slateui.Slate;
         if (slate == null)
         {
             Debug.Log("오류 : 선택한 Slate가 없는 상태입니다.");

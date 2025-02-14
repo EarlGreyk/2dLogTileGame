@@ -28,7 +28,7 @@ public class LuneUi : MonoBehaviour
  
     
 
-    public void onSet(BagicLune node)
+    public void onSet(LuneScriptableObejct node)
     {
         if (node == null)
             return;
@@ -42,40 +42,25 @@ public class LuneUi : MonoBehaviour
 
 
     }
-    public void onSet(MajorLune node)
+  
+
+
+    private void ApplyTextSet(LuneScriptableObejct node)
     {
-        if (node == null)
-            return;
-
-        gameObject.SetActive(true);
-        luneName.text = node.LuneName + "\n";
-        luneDesc.text = node.LuneDesc;
-
-        //ApplyTextSet();
-
-    }   
-
-
-    private void ApplyTextSet(BagicLune node)
-    {
-
+     
         Debug.Log(LuneManager.instance.luneTotalStatus);
-        if (node.effectType == BagicLune.EffectType.Health)
+        if (node.effectType == LuneScriptableObejct.EffectType.Health)
             luneApplyValue.text = "체력 : " + LuneManager.instance.luneTotalStatus.Health.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.ElementalDamage)
+        else if (node.effectType == LuneScriptableObejct.EffectType.ElementalDamage)
             luneApplyValue.text = "속성 데미지 배율 : " + LuneManager.instance.luneTotalStatus.ElementalDamage.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.Damage)
+        else if (node.effectType == LuneScriptableObejct.EffectType.Damage)
             luneApplyValue.text = "무속성 데미지 배율 : " + LuneManager.instance.luneTotalStatus.Damage.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.Defence)
+        else if (node.effectType == LuneScriptableObejct.EffectType.Defence)
             luneApplyValue.text = "보호막 생성 비율 : " + LuneManager.instance.luneTotalStatus.Defense.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.MagicChan)
+        else if (node.effectType == LuneScriptableObejct.EffectType.MagicChan)
             luneApplyValue.text = "영감 추가 발동 확률 : " + LuneManager.instance.luneTotalStatus.MagicChan.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.MagicCount)
+        else if (node.effectType == LuneScriptableObejct.EffectType.MagicCount)
             luneApplyValue.text = "영감시 추가 획득율 : " + LuneManager.instance.luneTotalStatus.MagicCount.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.CriChan)
-            luneApplyValue.text = "크리티컬 확률 : " + LuneManager.instance.luneTotalStatus.CriChan.ToString() + " + " + node.effectValue.ToString();
-        else if (node.effectType == BagicLune.EffectType.CriMul)
-            luneApplyValue.text = "크리티컬 배율 : " + LuneManager.instance.luneTotalStatus.CriMul.ToString() + " + " + node.effectValue.ToString();
         else
             luneApplyValue.text = "오류";
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76472593d0dc21e4e9984472ae96a6b9, type: 3}
+  m_Name: 10004
+  m_EditorClassIdentifier: 
+  id: 10004
+  LuneName: "\uBC88\uB729\uC774\uB294 \uC601\uAC10"
+  LuneDesc: "\uC601\uAC10 \uC218\uCE58\uB97C \uC99D\uAC00\uC2DC\uD0A4\uB294 \uB8EC"
+  LunePrice: 100
+  LuneSprite: {fileID: 0}
+  effectType: 0
+  effectValue: 3
+  luneScriptableObejcts:
+  - {fileID: 11400000, guid: 515ce78f41870fe46ae2eeb56707148e, type: 2}
+  - {fileID: 11400000, guid: df4dce5e08790a449ad83f42cf2ae108, type: 2}
+  - {fileID: 11400000, guid: 211b8341184e4cd41a83be5323740af7, type: 2}
+  - {fileID: 11400000, guid: 4fc98338039b451489d127fc8aed25ba, type: 2}

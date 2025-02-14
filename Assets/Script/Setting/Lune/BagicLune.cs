@@ -16,9 +16,6 @@ public class BagicLune : LuneNode
         BlockChan,
         MagicChan,
         MagicCount,
-        CriChan,
-        CriMul
-           
     }
     public EffectType effectType;
     public float effectValue;

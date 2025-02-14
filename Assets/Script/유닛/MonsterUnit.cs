@@ -114,6 +114,7 @@ public class MonsterUnit : Unit
     }
     private void OnMouseDown()
     {
+        Debug.Log("나눌럿엉!");
         GameManager.instance.BlockModeZone.unitBlockSet(this);
     }
 
@@ -251,6 +252,7 @@ public class MonsterUnit : Unit
                 int x = Mathf.FloorToInt((p.x - 3) + unitPos.x);
                 int y = Mathf.FloorToInt((p.y - 3) + unitPos.y);
                 return new Vector3Int(x, y, 0);
+
             }).ToList();
 
 
@@ -260,11 +262,14 @@ public class MonsterUnit : Unit
             {
                 this.targetPosList.Add(closestPosition);
                 movePosPath = FindPathWithBFS(new Vector3Int((int)unitPos.x, (int)unitPos.y, 0), closestPosition, validPositions);
+                GameManager.instance.BattleZone.setTempTile(targetPosList[0]);
             }
             else
             {
                 Debug.Log("경로를 찾을 수 없습니다.");
             }
+
+
         }
         else
         {
@@ -283,7 +288,6 @@ public class MonsterUnit : Unit
             {
                 List<PatternData.PatternPoint> pattern = currentAction.currentMagic.MagicRange.points;
 
-                Debug.Log("카운트 만큼 랜덤탐색");
                 List<Vector3Int> validPositions = currentAction.currentMagic.MagicRange.points.Select(p =>
                 {
                     int x = Mathf.FloorToInt((p.x - 3) + unitPos.x);
@@ -325,7 +329,7 @@ public class MonsterUnit : Unit
             if (pos.x >= 0 && pos.y >= 0 && pos.x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && 
                 pos.y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
                 GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].type != BattleTile.tileType.Break &&
-                GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].onUnit == null)
+                GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].onUnit == null )
             {
                 PositionList.Add(new Vector3Int(pos.x, pos.y, 0));
             }
@@ -353,16 +357,15 @@ public class MonsterUnit : Unit
     {
         Vector3Int closestPosition = start;
         float closestDistance = float.MaxValue;
-
         foreach (var pos in pattern)
         {
             int newX = Mathf.FloorToInt((pos.x - 3) + start.x);
             int newY = Mathf.FloorToInt((pos.y - 3) + start.y);
-
             if (newX >= 0 && newY >= 0 && newX < GameManager.instance.BattleZone.BattleTiles.GetLength(0) &&
                 newY < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
                 GameManager.instance.BattleZone.BattleTiles[newX, newY].type != BattleTile.tileType.Break &&
-                GameManager.instance.BattleZone.BattleTiles[newX, newY].onUnit == null)
+                GameManager.instance.BattleZone.BattleTiles[newX, newY].onUnit == null &&
+                GameManager.instance.BattleZone.BattleTiles[newX, newY].tempTile == false)
             {
                 float distanceToGoal = Vector3.Distance(new Vector3(newX, newY, 0), new Vector3(goal.x, goal.y, 0));
                 if (distanceToGoal < closestDistance)

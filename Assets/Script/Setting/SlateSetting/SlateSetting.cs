@@ -13,9 +13,9 @@ public class SlateSetting : MonoBehaviour
     [SerializeField]
     private SlateUI fourthSlate;
 
-    private List<Slate> slateList = new List<Slate>();
+    private List<SlateScriptableObejct> slateList = new List<SlateScriptableObejct>();
 
-    private List<Slate> enableslateList = new List<Slate>();
+    private List<SlateScriptableObejct> enableslateList = new List<SlateScriptableObejct>();
 
     private SlateUI curentSlateUI;
 

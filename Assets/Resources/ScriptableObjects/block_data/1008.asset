@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c89af52caca75b2448aae3febf81e250, type: 3}
+  m_Name: 1008
+  m_EditorClassIdentifier: 
+  id: 1008
+  BlockGrade: 4
+  BlockChargingMana: 02000000050000000c000000
+  BlockEquipCost: 020000000300000006000000
+  BlockEnforceGold: 8813000050460000
+  BlockRemovalGold: 5000
+  BlockEquipGold: 3000
+  BlockPatternData: {fileID: 11400000, guid: 3efbd8cb2d28b4d4cbcf761d7f9fbc65, type: 2}

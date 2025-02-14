@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87cf55a26127dad44a5e555bd1608f64, type: 3}
+  m_Name: 50011
+  m_EditorClassIdentifier: 
+  id: 50011
+  MosterName: "\uB3C4\uAE68\uBE44\uBD88"
+  HpValue: 1
+  ElementalDamageValue: 0.8
+  NonElementalDamageValue: 0.8
+  BarrierValue: 0.6
+  ReducionValue: 0
+  Level: 1
+  Type: 5
+  Reward: 2
+  ActionPoint: 5
+  MutationRate: 0
+  MovePattern:
+  - {fileID: 0}
+  DropGold: 2000
+  UsingMagic:
+  - {fileID: 0}

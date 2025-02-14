@@ -5190,11 +5190,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1092517120}
         m_TargetAssemblyTypeName: SlateManager, Assembly-CSharp
         m_MethodName: slateSerach
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: "\uBC29\uC5B4"
           m_BoolArgument: 0
@@ -8149,11 +8149,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1092517120}
         m_TargetAssemblyTypeName: SlateManager, Assembly-CSharp
         m_MethodName: slateSerach
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: "\uC800\uC8FC"
           m_BoolArgument: 0
@@ -10650,7 +10650,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -10926,11 +10926,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1092517120}
         m_TargetAssemblyTypeName: SlateManager, Assembly-CSharp
         m_MethodName: slateSerach
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 5
           m_FloatArgument: 0
           m_StringArgument: "\uC7AC\uBE60\uB984"
           m_BoolArgument: 0
@@ -18386,11 +18386,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1092517120}
         m_TargetAssemblyTypeName: SlateManager, Assembly-CSharp
         m_MethodName: slateSerach
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: "\uBCF4\uD638\uB9C9"
           m_BoolArgument: 0
@@ -19354,11 +19354,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1092517120}
         m_TargetAssemblyTypeName: SlateManager, Assembly-CSharp
         m_MethodName: slateSerach
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: "\uC601\uAC10"
           m_BoolArgument: 0
@@ -29621,7 +29621,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1092517120}
         m_TargetAssemblyTypeName: SlateManager, Assembly-CSharp
         m_MethodName: slateSerach
-        m_Mode: 5
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
