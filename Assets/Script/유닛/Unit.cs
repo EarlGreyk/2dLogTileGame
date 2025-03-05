@@ -83,18 +83,78 @@ public class UnitStatus
         MagicChan += addTemp.MagicChan;
         MagicCount += addTemp.MagicCount;
     }
-    public void effectRatio(UnitStatusObject ratioTemp)
+    /// <summary>
+    /// 일반 몬스터 유닛의 스테이터스 배율을 조정하기 위해 사용합니다.
+    /// </summary>
+    /// <param name="ratioTemp"></받아올 스테이터스>
+    /// <param name="grade"></false = 노말 몬스터 , true = 보스 몬스터  [기본값은 false입니다.]>
+    public void effectRatio(MonsterScriptableObject ratioTemp, bool grade = false)
     {
-        Health *= ratioTemp.Health;
-        MaxHealth = Health;
-        Damage *= ratioTemp.Damage;
-        ElementalDamage *= ratioTemp.ElementalDamage;
-        Defense *= ratioTemp.Defense;
-        ItemChan *= ratioTemp.ItemChan;
-        BlockGain *= ratioTemp.BlockChan;
-        MagicChan *= ratioTemp.MagicChian;
-        MagicCount *= ratioTemp.MagicCount;
+        float value = 1f;
+
+        if(!grade)
+        {
+            ///도전자의 메달 (5009) , 호통의 메달(5011)
+            if (SettingData.difficultDic.ContainsKey(5009))
+                value += SettingData.difficultDic[5009];
+            if (SettingData.difficultDic.ContainsKey(5011))
+                value += SettingData.difficultDic[5011];
+
+            Health *= ratioTemp.HpValue * value;
+            MaxHealth = Health;
+
+            value = 1f;
+            // 도발의 메달 (5010) , 어릿광대의 메달 (5012)
+            if (SettingData.difficultDic.ContainsKey(5010))
+                value += SettingData.difficultDic[5010];
+            if (SettingData.difficultDic.ContainsKey(5012))
+                value += SettingData.difficultDic[5012];
+
+            Damage *= ratioTemp.NonElementalDamageValue * value;
+            ElementalDamage *= ratioTemp.ElementalDamageValue * value;
+
+            value = 1f;
+            // 박살의 메달(5013)
+            if (SettingData.difficultDic.ContainsKey(5013))
+            {
+                value += SettingData.difficultDic[5013];
+            }
+            Defense *= ratioTemp.ReducionValue * value;
+        }else
+        {
+            ///대장의 메달 (5014) , 지도자의 메달(5016)
+            if (SettingData.difficultDic.ContainsKey(5014))
+                value += SettingData.difficultDic[5014];
+            if (SettingData.difficultDic.ContainsKey(5016))
+                value += SettingData.difficultDic[5016];
+
+            Health *= ratioTemp.HpValue * value;
+            MaxHealth = Health;
+
+            value = 1f;
+            // 보안관의 메달 (5015) , 군주의 메달(5017)
+            if (SettingData.difficultDic.ContainsKey(5015))
+                value += SettingData.difficultDic[5015];
+            if (SettingData.difficultDic.ContainsKey(5017))
+                value += SettingData.difficultDic[5017];
+
+            Damage *= ratioTemp.NonElementalDamageValue * value;
+            ElementalDamage *= ratioTemp.ElementalDamageValue * value;
+
+            value = 1f;
+            // 건실의 메달(5013)
+            if (SettingData.difficultDic.ContainsKey(5018))
+            {
+                value += SettingData.difficultDic[5018];
+            }
+            Defense *= ratioTemp.ReducionValue * value;
+        }
+        
+
+      
     }
+  
+
     public void effectUp(string effectString, float effectValue)
     {
         switch (effectString)

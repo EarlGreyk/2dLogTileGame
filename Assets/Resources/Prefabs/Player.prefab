@@ -99,5 +99,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HPbar: {fileID: 1405926418342992566, guid: 2eb867907a103784686b5e6154986f7f, type: 3}
   Sprite: {fileID: 0}
-  baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
+  baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   hpbar: {fileID: 0}

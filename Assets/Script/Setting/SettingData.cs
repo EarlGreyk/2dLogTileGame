@@ -14,7 +14,7 @@ public static class SettingData
     public static SlateScriptableObejct thirdSlate;
     public static SlateScriptableObejct fourthSlate;
 
-    public static Dictionary<int,bool> difficultDic = new Dictionary<int,bool>();
+    public static Dictionary<int,float> difficultDic = new Dictionary<int,float>();
 
     public static UnitStatus LuneStatus = new UnitStatus();
 
@@ -38,9 +38,9 @@ public static class SettingData
     }
 
 
-    public static void DifficultDicAdd(int key)
+    public static void DifficultDicAdd(int key, float value)
     {
-        difficultDic.Add(key, true);
+        difficultDic.Add(key, value);
     }
     public static void DifficultDicRemove(int key)
     {

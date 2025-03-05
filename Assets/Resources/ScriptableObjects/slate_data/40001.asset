@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 40001
   m_EditorClassIdentifier: 
   id: 40001
-  SlateName: 
+  SlateName: "\uBD88\uAF43\uC758 \uC11D\uD310"
   SlateType: 0
   SlateMagics:
   - {fileID: 11400000, guid: b2aef883cfe692440b7e3f2efd2c0f44, type: 2}
@@ -34,4 +34,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27c1a3bf877f19f4c95a6c4a12921068, type: 2}
   Enable: 1
   EnableLevel: 0
-  SlateSprite: {fileID: 0}
+  SlateSprite: {fileID: 21300000, guid: f458f9b278b801249ab120abc4a8a3c7, type: 3}

@@ -211,11 +211,11 @@ public class GameManager : MonoBehaviour
     }
 
     ////몬스터 행동 관리입니다.
-    ///
+    ///플레이어가 턴 종료를 누르면 작동합니다.
 
-    public void LampUpdate(int light)
+    public void LampUpdate()
     {
-        lampLight += light;
+        lampLight -=1;
         lamptext.text = lampLight.ToString();
         MonsterAIManager.MonsterCount();
     }

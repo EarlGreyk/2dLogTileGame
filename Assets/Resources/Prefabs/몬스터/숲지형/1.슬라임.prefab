@@ -101,14 +101,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
   Sprite: {fileID: 21300000, guid: c8f9ee9f23f8a0c45b04ce0ee2fb287f, type: 3}
-  baseStatus: {fileID: 11400000, guid: ee086e43957ceb84999aa5f2dc0ef3ea, type: 2}
+  baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   hpbar: {fileID: 0}
   position: 0
   movePattenData: {fileID: 11400000, guid: 1cf99e06eef531248a5b13e587227d91, type: 2}
   attackRangePattenData: {fileID: 11400000, guid: c9f3c787bf238e64bab65f39f1ac5a04, type: 2}
-  ratioStatus: {fileID: 11400000, guid: 577ccd95826e9e44fb920f2c3b2ee9c0, type: 2}
+  ratioStatus: {fileID: 11400000, guid: e4559c99b2abb9e42937d53339adcba0, type: 2}
   attackMagicList:
-  - {fileID: 11400000, guid: eb4e59deefa650c42a238da0716cf57f, type: 2}
+  - {fileID: 0}
   defenceMagicList: []
   currentAction: {fileID: -6424533642964141347}
   maxActionCount: 4

@@ -26,7 +26,7 @@ public class MonsterUnit : Unit
     [SerializeField]
     private PatternData attackRangePattenData;
     [SerializeField]
-    private UnitStatusObject ratioStatus;
+    private MonsterScriptableObject ratioStatus;
 
     /// <summary>
     /// 몬스터가 남은 행동까지의 카운트

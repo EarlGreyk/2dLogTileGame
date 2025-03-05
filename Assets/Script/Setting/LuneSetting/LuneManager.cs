@@ -45,8 +45,9 @@ public class LuneManager : MonoBehaviour
     }
     private void Start()
     {
-        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("ScriptableObjects/¿Ø¥÷¡§∫∏/Status/UnitBase_Player");
+        UnitStatusObject playerStatus = Resources.Load<UnitStatusObject>("ScriptableObjects/unit_data/UnitBase_Player");
 
+        Debug.Log(playerStatus);
         if(playerStatus != null)
         {
             luneTotalStatus = new UnitStatus(playerStatus);

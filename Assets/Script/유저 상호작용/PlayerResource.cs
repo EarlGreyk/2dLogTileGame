@@ -14,6 +14,9 @@ public class PlayerResource : MonoBehaviour
     private float maxMana;
     public float MaxMana {  get { return maxMana; } }
     private float tempMana;
+
+    public int MaxDrowCount ;
+    public int CurrentDrowCount;
     //플레이어 장착하고 있는 총 덱 리스트
     private List<Block> playerBlockList = new List<Block>();
     public List<Block> PlayerBlockList {  get { return playerBlockList; } }
@@ -144,6 +147,8 @@ public class PlayerResource : MonoBehaviour
             Gold = 0;
             mana = 20;
             maxMana = 20;
+            MaxDrowCount = 3;
+            CurrentDrowCount = MaxDrowCount;
         }
         else
         {
@@ -296,8 +301,16 @@ public class PlayerResource : MonoBehaviour
             }
 
         }
-        if(!start)
-            GameManager.instance.LampUpdate(-1);
+
+        if(CurrentDrowCount >0)
+        {
+            BlockDrow(start);
+            CurrentDrowCount--;
+        }else
+        {
+            CurrentDrowCount = MaxDrowCount;
+        }
+       
         
     }
 
@@ -404,7 +417,6 @@ public class PlayerResource : MonoBehaviour
             playerChargePanelList[i].BlockImage.color = Color.white;
         }
 
-        GameManager.instance.LampUpdate(-1);
     }
     
     /// <summary>

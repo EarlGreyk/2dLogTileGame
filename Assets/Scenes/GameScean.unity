@@ -10100,7 +10100,7 @@ GameObject:
   - component: {fileID: 221607011}
   - component: {fileID: 221607010}
   m_Layer: 5
-  m_Name: "\uAE30\uC6D0"
+  m_Name: "\uD134\uC885\uB8CC"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10124,7 +10124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 251, y: 0}
+  m_AnchoredPosition: {x: 446.9, y: 0}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &221607010
@@ -10199,6 +10199,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PlayerResource, Assembly-CSharp
         m_MethodName: BlockDrow
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1107026324}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: LampUpdate
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -34693,7 +34705,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAE30\uC6D0\n"
+  m_text: "\uD134\uC885\uB8CC\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 43bcde3abf43ed045a7caffc96e56cac, type: 2}
   m_sharedMaterial: {fileID: -6908712464764353189, guid: 43bcde3abf43ed045a7caffc96e56cac, type: 2}
@@ -59177,6 +59189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c176885092a8c42bdd3766923f769c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxDrowCount: 0
+  CurrentDrowCount: 0
   playerBlockPanel:
   - {fileID: 1653694727}
   - {fileID: 771348389}
@@ -70457,7 +70471,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 351, y: 0}
+  m_AnchoredPosition: {x: 250.2, y: 0}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1461129116

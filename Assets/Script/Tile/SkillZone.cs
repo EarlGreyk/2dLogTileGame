@@ -241,7 +241,6 @@ public class SkillZone : MonoBehaviour
         GameManager.instance.PlayerActionManager.SettingSkillAction
             (currentMagic,currentMagicEffect,hitTilePos, checkTilePos);
 
-        GameManager.instance.LampUpdate(-1);
         PlayerResource.instance.mpbarUpdate(-currentMagic.MagicRequiredMana);
         SkillStop();
     }

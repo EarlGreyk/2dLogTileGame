@@ -22,6 +22,7 @@ public class SlateScriptableObejct : BaseScriptableObject
         SlateType = int.Parse((string)values[3].Trim());
         SlateMagics = ConversMagics(values[4].Trim());
         Blocks = ConversBlocks(values[5].Trim(), values[6].Trim());
+        SlateSprite = Resources.Load<Sprite>("Sprite/Magic&Slate" + id.ToString());
 
      
     

@@ -103,7 +103,6 @@ public class MoveZone : MonoBehaviour
         }
         movePos.Clear();
 
-        GameManager.instance.LampUpdate(-1);
         breakMoveTile();
     }
 

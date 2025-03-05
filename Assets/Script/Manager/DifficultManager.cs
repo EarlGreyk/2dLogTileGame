@@ -140,7 +140,7 @@ public class DifficultManager : MonoBehaviour
 
         foreach (var kvp in SettingData.difficultDic)
         {
-            if (kvp.Value == true)  // value가 true일 때
+            if (kvp.Value >= 0)  // value가 true일 때
             {
                 trueKeys.Add(kvp.Key);  // 해당 key를 리스트에 추가
             }
@@ -222,7 +222,7 @@ public class DifficultManager : MonoBehaviour
 
         if(medalEnablebool)
         {
-            SettingData.DifficultDicAdd(currentMedalData.id);
+            SettingData.DifficultDicAdd(currentMedalData.id,currentMedalData.value);
         }
         else
         {
