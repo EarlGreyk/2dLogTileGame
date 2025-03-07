@@ -23,4 +23,6 @@ MonoBehaviour:
   MagicDamageRange: {fileID: 0}
   MagicDuration: 0
   MagicApplies: 214e0000244e0000284e00004a0d0300
-  MagicSprite: {fileID: 0}
+  MagicSprite: {fileID: 21300000, guid: 2a30117fbb3711742aef9ccda18f01a2, type: 3}
+  MagicEffectPrefab: {fileID: 0}
+  Gold: 0

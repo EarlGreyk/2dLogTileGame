@@ -109,6 +109,7 @@ public class MonsterUnit : Unit
         status.effectRatio(ratioStatus);
         hpbar.HpTextSet();
         ActionCheck();
+        //attackMagicList = ratioStatus.UsingMagicList();
        
 
     }

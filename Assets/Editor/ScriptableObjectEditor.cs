@@ -7,6 +7,7 @@ public class ScriptableObjectEditor : EditorWindow
     [MenuItem("Tools/Load Excel Data")]
     public static void LoadExcelData()
     {
+        Debug.Log("¿¢¼¿ ÆÄÀÏ ºÒ·¯¿À´ÂÁß...");
         string path = EditorUtility.OpenFilePanel("Select CSV File", "", "csv");
 
 
@@ -66,10 +67,10 @@ public class ScriptableObjectEditor : EditorWindow
                         savepath = "block_data";
                     }
                     break;
-                case "monster_data":
+                case "unit_data":
                     {
                         newBso = ScriptableObject.CreateInstance<MonsterScriptableObject>();
-                        savepath = "monster_data";
+                        savepath = "unit_data";
                     }
                     break;
                 case "medal_data":
@@ -85,6 +86,8 @@ public class ScriptableObjectEditor : EditorWindow
                 string assetPath = "Assets/Resources/ScriptableObjects/" + savepath + "/" + values[1] +  ".asset";
                 AssetDatabase.CreateAsset(newBso, assetPath);
                 AssetDatabase.SaveAssets();
+
+                Debug.Log("¿¢¼¿ µ¥ÀÌÅÍ ÀÎ½Ä");
             }
 
         }

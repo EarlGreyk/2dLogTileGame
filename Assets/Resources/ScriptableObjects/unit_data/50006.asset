@@ -28,4 +28,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89e47bad282e45f4c8659589bcc3119b, type: 2}
   DropGold: 1000
   UsingMagic:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: df800badc45d06249937d31bcd0eb74c, type: 2}

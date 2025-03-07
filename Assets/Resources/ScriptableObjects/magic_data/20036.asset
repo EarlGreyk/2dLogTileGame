@@ -26,3 +26,5 @@ MonoBehaviour:
   MagicDuration: 5
   MagicApplies: 00000000
   MagicSprite: {fileID: 0}
+  MagicEffectPrefab: {fileID: 0}
+  Gold: 0
