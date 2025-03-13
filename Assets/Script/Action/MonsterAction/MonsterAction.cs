@@ -13,8 +13,8 @@ public class MonsterAction : MonoBehaviour
     public MonsterUnit Unit { get { return unit; } set { unit = value; } }
 
 
-    private MonsterMagic currentmagic;
-    public MonsterMagic currentMagic { get { return currentmagic; } set { currentmagic = value; } }
+    private MonSterMagicScriptableObejct currentmagic;
+    public MonSterMagicScriptableObejct currentMagic { get { return currentmagic; } set { currentmagic = value; } }
 
     private List<Unit> hitunits = new List<Unit>();
 
@@ -31,9 +31,9 @@ public class MonsterAction : MonoBehaviour
         if (currentmagic == null)
             return;
         StartCoroutine(Action());
-        if(currentMagic.AoeType == MonsterMagic.MagicAoeType.Target)
+        if(currentMagic.Operating_type == 0)
         {
-            List<PatternData.PatternPoint> pattern = currentMagic.MagicAoe.points;
+            List<PatternData.PatternPoint> pattern = currentMagic.MagicCastingRange.points;
             int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
             int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
             foreach (var pos in pattern)
@@ -62,41 +62,6 @@ public class MonsterAction : MonoBehaviour
                 }
 
             }
-        }else if(currentMagic.AoeType == MonsterMagic.MagicAoeType.LocAoe)
-        {
-            List<PatternData.PatternPoint> pattern = currentMagic.MagicAoe.points;
-            int lengthX = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
-            int lengthY = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
-            for(int i =0; i<unit.TargetPosList.Count;i++)
-            {
-                foreach (var pos in pattern)
-                {
-                    //중간값이 2,2이기 떄문에 -2씩 연산
-                    int x = unit.TargetPosList[i].x;
-                    int y = unit.TargetPosList[i].y;
-                    Vector3Int tilepos = new Vector3Int(x, y);
-
-                    if (Math.Abs(x) <= lengthX && Math.Abs(y) <= lengthY)
-                    {
-                        if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
-                        {
-                            Debug.Log($"position ({x}, {y}) 안됨! ");
-                        }
-                        else
-                        {
-                            Debug.Log($"position ({x}, {y}) 공격 및 생성가능. ");
-                            if (GameManager.instance.BattleZone.BattleTiles[x, y].onUnit == null)
-                                hitPos.Add(tilepos);
-                        }
-                    }
-                    else
-                    {
-                        Debug.Log($"타일맵 해당 좌표값 {x},{y} 은 타일맵 밖에 존재함");
-                    }
-
-                }
-            }
-           
         }
         else
         {
@@ -116,24 +81,24 @@ public class MonsterAction : MonoBehaviour
     {
         //현재 마법이 데미지인지 버프인지 등을 체크하여 그에 맞는 효과를부여 
         //임시적으로 데미지만을 줌.
-        if(currentMagic.Type == MonsterMagic.MagicType.Attack)
+        if(currentMagic.Operating_type == 0)
         {
             for (int i = 0; i < hitunits.Count; i++)
             {
                 if (hitunits[i] == GameManager.instance.PlayerUnit)
                     hitunits[i].HitDamage(currentMagic.MagicValue);
             }
-        }else if(currentMagic.Type == MonsterMagic.MagicType.Surport)
+        }else if(currentMagic.Operating_type == 2)
         {
 
-        }else if(currentMagic.Type == MonsterMagic.MagicType.Summon)
+        }else if(currentMagic.Operating_type == 5)
         {
             Debug.Log($"생성 가능 숫자 : {hitPos.Count}");
-            for(int i =0; i <hitPos.Count; i++)
-            {
-                int random = Random.Range(0, currentmagic.MagicSumonPrefabs.Count);
-                GameManager.instance.setMonster(hitPos[i], currentmagic.MagicSumonPrefabs[random],true);
-            }
+            //for(int i =0; i <hitPos.Count; i++)
+            //{
+            //    int random = Random.Range(0, currentmagic.MagicSumonPrefabs.Count);
+            //    GameManager.instance.setMonster(hitPos[i], currentmagic.MagicSumonPrefabs[random],true);
+            //}
         }
 
         hitunits.Clear();

@@ -6,7 +6,7 @@ public class BossMonsterUnit : MonsterUnit
 {
 
     [SerializeField]
-    private List<MonsterMagic> specailMagicList = new List<MonsterMagic>();
+    private MonSterMagicScriptableObejct[] SpecailMagicArray;
 
 
 
@@ -22,14 +22,14 @@ public class BossMonsterUnit : MonsterUnit
     {
         //보스에만 존재하는 자신의 특수 패턴을 사전에 사용할 수 있는지 없는지 체크하고 사용합니다.
         //만약 사용하지 않는다면 일반 몬스터의 AI를 행동합니다.
-        if(specailMagicList.Count > 0)
+        if (SpecailMagicArray.Length > 0)
         {
-            if ((status.Health / status.MaxHealth) <= specailMagicList[0].MagicHpCon)
+            if ((status.Health / status.MaxHealth) <= SpecailMagicArray[0].HPcon)
             {
-                CurrentAcion.currentMagic = specailMagicList[0];
-                ActionCount = specailMagicList[0].MagicCost;
+                CurrentAcion.currentMagic = SpecailMagicArray[0];
+                ActionCount = SpecailMagicArray[0].RequiredCost;
 
-                specailMagicList.RemoveAt(0);   // 해당 인덱스의 항목 삭제
+                //현재 해당 문구에서 사용한 특별 패턴을 제외하여 더이상 사용 못하게 설정해야합니다.
                 targetPosSet();
                 return;
             }

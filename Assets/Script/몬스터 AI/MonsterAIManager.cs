@@ -61,11 +61,7 @@ public class MonsterAIManager : MonoBehaviour
     {
         for (int i = 0; i < monsters.Count; i++)
         {
-            monsters[i].ActionCount--;
-            if (monsters[i].ActionCount == 0)
-            {
-                actionMonsters.Enqueue(monsters[i]);   
-            }
+            actionMonsters.Enqueue(monsters[i]);
         }
     }
 

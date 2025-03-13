@@ -18,7 +18,7 @@ public class MonsterScriptableObject : BaseScriptableObject
 
     public PatternData[] MovePattern;
     public int DropGold;
-    public MagicScriptableObejct[] UsingMagic;
+    public MonSterMagicScriptableObejct[] UsingMagic;
 
 
 
@@ -56,15 +56,15 @@ public class MonsterScriptableObject : BaseScriptableObject
 
         return datas;
     }
-    public MagicScriptableObejct[] ConversMagic(string strings)
+    public MonSterMagicScriptableObejct[] ConversMagic(string strings)
     {
         string[] values = strings.Trim().Split(' ');
 
-        MagicScriptableObejct[] datas = new MagicScriptableObejct[values.Length];
+        MonSterMagicScriptableObejct[] datas = new MonSterMagicScriptableObejct[values.Length];
 
         for (int i = 0; i < values.Length; i++)
         {
-            datas[i] = Resources.Load<MagicScriptableObejct>("ScriptableObjects/magic_data/" + values[i]);
+            datas[i] = Resources.Load<MonSterMagicScriptableObejct>("ScriptableObjects/magic_data/" + values[i]);
         }
 
         return datas;

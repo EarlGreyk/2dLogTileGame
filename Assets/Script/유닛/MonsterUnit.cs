@@ -37,7 +37,8 @@ public class MonsterUnit : Unit
         set
         {
             actionCount = value;
-            if(actionCount > 0)
+
+            if(IsAction)
             {
                 if (currentAction.currentMagic == null)
                 {
@@ -46,26 +47,22 @@ public class MonsterUnit : Unit
                 }
                 else
                 {
-                    List<string> text = new List<string>() { currentAction.currentMagic.MagicName, ActionCount.ToString() };
+                    List<string> text = new List<string>() { currentAction.currentMagic.Name, ActionCount.ToString() };
                     hpbar.ActionSet(text);
                 }
-            }else
+            }
+            else
             {
-                List<string> text = new List<string>() { "순번 대기중", ActionCount.ToString() };
+                List<string> text = new List<string>() { "턴 대기중", ActionCount.ToString() };
                 hpbar.ActionSet(text);
             }
             
-            
         }
     }
-    /// <summary>
-    /// 몬스터가 이동하는대에 행동 카운트.
-    /// </summary>
-    private int moveCount;
     //몬스터가 사용하는 액션 종류
     //공격 및 유닛에게 사용하는 서포트 마법이 들어갑니다.
     [SerializeField]
-    private List<MonsterMagic> attackMagicList = new List<MonsterMagic>();
+    private MonSterMagicScriptableObejct[] attackMagicArray;
 
     //방어 마법이 들어갑니다.
     [SerializeField]
@@ -97,7 +94,12 @@ public class MonsterUnit : Unit
 
     public int KillGold;
 
-    
+    /// <summary>
+    /// 몬스터가 이동하는대에 행동 카운트.
+    /// </summary>
+    private int moveCount = 2;
+
+
 
 
 
@@ -108,14 +110,13 @@ public class MonsterUnit : Unit
         currentAction.Unit = this;
         status.effectRatio(ratioStatus);
         hpbar.HpTextSet();
-        ActionCheck();
-        //attackMagicList = ratioStatus.UsingMagicList();
+        attackMagicArray = ratioStatus.UsingMagic;
        
 
     }
     private void OnMouseDown()
     {
-        Debug.Log("나눌럿엉!");
+        Debug.Log("몬스터의 공격 범위를 표시합니다!");
         GameManager.instance.BlockModeZone.unitBlockSet(this);
     }
 
@@ -131,7 +132,9 @@ public class MonsterUnit : Unit
     {
         //행동 시작
         //몬스터가 행동을 시작하기 위해서 게임 매니저에 보내서 작동을 한다고 선언합니다.
+        ActionCount = maxActionCount;
         isAction = true;
+        ActionCheck();
         GameManager.instance.BlockModeZone.unitBlockSet(this);
         if (currentAction.currentMagic == null)
             StartCoroutine(ActionMove());
@@ -150,8 +153,9 @@ public class MonsterUnit : Unit
 
     public void ActionCheck()
     {
-        isAction = false;
-        GameManager.instance.MonsterAIManager.CurrentMonster = null;
+        
+        
+        
         //GameManager에 있는 플레이어의 좌표를 가져와 BattleZone에서 비교하여
         //현재 몬스터 유닛의 공격 사거리에들어와 있는지를 체크합니다.
         //이는 이동을 할지 액션 공격을 할지를 선정합니다. [인식범위]
@@ -192,7 +196,7 @@ public class MonsterUnit : Unit
         if (move)
         {
             currentAction.currentMagic = null;
-            ActionCount = maxActionCount;
+            ActionCount -= moveCount;
         }
         else
         {
@@ -204,17 +208,11 @@ public class MonsterUnit : Unit
 
             if (!dcheck)
             {
-                random = Random.Range(0, attackMagicList.Count);
-                currentAction.currentMagic = attackMagicList[random];
-                ActionCount = currentAction.currentMagic.MagicCost;
+                random = Random.Range(0, attackMagicArray.Length);
+                currentAction.currentMagic = attackMagicArray[random];
+                ActionCount -= currentAction.currentMagic.RequiredCost;
             }
-            else
-            {
-                random = Random.Range(0, defenceMagicList.Count);
-                currentAction.currentMagic = defenceMagicList[random];
-                ActionCount = currentAction.currentMagic.MagicCost;
-                return;
-            }
+            
 
         }
         targetPosSet();
@@ -223,10 +221,10 @@ public class MonsterUnit : Unit
 
     /// <summary>
     /// 몬스터 유닛이 사용해야할 지점의 좌표를 설정합니다. 이는 사용하는 기술에 따라 다릅니다.
+    /// 또한 기술 혹은 이동을 같이 시행합니다.
     /// </summary>
 
-   
-
+  
 
     protected void targetPosSet()
     {
@@ -271,25 +269,26 @@ public class MonsterUnit : Unit
             }
 
 
+
         }
         else
         {
             // 액션값이 있다면 해당 액션값에서의 공격범위내에 유닛이 있다는 것이니 타겟이 되는 대상자의 지점을 체크해야합니다.
             //서포팅 기술은 추가로 체크해야합니다.
             // 타겟이 다중인 기술은 현재 자신의 유닛을 위치를 기점으로 랜덤한 범위를 산출해야합니다.
-            if(currentAction.currentMagic.MagicCount <=1 && currentAction.currentMagic.AoeType == MonsterMagic.MagicAoeType.Target)
+            if(currentAction.currentMagic.Target ==1)
             {
                 //1인공격 타입입니다.
-                if(currentAction.currentMagic.Type == MonsterMagic.MagicType.Attack)
+                if(currentAction.currentMagic.Operating_type == 0)
                 {
                     targetPosList.Add(new Vector3Int((int)playerPos.x, (int)playerPos.y,0));
                 }
             }
-            else if(currentAction.currentMagic.MagicCount>=1 && currentAction.currentMagic.AoeType == MonsterMagic.MagicAoeType.LocAoe)
+            else if(currentAction.currentMagic.Target == 1 && currentAction.currentMagic.Operating_type ==3)
             {
-                List<PatternData.PatternPoint> pattern = currentAction.currentMagic.MagicRange.points;
+                List<PatternData.PatternPoint> pattern = currentAction.currentMagic.MagicDamageRange.points;
 
-                List<Vector3Int> validPositions = currentAction.currentMagic.MagicRange.points.Select(p =>
+                List<Vector3Int> validPositions = currentAction.currentMagic.MagicDamageRange.points.Select(p =>
                 {
                     int x = Mathf.FloorToInt((p.x - 3) + unitPos.x);
                     int y = Mathf.FloorToInt((p.y - 3) + unitPos.y);
@@ -298,7 +297,7 @@ public class MonsterUnit : Unit
 
 
                 // BFS를 사용하여 유닛이 공격 위치를 탐색
-                for(int i =0;i<currentAction.currentMagic.MagicCount;i++)
+                for(int i =0;i<currentAction.currentMagic.Target;i++)
                 {
                     Vector3Int RandomPosition = FindRandomPositionWithPattern(new Vector3Int((int)unitPos.x, (int)unitPos.y, 0), validPositions);
                     if (RandomPosition != unitPos)
@@ -316,6 +315,9 @@ public class MonsterUnit : Unit
 
             
         }
+
+   
+
     }
 
 
@@ -451,7 +453,7 @@ public class MonsterUnit : Unit
 
     IEnumerator ActionMove()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (!GameManager.instance.BattleZone.SerchTileUnit(targetPosList[0]))
         {
             Vector3Int scaledCellPos = new Vector3Int(
@@ -461,11 +463,22 @@ public class MonsterUnit : Unit
             GameManager.instance.BattleZone.removeTileUnit(transform.position, this);
             transform.position = scaledCellPos;
             GameManager.instance.BattleZone.setTileUnit(scaledCellPos, this);
-            ActionCheck();
-        }else
+            if (actionCount <= moveCount)
+            {
+                isAction = false;
+                GameManager.instance.MonsterAIManager.CurrentMonster = null;
+                ActionCount = 0;
+                Debug.Log("몬스터의 행동이 종료되엇습니다");
+            }
+            else
+            {
+                ActionCheck();
+                Debug.Log("현재 액션값이 이동보다 높음으로 다시 재 탐색을 시행합니다.");
+            }
+        }
+        else
         {
             targetPosSet();
-            monsterAction();
         }
         yield return null;
         yield break;

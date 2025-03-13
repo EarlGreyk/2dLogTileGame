@@ -47,7 +47,7 @@ public class BlockModeZone : MonoBehaviour
             }
         }else
         {
-            List<Vector3Int> targetAoePositions = unit.CurrentAcion.currentMagic.MagicAoe.points.Select(p =>
+            List<Vector3Int> targetAoePositions = unit.CurrentAcion.currentMagic.MagicCastingRange.points.Select(p =>
             {
                 int x = Mathf.FloorToInt((p.x - 3) + unit.TargetPosList[0].x);
                 int y = Mathf.FloorToInt((p.y - 3) + unit.TargetPosList[0].y);

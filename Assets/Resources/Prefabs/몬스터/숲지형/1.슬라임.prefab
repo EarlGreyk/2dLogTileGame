@@ -107,8 +107,7 @@ MonoBehaviour:
   movePattenData: {fileID: 11400000, guid: 1cf99e06eef531248a5b13e587227d91, type: 2}
   attackRangePattenData: {fileID: 11400000, guid: c9f3c787bf238e64bab65f39f1ac5a04, type: 2}
   ratioStatus: {fileID: 11400000, guid: e4559c99b2abb9e42937d53339adcba0, type: 2}
-  attackMagicList:
-  - {fileID: 0}
+  attackMagicList: []
   defenceMagicList: []
   currentAction: {fileID: -6424533642964141347}
   maxActionCount: 4

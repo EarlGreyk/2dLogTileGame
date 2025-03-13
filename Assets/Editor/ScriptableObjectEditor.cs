@@ -55,6 +55,12 @@ public class ScriptableObjectEditor : EditorWindow
                         savepath = "magic_data";
                     }
                     break;
+                case "monster_magic_data" :
+                    {
+                        newBso = ScriptableObject.CreateInstance<MonSterMagicScriptableObejct>();
+                        savepath = "monster_magic_data";
+                    }
+                    break;
                 case "slate_data":
                     {
                         newBso = ScriptableObject.CreateInstance<SlateScriptableObejct>();
