@@ -56,7 +56,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameProsessManager gameProsessManager;
 
-    public GameProsessManager GameProsessManager {  get { return gameProsessManager; } }    
+    public GameProsessManager GameProsessManager {  get { return gameProsessManager; } }
+    [SerializeField]
+    private UnitInfoManager unitInfoManager;
+
+    public UnitInfoManager UnitInfoManager { get { return unitInfoManager; } }
+
+    
 
 
     private bool isPlayer;

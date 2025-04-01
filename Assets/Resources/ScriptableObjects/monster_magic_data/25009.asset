@@ -27,3 +27,5 @@ MonoBehaviour:
   Proportion: 0
   MagicSprite: {fileID: 0}
   MagicEffectPrefab: {fileID: 0}
+  MagicTime: 2
+  HPcon: 1

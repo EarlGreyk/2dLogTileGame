@@ -30,13 +30,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3fa9e8bae545a484a884330e74445031, type: 2}
   DropGold: 20000
   UsingMagic:
-  - {fileID: 11400000, guid: 10451f5891e0a214aa8de544ca4f3528, type: 2}
-  - {fileID: 11400000, guid: 94246be7849bd9a4db40a78bf24fdf79, type: 2}
-  - {fileID: 11400000, guid: 9286c5b0606dcaf48a4ff2abca6154b8, type: 2}
-  - {fileID: 11400000, guid: 838e35fe6da2f074aa4e3f46dc749573, type: 2}
-  - {fileID: 11400000, guid: a08710947f73f3f4eb66d1f67eaabddb, type: 2}
-  - {fileID: 11400000, guid: 8d677ad371841de46ab1648a3ff1c327, type: 2}
-  - {fileID: 11400000, guid: 94cd6bd162ea6d244a22a1d22995f9b9, type: 2}
-  - {fileID: 11400000, guid: 695c58386abfafe4cab024b588382885, type: 2}
-  - {fileID: 11400000, guid: 2ec9b8eaa6e72ee48b296cea96b31b1d, type: 2}
-  - {fileID: 11400000, guid: 4048e0764aa67754a958a49f07a93a03, type: 2}
+  - {fileID: 11400000, guid: f68c23432353762438b97edc2f311d2e, type: 2}
+  - {fileID: 11400000, guid: 35054f02d5102a84cb4207cdebb67071, type: 2}
+  - {fileID: 11400000, guid: d7ad0aceef077bd4d92ab190b1bb0ea1, type: 2}
+  - {fileID: 11400000, guid: 128b14dd8c4b333429d3b0194ac7b8fd, type: 2}
+  - {fileID: 11400000, guid: cec8e09fa1cf0dc408aa12817e18a118, type: 2}
+  - {fileID: 11400000, guid: 92da3fb34d42619499a283e2cc2749f4, type: 2}
+  - {fileID: 11400000, guid: 3f0c3d8f5af6e1040a9f08f435428c77, type: 2}
+  - {fileID: 11400000, guid: 25cdd7a009a08874e970a9a3369f5a3e, type: 2}
+  - {fileID: 11400000, guid: bef6331a9797e32478ace17e46a75bbb, type: 2}
+  - {fileID: 11400000, guid: c152970ba6fa30a448a84b2d582f26b4, type: 2}

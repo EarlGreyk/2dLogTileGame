@@ -17,6 +17,7 @@ public class BlockModeZone : MonoBehaviour
     /// 
     public void ModeSetting(bool value)
     {
+        Debug.Log("모드를 재설정합니다. : " + value);
         if(value)
         {
             for (int i = 0; i < GameManager.instance.MonsterAIManager.Monsters.Count; i++)
@@ -34,10 +35,14 @@ public class BlockModeZone : MonoBehaviour
     public void unitBlockSet(MonsterUnit unit)
     {
         breakTile();
+        Debug.Log("동선 밑 기술 범위 표시");
 
-        if(unit.CurrentAcion.currentMagic == null)
+
+
+        if (unit.CurrentAcion.currentMagic == null)
         {
-            if(unit.MovePosPath.Count>0)
+            Debug.Log("유닛 이동 개수 : " + unit.MovePosPath.Count.ToString());
+            if (unit.MovePosPath.Count>0)
             {
                 for (int i = 0; i < unit.MovePosPath.Count; i++)
                 {

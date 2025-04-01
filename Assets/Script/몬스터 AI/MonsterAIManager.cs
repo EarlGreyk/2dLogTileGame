@@ -7,15 +7,19 @@ public class MonsterAIManager : MonoBehaviour
     // Start is called before the first frame update
     private List<MonsterUnit> monsters = new List< MonsterUnit>();
     public List<MonsterUnit> Monsters { get { return monsters; } }
+
     private Queue<MonsterUnit> actionMonsters = new Queue<MonsterUnit>();
 
-    private MonsterUnit currentMonster;
-    public MonsterUnit CurrentMonster { get { return currentMonster; } set { currentMonster = value; } }
+    private MonsterUnit currentMonster = null;
+    public MonsterUnit CurrentMonster { get { return currentMonster; } 
+        set
+        { currentMonster = value;} }
 
 
     public void MonsterSet(MonsterUnit monster)
     {
         monsters.Add(monster);
+        GameManager.instance.UnitInfoManager.MonsterInfoAdd(monster);
     }
 
 
@@ -34,16 +38,12 @@ public class MonsterAIManager : MonoBehaviour
 
     private void Update()
     {
+
         if (currentMonster == null && actionMonsters.Count > 0)
         {
             AiEnable();
         }
-        if( currentMonster == null && actionMonsters.Count == 0)
-        {
-            GameManager.instance.onPlayerAction();
-        }
-
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("몬스터 처치 명령");
             MonsterRevmoe(monsters[monsters.Count - 1]);
@@ -75,7 +75,14 @@ public class MonsterAIManager : MonoBehaviour
             currentMonster.monsterAction();
 
         }
-            
+
+
+        if (currentMonster == null && actionMonsters.Count == 0)
+        {
+            GameManager.instance.onPlayerAction();
+        }
+
+
     }
 
 

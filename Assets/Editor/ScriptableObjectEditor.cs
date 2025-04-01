@@ -73,10 +73,10 @@ public class ScriptableObjectEditor : EditorWindow
                         savepath = "block_data";
                     }
                     break;
-                case "unit_data":
+                case "monster_data":
                     {
                         newBso = ScriptableObject.CreateInstance<MonsterScriptableObject>();
-                        savepath = "unit_data";
+                        savepath = "monster_data";
                     }
                     break;
                 case "medal_data":

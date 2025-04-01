@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,6 +28,8 @@ public class MonsterUnit : Unit
     private PatternData attackRangePattenData;
     [SerializeField]
     private MonsterScriptableObject ratioStatus;
+
+    public MonsterScriptableObject RatioStatus { get { return ratioStatus; } }
 
     /// <summary>
     /// 몬스터가 남은 행동까지의 카운트
@@ -64,9 +67,13 @@ public class MonsterUnit : Unit
     [SerializeField]
     private MonSterMagicScriptableObejct[] attackMagicArray;
 
+    public MonSterMagicScriptableObejct[] AttackMagicArray { get { return attackMagicArray; } }
+
     //방어 마법이 들어갑니다.
     [SerializeField]
-    private List<MonsterMagic> defenceMagicList = new List<MonsterMagic>();
+    private MonSterMagicScriptableObejct[] defenceMagicArray;
+
+    public MonSterMagicScriptableObejct[] DefenceMagicArray  { get { return defenceMagicArray; } }
 
     //몬스터가 현재 사용하는 액션[마법]
     [SerializeField]
@@ -99,6 +106,11 @@ public class MonsterUnit : Unit
     /// </summary>
     private int moveCount = 2;
 
+    /// <summary>
+    /// 몬스터가 다음애 행동할 랜덤액션값
+    /// </summary>
+    private int randomAction = 0;
+
 
 
 
@@ -111,13 +123,14 @@ public class MonsterUnit : Unit
         status.effectRatio(ratioStatus);
         hpbar.HpTextSet();
         attackMagicArray = ratioStatus.UsingMagic;
+
+        randomAction = Random.Range(0, attackMagicArray.Length);
        
 
     }
     private void OnMouseDown()
     {
-        Debug.Log("몬스터의 공격 범위를 표시합니다!");
-        GameManager.instance.BlockModeZone.unitBlockSet(this);
+        GameManager.instance.UnitInfoManager.TargetUnitSet(this);
     }
 
 
@@ -147,14 +160,12 @@ public class MonsterUnit : Unit
 
         //사용이 완료 되엇음으로 actionCount를 올리고 GameManager에 완료되엇다고 신호를 보내줍니다.
     }
- 
+   
     //아래의 함수는 액션을 선택하고 설정합니다.
     //몬스터의 기본적인 AI입니다.
 
     public void ActionCheck()
     {
-        
-        
         
         //GameManager에 있는 플레이어의 좌표를 가져와 BattleZone에서 비교하여
         //현재 몬스터 유닛의 공격 사거리에들어와 있는지를 체크합니다.
@@ -177,22 +188,25 @@ public class MonsterUnit : Unit
                 }
             }
         }
+        
         if(isCheck)
         {
             ActionSet(false);
+            Debug.Log("다음 행동 : 공격");
         }
         else
         {
             ActionSet(true);
+            Debug.Log("다음 행동 : 이동");
         }
     }
     /// <summary>
     /// 몬스터의 행동 알고리즘을 보여줍니다.
-    /// 몬스터는 다음 행동을 미리 알려주어야 하기 때문에 행동이 끝나면 
-    /// 함수를 작동 시켜야합니다.
+    /// 매 플레이어의 행동 체크마다 해당 액션을 해서 현재 행동값으로 보여주어야 합니다.
     /// </summary>
     protected virtual void ActionSet(bool move)
     {
+
         if (move)
         {
             currentAction.currentMagic = null;
@@ -200,20 +214,29 @@ public class MonsterUnit : Unit
         }
         else
         {
-            int random = Random.Range(0, 10);
             bool dcheck = false;
 
-            if (random > 7 && (status.Health / status.MaxHealth) < 0.6 && defenceMagicList.Count > 0)
+            if (randomAction > 7 && (status.Health / status.MaxHealth) < 0.6 && defenceMagicArray.Length > 0)
                 dcheck = true;
+          
 
             if (!dcheck)
             {
-                random = Random.Range(0, attackMagicArray.Length);
-                currentAction.currentMagic = attackMagicArray[random];
-                ActionCount -= currentAction.currentMagic.RequiredCost;
+                currentAction.currentMagic = attackMagicArray[randomAction];
             }
             
 
+        }
+
+        if(isAction)
+        {
+            if(move)
+            {
+                ActionCount -= moveCount;
+            }else
+            {
+                ActionCount -= currentAction.currentMagic.RequiredCost;
+            }
         }
         targetPosSet();
     }
@@ -278,7 +301,7 @@ public class MonsterUnit : Unit
             // 타겟이 다중인 기술은 현재 자신의 유닛을 위치를 기점으로 랜덤한 범위를 산출해야합니다.
             if(currentAction.currentMagic.Target ==1)
             {
-                //1인공격 타입입니다.
+                //공격타입입니다.
                 if(currentAction.currentMagic.Operating_type == 0)
                 {
                     targetPosList.Add(new Vector3Int((int)playerPos.x, (int)playerPos.y,0));
@@ -463,18 +486,7 @@ public class MonsterUnit : Unit
             GameManager.instance.BattleZone.removeTileUnit(transform.position, this);
             transform.position = scaledCellPos;
             GameManager.instance.BattleZone.setTileUnit(scaledCellPos, this);
-            if (actionCount <= moveCount)
-            {
-                isAction = false;
-                GameManager.instance.MonsterAIManager.CurrentMonster = null;
-                ActionCount = 0;
-                Debug.Log("몬스터의 행동이 종료되엇습니다");
-            }
-            else
-            {
-                ActionCheck();
-                Debug.Log("현재 액션값이 이동보다 높음으로 다시 재 탐색을 시행합니다.");
-            }
+            ReAction();
         }
         else
         {
@@ -485,6 +497,23 @@ public class MonsterUnit : Unit
 
         
 
+    }
+
+
+    public void ReAction()
+    {
+        if (actionCount <= moveCount)
+        {
+            isAction = false;
+            GameManager.instance.MonsterAIManager.CurrentMonster = null;
+            ActionCount = 0;
+            Debug.Log("몬스터의 행동이 종료되엇습니다");
+        }
+        else
+        {
+            ActionCheck();
+            Debug.Log("현재 액션값이 이동보다 높음으로 다시 재 탐색을 시행합니다.");
+        }
     }
 
     public override void UnitDie()

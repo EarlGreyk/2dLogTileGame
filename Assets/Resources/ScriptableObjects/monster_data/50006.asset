@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87cf55a26127dad44a5e555bd1608f64, type: 3}
-  m_Name: 50004
+  m_Name: 50006
   m_EditorClassIdentifier: 
-  id: 50004
-  MosterName: "\uC232\uC694\uC815 \uAD81\uC218"
+  id: 50006
+  MosterName: "\uC232\uC694\uC815 \uC791\uC0B4\uAFBC"
   HpValue: 0.6
   ElementalDamageValue: 0.4
   NonElementalDamageValue: 0.6
   BarrierValue: 0.6
   ReducionValue: 0
   Level: 1
-  Type: 1
+  Type: 0
   Reward: 1
-  ActionPoint: 6
+  ActionPoint: 5
   MutationRate: 0
   MovePattern:
-  - {fileID: 11400000, guid: 1cf99e06eef531248a5b13e587227d91, type: 2}
+  - {fileID: 11400000, guid: 89e47bad282e45f4c8659589bcc3119b, type: 2}
   DropGold: 1000
   UsingMagic:
-  - {fileID: 11400000, guid: 5152c38842505b444bc7b550e0026975, type: 2}
+  - {fileID: 11400000, guid: 00d7a6944eb0da64c8888f17860d0886, type: 2}

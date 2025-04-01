@@ -157,7 +157,6 @@ public class BattleZone : MonoBehaviour
     {
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
-        Debug.Log(pos);
         int x = unitPos.x;
         int y = unitPos.y;
         battleTiles[x, y].tempTile = true;

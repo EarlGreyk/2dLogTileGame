@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class MonsterScriptableObject : BaseScriptableObject
 {
@@ -26,7 +28,7 @@ public class MonsterScriptableObject : BaseScriptableObject
     {
         id = int.Parse(values[1].Trim());
         MosterName = values[2].Trim();
-        HpValue = float.Parse(values[3].Trim());
+        HpValue = float.Parse(floatCheck(values[3].Trim()));
         ElementalDamageValue = float.Parse(values[4].Trim());
         NonElementalDamageValue = float.Parse(values[5].Trim());
         BarrierValue = float.Parse(values[6].Trim());
@@ -39,6 +41,27 @@ public class MonsterScriptableObject : BaseScriptableObject
         MovePattern = ConversBlocks(values[14]);
         DropGold = int.Parse(values[15].Trim());
         UsingMagic = ConversMagic(values[16].Trim());
+
+
+    }
+
+    public string floatCheck(string value)
+    {
+        
+        
+        float parsedValue = 0f;
+
+        // 값이 실수인지 정수인지 체크하는 방법
+
+
+        if (float.TryParse(value, out parsedValue))
+        {
+            return value +"."+parsedValue;
+        }
+        else
+        {
+            return value;
+        }
 
 
     }
@@ -64,7 +87,7 @@ public class MonsterScriptableObject : BaseScriptableObject
 
         for (int i = 0; i < values.Length; i++)
         {
-            datas[i] = Resources.Load<MonSterMagicScriptableObejct>("ScriptableObjects/magic_data/" + values[i]);
+            datas[i] = Resources.Load<MonSterMagicScriptableObejct>("ScriptableObjects/monster_magic_data/" + values[i]);
         }
 
         return datas;

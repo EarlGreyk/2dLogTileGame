@@ -28,6 +28,7 @@ public class MonsterAction : MonoBehaviour
     /// </summary>
     public void onAction()
     {
+        Debug.Log("몬스터 액션!!!");
         if (currentmagic == null)
             return;
         StartCoroutine(Action());
@@ -46,11 +47,9 @@ public class MonsterAction : MonoBehaviour
                 {
                     if (GameManager.instance.BattleZone.BattleTiles[x, y].type == BattleTile.tileType.Break)
                     {
-                        Debug.Log($"position ({x}, {y}) 안됨! ");
                     }
                     else
-                    {
-                        Debug.Log($"position ({x}, {y}) 공격가능. ");
+                    {   
                         if (GameManager.instance.BattleZone.BattleTiles[x, y].onUnit != null)
                             hitunits.Add(GameManager.instance.BattleZone.BattleTiles[x, y].onUnit);
                     }
@@ -79,6 +78,8 @@ public class MonsterAction : MonoBehaviour
     /// </summary>
     public void effectAction()
     {
+        
+        
         //현재 마법이 데미지인지 버프인지 등을 체크하여 그에 맞는 효과를부여 
         //임시적으로 데미지만을 줌.
         if(currentMagic.Operating_type == 0)
@@ -101,12 +102,13 @@ public class MonsterAction : MonoBehaviour
             //}
         }
 
+        
         hitunits.Clear();
         hitPos.Clear();
     }
     public void endAction()
     {
-        unit.ActionCheck();
+        unit.ReAction();
     }
 
     /// <summary>

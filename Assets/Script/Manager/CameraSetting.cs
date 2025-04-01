@@ -6,9 +6,9 @@ using UnityEngine.Tilemaps;
 
 public class CameraSetting : MonoBehaviour
 {
+    public static CameraSetting instance;
     [SerializeField]
     private Grid grid;
-    public static CameraSetting instance;
     private Camera camera;
     public float zoomSpeed;
     public float minZoom;
@@ -103,7 +103,7 @@ public class CameraSetting : MonoBehaviour
 
     public void unitFocusSet(Vector3 unitPos)
     {
-        camera.transform.position = unitPos+new Vector3(0, 0, -1);
+        camera.transform.position = unitPos+new Vector3(-10, 0, -1);
         camera.orthographicSize = 10;
     }
 

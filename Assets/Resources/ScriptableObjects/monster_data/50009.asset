@@ -29,5 +29,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 89e47bad282e45f4c8659589bcc3119b, type: 2}
   DropGold: 6000
   UsingMagic:
-  - {fileID: 11400000, guid: 94246be7849bd9a4db40a78bf24fdf79, type: 2}
-  - {fileID: 11400000, guid: 5152c38842505b444bc7b550e0026975, type: 2}
+  - {fileID: 11400000, guid: 35054f02d5102a84cb4207cdebb67071, type: 2}
+  - {fileID: 11400000, guid: 02a3383738d136a43a721a1bc07461a7, type: 2}
