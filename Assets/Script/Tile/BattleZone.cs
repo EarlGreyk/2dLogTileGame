@@ -16,7 +16,7 @@ public class BattleZone : MonoBehaviour
     private Grid grid;
     private Tilemap tilemap; // 타일맵 참조
     public Tilemap Tilemap {  get { return tilemap; } }
-    private BattleTile[,] battleTiles = new BattleTile[15,7];
+    private BattleTile[,] battleTiles ;
 
     public BattleTile[,] BattleTiles { get { return battleTiles; } }
 
@@ -133,6 +133,9 @@ public class BattleZone : MonoBehaviour
         if (battleTiles[x, y].onUnit == null)
             battleTiles[x, y].onUnit = unit;
 
+
+        setTempTile(pos);
+
     }
     /// <summary>
     /// 유닛이 파괴되거나 유닛이 이동될때 BattleZone에 해당 유닛을 제거합니다.
@@ -151,25 +154,49 @@ public class BattleZone : MonoBehaviour
         if (battleTiles[x, y].onUnit == unit)
             battleTiles[x, y].onUnit = null;
 
+
         removeTempTile(pos);
+
     }
-    public void setTempTile(Vector3 pos)
+    public void setTempTile(Vector3 pos, bool b = true)
     {
+        Vector3 scale = grid.transform.localScale;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
         int x = unitPos.x;
         int y = unitPos.y;
+
+        if(b)
+        {
+            x = Mathf.FloorToInt(unitPos.x / scale.x);
+            y = Mathf.FloorToInt(unitPos.y / scale.y);
+        }
+
+        
+
+
         battleTiles[x, y].tempTile = true;
+        DebugTempTest();
     }
 
-    public void removeTempTile(Vector3 pos)
+    public void removeTempTile(Vector3 pos, bool b = true)
     {
+        Vector3 scale = grid.transform.localScale;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
 
         int x = unitPos.x;
         int y = unitPos.y;
+
+        if (b)
+        {
+            x = Mathf.FloorToInt(unitPos.x / scale.x);
+            y = Mathf.FloorToInt(unitPos.y / scale.y);
+        }
+
+
         battleTiles[x, y].tempTile = false;
+        DebugTempTest();
     }
 
 
@@ -179,11 +206,12 @@ public class BattleZone : MonoBehaviour
     public Unit SerchTileUnit(Vector3 pos)
     {
         Unit serchUnit = null;
+        Vector3 scale = grid.transform.localScale;
         Vector3Int unitPos = new Vector3Int((int)pos.x, (int)pos.y, 0);
 
 
-        int x = unitPos.x ;
-        int y = unitPos.y ;
+        int x = Mathf.FloorToInt(unitPos.x / scale.x);
+        int y = Mathf.FloorToInt(unitPos.y / scale.y);
 
         if (battleTiles[x, y].onUnit != null) 
             serchUnit = battleTiles[x, y].onUnit;
@@ -192,5 +220,128 @@ public class BattleZone : MonoBehaviour
         return serchUnit;
     }
 
-    
+    public Unit SerchTileUnit(Vector3Int pos)
+    {
+        Vector3 scale = grid.transform.localScale;
+        Unit serchUnit = null;
+
+
+        int x = Mathf.FloorToInt(pos.x / scale.x);
+        int y = Mathf.FloorToInt(pos.y / scale.y);
+
+        if (battleTiles[x, y].onUnit != null)
+            serchUnit = battleTiles[x, y].onUnit;
+
+
+        return serchUnit;
+    }
+
+
+
+
+
+
+    private void DebugUnitTest()
+    {
+
+        BattleTile[,] Tiles = battleTiles;
+
+       // Tiles = Rotate90Clockwise(Tiles);
+
+        string s = "";
+        for (int x = 0; x < Tiles.GetLength(0); x++)
+        {
+            s += "\n";
+            for (int y = 0;y < Tiles.GetLength(1); y++)
+            {
+                if(Tiles[x, y].onUnit == null)
+                {
+                    if(battleTiles[x, y].type == BattleTile.tileType.Break)
+                    {
+                        s += "■";
+                    }
+                    else
+                    {
+                        s += "□";
+                    }
+                    
+                }else
+                {
+                    s += "▦";
+                }
+
+                
+            }
+        }
+
+
+
+
+        Debug.Log(s);
+    }
+
+    private void DebugTempTest()
+    {
+
+        BattleTile[,] Tiles = battleTiles;
+
+        // Tiles = Rotate90Clockwise(Tiles);
+
+        string s = "";
+        for (int x = 0; x < Tiles.GetLength(0); x++)
+        {
+            s += "\n";
+            for (int y = 0; y < Tiles.GetLength(1); y++)
+            {
+                if (Tiles[x, y].tempTile == false)
+                {
+                    if (battleTiles[x, y].type == BattleTile.tileType.Break)
+                    {
+                        s += "■";
+                    }
+                    else
+                    {
+                        s += "□";
+                    }
+
+                }
+                else
+                {
+                    s += "▣";
+                }
+
+
+            }
+        }
+
+
+
+
+        Debug.Log(s);
+    }
+
+    BattleTile[,] Rotate90Clockwise(BattleTile[,] input)
+    {
+        int rows = input.GetLength(0);
+        int cols = input.GetLength(1);
+
+        BattleTile[,] rotated = new BattleTile[cols, rows];
+
+       
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                rotated[cols - 1 - j, i] = input[i, j];
+            }
+        }
+
+        return rotated;
+    }
+
+
+
+
+
 }

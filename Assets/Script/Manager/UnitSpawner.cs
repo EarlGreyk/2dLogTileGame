@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
 public class UnitSpawner : MonoBehaviour
 {
@@ -35,7 +37,9 @@ public class UnitSpawner : MonoBehaviour
         // À¯´Ö »ý¼º
         GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
-        return unit.GetComponent<PlayerUnit>();
+        PlayerUnit player = unit.GetComponent<PlayerUnit>();
+        GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
+        return player;
     }
 
     public MonsterUnit SpawnMonster(Vector3Int tilePosition, GameObject unitPrefab)
@@ -47,6 +51,7 @@ public class UnitSpawner : MonoBehaviour
         unit.transform.SetParent(UnitMap.transform);
         MonsterUnit monster = unit.GetComponent<MonsterUnit>();
         GameManager.instance.MonsterAIManager.MonsterSet(monster);
+        GameManager.instance.BattleZone.setTileUnit(tilePosition, monster);
         return monster;
     }
 

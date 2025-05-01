@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,11 +36,22 @@ public class MonsterAIManager : MonoBehaviour
                 GameManager.instance.GameProsessManager.ProsessSet();
         }
     }
+    /// <summary>
+    /// 플레이어가 이동, 마법의 행동을 했을때 위치 및 상황이 변동 할 수 있음으로 행동 알고리즘을 재검색합니다.
+    /// </summary>
+    public void MonsterActionCheck()
+    {
+        Debug.Log("몬스터 행동 재설정");
+        for (int i = 0; i < monsters.Count; i++)
+        {
+            monsters[i].ActionCheck();
+        }
+    }
 
     private void Update()
     {
 
-        if (currentMonster == null && actionMonsters.Count > 0)
+        if (currentMonster == null && actionMonsters.Count >= 0 && GameManager.instance.IsMonater)
         {
             AiEnable();
         }
@@ -72,14 +84,16 @@ public class MonsterAIManager : MonoBehaviour
             GameManager.instance.onMonsterAction();
             currentMonster = actionMonsters.Peek();
             actionMonsters.Dequeue();
-            currentMonster.monsterAction();
+            currentMonster.ActionStart();
 
         }
 
 
         if (currentMonster == null && actionMonsters.Count == 0)
         {
+            
             GameManager.instance.onPlayerAction();
+            MonsterActionCheck();
         }
 
 

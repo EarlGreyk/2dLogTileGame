@@ -197,6 +197,7 @@ public class Unit :MonoBehaviour
     public UnitStatus status;
     public GameObject HPbar;
     public Sprite Sprite;
+    public SpriteRenderer SpriteRenderer;
     public UnitStatusObject baseStatus;
     public UnitHpBar hpbar;
     private GameObject uicanvas;
@@ -210,16 +211,16 @@ public class Unit :MonoBehaviour
         hpbar = obj.GetComponent<UnitHpBar>();
         hpbar.HpbarSet(this);
         
-        GameManager.instance.BattleZone.setTileUnit(transform.position, this);
         uicanvas = GameManager.instance.HPCanvas;
         uicanvasRectTransform = uicanvas.GetComponent<RectTransform>();
+        SpriteRenderer = GetComponent<SpriteRenderer>();
         
 
 
     }
     public virtual void Update()
     {
-
+        /*   몬스터의 체력바 밑 텍스트 활성화 문구입니다. 
         if (CheckVisibility())
         {
 
@@ -241,6 +242,7 @@ public class Unit :MonoBehaviour
                 hpbar.rectAction.gameObject.SetActive(false);
             }
         }
+        */
 
     }
     private bool CheckVisibility()

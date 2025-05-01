@@ -103,7 +103,7 @@ public class CameraSetting : MonoBehaviour
 
     public void unitFocusSet(Vector3 unitPos)
     {
-        camera.transform.position = unitPos+new Vector3(-10, 0, -1);
+        camera.transform.position = unitPos+new Vector3(-1, 0, -1);
         camera.orthographicSize = 10;
     }
 

@@ -111,6 +111,10 @@ public class MonsterUnit : Unit
     /// </summary>
     private int randomAction = 0;
 
+    /// <summary>
+    /// 몬스터가 감소시켜야할 행동 카운트
+    /// </summary>
+    private int disCount = 0;
 
 
 
@@ -125,6 +129,9 @@ public class MonsterUnit : Unit
         attackMagicArray = ratioStatus.UsingMagic;
 
         randomAction = Random.Range(0, attackMagicArray.Length);
+
+
+        ActionCheck();
        
 
     }
@@ -134,31 +141,26 @@ public class MonsterUnit : Unit
     }
 
 
-
-
-
-
-
-    //actionCount 가 0이면 실행합니다.
-    //이는 몬스터 AI메니저에서 실행합니다.
-    public void monsterAction()
+    public void ActionStart()
     {
         //행동 시작
         //몬스터가 행동을 시작하기 위해서 게임 매니저에 보내서 작동을 한다고 선언합니다.
         ActionCount = maxActionCount;
         isAction = true;
-        ActionCheck();
+        monsterAction();
+    }
+
+
+
+
+    //몬스터 행동을 재탐색한뒤 실행하는 함수입니다.
+    public void monsterAction()
+    {
         GameManager.instance.BlockModeZone.unitBlockSet(this);
         if (currentAction.currentMagic == null)
             StartCoroutine(ActionMove());
         else
             currentAction.onAction();
-
-
-
-
-
-        //사용이 완료 되엇음으로 actionCount를 올리고 GameManager에 완료되엇다고 신호를 보내줍니다.
     }
    
     //아래의 함수는 액션을 선택하고 설정합니다.
@@ -210,7 +212,7 @@ public class MonsterUnit : Unit
         if (move)
         {
             currentAction.currentMagic = null;
-            ActionCount -= moveCount;
+            actionCount -= moveCount;
         }
         else
         {
@@ -232,10 +234,10 @@ public class MonsterUnit : Unit
         {
             if(move)
             {
-                ActionCount -= moveCount;
+                disCount= moveCount;
             }else
             {
-                ActionCount -= currentAction.currentMagic.RequiredCost;
+                disCount = currentAction.currentMagic.RequiredCost;
             }
         }
         targetPosSet();
@@ -252,6 +254,10 @@ public class MonsterUnit : Unit
     protected void targetPosSet()
     {
         //타겟리스트 초기화
+        for(int i =0; i < targetPosList.Count;i++)
+        {
+            GameManager.instance.BattleZone.removeTempTile(targetPosList[i],false);
+        }
         targetPosList.Clear();
         //
 
@@ -284,7 +290,7 @@ public class MonsterUnit : Unit
             {
                 this.targetPosList.Add(closestPosition);
                 movePosPath = FindPathWithBFS(new Vector3Int((int)unitPos.x, (int)unitPos.y, 0), closestPosition, validPositions);
-                GameManager.instance.BattleZone.setTempTile(targetPosList[0]);
+                GameManager.instance.BattleZone.setTempTile(targetPosList[0],false);
             }
             else
             {
@@ -355,7 +361,7 @@ public class MonsterUnit : Unit
             if (pos.x >= 0 && pos.y >= 0 && pos.x < GameManager.instance.BattleZone.BattleTiles.GetLength(0) && 
                 pos.y < GameManager.instance.BattleZone.BattleTiles.GetLength(1) &&
                 GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].type != BattleTile.tileType.Break &&
-                GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].onUnit == null )
+                GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].onUnit == null && GameManager.instance.BattleZone.BattleTiles[pos.x, pos.y].tempTile == false)
             {
                 PositionList.Add(new Vector3Int(pos.x, pos.y, 0));
             }
@@ -476,7 +482,7 @@ public class MonsterUnit : Unit
 
     IEnumerator ActionMove()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         if (!GameManager.instance.BattleZone.SerchTileUnit(targetPosList[0]))
         {
             Vector3Int scaledCellPos = new Vector3Int(
@@ -502,17 +508,22 @@ public class MonsterUnit : Unit
 
     public void ReAction()
     {
-        if (actionCount <= moveCount)
+        actionCount -= disCount;
+        if (actionCount < moveCount)
         {
             isAction = false;
             GameManager.instance.MonsterAIManager.CurrentMonster = null;
             ActionCount = 0;
+
             Debug.Log("몬스터의 행동이 종료되엇습니다");
         }
         else
         {
-            ActionCheck();
             Debug.Log("현재 액션값이 이동보다 높음으로 다시 재 탐색을 시행합니다.");
+            ActionCheck();
+            monsterAction();
+
+
         }
     }
 

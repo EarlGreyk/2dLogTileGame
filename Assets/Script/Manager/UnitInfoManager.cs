@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class UnitInfoManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private GameObject UnitInfoInterPanel;
+
+    [SerializeField]
+    private GameObject UnitInfoActionPanel;
 
 
     /// <summary>
@@ -45,6 +49,11 @@ public class UnitInfoManager : MonoBehaviour
     private TextMeshProUGUI targetName;
 
 
+    [SerializeField]
+    private Image targetHpbar;
+
+    [SerializeField]
+    private TextMeshProUGUI targetHpText;
 
 
 
@@ -56,8 +65,16 @@ public class UnitInfoManager : MonoBehaviour
 
         if (Input.GetButtonDown("Cancel"))
         {
-            TargetUnit = null;
-            UnitInfoInterPanel.SetActive(false);
+            if(UnitInfoInterPanel.activeSelf)
+                TargetUnitRemove();
+
+            if(UnitInfoActionPanel.activeSelf)
+            {
+                UnitInfoActionPanel.gameObject.SetActive(false);
+                UnitInfoInterPanel.gameObject.SetActive(true);
+            }
+
+
         }
     }
 
@@ -104,27 +121,50 @@ public class UnitInfoManager : MonoBehaviour
     /// <param name="targetUnit"></param>
     public void  TargetUnitSet(MonsterUnit targetUnit)
     {
+        if(this.TargetUnit != null)
+            this.TargetUnit.SpriteRenderer.color = Color.white;
+
         this.TargetUnit = targetUnit;
+        this.TargetUnit.SpriteRenderer.color = Color.blue;
         UnitInfoInterPanel.gameObject.SetActive(true);
 
 
         CameraSetting.instance.unitFocusSet(TargetUnit.transform.position);
-        TagetMonsterActionInfoSet();
+        TargetMonsterActionPredict();
+
+
 
     }
     public void TargetUnitSet(int i)
     {
+        if (this.TargetUnit != null)
+            this.TargetUnit.SpriteRenderer.color = Color.white;
+
         this.TargetUnit = MonsterUnitArray[i];
+        this.TargetUnit.SpriteRenderer.color = Color.blue;
         UnitInfoInterPanel.gameObject.SetActive(true);
         CameraSetting.instance.unitFocusSet(TargetUnit.transform.position);
-        TagetMonsterActionInfoSet();
+
+        TargetMonsterActionPredict();
     }
 
-
-
-    private void TagetMonsterActionInfoSet()
+    private void TargetUnitRemove()
     {
-        targetName.text = TargetUnit.RatioStatus.MosterName;
+        if(TargetUnit != null)
+        {
+            this.TargetUnit.SpriteRenderer.color = Color.white;
+            TargetUnit = null;
+            UnitInfoInterPanel.SetActive(false);
+            GameManager.instance.BlockModeZone.ModeSetting(false);
+        }
+
+    }
+    
+
+    public void TagetMonsterActionInfoSet()
+    {
+        UnitInfoActionPanel.gameObject.SetActive(true);
+        UnitInfoInterPanel.gameObject.SetActive(false);
 
 
         for (int i =0; i<TargetUnit.AttackMagicArray.Length; i++)
@@ -145,11 +185,16 @@ public class UnitInfoManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// 대상이 행동을 할때 어떻게 행할지 필드에 보여줍니다.
+    /// </summary>
 
     public void TargetMonsterActionPredict()
     {
-        Debug.Log("대상 행동 체크");
-        TargetUnit.ActionCheck();
+        
+        targetName.text = TargetUnit.RatioStatus.MosterName;
+        targetHpbar.fillAmount = TargetUnit.status.Health / TargetUnit.status.MaxHealth;
+        targetHpText.text = TargetUnit.status.Health.ToString() + " / " + TargetUnit.status.MaxHealth.ToString();
         GameManager.instance.BlockModeZone.unitBlockSet(TargetUnit);
     }
 

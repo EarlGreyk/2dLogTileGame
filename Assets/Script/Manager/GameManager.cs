@@ -114,8 +114,7 @@ public class GameManager : MonoBehaviour
     {
         RoundUpdate(SettingData.Stage, SettingData.Round);
         RoundSet();
-
-
+   
 
     }
 
@@ -171,9 +170,12 @@ public class GameManager : MonoBehaviour
         {
             for(int i =0;i<monsterRoundInfo.MonsterList.Count;i++)
             {
+                int k = Random.Range(0, BattleZone.MonsterSponePosList.Count);
+                Vector3Int SponePos = RandomSpone(BattleZone.MonsterSponePosList[k]);
                 GameObject unitPrefabs = monsterRoundInfo.MonsterList[i];
-                MonsterUnit monster = unitSpawner.SpawnMonster(BattleZone.MonsterSponePosList[i], unitPrefabs);
-                monster.transform.position = unitSpawner.PosUnitSet(BattleZone.MonsterSponePosList[i]);
+              
+                MonsterUnit monster = unitSpawner.SpawnMonster(SponePos, unitPrefabs);
+                monster.transform.position = unitSpawner.PosUnitSet(SponePos);
             }
         }else
         {
@@ -181,6 +183,27 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    public Vector3Int RandomSpone(Vector3Int center)
+    {
+        bool check = true;
+        Vector3Int pos = center;
+
+        while (check)
+        {
+            int x = Random.Range(-1, 2) * (int)grid.transform.localScale.x;
+            int y = Random.Range(-1, 2) * (int)grid.transform.localScale.y;
+            pos = new Vector3Int(center.x + x, center.y + y);
+
+            Unit unit = BattleZone.SerchTileUnit(pos);
+            if (unit == null)
+            {
+                check = false;
+            }
+        }
+
+        return pos;
+    }
+    /*
     /// <summary>
     /// 몬스터를 생성합니다.
     /// </summary>
@@ -193,6 +216,7 @@ public class GameManager : MonoBehaviour
         if(Mathbool == false)
             monster.transform.position = unitSpawner.PosUnitSet(sponePos);
     }
+    */
 
 
     public void onPlayerAction()
@@ -218,11 +242,12 @@ public class GameManager : MonoBehaviour
 
     ////몬스터 행동 관리입니다.
     ///플레이어가 턴 종료를 누르면 작동합니다.
-
+    //턴종료를 실행하는 함수입니다.
     public void LampUpdate()
     {
         lampLight -=1;
         lamptext.text = lampLight.ToString();
+        onMonsterAction();
         MonsterAIManager.MonsterCount();
     }
     public void RoundUpdate(int stage = 0, int round = 1)
@@ -253,6 +278,8 @@ public class GameManager : MonoBehaviour
         onPlayerAction();
         setMonster();
         setPlayer();
+
+        
     }
 
     

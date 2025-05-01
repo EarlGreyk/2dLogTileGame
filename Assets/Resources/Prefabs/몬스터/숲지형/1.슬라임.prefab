@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c8f9ee9f23f8a0c45b04ce0ee2fb287f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9245283, g: 0.91929513, b: 0.91929513, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -107,8 +107,8 @@ MonoBehaviour:
   movePattenData: {fileID: 11400000, guid: 1cf99e06eef531248a5b13e587227d91, type: 2}
   attackRangePattenData: {fileID: 11400000, guid: c9f3c787bf238e64bab65f39f1ac5a04, type: 2}
   ratioStatus: {fileID: 11400000, guid: e4559c99b2abb9e42937d53339adcba0, type: 2}
-  attackMagicList: []
-  defenceMagicList: []
+  attackMagicArray: []
+  defenceMagicArray: []
   currentAction: {fileID: -6424533642964141347}
   maxActionCount: 4
   KillGold: 1000
