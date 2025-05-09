@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
+
+
 /// <summary>
 /// 석판 도감 클래스입니다.
 /// </summary>
@@ -16,9 +19,9 @@ public class LightCollection : MonoBehaviour
     private ScrollView dictionaryView;
 
 
-    private Dictionary<int,List<LampFireData>> slateDic = new Dictionary<int,List<LampFireData>>();
+    private Dictionary<int,List<LanternPerkScriptableObejct>> slateDic = new Dictionary<int,List<LanternPerkScriptableObejct>>();
 
-    private List<LampFireData> fireDataList = new List<LampFireData>();
+    private List<LanternPerkScriptableObejct> fireDataList = new List<LanternPerkScriptableObejct>();
 
     [SerializeField]
     private List<LampLight> LampObject = new List<LampLight>();
@@ -35,14 +38,14 @@ public class LightCollection : MonoBehaviour
     private void LoadAllFires()
     {
         LightFireDataSet();
-        LampFireData[] allLampFireData = Resources.LoadAll<LampFireData>("램프 정보");
-        foreach (LampFireData fireData in allLampFireData)
+        LanternPerkScriptableObejct[] allLampFireData = Resources.LoadAll<LanternPerkScriptableObejct>("ScriptableObjects");
+        foreach (LanternPerkScriptableObejct fireData in allLampFireData)
         {
-            int key = fireData.EnableLevel;
+            int key = fireData.PerkLevel;
             if (!slateDic.ContainsKey(key))
             {
                 Debug.Log($"생성{key}");
-                slateDic[key] = new List<LampFireData>();
+                slateDic[key] = new List<LanternPerkScriptableObejct>();
             }
             slateDic[key].Add(fireData);
         }
@@ -76,7 +79,7 @@ public class LightCollection : MonoBehaviour
     }
 
 
-    private void fireScrollSet(LampLight lampLight,LampFireData fireData)
+    private void fireScrollSet(LampLight lampLight,LanternPerkScriptableObejct fireData)
     {
         lampLight.LampLightDataSet(fireData);
     }

@@ -95,63 +95,61 @@ public class UnitStatus
         if(!grade)
         {
             ///도전자의 메달 (5009) , 호통의 메달(5011)
-            if (SettingData.difficultDic.ContainsKey(5009))
-                value += SettingData.difficultDic[5009];
-            if (SettingData.difficultDic.ContainsKey(5011))
-                value += SettingData.difficultDic[5011];
+            if (SettingData.difficultMonster.ContainsKey(5009))
+                value += SettingData.difficultMonster[5009];
+            if (SettingData.difficultMonster.ContainsKey(5011))
+                value += SettingData.difficultMonster[5011];
 
             Health *= ratioTemp.HpValue * value;
             MaxHealth = Health;
 
             value = 1f;
             // 도발의 메달 (5010) , 어릿광대의 메달 (5012)
-            if (SettingData.difficultDic.ContainsKey(5010))
-                value += SettingData.difficultDic[5010];
-            if (SettingData.difficultDic.ContainsKey(5012))
-                value += SettingData.difficultDic[5012];
+            if (SettingData.difficultMonster.ContainsKey(5010))
+                value += SettingData.difficultMonster[5010];
+            if (SettingData.difficultMonster.ContainsKey(5012))
+                value += SettingData.difficultMonster[5012];
 
             Damage *= ratioTemp.NonElementalDamageValue * value;
             ElementalDamage *= ratioTemp.ElementalDamageValue * value;
 
             value = 1f;
             // 박살의 메달(5013)
-            if (SettingData.difficultDic.ContainsKey(5013))
+            if (SettingData.difficultMonster.ContainsKey(5013))
             {
-                value += SettingData.difficultDic[5013];
+                value += SettingData.difficultMonster[5013];
             }
             Defense *= ratioTemp.ReducionValue * value;
         }else
         {
             ///대장의 메달 (5014) , 지도자의 메달(5016)
-            if (SettingData.difficultDic.ContainsKey(5014))
-                value += SettingData.difficultDic[5014];
-            if (SettingData.difficultDic.ContainsKey(5016))
-                value += SettingData.difficultDic[5016];
+            if (SettingData.difficultMonster.ContainsKey(5014))
+                value += SettingData.difficultMonster[5014];
+            if (SettingData.difficultMonster.ContainsKey(5016))
+                value += SettingData.difficultMonster[5016];
 
             Health *= ratioTemp.HpValue * value;
             MaxHealth = Health;
 
             value = 1f;
             // 보안관의 메달 (5015) , 군주의 메달(5017)
-            if (SettingData.difficultDic.ContainsKey(5015))
-                value += SettingData.difficultDic[5015];
-            if (SettingData.difficultDic.ContainsKey(5017))
-                value += SettingData.difficultDic[5017];
+            if (SettingData.difficultMonster.ContainsKey(5015))
+                value += SettingData.difficultMonster[5015];
+            if (SettingData.difficultMonster.ContainsKey(5017))
+                value += SettingData.difficultMonster[5017];
 
             Damage *= ratioTemp.NonElementalDamageValue * value;
             ElementalDamage *= ratioTemp.ElementalDamageValue * value;
 
             value = 1f;
             // 건실의 메달(5013)
-            if (SettingData.difficultDic.ContainsKey(5018))
+            if (SettingData.difficultMonster.ContainsKey(5018))
             {
-                value += SettingData.difficultDic[5018];
+                value += SettingData.difficultMonster[5018];
             }
             Defense *= ratioTemp.ReducionValue * value;
         }
-        
 
-      
     }
   
 
@@ -188,6 +186,12 @@ public class UnitStatus
         Debug.Log($"룬증가 방어력 : {Defense}");
 
     }
+
+
+
+
+
+
 
 }
 

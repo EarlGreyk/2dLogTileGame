@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -42,7 +43,8 @@ public class DifficultManager : MonoBehaviour
 
     private bool medalEnablebool = false;
 
-
+    [SerializeField]
+    private PopUp medalPopUp;
 
     private void Start()
     {
@@ -103,6 +105,7 @@ public class DifficultManager : MonoBehaviour
     public void MedalOff()
     {
         CancelMedal();
+        medalPopUp.Pop.gameObject.SetActive(false);
         for (int i =0; i<DifficultMedalList.Count; i++)
         {
             if (DifficultMedalList[i].medalData)
@@ -124,12 +127,15 @@ public class DifficultManager : MonoBehaviour
 
         List<int> keys = new List<int>();
         keys = FindTrueKeys();
-
+        DifficultText.text = null;
         for (int i = 0; i < keys.Count; i++)
         {
             MedalScriptableObejct medal = Resources.Load<MedalScriptableObejct>("ScriptableObjects/medal_data/" + keys[i].ToString());
             DifficultMedalList[i].MedalSet(medal);
+            DifficultText.text += medal.Description + "\n";
         }
+
+
 
 
     }
@@ -138,16 +144,20 @@ public class DifficultManager : MonoBehaviour
     {
         List<int> trueKeys = new List<int>();  // value가 true인 key를 저장할 리스트
 
-        foreach (var kvp in SettingData.difficultDic)
+
+
+        foreach (var key in SettingData.difficultPlayer.Keys)
         {
-            if (kvp.Value >= 0)  // value가 true일 때
-            {
-                trueKeys.Add(kvp.Key);  // 해당 key를 리스트에 추가
-            }
+            trueKeys.Add(key);
         }
 
+        foreach (var key in SettingData.difficultMonster.Keys)
+        {
+            trueKeys.Add(key);
+        }
 
-        return trueKeys;
+      
+         return trueKeys;
 
       
     }
@@ -164,17 +174,21 @@ public class DifficultManager : MonoBehaviour
     /// <param name="medal"></param>
     public void SelectMedal(DifficultMedal medal)
     {
+        
         if (medal.medalData == null)
             return;
 
+
+        medalPopUp.Pop.gameObject.SetActive(true);
 
         currentMedalData = medal.medalData;
         medalImage.sprite = medal.medalData.Sprite;
         medalTarget.text = medal.medalData.Tag.ToString();
         medalName.text = medal.medalData.Name;
+        medalDesc.text = medal.medalData.Description;
 
 
-        if(SettingData.difficultDic.ContainsKey(medal.medalData.id))
+        if(SettingData.difficultPlayer.ContainsKey(medal.medalData.id) == true || SettingData.difficultMonster.ContainsKey(medal.medalData.id))
         {
             medalBool.text = "비활성화";
             medalEnablebool = false;
@@ -211,7 +225,7 @@ public class DifficultManager : MonoBehaviour
         Debug.Log("메달넣기");
 
         if (currentMedalData == null)
-            return;
+            return; 
 
 
 
@@ -222,11 +236,27 @@ public class DifficultManager : MonoBehaviour
 
         if(medalEnablebool)
         {
-            SettingData.DifficultDicAdd(currentMedalData.id,currentMedalData.value);
+            if(currentMedalData.Tag == MedalScriptableObejct.MedalTag.Player)
+            {
+                SettingData.DifficultAdd(currentMedalData.id,currentMedalData.value);
+            }
+            else
+            {
+                SettingData.DifficultAdd(currentMedalData.id, currentMedalData.value, false);
+            }
+           
         }
         else
         {
-            SettingData.DifficultDicRemove(currentMedalData.id);
+            if (currentMedalData.Tag == MedalScriptableObejct.MedalTag.Player)
+            {
+                SettingData.DifficultRemove(currentMedalData.id);
+            }
+            else
+            {
+                SettingData.DifficultRemove(currentMedalData.id);
+            }
+            EnableMedalSet();
         }
         
 

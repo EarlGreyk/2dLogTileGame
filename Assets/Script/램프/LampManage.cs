@@ -20,14 +20,14 @@ public class LampManage : MonoBehaviour
     private GameObject lightPrePab;
 
     [SerializeField]
-    private List<LampFireData> lampFires = new List<LampFireData>();
-    public List<LampFireData> LampFires { get { return lampFires; } }
+    private List<LanternPerkScriptableObejct> lampFires = new List<LanternPerkScriptableObejct>();
+    public List<LanternPerkScriptableObejct> LampFires { get { return lampFires; } }
 
     private List<LampLight> equipLampLight = new List<LampLight>();
 
     public List<LampLight> EquipLampLight { get { return equipLampLight; } }
 
-    private List<LampFireData> removeLampFires = new List<LampFireData>();
+    private List<LanternPerkScriptableObejct> removeLampFires = new List<LanternPerkScriptableObejct>();
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class LampManage : MonoBehaviour
     private void Start()
     {
         LightFireDataSet();
-        LampFireData[] lampAllFires = Resources.LoadAll<LampFireData>("램프 정보");
+        LanternPerkScriptableObejct[] lampAllFires = Resources.LoadAll<LanternPerkScriptableObejct>("램프 정보");
 
         for(int i=0;i<lampAllFires.Length;i++)
         {
@@ -116,7 +116,7 @@ public class LampManage : MonoBehaviour
         LampLight lampLight = ob.GetComponent<LampLight>();
 
 
-        LampFireData firedata = Resources.Load<LampFireData>("램프정보/" + LampFireDataName);
+        LanternPerkScriptableObejct firedata = Resources.Load<LanternPerkScriptableObejct>("ScriptableObjects/lantern_data/" + LampFireDataName);
         lampLight.LampLightDataSet(firedata);
         lampFires.Remove(firedata);
 

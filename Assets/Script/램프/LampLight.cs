@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class LampLight : MonoBehaviour
 {
     
-    private LampFireData fireData;
+    private LanternPerkScriptableObejct fireData;
 
-    public LampFireData FireData { get { return fireData; } set { fireData = value; } }
+    public LanternPerkScriptableObejct FireData { get { return fireData; } set { fireData = value; } }
     [SerializeField]
     private Image fireIcon;
     [SerializeField]
@@ -21,11 +21,11 @@ public class LampLight : MonoBehaviour
 
     
 
-    public void LampLightDataSet(LampFireData fireData)
+    public void LampLightDataSet(LanternPerkScriptableObejct fireData)
     {
         this.fireData = fireData;
-        fireIcon.sprite = fireData.FireIcon;    
-        fireDesc.text = fireData.FileDesc;
+        fireIcon.sprite = fireData.PerkSprite;    
+        fireDesc.text = fireData.PerkDesc;
         
 
     }
