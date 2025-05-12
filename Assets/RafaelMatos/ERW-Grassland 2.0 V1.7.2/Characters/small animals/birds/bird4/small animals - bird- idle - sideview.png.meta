@@ -3,7 +3,7 @@ guid: 8ba5e528d646bbf4b8db953ae6e4d5da
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -441,21 +454,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      small animals - bird- idle - sideview_3: 2115652778
-      small animals - bird- idle - sideview_8: 452653182
-      small animals - bird- idle - sideview_14: -1481161624
-      small animals - bird- idle - sideview_1: 685142649
       small animals - bird- idle - sideview_0: 1515715815
-      small animals - bird- idle - sideview_2: 1605484063
+      small animals - bird- idle - sideview_1: 685142649
       small animals - bird- idle - sideview_10: 1738019209
-      small animals - bird- idle - sideview_13: -370945481
-      small animals - bird- idle - sideview_6: 1770702400
-      small animals - bird- idle - sideview_12: 1604440166
-      small animals - bird- idle - sideview_4: -1427267086
-      small animals - bird- idle - sideview_7: 7962340
-      small animals - bird- idle - sideview_9: -1613514361
-      small animals - bird- idle - sideview_5: -78489160
       small animals - bird- idle - sideview_11: 1550606379
+      small animals - bird- idle - sideview_12: 1604440166
+      small animals - bird- idle - sideview_13: -370945481
+      small animals - bird- idle - sideview_14: -1481161624
+      small animals - bird- idle - sideview_2: 1605484063
+      small animals - bird- idle - sideview_3: 2115652778
+      small animals - bird- idle - sideview_4: -1427267086
+      small animals - bird- idle - sideview_5: -78489160
+      small animals - bird- idle - sideview_6: 1770702400
+      small animals - bird- idle - sideview_7: 7962340
+      small animals - bird- idle - sideview_8: 452653182
+      small animals - bird- idle - sideview_9: -1613514361
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

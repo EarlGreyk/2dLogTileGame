@@ -3,7 +3,7 @@ guid: c15a758467b7fad4da6fb7718cded11f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -441,21 +454,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      enemy flag1animation_10: 1953177348
-      enemy flag1animation_8: -1765722761
-      enemy flag1animation_12: -1368801116
-      enemy flag1animation_9: -1207745559
-      enemy flag1animation_4: -1691358645
       enemy flag1animation_0: 802936983
-      enemy flag1animation_3: 784500330
-      enemy flag1animation_6: -146195646
-      enemy flag1animation_2: 720466800
-      enemy flag1animation_11: 1069514392
-      enemy flag1animation_5: -1311063080
-      enemy flag1animation_13: 281879266
       enemy flag1animation_1: 1414702574
-      enemy flag1animation_7: -1004833091
+      enemy flag1animation_10: 1953177348
+      enemy flag1animation_11: 1069514392
+      enemy flag1animation_12: -1368801116
+      enemy flag1animation_13: 281879266
       enemy flag1animation_14: -1524041807
+      enemy flag1animation_2: 720466800
+      enemy flag1animation_3: 784500330
+      enemy flag1animation_4: -1691358645
+      enemy flag1animation_5: -1311063080
+      enemy flag1animation_6: -146195646
+      enemy flag1animation_7: -1004833091
+      enemy flag1animation_8: -1765722761
+      enemy flag1animation_9: -1207745559
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

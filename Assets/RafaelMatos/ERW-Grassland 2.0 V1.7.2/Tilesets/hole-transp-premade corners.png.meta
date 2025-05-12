@@ -3,7 +3,7 @@ guid: a37ad611a5788ae4fa1cd786f0bd03c9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -102,6 +103,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1176,56 +1189,56 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hole-transp-premade corners_8: -1682510693
-      hole-transp-premade corners_31: -1283982370
-      hole-transp-premade corners_13: 1689843659
       hole-transp-premade corners_0: 1153827557
-      hole-transp-premade corners_45: 1286496429
-      hole-transp-premade corners_22: -2035043658
-      hole-transp-premade corners_42: -402762921
-      hole-transp-premade corners_44: -1359185433
-      hole-transp-premade corners_36: -938299288
-      hole-transp-premade corners_17: -1829443790
-      hole-transp-premade corners_24: 944760098
-      hole-transp-premade corners_30: -464210637
-      hole-transp-premade corners_37: -1004206705
-      hole-transp-premade corners_10: -973880092
-      hole-transp-premade corners_15: -1566294680
-      hole-transp-premade corners_21: -1028707149
-      hole-transp-premade corners_47: -1983174075
-      hole-transp-premade corners_35: -547174736
-      hole-transp-premade corners_43: 713353194
-      hole-transp-premade corners_7: 208911851
-      hole-transp-premade corners_16: 756642375
       hole-transp-premade corners_1: 593381867
-      hole-transp-premade corners_9: -1238172724
-      hole-transp-premade corners_18: -1023233341
-      hole-transp-premade corners_38: 1380738084
-      hole-transp-premade corners_14: 1359487999
-      hole-transp-premade corners_40: 833739788
-      hole-transp-premade corners_49: -1477763916
-      hole-transp-premade corners_19: -947560913
-      hole-transp-premade corners_12: 710878257
-      hole-transp-premade corners_33: -222340806
-      hole-transp-premade corners_32: -581278413
-      hole-transp-premade corners_39: 1775963247
-      hole-transp-premade corners_28: -1966707174
-      hole-transp-premade corners_26: 626361262
-      hole-transp-premade corners_4: 1123589822
-      hole-transp-premade corners_20: -1072447821
-      hole-transp-premade corners_2: 611395174
-      hole-transp-premade corners_48: 928900913
-      hole-transp-premade corners_27: 1342781319
-      hole-transp-premade corners_23: 589171397
-      hole-transp-premade corners_41: 156842795
-      hole-transp-premade corners_6: -2081251750
-      hole-transp-premade corners_25: -1980797861
-      hole-transp-premade corners_34: -837047661
+      hole-transp-premade corners_10: -973880092
       hole-transp-premade corners_11: 1900010357
+      hole-transp-premade corners_12: 710878257
+      hole-transp-premade corners_13: 1689843659
+      hole-transp-premade corners_14: 1359487999
+      hole-transp-premade corners_15: -1566294680
+      hole-transp-premade corners_16: 756642375
+      hole-transp-premade corners_17: -1829443790
+      hole-transp-premade corners_18: -1023233341
+      hole-transp-premade corners_19: -947560913
+      hole-transp-premade corners_2: 611395174
+      hole-transp-premade corners_20: -1072447821
+      hole-transp-premade corners_21: -1028707149
+      hole-transp-premade corners_22: -2035043658
+      hole-transp-premade corners_23: 589171397
+      hole-transp-premade corners_24: 944760098
+      hole-transp-premade corners_25: -1980797861
+      hole-transp-premade corners_26: 626361262
+      hole-transp-premade corners_27: 1342781319
+      hole-transp-premade corners_28: -1966707174
       hole-transp-premade corners_29: 1637060224
       hole-transp-premade corners_3: 1215016481
-      hole-transp-premade corners_5: -332544973
+      hole-transp-premade corners_30: -464210637
+      hole-transp-premade corners_31: -1283982370
+      hole-transp-premade corners_32: -581278413
+      hole-transp-premade corners_33: -222340806
+      hole-transp-premade corners_34: -837047661
+      hole-transp-premade corners_35: -547174736
+      hole-transp-premade corners_36: -938299288
+      hole-transp-premade corners_37: -1004206705
+      hole-transp-premade corners_38: 1380738084
+      hole-transp-premade corners_39: 1775963247
+      hole-transp-premade corners_4: 1123589822
+      hole-transp-premade corners_40: 833739788
+      hole-transp-premade corners_41: 156842795
+      hole-transp-premade corners_42: -402762921
+      hole-transp-premade corners_43: 713353194
+      hole-transp-premade corners_44: -1359185433
+      hole-transp-premade corners_45: 1286496429
       hole-transp-premade corners_46: -1027447037
+      hole-transp-premade corners_47: -1983174075
+      hole-transp-premade corners_48: 928900913
+      hole-transp-premade corners_49: -1477763916
+      hole-transp-premade corners_5: -332544973
+      hole-transp-premade corners_6: -2081251750
+      hole-transp-premade corners_7: 208911851
+      hole-transp-premade corners_8: -1682510693
+      hole-transp-premade corners_9: -1238172724
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -3,7 +3,7 @@ guid: b900cc6ce76f10041b864deca71214f9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -462,22 +475,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      orc mage hand fx only-atk2_3: 1002716680
-      orc mage hand fx only-atk2_2: -533299650
       orc mage hand fx only-atk2_0: 266149732
-      orc mage hand fx only-atk2_15: 650400335
-      orc mage hand fx only-atk2_10: 1859176077
-      orc mage hand fx only-atk2_13: 1385754028
-      orc mage hand fx only-atk2_4: 1928612015
-      orc mage hand fx only-atk2_7: 816777020
-      orc mage hand fx only-atk2_14: 608865297
-      orc mage hand fx only-atk2_6: -1001639317
-      orc mage hand fx only-atk2_11: -1450011719
-      orc mage hand fx only-atk2_5: -425614993
-      orc mage hand fx only-atk2_8: 1317653584
       orc mage hand fx only-atk2_1: -1513319009
-      orc mage hand fx only-atk2_9: 2095664564
+      orc mage hand fx only-atk2_10: 1859176077
+      orc mage hand fx only-atk2_11: -1450011719
       orc mage hand fx only-atk2_12: 278491226
+      orc mage hand fx only-atk2_13: 1385754028
+      orc mage hand fx only-atk2_14: 608865297
+      orc mage hand fx only-atk2_15: 650400335
+      orc mage hand fx only-atk2_2: -533299650
+      orc mage hand fx only-atk2_3: 1002716680
+      orc mage hand fx only-atk2_4: 1928612015
+      orc mage hand fx only-atk2_5: -425614993
+      orc mage hand fx only-atk2_6: -1001639317
+      orc mage hand fx only-atk2_7: 816777020
+      orc mage hand fx only-atk2_8: 1317653584
+      orc mage hand fx only-atk2_9: 2095664564
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

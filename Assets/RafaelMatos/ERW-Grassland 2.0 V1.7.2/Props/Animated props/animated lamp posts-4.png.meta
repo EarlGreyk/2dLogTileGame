@@ -3,7 +3,7 @@ guid: 1f337dc45ade168439514a35fcfcf5fd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -528,22 +541,22 @@ TextureImporter:
       animated lamp posts-4_0: 829637242
       animated lamp posts-4_1: -756602099
       animated lamp posts-4_10: -444295321
+      animated lamp posts-4_11: -122108482
+      animated lamp posts-4_12: -2137904757
+      animated lamp posts-4_13: 1731402160
       animated lamp posts-4_14: 1752555390
       animated lamp posts-4_15: 149159501
-      animated lamp posts-4_2: 1086625787
-      animated lamp posts-4_4: -1283776120
       animated lamp posts-4_16: -1143574796
-      animated lamp posts-4_13: 1731402160
-      animated lamp posts-4_7: -354197541
       animated lamp posts-4_17: -1696560935
-      animated lamp posts-4_12: -2137904757
-      animated lamp posts-4_11: -122108482
       animated lamp posts-4_18: -2110769193
+      animated lamp posts-4_2: 1086625787
       animated lamp posts-4_3: -1869627547
+      animated lamp posts-4_4: -1283776120
       animated lamp posts-4_5: 1830117820
-      animated lamp posts-4_9: -2139456580
       animated lamp posts-4_6: 643154972
+      animated lamp posts-4_7: -354197541
       animated lamp posts-4_8: 1757987442
+      animated lamp posts-4_9: -2139456580
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

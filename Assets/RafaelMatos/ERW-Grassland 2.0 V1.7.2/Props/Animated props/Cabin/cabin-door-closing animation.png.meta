@@ -3,7 +3,7 @@ guid: a9341aafd1edcd5418332eeb8cd0c601
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -102,6 +103,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -420,20 +433,20 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      cabin-door-closing animation_6: 1196589139
-      cabin-door-closing animation_2: -200041865
-      cabin-door-closing animation_5: -1687788584
-      cabin-door-closing animation_10: 1356401232
-      cabin-door-closing animation_7: 1007788510
-      cabin-door-closing animation_3: 699582661
-      cabin-door-closing animation_8: -1108719995
-      cabin-door-closing animation_4: 1945350744
-      cabin-door-closing animation_9: 373324675
       cabin-door-closing animation_0: 1268354456
+      cabin-door-closing animation_1: 169587261
+      cabin-door-closing animation_10: 1356401232
+      cabin-door-closing animation_11: -1909672646
       cabin-door-closing animation_12: 7447748
       cabin-door-closing animation_13: -766885272
-      cabin-door-closing animation_1: 169587261
-      cabin-door-closing animation_11: -1909672646
+      cabin-door-closing animation_2: -200041865
+      cabin-door-closing animation_3: 699582661
+      cabin-door-closing animation_4: 1945350744
+      cabin-door-closing animation_5: -1687788584
+      cabin-door-closing animation_6: 1196589139
+      cabin-door-closing animation_7: 1007788510
+      cabin-door-closing animation_8: -1108719995
+      cabin-door-closing animation_9: 373324675
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

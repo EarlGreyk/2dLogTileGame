@@ -3,7 +3,7 @@ guid: 7def02a958313614fa9f18c7f9dfc461
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -441,21 +454,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      default animated door - opening_11: 579284561
-      default animated door - opening_13: -968474299
-      default animated door - opening_7: 1232925678
-      default animated door - opening_6: 104130280
+      default animated door - opening_0: -1134215826
       default animated door - opening_1: -1607288218
-      default animated door - opening_8: 507630269
-      default animated door - opening_9: -579772578
+      default animated door - opening_10: 1048068744
+      default animated door - opening_11: 579284561
+      default animated door - opening_12: 1868673072
+      default animated door - opening_13: -968474299
+      default animated door - opening_14: -155334061
+      default animated door - opening_2: 467278500
       default animated door - opening_3: -86639304
       default animated door - opening_4: -921821728
-      default animated door - opening_12: 1868673072
-      default animated door - opening_2: 467278500
-      default animated door - opening_14: -155334061
-      default animated door - opening_0: -1134215826
       default animated door - opening_5: -1277686382
-      default animated door - opening_10: 1048068744
+      default animated door - opening_6: 104130280
+      default animated door - opening_7: 1232925678
+      default animated door - opening_8: 507630269
+      default animated door - opening_9: -579772578
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

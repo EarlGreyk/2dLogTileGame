@@ -3,7 +3,7 @@ guid: 110901e255854674f81e76e20b613087
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -693,33 +706,33 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      stone ground to dirt2_19: -2139622847
-      stone ground to dirt2_11: -418764556
-      stone ground to dirt2_2: -672185655
-      stone ground to dirt2_5: -1642625026
-      stone ground to dirt2_4: -1695886857
-      stone ground to dirt2_8: 1914513957
-      stone ground to dirt2_7: -236657109
       stone ground to dirt2_0: -2078269927
       stone ground to dirt2_1: 531415222
-      stone ground to dirt2_14: 1240251153
-      stone ground to dirt2_21: 301240893
-      stone ground to dirt2_24: 1719813042
-      stone ground to dirt2_6: -210841698
-      stone ground to dirt2_18: -1838695984
-      stone ground to dirt2_16: -447146967
       stone ground to dirt2_10: 996736548
-      stone ground to dirt2_13: 2033804740
+      stone ground to dirt2_11: -418764556
       stone ground to dirt2_12: 490124945
-      stone ground to dirt2_22: 14928798
-      stone ground to dirt2_9: -1835879828
-      stone ground to dirt2_17: 2126847903
-      stone ground to dirt2_23: -320295762
-      stone ground to dirt2_3: 487034331
-      stone ground to dirt2_20: -1173089723
-      stone ground to dirt2_25: -631910233
+      stone ground to dirt2_13: 2033804740
+      stone ground to dirt2_14: 1240251153
       stone ground to dirt2_15: 1938569582
+      stone ground to dirt2_16: -447146967
+      stone ground to dirt2_17: 2126847903
+      stone ground to dirt2_18: -1838695984
+      stone ground to dirt2_19: -2139622847
+      stone ground to dirt2_2: -672185655
+      stone ground to dirt2_20: -1173089723
+      stone ground to dirt2_21: 301240893
+      stone ground to dirt2_22: 14928798
+      stone ground to dirt2_23: -320295762
+      stone ground to dirt2_24: 1719813042
+      stone ground to dirt2_25: -631910233
       stone ground to dirt2_26: -1842873103
+      stone ground to dirt2_3: 487034331
+      stone ground to dirt2_4: -1695886857
+      stone ground to dirt2_5: -1642625026
+      stone ground to dirt2_6: -210841698
+      stone ground to dirt2_7: -236657109
+      stone ground to dirt2_8: 1914513957
+      stone ground to dirt2_9: -1835879828
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

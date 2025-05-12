@@ -3,7 +3,7 @@ guid: da252fe3ea39c0543940e929dd5a7992
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -504,24 +517,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      small animals - duck-duck - idle - sideview_8: 1764639280
-      small animals - duck-duck - idle - sideview_9: -1051379327
-      small animals - duck-duck - idle - sideview_6: -662975001
-      small animals - duck-duck - idle - sideview_14: -1420901765
-      small animals - duck-duck - idle - sideview_10: 745532953
-      small animals - duck-duck - idle - sideview_1: 1691935472
       small animals - duck-duck - idle - sideview_0: 301973659
-      small animals - duck-duck - idle - sideview_7: 356371476
+      small animals - duck-duck - idle - sideview_1: 1691935472
+      small animals - duck-duck - idle - sideview_10: 745532953
+      small animals - duck-duck - idle - sideview_11: -1894402445
+      small animals - duck-duck - idle - sideview_12: -1998063024
+      small animals - duck-duck - idle - sideview_13: -688894506
+      small animals - duck-duck - idle - sideview_14: -1420901765
+      small animals - duck-duck - idle - sideview_15: 381333176
+      small animals - duck-duck - idle - sideview_16: -1673528303
+      small animals - duck-duck - idle - sideview_17: 1735906133
+      small animals - duck-duck - idle - sideview_2: 16810668
       small animals - duck-duck - idle - sideview_3: 72209722
       small animals - duck-duck - idle - sideview_4: 2140572941
       small animals - duck-duck - idle - sideview_5: 1520035253
-      small animals - duck-duck - idle - sideview_15: 381333176
-      small animals - duck-duck - idle - sideview_16: -1673528303
-      small animals - duck-duck - idle - sideview_13: -688894506
-      small animals - duck-duck - idle - sideview_11: -1894402445
-      small animals - duck-duck - idle - sideview_17: 1735906133
-      small animals - duck-duck - idle - sideview_2: 16810668
-      small animals - duck-duck - idle - sideview_12: -1998063024
+      small animals - duck-duck - idle - sideview_6: -662975001
+      small animals - duck-duck - idle - sideview_7: 356371476
+      small animals - duck-duck - idle - sideview_8: 1764639280
+      small animals - duck-duck - idle - sideview_9: -1051379327
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -3,7 +3,7 @@ guid: 1322702ec1814ab4887ddf34e64a667f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -525,24 +538,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      animated lamp posts-only lamp2_14: -1765044536
-      animated lamp posts-only lamp2_5: 1221954875
-      animated lamp posts-only lamp2_13: -1936884333
-      animated lamp posts-only lamp2_6: -1278546166
-      animated lamp posts-only lamp2_10: 243794266
-      animated lamp posts-only lamp2_11: -776572779
-      animated lamp posts-only lamp2_4: 1658665859
-      animated lamp posts-only lamp2_12: -58166219
-      animated lamp posts-only lamp2_8: 1291671898
-      animated lamp posts-only lamp2_2: 1597206903
-      animated lamp posts-only lamp2_18: -2098857562
-      animated lamp posts-only lamp2_15: -1848080539
-      animated lamp posts-only lamp2_17: -976254264
-      animated lamp posts-only lamp2_7: -285333817
-      animated lamp posts-only lamp2_3: 837749958
       animated lamp posts-only lamp2_0: 1624591984
       animated lamp posts-only lamp2_1: -382604590
+      animated lamp posts-only lamp2_10: 243794266
+      animated lamp posts-only lamp2_11: -776572779
+      animated lamp posts-only lamp2_12: -58166219
+      animated lamp posts-only lamp2_13: -1936884333
+      animated lamp posts-only lamp2_14: -1765044536
+      animated lamp posts-only lamp2_15: -1848080539
       animated lamp posts-only lamp2_16: 1039544336
+      animated lamp posts-only lamp2_17: -976254264
+      animated lamp posts-only lamp2_18: -2098857562
+      animated lamp posts-only lamp2_2: 1597206903
+      animated lamp posts-only lamp2_3: 837749958
+      animated lamp posts-only lamp2_4: 1658665859
+      animated lamp posts-only lamp2_5: 1221954875
+      animated lamp posts-only lamp2_6: -1278546166
+      animated lamp posts-only lamp2_7: -285333817
+      animated lamp posts-only lamp2_8: 1291671898
       animated lamp posts-only lamp2_9: -1129327845
   spritePackingTag: 
   pSDRemoveMatte: 0

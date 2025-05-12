@@ -3,7 +3,7 @@ guid: 00b32c7aa31a72241b6c56692c0e5e03
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -102,6 +103,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -1008,48 +1021,48 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      grass to transaprency_23: 2051116581
-      grass to transaprency_38: 829858044
-      grass to transaprency_20: -2023382270
-      grass to transaprency_16: -1780132643
       grass to transaprency_0: 464662056
-      grass to transaprency_8: 1590747902
-      grass to transaprency_33: 454797718
-      grass to transaprency_15: 998322026
-      grass to transaprency_11: -1688390396
-      grass to transaprency_28: 454281530
-      grass to transaprency_22: -535548473
       grass to transaprency_1: 1515150714
-      grass to transaprency_6: 1879184570
-      grass to transaprency_3: -2123373050
-      grass to transaprency_4: 1842652740
+      grass to transaprency_10: 1309178367
+      grass to transaprency_11: -1688390396
       grass to transaprency_12: 1741611365
-      grass to transaprency_30: -545498686
-      grass to transaprency_7: -2075864706
+      grass to transaprency_13: -627165238
+      grass to transaprency_14: 1750183241
+      grass to transaprency_15: 998322026
+      grass to transaprency_16: -1780132643
+      grass to transaprency_17: 1012556027
       grass to transaprency_18: 185965991
+      grass to transaprency_19: 1539813515
       grass to transaprency_2: -256194950
+      grass to transaprency_20: -2023382270
+      grass to transaprency_21: -889657841
+      grass to transaprency_22: -535548473
+      grass to transaprency_23: 2051116581
+      grass to transaprency_24: 1996730076
+      grass to transaprency_25: -2009951210
+      grass to transaprency_26: -1622505886
+      grass to transaprency_27: -1806927429
+      grass to transaprency_28: 454281530
+      grass to transaprency_29: 339247770
+      grass to transaprency_3: -2123373050
+      grass to transaprency_30: -545498686
+      grass to transaprency_31: 963320588
+      grass to transaprency_32: 467947023
+      grass to transaprency_33: 454797718
+      grass to transaprency_34: -1054753197
+      grass to transaprency_35: -824757694
+      grass to transaprency_36: 1385296499
+      grass to transaprency_37: -1535478288
+      grass to transaprency_38: 829858044
+      grass to transaprency_39: 2013365028
+      grass to transaprency_4: 1842652740
+      grass to transaprency_40: 1877513567
       grass to transaprency_41: -964893219
       grass to transaprency_5: -1483205771
+      grass to transaprency_6: 1879184570
+      grass to transaprency_7: -2075864706
+      grass to transaprency_8: 1590747902
       grass to transaprency_9: -1857777264
-      grass to transaprency_25: -2009951210
-      grass to transaprency_10: 1309178367
-      grass to transaprency_21: -889657841
-      grass to transaprency_34: -1054753197
-      grass to transaprency_31: 963320588
-      grass to transaprency_39: 2013365028
-      grass to transaprency_37: -1535478288
-      grass to transaprency_35: -824757694
-      grass to transaprency_27: -1806927429
-      grass to transaprency_40: 1877513567
-      grass to transaprency_24: 1996730076
-      grass to transaprency_13: -627165238
-      grass to transaprency_32: 467947023
-      grass to transaprency_29: 339247770
-      grass to transaprency_14: 1750183241
-      grass to transaprency_19: 1539813515
-      grass to transaprency_26: -1622505886
-      grass to transaprency_17: 1012556027
-      grass to transaprency_36: 1385296499
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

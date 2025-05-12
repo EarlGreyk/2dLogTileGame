@@ -3,7 +3,7 @@ guid: c2a53e339f1a8ee4e8568adbd6f8014d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -504,24 +517,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      small animals - frog-frog - idle 2 - sideview_8: -14479872
+      small animals - frog-frog - idle 2 - sideview_0: -797136978
+      small animals - frog-frog - idle 2 - sideview_1: 1949818301
+      small animals - frog-frog - idle 2 - sideview_10: -1723232776
+      small animals - frog-frog - idle 2 - sideview_11: 1053801666
+      small animals - frog-frog - idle 2 - sideview_12: 230297059
+      small animals - frog-frog - idle 2 - sideview_13: 1433978460
+      small animals - frog-frog - idle 2 - sideview_14: 162613523
       small animals - frog-frog - idle 2 - sideview_15: -235820562
       small animals - frog-frog - idle 2 - sideview_16: 1319578060
-      small animals - frog-frog - idle 2 - sideview_14: 162613523
-      small animals - frog-frog - idle 2 - sideview_10: -1723232776
-      small animals - frog-frog - idle 2 - sideview_9: 1982718627
-      small animals - frog-frog - idle 2 - sideview_6: -2111749485
-      small animals - frog-frog - idle 2 - sideview_0: -797136978
-      small animals - frog-frog - idle 2 - sideview_12: 230297059
-      small animals - frog-frog - idle 2 - sideview_11: 1053801666
-      small animals - frog-frog - idle 2 - sideview_2: -1557143428
       small animals - frog-frog - idle 2 - sideview_17: 872520869
-      small animals - frog-frog - idle 2 - sideview_13: 1433978460
-      small animals - frog-frog - idle 2 - sideview_1: 1949818301
-      small animals - frog-frog - idle 2 - sideview_7: -388215846
+      small animals - frog-frog - idle 2 - sideview_2: -1557143428
+      small animals - frog-frog - idle 2 - sideview_3: 780452530
       small animals - frog-frog - idle 2 - sideview_4: -940601367
       small animals - frog-frog - idle 2 - sideview_5: 1698547611
-      small animals - frog-frog - idle 2 - sideview_3: 780452530
+      small animals - frog-frog - idle 2 - sideview_6: -2111749485
+      small animals - frog-frog - idle 2 - sideview_7: -388215846
+      small animals - frog-frog - idle 2 - sideview_8: -14479872
+      small animals - frog-frog - idle 2 - sideview_9: 1982718627
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -3,7 +3,7 @@ guid: 2a8c5171d38629d44aea6cd0e0d729d4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -379,17 +392,17 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       water well- empty bucket-going down_0: -478935198
-      water well- empty bucket-going down_9: -1664824837
+      water well- empty bucket-going down_1: 287726293
+      water well- empty bucket-going down_10: -1897873821
+      water well- empty bucket-going down_11: 957325262
       water well- empty bucket-going down_2: 841202565
+      water well- empty bucket-going down_3: -1975483272
+      water well- empty bucket-going down_4: 1685029892
       water well- empty bucket-going down_5: 744171580
       water well- empty bucket-going down_6: 622441369
-      water well- empty bucket-going down_10: -1897873821
-      water well- empty bucket-going down_4: 1685029892
       water well- empty bucket-going down_7: -979657539
-      water well- empty bucket-going down_1: 287726293
       water well- empty bucket-going down_8: 1322111427
-      water well- empty bucket-going down_11: 957325262
-      water well- empty bucket-going down_3: -1975483272
+      water well- empty bucket-going down_9: -1664824837
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

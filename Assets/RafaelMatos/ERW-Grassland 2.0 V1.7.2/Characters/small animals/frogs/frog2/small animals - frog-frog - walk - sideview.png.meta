@@ -3,7 +3,7 @@ guid: 2f17477bf0f0b4f48b87898b78fe100a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 333
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,6 +63,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -106,6 +107,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -336,16 +349,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      small animals - frog-frog - walk - sideview_0: 298818889
+      small animals - frog-frog - walk - sideview_1: 1357140528
+      small animals - frog-frog - walk - sideview_2: 1644994122
       small animals - frog-frog - walk - sideview_3: -76743966
+      small animals - frog-frog - walk - sideview_4: -1811942304
+      small animals - frog-frog - walk - sideview_5: -27015437
+      small animals - frog-frog - walk - sideview_6: 1657878137
+      small animals - frog-frog - walk - sideview_7: -1669974971
       small animals - frog-frog - walk - sideview_8: 360331984
       small animals - frog-frog - walk - sideview_9: 1049536569
-      small animals - frog-frog - walk - sideview_0: 298818889
-      small animals - frog-frog - walk - sideview_2: 1644994122
-      small animals - frog-frog - walk - sideview_6: 1657878137
-      small animals - frog-frog - walk - sideview_1: 1357140528
-      small animals - frog-frog - walk - sideview_5: -27015437
-      small animals - frog-frog - walk - sideview_4: -1811942304
-      small animals - frog-frog - walk - sideview_7: -1669974971
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
