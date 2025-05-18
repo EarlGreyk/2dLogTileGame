@@ -8,7 +8,7 @@ public class SetPixelsPerUnit : MonoBehaviour
     [MenuItem("Tools/Change Pixels Per Unit")]
     static void ChangeAllSpritesPPU()
     {
-        string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/RafaelMatos/ERW-Ancient Ruins V1.9.1" });
+        string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/RafaelMatos" });
         int targetPPU = 32; // 원하는 PPU로 변경하세요
 
         foreach (string guid in guids)
