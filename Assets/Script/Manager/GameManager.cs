@@ -112,7 +112,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        RoundUpdate(SettingData.Stage, SettingData.Round);
+        ///
+        ///   맵만을 설치해야함.
+        ///
+        //RoundUpdate(SettingData.Stage, SettingData.Round);
         RoundSet();
    
 
@@ -120,7 +123,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerUnit != null)
+        if (PlayerUnit == null)
             return;
 
 
@@ -128,7 +131,17 @@ public class GameManager : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void setField()
+
+    private void setGameFeild()
+    {
+
+    }
+
+
+    /// <summary>
+    /// 현재 위치를 전투필드로 변경시킵니다.
+    /// </summary>
+    private void setBattleField()
     {
         if(battleZone != null)
         {
@@ -139,7 +152,7 @@ public class GameManager : MonoBehaviour
         battleZone = gameObject.GetComponentInChildren<BattleZone>();
     }
     /// <summary>
-    /// 플레이어 생성.
+    /// 플레이어 의 위치를 조정합니다.
     /// </summary>
     private void setPlayer()
     {
@@ -159,7 +172,7 @@ public class GameManager : MonoBehaviour
         
     }
     /// <summary>
-    /// 몬스터 생성.
+    /// 몬스터를 생성합니다..
     /// 스테이지 정보값에서 받아온뒤 생성해야합니다.
     /// </summary>
 
@@ -203,20 +216,7 @@ public class GameManager : MonoBehaviour
 
         return pos;
     }
-    /*
-    /// <summary>
-    /// 몬스터를 생성합니다.
-    /// </summary>
-    /// <param name="sponePos"></몬스터가 생성될 좌표.>
-    /// <param name="unitPrefab"></생성될 유닛 오브젝트 입니다.>
-    /// <param name="Mathbool"></기본값은 false이며 유닛의 좌표를 Grid크기에 맞게 보정해 주어야합니다. 만약 true면 보정을 한 좌표값을 받아 사용합니다.>
-    public void setMonster(Vector3Int sponePos,GameObject unitPrefab,bool Mathbool = false)
-    {
-        MonsterUnit monster = unitSpawner.SpawnMonster(sponePos, unitPrefab);
-        if(Mathbool == false)
-            monster.transform.position = unitSpawner.PosUnitSet(sponePos);
-    }
-    */
+
 
 
     public void onPlayerAction()
@@ -274,10 +274,10 @@ public class GameManager : MonoBehaviour
     ///
     public void RoundSet()
     {
-        setField();
-        onPlayerAction();
-        setMonster();
-        setPlayer();
+        //setBattleField();
+        //onPlayerAction();
+        //setMonster();
+        //setPlayer();
 
         
     }
