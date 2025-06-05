@@ -63565,9 +63565,12 @@ MonoBehaviour:
   grid: {fileID: 241694560}
   tilemapPrefabs:
   - {fileID: 5913008604598010124, guid: 5ae8cb168414c4945a599c68cf97d906, type: 3}
-  - {fileID: 5913008604598010124, guid: ef9d6eedb05d5df4b882dadc1d6dc403, type: 3}
+  westTileMapPrefabs: []
+  eastTileMapPrefabs: []
+  northTileMapPrefabs: []
+  southTileMapPrefabs: []
   initialTilePrefab: {fileID: 5913008604598010124, guid: 5ae8cb168414c4945a599c68cf97d906, type: 3}
-  mapSize: 10
+  mapSize: 50
 --- !u!1 &1110278398
 GameObject:
   m_ObjectHideFlags: 0

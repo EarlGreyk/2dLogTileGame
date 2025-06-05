@@ -3379,7 +3379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f28ed50437c06c846812e51d94bd6bc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Up: 1
-  Down: 1
+  Up: 0
+  Down: 0
   Left: 1
   Right: 1
