@@ -38,7 +38,7 @@ public class UnitSpawner : MonoBehaviour
         GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
         PlayerUnit player = unit.GetComponent<PlayerUnit>();
-        GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
+        //GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
         return player;
     }
 

@@ -19,8 +19,10 @@ public class MapGenerator : MonoBehaviour
     public GameObject initialTilePrefab;  // 최초 사용할 타일 Prefab
     public int mapSize;  // 생성할 맵의 크기 (가로/세로)
     private int tileCount = 0;  // 생성된 타일 수
-    private Dictionary<Vector2Int, GameObject> spawnedTilemaps = new Dictionary<Vector2Int, GameObject>();  // 생성된 전체 타일 저장
+    public Dictionary<Vector2Int, GameObject> spawnedTilemaps = new Dictionary<Vector2Int, GameObject>();  // 생성된 전체 타일 저장
+    
     private Dictionary<Vector2Int, GameObject> progressTilemaps = new Dictionary<Vector2Int, GameObject>(); // 생성된 타일중 진행 방향. (타일 카운트 체크)
+    public Dictionary<Vector2Int,TileMapInfo> tileMapInfo = new Dictionary<Vector2Int, TileMapInfo>(); 
     private Vector2Int lastbeforePos;
     private Vector2Int lastPos;
 
@@ -34,6 +36,7 @@ public class MapGenerator : MonoBehaviour
 
         LoadTilemapPrefabs();
         GenerateMap();  // 맵 생성
+        GameManager.instance.setPlayer();
     }
 
     // 타일맵 프리팹 로드
@@ -161,7 +164,7 @@ public class MapGenerator : MonoBehaviour
 
         GameObject selectedTilePrefab = null;
         GameObject newTilemapObject = null;
-        TileMapDirection tilemapDirection = null;
+        TileMapInfo tilemapGetCompnent = null;
 
         // incomingDirection이 Vector2Int.zero이면 첫 타일로 간주
         if (incomingDirection == Vector2Int.zero)
@@ -179,15 +182,15 @@ public class MapGenerator : MonoBehaviour
             newTilemapObject.transform.position = new UnityEngine.Vector3(pos.x * 30, pos.y * 30, 0);
 
             // 최초 타일의 방향 정보 가져오기
-            tilemapDirection = newTilemapObject.GetComponent<TileMapDirection>();
-            if (tilemapDirection != null)
-            {
-                // 최초 타일의 방향 정보를 저장하거나 후속 타일 생성을 위한 처리를 할 수 있습니다.
-            }
+            tilemapGetCompnent = newTilemapObject.GetComponent<TileMapInfo>();
+    
 
             // 생성된 타일을 맵에 등록
             spawnedTilemaps[pos] = newTilemapObject;
             progressTilemaps[pos] = newTilemapObject;
+            tileMapInfo[pos] = tilemapGetCompnent;
+
+
             return;
         }
 
@@ -201,13 +204,13 @@ public class MapGenerator : MonoBehaviour
 
         // 타일을 생성
         newTilemapObject = Instantiate(customTilePrefab, grid.transform);
-        tilemapDirection = newTilemapObject.GetComponent<TileMapDirection>();
+        tilemapGetCompnent = newTilemapObject.GetComponent<TileMapInfo>();
 
         // 타일 위치 설정 (15x15 크기 고려)
         newTilemapObject.transform.position = new UnityEngine.Vector3(pos.x * 30, pos.y * 30, 0);
 
         // 연결 가능 여부 확인
-        if (!CanConnectTile(tilemapDirection, incomingDirection - pos))
+        if (!CanConnectTile(tilemapGetCompnent, incomingDirection - pos))
         {
             Debug.LogWarning("타일을 이 위치에 배치할 수 없습니다.");
             return;
@@ -215,82 +218,94 @@ public class MapGenerator : MonoBehaviour
 
         // 생성된 타일을 맵에 등록
         spawnedTilemaps[pos] = newTilemapObject;
+        if(Random.Range(0,2) == 0)
+        {
+            tilemapGetCompnent.Battle = true;
+        }else
+        {
+            tilemapGetCompnent.Battle = false;
+        }
+      
+        tileMapInfo[pos] = tilemapGetCompnent;
+
     }
 
-    void SpawnTileConnect(Vector2Int pos, Vector2Int incomingDirection)
-    {
-        GameObject customTilePrefab = null;
-        int count = 0;
+    //void SpawnTileConnect(Vector2Int pos, Vector2Int incomingDirection)
+    //{
+    //    GameObject customTilePrefab = null;
+    //    int count = 0;
 
-        if (spawnedTilemaps[pos] != null)
-        {
-            Debug.Log("해당 위치에는 이미 생성되어있습니다.");
-            return;
+    //    if (spawnedTilemaps[pos] != null)
+    //    {
+    //        Debug.Log("해당 위치에는 이미 생성되어있습니다.");
+    //        return;
 
-        }
-
-
+    //    }
 
 
 
-        if (pos - incomingDirection == Vector2Int.up)
-        {
-            count = southTileMapPrefabs.Length;
-            customTilePrefab = northTileMapPrefabs[count - 1];
-        }
-        if (pos - incomingDirection == Vector2Int.down)
-        {
-            count = northTileMapPrefabs.Length;
-            customTilePrefab = northTileMapPrefabs[count - 1];
-        }
-        if (pos - incomingDirection == Vector2Int.left)
-        {
-            count = eastTileMapPrefabs.Length;
-            customTilePrefab = northTileMapPrefabs[count - 1];
-        }
-        if (pos - incomingDirection == Vector2Int.right)
-        {
-            count = westTileMapPrefabs.Length;
-            customTilePrefab = northTileMapPrefabs[count - 1];
-        }
-
-        Debug.Log($"해당 좌표에 타일 생성을 시도합니다.: {pos}, 이전 타일 좌표: {incomingDirection}, 생성되는 프리팹 : {customTilePrefab}");
-
-        GameObject newTilemapObject = null;
-        TileMapDirection tilemapDirection = null;
-
-        // incomingDirection이 Vector2Int.zero이면 첫 타일로 간주
 
 
-        // `incomingDirection`이 Zero가 아닌 경우
+    //    if (pos - incomingDirection == Vector2Int.up)
+    //    {
+    //        count = southTileMapPrefabs.Length;
+    //        customTilePrefab = northTileMapPrefabs[count - 1];
+    //    }
+    //    if (pos - incomingDirection == Vector2Int.down)
+    //    {
+    //        count = northTileMapPrefabs.Length;
+    //        customTilePrefab = northTileMapPrefabs[count - 1];
+    //    }
+    //    if (pos - incomingDirection == Vector2Int.left)
+    //    {
+    //        count = eastTileMapPrefabs.Length;
+    //        customTilePrefab = northTileMapPrefabs[count - 1];
+    //    }
+    //    if (pos - incomingDirection == Vector2Int.right)
+    //    {
+    //        count = westTileMapPrefabs.Length;
+    //        customTilePrefab = northTileMapPrefabs[count - 1];
+    //    }
 
-        if (customTilePrefab == null)
-        {
-            Debug.LogWarning("이 위치에 맞는 타일을 찾을 수 없습니다.");
-            return;
-        }
+    //    Debug.Log($"해당 좌표에 타일 생성을 시도합니다.: {pos}, 이전 타일 좌표: {incomingDirection}, 생성되는 프리팹 : {customTilePrefab}");
+
+    //    GameObject newTilemapObject = null;
+    //    TileMapInfo tilemapDirection = null;
+
+    //    // incomingDirection이 Vector2Int.zero이면 첫 타일로 간주
 
 
-        // 타일을 생성
-        newTilemapObject = Instantiate(customTilePrefab, grid.transform);
-        tilemapDirection = newTilemapObject.GetComponent<TileMapDirection>();
+    //    // `incomingDirection`이 Zero가 아닌 경우
 
-        // 타일 위치 설정 (15x15 크기 고려)
-        newTilemapObject.transform.position = new UnityEngine.Vector3(pos.x * 30, pos.y * 30, 0);
+    //    if (customTilePrefab == null)
+    //    {
+    //        Debug.LogWarning("이 위치에 맞는 타일을 찾을 수 없습니다.");
+    //        return;
+    //    }
 
-        // 연결 가능 여부 확인
-        if (!CanConnectTile(tilemapDirection, incomingDirection - pos))
-        {
-            Debug.LogWarning("타일을 이 위치에 배치할 수 없습니다.");
-            return;
-        }
 
-        // 생성된 타일을 맵에 등록
-        spawnedTilemaps[pos] = newTilemapObject;
-    }
+    //    // 타일을 생성
+    //    newTilemapObject = Instantiate(customTilePrefab, grid.transform);
+    //    tilemapDirection = newTilemapObject.GetComponent<TileMapInfo>();
+
+    //    // 타일 위치 설정 (15x15 크기 고려)
+    //    newTilemapObject.transform.position = new UnityEngine.Vector3(pos.x * 30, pos.y * 30, 0);
+
+    //    // 연결 가능 여부 확인
+    //    if (!CanConnectTile(tilemapDirection, incomingDirection - pos))
+    //    {
+    //        Debug.LogWarning("타일을 이 위치에 배치할 수 없습니다.");
+    //        return;
+    //    }
+
+    //    // 생성된 타일을 맵에 등록
+    //    spawnedTilemaps[pos] = newTilemapObject;
+
+
+    //}
 
     // 타일이 연결 가능한지 확인하는 함수
-    bool CanConnectTile(TileMapDirection tilemapDirection, Vector2Int incomingDirection)
+    bool CanConnectTile(TileMapInfo tilemapDirection, Vector2Int incomingDirection)
     {
         Debug.Log($"현재타일 번호 {tileCount} -> 타일연결체크 {incomingDirection}");
         if (incomingDirection == Vector2Int.up && tilemapDirection.Up) return true;
@@ -316,7 +331,6 @@ public class MapGenerator : MonoBehaviour
         //이전타일과 현재의 타일의 좌표를 구해야함.
         Vector2Int direction = nextPos - beforePos;
 
-        Debug.Log("GetTilemapPrefabByDirection" + nextPos);
 
         //북쪽으로 이동함 새로 생성될 프리팹은 남쪽이 반드시 비어져 있어야 하며 추가적으로 막혀있지 않아야한다.
         if (direction == Vector2Int.up)
@@ -325,7 +339,7 @@ public class MapGenerator : MonoBehaviour
             {
                 foreach (var prefab in southTileMapPrefabs)
                 {
-                    TileMapDirection tilemapDirection = prefab.GetComponent<TileMapDirection>();
+                    TileMapInfo tilemapDirection = prefab.GetComponent<TileMapInfo>();
                     if (tilemapDirection.Down)
                     {
 
@@ -383,7 +397,7 @@ public class MapGenerator : MonoBehaviour
             {
                 foreach (var prefab in northTileMapPrefabs)
                 {
-                    TileMapDirection tilemapDirection = prefab.GetComponent<TileMapDirection>();
+                    TileMapInfo tilemapDirection = prefab.GetComponent<TileMapInfo>();
                     Debug.Log(prefab);
                     if (tilemapDirection.Up)
                     {
@@ -440,7 +454,7 @@ public class MapGenerator : MonoBehaviour
             {
                 foreach (var prefab in eastTileMapPrefabs)
                 {
-                    TileMapDirection tilemapDirection = prefab.GetComponent<TileMapDirection>();
+                    TileMapInfo tilemapDirection = prefab.GetComponent<TileMapInfo>();
                     Debug.Log(prefab);
                     if (tilemapDirection.Right)
                     {
@@ -495,7 +509,7 @@ public class MapGenerator : MonoBehaviour
             {
                 foreach (var prefab in westTileMapPrefabs)
                 {
-                    TileMapDirection tilemapDirection = prefab.GetComponent<TileMapDirection>();
+                    TileMapInfo tilemapDirection = prefab.GetComponent<TileMapInfo>();
 
                     if (tilemapDirection.Left)
                     {
@@ -569,29 +583,29 @@ public class MapGenerator : MonoBehaviour
     {
         // 이전 타일의 방향을 확인
         GameObject lastTile = spawnedTilemaps[lastTilePos];
-        TileMapDirection lastTileDirection = lastTile.GetComponent<TileMapDirection>();
+        TileMapInfo lastTileInfo = lastTile.GetComponent<TileMapInfo>();
         List<Vector2Int> TileDirections = new List<Vector2Int>();
 
         Debug.Log($"GetNextTilePosition의 비교좌표: {lastTilePos}");
         Debug.Log($"GetNextTilePosition : {lastbeforePos - lastTilePos}");
         // 이전 타일이 가진 방향에 맞는 위치를 계산하여 반환
         // 타일의 방향에 맞게 연결된 위치를 반환
-        if (lastTileDirection.Up)
+        if (lastTileInfo.Up)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.up)
                 TileDirections.Add(lastTilePos + new Vector2Int(0, 1)); Debug.Log($"{tileCount}의 북쪽" + (lastTilePos + new Vector2Int(0, 1)));
         }
-        if (lastTileDirection.Down)
+        if (lastTileInfo.Down)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.down)
                 TileDirections.Add(lastTilePos + new Vector2Int(0, -1)); Debug.Log($"{tileCount}의 남쪽" + (lastTilePos + new Vector2Int(0, -1)));
         }
-        if (lastTileDirection.Left)
+        if (lastTileInfo.Left)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.left)
                 TileDirections.Add(lastTilePos + new Vector2Int(-1, 0)); Debug.Log($"{tileCount}의 서쪽" + (lastTilePos + new Vector2Int(-1, 0)));
         }
-        if (lastTileDirection.Right)
+        if (lastTileInfo.Right)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.right)
                 TileDirections.Add(lastTilePos + new Vector2Int(1, 0)); Debug.Log($"{tileCount}의 동쪽" + (lastTilePos + new Vector2Int(1, 0)));

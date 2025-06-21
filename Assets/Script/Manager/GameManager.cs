@@ -62,9 +62,16 @@ public class GameManager : MonoBehaviour
 
     public UnitInfoManager UnitInfoManager { get { return unitInfoManager; } }
 
-    
+    [SerializeField]
+    private MapGenerator mapGenerator;
+
+    public MapGenerator MapGenerator { get { return mapGenerator; } }
 
 
+
+    private bool isBattle;
+
+    public bool IsBattle { get { return isBattle; } }
     private bool isPlayer;
     public bool IsPlayer {  get { return isPlayer; } }
     private bool isMonster;
@@ -78,6 +85,10 @@ public class GameManager : MonoBehaviour
     public int Stage { get { return stage; } set { stage = value; } }
     private int round = 1;
     public int Round { get { return round; } set { round = value; } }
+
+    private Vector2Int currentPos = new Vector2Int(0, 0);
+
+    public Vector2Int CurrentPos { get { return currentPos; } set { currentPos = value; } }
 
     private List<string> roundInfo = new List<string>();
     public List<string> RoundInfo { get { return roundInfo; } set {roundInfo = value;} }
@@ -116,6 +127,7 @@ public class GameManager : MonoBehaviour
         ///   맵만을 설치해야함.
         ///
         //RoundUpdate(SettingData.Stage, SettingData.Round);
+        isBattle = false;
         RoundSet();
    
 
@@ -123,7 +135,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerUnit == null)
+        if (PlayerUnit != null)
             return;
 
 
@@ -153,23 +165,20 @@ public class GameManager : MonoBehaviour
     }
     /// <summary>
     /// 플레이어 의 위치를 조정합니다.
+    /// 1스테이지라면 플레이어를 생성하고 그게 아니라면 0,0,0 좌표로 이동시킵니다.
     /// </summary>
-    private void setPlayer()
+    public void setPlayer()
     {
         //유닛을 생성할때 SettingData에서 UnitStatus를 받아와서 적용시키면됩니다.
         if(playerUnit == null)
         {
             GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
-            playerUnit = unitSpawner.SpawnPlayer(BattleZone.PlayerSponePos, unitPrefabs);
+            playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15,15,0), unitPrefabs);
             CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
             return;
         }
-
-        playerUnit.transform.position = unitSpawner.PosUnitSet(BattleZone.PlayerSponePos);
-
-
-        
-        
+        playerUnit.transform.position = unitSpawner.PosUnitSet(new Vector3Int(15, 15, 0));
+   
     }
     /// <summary>
     /// 몬스터를 생성합니다..
