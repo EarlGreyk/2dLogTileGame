@@ -9,10 +9,12 @@ using UnityEngine.UI;
 
 public class GameProsessManager : MonoBehaviour
 {
-
+    //정화 유닛의 정보를 보여주는 판낼입니다.
+    [SerializeField]
+    private GameObject ClearUnitInfoPanel;
 
    
-
+    /// 아래의 변수들은 전부 전투(Battel)이후 받는 정보값들을 표시한것입니다.
 
     private int rewardStep;
     private int rewardExp;
@@ -321,6 +323,25 @@ public class GameProsessManager : MonoBehaviour
             }
         }
         SaveLoadManager.instance.Save();
+    }
+
+
+
+
+
+
+   ////정화 유닛의 정보를 플레이어에게 보여주기 위해 Panel에 갱신합니다. 
+   public void ClearPanelSet(ClearUnit clearUnit, bool set)
+    {
+        if (set)
+        {
+            ClearUnitInfoPanel.SetActive(true);
+        }
+        else
+        {
+            ClearUnitInfoPanel.SetActive(false);
+        }
+        
     }
     
 }

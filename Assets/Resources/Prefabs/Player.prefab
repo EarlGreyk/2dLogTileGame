@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4406794317286423251}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   SpriteRenderer: {fileID: 0}
   baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   hpbar: {fileID: 0}
+  ColiderCheck: 0
 --- !u!50 &-6079140699372072975
 Rigidbody2D:
   serializedVersion: 4

@@ -20,27 +20,27 @@ public class PlayerUnit : Unit
     {
         base.Update();
         //유닛 기본이동구현
-        if (Input.GetKey(KeyCode.W))
+        if (   Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)    )
         {
-            transform.position += Vector3.up*0.01f;
+            transform.position += Vector3.up*0.02f;
         }
 
         // S 키를 눌렀을 때, 카메라를 아래쪽(Y축)으로 이동
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.down * 0.01f;
+            transform.position += Vector3.down * 0.02f;
         }
 
         // A 키를 눌렀을 때, 카메라를 왼쪽으로 이동
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * 0.01f;
+            transform.position += Vector3.left * 0.04f;
         }
 
         // D 키를 눌렀을 때, 카메라를 오른쪽으로 이동
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right * 0.01f;
+            transform.position += Vector3.right * 0.02f;
         }
     }
 
@@ -55,7 +55,7 @@ public class PlayerUnit : Unit
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
-
+        Debug.Log("접촉");
         
         if (other.CompareTag("MoveTrigger") && ColiderCheck == false)
         {
@@ -76,7 +76,7 @@ public class PlayerUnit : Unit
                 ColiderCheck = true;
                 Debug.Log($"동서 비교 {valueX} : {comparePos.x + 4}");
                 //서쪽
-                if (valueX > comparePos.x + 4)
+                if (valueX > comparePos.x - 4)
                 {
                     Debug.Log("동쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(1, 0);
