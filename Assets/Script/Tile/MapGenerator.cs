@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
+
 using UnityEngine;
-using UnityEngine.Tilemaps;
+
 
 
 
@@ -230,79 +229,26 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    //void SpawnTileConnect(Vector2Int pos, Vector2Int incomingDirection)
-    //{
-    //    GameObject customTilePrefab = null;
-    //    int count = 0;
+    
+    public BattleZone BattleZoneSet()
+    {
+        //배틀존 설정
+        BattleZone value = spawnedTilemaps[GameManager.instance.CurrentPos].GetComponentInChildren<BattleZone>();
+        //배틀존을 설정하고 해당 타일맵에 있는 정화유닛을 비활성화.
+        if(tileMapInfo.ContainsKey(GameManager.instance.CurrentPos))
+        {
+            Debug.Log(tileMapInfo[GameManager.instance.CurrentPos].clearUnit);
+            tileMapInfo[GameManager.instance.CurrentPos].clearUnit.gameObject.SetActive(false);
+        }else
+        {
+            Debug.Log("타일맵 오류!!");
+            return null;
+        }
+            
 
-    //    if (spawnedTilemaps[pos] != null)
-    //    {
-    //        Debug.Log("해당 위치에는 이미 생성되어있습니다.");
-    //        return;
+        return value;
+    }
 
-    //    }
-
-
-
-
-
-    //    if (pos - incomingDirection == Vector2Int.up)
-    //    {
-    //        count = southTileMapPrefabs.Length;
-    //        customTilePrefab = northTileMapPrefabs[count - 1];
-    //    }
-    //    if (pos - incomingDirection == Vector2Int.down)
-    //    {
-    //        count = northTileMapPrefabs.Length;
-    //        customTilePrefab = northTileMapPrefabs[count - 1];
-    //    }
-    //    if (pos - incomingDirection == Vector2Int.left)
-    //    {
-    //        count = eastTileMapPrefabs.Length;
-    //        customTilePrefab = northTileMapPrefabs[count - 1];
-    //    }
-    //    if (pos - incomingDirection == Vector2Int.right)
-    //    {
-    //        count = westTileMapPrefabs.Length;
-    //        customTilePrefab = northTileMapPrefabs[count - 1];
-    //    }
-
-    //    Debug.Log($"해당 좌표에 타일 생성을 시도합니다.: {pos}, 이전 타일 좌표: {incomingDirection}, 생성되는 프리팹 : {customTilePrefab}");
-
-    //    GameObject newTilemapObject = null;
-    //    TileMapInfo tilemapDirection = null;
-
-    //    // incomingDirection이 Vector2Int.zero이면 첫 타일로 간주
-
-
-    //    // `incomingDirection`이 Zero가 아닌 경우
-
-    //    if (customTilePrefab == null)
-    //    {
-    //        Debug.LogWarning("이 위치에 맞는 타일을 찾을 수 없습니다.");
-    //        return;
-    //    }
-
-
-    //    // 타일을 생성
-    //    newTilemapObject = Instantiate(customTilePrefab, grid.transform);
-    //    tilemapDirection = newTilemapObject.GetComponent<TileMapInfo>();
-
-    //    // 타일 위치 설정 (15x15 크기 고려)
-    //    newTilemapObject.transform.position = new UnityEngine.Vector3(pos.x * 30, pos.y * 30, 0);
-
-    //    // 연결 가능 여부 확인
-    //    if (!CanConnectTile(tilemapDirection, incomingDirection - pos))
-    //    {
-    //        Debug.LogWarning("타일을 이 위치에 배치할 수 없습니다.");
-    //        return;
-    //    }
-
-    //    // 생성된 타일을 맵에 등록
-    //    spawnedTilemaps[pos] = newTilemapObject;
-
-
-    //}
 
     // 타일이 연결 가능한지 확인하는 함수
     bool CanConnectTile(TileMapInfo tilemapDirection, Vector2Int incomingDirection)

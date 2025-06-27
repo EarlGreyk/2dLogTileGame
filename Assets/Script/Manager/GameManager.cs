@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UnitSpawner unitSpawner;
+    public UnitSpawner UnitSpawner { get { return unitSpawner; } }
 
     [SerializeField]
     private GameProsessManager gameProsessManager;
@@ -69,9 +70,7 @@ public class GameManager : MonoBehaviour
 
 
 
-    private bool isBattle;
 
-    public bool IsBattle { get { return isBattle; } }
     private bool isPlayer;
     public bool IsPlayer {  get { return isPlayer; } }
     private bool isMonster;
@@ -89,6 +88,7 @@ public class GameManager : MonoBehaviour
     private Vector2Int currentPos = new Vector2Int(0, 0);
 
     public Vector2Int CurrentPos { get { return currentPos; } set { currentPos = value; } }
+
 
     private List<string> roundInfo = new List<string>();
     public List<string> RoundInfo { get { return roundInfo; } set {roundInfo = value;} }
@@ -127,8 +127,6 @@ public class GameManager : MonoBehaviour
         ///   맵만을 설치해야함.
         ///
         //RoundUpdate(SettingData.Stage, SettingData.Round);
-        isBattle = false;
-        RoundSet();
    
 
     }
@@ -144,24 +142,22 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void setGameFeild()
-    {
-
-    }
 
 
     /// <summary>
     /// 현재 위치를 전투필드로 변경시킵니다.
     /// </summary>
-    private void setBattleField()
+    public void setBattleField()
     {
-        if(battleZone != null)
+        GameProsessManager.prosessType = GameProsessManager.ProsessType.Battle;
+        if (battleZone != null)
         {
             Destroy(battleZone.gameObject);
             battleZone = null;
         }
-        GameObject gameObject = Instantiate(Resources.Load<GameObject>("맵/"+stage.ToString()+"/"+round.ToString()), grid.transform);
-        battleZone = gameObject.GetComponentInChildren<BattleZone>();
+        
+        battleZone = MapGenerator.BattleZoneSet();
+        
     }
     /// <summary>
     /// 플레이어 의 위치를 조정합니다.
@@ -177,7 +173,15 @@ public class GameManager : MonoBehaviour
             CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
             return;
         }
-        playerUnit.transform.position = unitSpawner.PosUnitSet(new Vector3Int(15, 15, 0));
+        int x= currentPos.x * 15;
+        int y= 0;
+
+        if (currentPos.x >= 0)
+            x += 30;
+        if (currentPos.y >= 0)
+            y += 15;
+
+        playerUnit.transform.position = unitSpawner.PosUnitSet(new Vector3Int(x, y, 0));
    
     }
     /// <summary>
@@ -283,10 +287,10 @@ public class GameManager : MonoBehaviour
     ///
     public void RoundSet()
     {
-        //setBattleField();
-        //onPlayerAction();
-        //setMonster();
-        //setPlayer();
+        setBattleField();
+        onPlayerAction();
+        setMonster();
+        setPlayer();
 
         
     }

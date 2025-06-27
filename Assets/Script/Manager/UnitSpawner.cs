@@ -64,6 +64,8 @@ public class UnitSpawner : MonoBehaviour
         Vector3 worldPosition = UnitMap.CellToWorld(vector3);
         int x = Mathf.FloorToInt(worldPosition.x / scale.x);
         int y = Mathf.FloorToInt(worldPosition.y / scale.y);
+
+        Debug.Log($"{x} : {y}");
         Vector3Int unitPos = new Vector3Int(x, y, 0);
 
 

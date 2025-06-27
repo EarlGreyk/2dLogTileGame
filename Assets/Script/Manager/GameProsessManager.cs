@@ -9,9 +9,22 @@ using UnityEngine.UI;
 
 public class GameProsessManager : MonoBehaviour
 {
+
+    public enum ProsessType
+    {
+        Stay,
+        Battle,
+        Rest
+    }
+
+    public ProsessType prosessType;
+
+
+
+
     //정화 유닛의 정보를 보여주는 판낼입니다.
     [SerializeField]
-    private GameObject ClearUnitInfoPanel;
+    public GameObject ClearUnitInfoPanel;
 
    
     /// 아래의 변수들은 전부 전투(Battel)이후 받는 정보값들을 표시한것입니다.
@@ -79,6 +92,9 @@ public class GameProsessManager : MonoBehaviour
     private TextMeshProUGUI GameExpText;
 
     private int exp;
+
+    [SerializeField]
+    private InteractionUI interactionPanel;
 
 
 
@@ -331,17 +347,36 @@ public class GameProsessManager : MonoBehaviour
 
 
    ////정화 유닛의 정보를 플레이어에게 보여주기 위해 Panel에 갱신합니다. 
+   ////해당 데이터 값에 맞게 이미지와 정보를 수정해야합니다.
+   
    public void ClearPanelSet(ClearUnit clearUnit, bool set)
     {
         if (set)
         {
             ClearUnitInfoPanel.SetActive(true);
+            InteractionPanelSet(true);
         }
         else
         {
             ClearUnitInfoPanel.SetActive(false);
+            InteractionPanelSet(false);
         }
         
     }
-    
+
+    //어떠한 유닛이라도 상호작용을 했으면 해당 판넬을 작동시킵니다.
+    private void InteractionPanelSet(bool set)
+    {
+        if (set)
+        {
+            interactionPanel.Set(1, true);
+            
+        }
+        else
+        {
+            interactionPanel.Set(1, false);
+        }
+    }
+
+
 }

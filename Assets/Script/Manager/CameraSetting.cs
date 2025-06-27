@@ -43,7 +43,7 @@ public class CameraSetting : MonoBehaviour
 
     public void Update()
     {
-        if(GameManager.instance.IsBattle == false)
+        if(GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
         {
 
             if(moveCoroutine == null)

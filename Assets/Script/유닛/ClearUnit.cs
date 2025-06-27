@@ -19,7 +19,14 @@ public class ClearUnit : MonoBehaviour
     // Start is called before the first frame update
     public MonsterListScriptableObejct monsterList;
 
-    
+
+
+    [SerializeField]
+    private Canvas canvas;
+
+    private Transform targetObj;
+
+
 
     void Start()
     {
@@ -27,7 +34,23 @@ public class ClearUnit : MonoBehaviour
         battle = true;
         victory = false;
     }
-    
+
+    private void Update()
+    {
+        if (targetObj != null)
+        {
+            if (Input.GetKey(KeyCode.G) && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
+            {
+                Debug.Log("전투전환");
+                GameManager.instance.RoundSet();
+
+            }
+
+          
+
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -35,6 +58,8 @@ public class ClearUnit : MonoBehaviour
         {
             Debug.Log("플레이어가 정화 유닛에 접근햇습니다.");
             GameManager.instance.GameProsessManager.ClearPanelSet(this, true);
+            targetObj = other.gameObject.transform;
+
         }
 
     }
@@ -45,6 +70,7 @@ public class ClearUnit : MonoBehaviour
         {
             Debug.Log("플레이어가 정화 유닛에 나갔습니다.");
             GameManager.instance.GameProsessManager.ClearPanelSet(this, false);
+            targetObj = null;
         }
     }
 

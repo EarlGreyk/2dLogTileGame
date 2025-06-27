@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerUnit : Unit
 {
     public bool ColiderCheck = false;
+
  
     // Start is called before the first frame update
     public override void Start()
