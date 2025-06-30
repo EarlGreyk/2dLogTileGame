@@ -20,28 +20,32 @@ public class PlayerUnit : Unit
     public override void Update()
     {
         base.Update();
+        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+            return;
+
+        //아래는 전투가 아닐때만 작동합니다.
         //유닛 기본이동구현
         if (   Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)    )
         {
-            transform.position += Vector3.up*0.02f;
+            transform.position += Vector3.up*0.1f;
         }
 
         // S 키를 눌렀을 때, 카메라를 아래쪽(Y축)으로 이동
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.down * 0.02f;
+            transform.position += Vector3.down * 0.1f;
         }
 
         // A 키를 눌렀을 때, 카메라를 왼쪽으로 이동
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * 0.04f;
+            transform.position += Vector3.left * 0.1f;
         }
 
         // D 키를 눌렀을 때, 카메라를 오른쪽으로 이동
         if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right * 0.02f;
+            transform.position += Vector3.right * 0.1f;
         }
     }
 
@@ -57,7 +61,9 @@ public class PlayerUnit : Unit
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("접촉");
-        
+        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+            return;
+
         if (other.CompareTag("MoveTrigger") && ColiderCheck == false)
         {
             if (!GameManager.instance.MapGenerator.spawnedTilemaps.ContainsKey(GameManager.instance.CurrentPos))

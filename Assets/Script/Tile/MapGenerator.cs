@@ -232,19 +232,27 @@ public class MapGenerator : MonoBehaviour
     
     public BattleZone BattleZoneSet()
     {
-        //배틀존 설정
-        BattleZone value = spawnedTilemaps[GameManager.instance.CurrentPos].GetComponentInChildren<BattleZone>();
-        //배틀존을 설정하고 해당 타일맵에 있는 정화유닛을 비활성화.
-        if(tileMapInfo.ContainsKey(GameManager.instance.CurrentPos))
-        {
-            Debug.Log(tileMapInfo[GameManager.instance.CurrentPos].clearUnit);
-            tileMapInfo[GameManager.instance.CurrentPos].clearUnit.gameObject.SetActive(false);
-        }else
-        {
-            Debug.Log("타일맵 오류!!");
-            return null;
-        }
-            
+
+        ////배틀존 설정
+        //BattleZone value = spawnedTilemaps[GameManager.instance.CurrentPos].GetComponentInChildren<BattleZone>();
+        ////배틀존을 설정하고 해당 타일맵에 있는 정화유닛을 비활성화.
+        //if(tileMapInfo.ContainsKey(GameManager.instance.CurrentPos))
+        //{
+        //    Debug.Log(tileMapInfo[GameManager.instance.CurrentPos].clearUnit);
+        //    tileMapInfo[GameManager.instance.CurrentPos].clearUnit.gameObject.SetActive(false);
+        //}else
+        //{
+        //    Debug.Log("타일맵 오류!!");
+        //    return null;
+        //}
+        GameObject field = Instantiate<GameObject>(spawnedTilemaps[GameManager.instance.CurrentPos], GameManager.instance.Grid.transform);
+        field.transform.position = Vector3.zero;
+        BattleZone value = field.GetComponentInChildren<BattleZone>();
+        TileMapInfo info = field.GetComponentInChildren<TileMapInfo>();
+        info.clearUnit.gameObject.SetActive(false);
+
+
+
 
         return value;
     }

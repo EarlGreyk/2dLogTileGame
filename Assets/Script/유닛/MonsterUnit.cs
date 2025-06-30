@@ -421,6 +421,7 @@ public class MonsterUnit : Unit
     /// <returns></returns>
     private List<Vector3Int> FindPathWithBFS(Vector3Int start, Vector3Int goal, List<Vector3Int> validPositions)
     {
+        Debug.Log($"최단경로 탐색 - 시작점 : {start}, 종료지점 {goal}, 인자 {validPositions}");
         int rows = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
         int cols = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
         bool[,] visited = new bool[rows, cols];

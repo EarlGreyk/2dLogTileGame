@@ -14,12 +14,15 @@ public class UnitSpawner : MonoBehaviour
 
     public void SpawnUnit(Vector3Int tilePosition,GameObject unitPrefab)
     {
+        Debug.Log($"À¯´Ö »ý¼º ÁÂÇ¥ : {tilePosition}");
+       
         Vector3 scale = grid.transform.localScale;
         // Å¸ÀÏ¸ÊÀÇ Å¸ÀÏ ÁÂÇ¥¸¦ ¿ùµå ÁÂÇ¥·Î º¯È¯
         Vector3 worldPosition = UnitMap.CellToWorld(tilePosition);
         int x = Mathf.FloorToInt(worldPosition.x / scale.x);
         int y = Mathf.FloorToInt(worldPosition.y / scale.y);
         Vector3Int unitPos = new Vector3Int(x, y, 0);
+
         // À¯´Ö »ý¼º
         GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
@@ -45,7 +48,7 @@ public class UnitSpawner : MonoBehaviour
     public MonsterUnit SpawnMonster(Vector3Int tilePosition, GameObject unitPrefab)
     {
         Vector3 worldPosition = UnitMap.CellToWorld(tilePosition);
-
+        Debug.Log($"À¯´Ö »ý¼º ÁÂÇ¥ : {tilePosition}      :   º¯È¯ ÁÂÇ¥ : {worldPosition}");
         // À¯´Ö »ý¼º
         GameObject unit = Instantiate(unitPrefab, worldPosition, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);

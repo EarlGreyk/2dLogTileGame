@@ -155,13 +155,35 @@ public class GameManager : MonoBehaviour
             Destroy(battleZone.gameObject);
             battleZone = null;
         }
-        
         battleZone = MapGenerator.BattleZoneSet();
+        foreach (var value in MapGenerator.spawnedTilemaps)
+        {
+            value.Value.SetActive(false);
+        }
+         
+
+       // // 전투로 전환시 그에 대응한 UI타일의 좌표를 수정합니다.
+       // int x = (int)grid.transform.localScale.x;
+       // int y = (int)grid.transform.localScale.y;
+       
+
+       // Vector3 offset = new Vector3Int(currentPos.x * 15 * x, currentPos.y * 15 * y, 0);
+
+       // blockModeZone.gameObject.transform.position += offset;
+       // skillZone.gameObject.transform.position += offset;
+       // MoveZone.gameObject.transform.position += offset;
+
+
+       //// offset.x += grid.transform.localScale.x * -0.5f;
+       // //offset.y += grid.transform.localScale.y * -0.5f;
+       // UnitSpawner.gameObject.transform.position += offset*2;
+       // //
+        
         
     }
     /// <summary>
     /// 플레이어 의 위치를 조정합니다.
-    /// 1스테이지라면 플레이어를 생성하고 그게 아니라면 0,0,0 좌표로 이동시킵니다.
+    /// 전투이동시 위치는 BattleZone에서 플레이어 좌표를 가져옵니다
     /// </summary>
     public void setPlayer()
     {
@@ -173,13 +195,15 @@ public class GameManager : MonoBehaviour
             CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
             return;
         }
-        int x= currentPos.x * 15;
-        int y= 0;
+        //int x= currentPos.x * 15;
+        //int y= 0;
 
-        if (currentPos.x >= 0)
-            x += 30;
-        if (currentPos.y >= 0)
-            y += 15;
+        //if (currentPos.x >= 0)
+        //    x += 30;
+        //if (currentPos.y >= 0)
+        //    y += 15;
+        int x = GameManager.instance.BattleZone.PlayerSponePos.x;
+        int y = GameManager.instance.BattleZone.PlayerSponePos.y;
 
         playerUnit.transform.position = unitSpawner.PosUnitSet(new Vector3Int(x, y, 0));
    
