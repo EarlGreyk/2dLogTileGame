@@ -310,8 +310,25 @@ public class GameProsessManager : MonoBehaviour
         }
     }
 
+    //게임진행 상태에 따라 UI를 조절합니다.
+    //이는 유닛을 그리는 Tile맵 위치도 동일하게 그립니다.
+
     public void changeMode(string mode)
     {
+        if (mode == "stay")
+        {
+            for (int i = 0; i < battleUIList.Count; i++)
+            {
+                battleUIList[i].SetActive(false);
+            }
+            for (int i = 0; i < restUIList.Count; i++)
+            {
+                restUIList[i].SetActive(false);
+            }
+            GameManager.instance.PlayerUnit.boxCollider2D.enabled = true;
+            
+
+        }
         if (mode == "battle")
         {
             Debug.Log("배틀");
@@ -323,8 +340,9 @@ public class GameProsessManager : MonoBehaviour
             {
                 restUIList[i].SetActive(false);
             }
-            GameManager.instance.RoundSet();
             PlayerResource.instance.BlockReset();
+            GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
+            CameraSetting.instance.transform.position = new Vector3(15f, 15f, 0);
         }
         if (mode == "rest")
         {
@@ -338,7 +356,7 @@ public class GameProsessManager : MonoBehaviour
                 restUIList[i].SetActive(true);
             }
         }
-        SaveLoadManager.instance.Save();
+        //SaveLoadManager.instance.Save();
     }
 
 

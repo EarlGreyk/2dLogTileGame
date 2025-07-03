@@ -7,6 +7,8 @@ public class PlayerUnit : Unit
 {
     public bool ColiderCheck = false;
 
+    public BoxCollider2D boxCollider2D;
+
  
     // Start is called before the first frame update
     public override void Start()

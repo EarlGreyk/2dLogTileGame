@@ -173,10 +173,8 @@ public class BattleZone : MonoBehaviour
         }
 
         
-
-
         battleTiles[x, y].tempTile = true;
-        DebugTempTest();
+        //DebugTempTest();
     }
 
     public void removeTempTile(Vector3 pos, bool b = true)
@@ -196,7 +194,7 @@ public class BattleZone : MonoBehaviour
 
 
         battleTiles[x, y].tempTile = false;
-        DebugTempTest();
+        //DebugTempTest();
     }
 
 

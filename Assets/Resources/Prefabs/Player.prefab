@@ -105,6 +105,7 @@ MonoBehaviour:
   baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   hpbar: {fileID: 0}
   ColiderCheck: 0
+  boxCollider2D: {fileID: 4406794317286423251}
 --- !u!50 &-6079140699372072975
 Rigidbody2D:
   serializedVersion: 4

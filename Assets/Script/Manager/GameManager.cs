@@ -160,26 +160,29 @@ public class GameManager : MonoBehaviour
         {
             value.Value.SetActive(false);
         }
-         
 
-       // // 전투로 전환시 그에 대응한 UI타일의 좌표를 수정합니다.
-       // int x = (int)grid.transform.localScale.x;
-       // int y = (int)grid.transform.localScale.y;
-       
-
-       // Vector3 offset = new Vector3Int(currentPos.x * 15 * x, currentPos.y * 15 * y, 0);
-
-       // blockModeZone.gameObject.transform.position += offset;
-       // skillZone.gameObject.transform.position += offset;
-       // MoveZone.gameObject.transform.position += offset;
+        //blockModeZone.gameObject.transform.position += offset;
+        //skillZone.gameObject.transform.position += offset;
+        //MoveZone.gameObject.transform.position += offset;
 
 
-       //// offset.x += grid.transform.localScale.x * -0.5f;
-       // //offset.y += grid.transform.localScale.y * -0.5f;
-       // UnitSpawner.gameObject.transform.position += offset*2;
-       // //
-        
-        
+
+        // // 전투로 전환시 그에 대응한 UI타일의 좌표를 수정합니다.
+        // int x = (int)grid.transform.localScale.x;
+        // int y = (int)grid.transform.localScale.y;
+
+
+        // Vector3 offset = new Vector3Int(currentPos.x * 15 * x, currentPos.y * 15 * y, 0);
+
+
+
+
+        //// offset.x += grid.transform.localScale.x * -0.5f;
+        // //offset.y += grid.transform.localScale.y * -0.5f;
+        // UnitSpawner.gameObject.transform.position += offset*2;
+        // //
+
+
     }
     /// <summary>
     /// 플레이어 의 위치를 조정합니다.
@@ -316,7 +319,10 @@ public class GameManager : MonoBehaviour
         setMonster();
         setPlayer();
 
-        
+        GameProsessManager.changeMode("battle");
+       
+
+
     }
 
     
