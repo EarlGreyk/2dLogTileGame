@@ -326,6 +326,8 @@ public class GameProsessManager : MonoBehaviour
                 restUIList[i].SetActive(false);
             }
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = true;
+            Destroy(GameManager.instance.PlayerUnit);
+            GameManager.instance.StayPlayerUnit.gameObject.SetActive(true);
             
 
         }
@@ -342,6 +344,7 @@ public class GameProsessManager : MonoBehaviour
             }
             PlayerResource.instance.BlockReset();
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
+            GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
             CameraSetting.instance.transform.position = new Vector3(15f, 15f, 0);
         }
         if (mode == "rest")

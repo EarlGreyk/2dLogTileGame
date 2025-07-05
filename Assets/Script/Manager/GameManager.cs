@@ -22,6 +22,13 @@ public class GameManager : MonoBehaviour
 
     public Grid Grid { get { return grid; } }
 
+    private PlayerUnit stayPlayerUnit;
+
+    public PlayerUnit StayPlayerUnit { get { return stayPlayerUnit; } }
+
+    //전투시 사용되는 플레이어 유닛입니다.
+    //전투 시작시 배틀필드에 있는 플레이어 유닛값을 받아와서 사용합니다.
+
     private PlayerUnit playerUnit;
     public PlayerUnit PlayerUnit { get { return playerUnit; } }
 
@@ -133,12 +140,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerUnit != null)
-            return;
-
-
-        PlayerLose();
-        Destroy(gameObject);
+        
     }
 
 
@@ -190,21 +192,21 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void setPlayer()
     {
-        //유닛을 생성할때 SettingData에서 UnitStatus를 받아와서 적용시키면됩니다.
-        if(playerUnit == null)
+        if(stayPlayerUnit == null)
         {
             GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
-            playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15,15,0), unitPrefabs);
-            CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
+            stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs);
+            CameraSetting.instance.unitFocusSet(stayPlayerUnit.transform.position);
             return;
         }
-        //int x= currentPos.x * 15;
-        //int y= 0;
 
-        //if (currentPos.x >= 0)
-        //    x += 30;
-        //if (currentPos.y >= 0)
-        //    y += 15;
+
+        if(playerUnit == null && stayPlayerUnit)
+        {
+            playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15,15,0),stayPlayerUnit.gameObject);
+            CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
+        }
+      
         int x = GameManager.instance.BattleZone.PlayerSponePos.x;
         int y = GameManager.instance.BattleZone.PlayerSponePos.y;
 

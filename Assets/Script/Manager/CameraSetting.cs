@@ -199,7 +199,7 @@ public class CameraSetting : MonoBehaviour
 
 
         moveCoroutine = null;
-        GameManager.instance.PlayerUnit.ColiderCheck = false;
+        GameManager.instance.StayPlayerUnit.ColiderCheck = false;
     }
 
     /// <summary>
@@ -229,11 +229,20 @@ public class CameraSetting : MonoBehaviour
         int maxY = absoluteY + 5;
         int minY = absoluteY - 5;
 
+        float x = 0;
+        float y = 0;
 
-        
 
-        float x = (GameManager.instance.PlayerUnit.transform.position.x);
-        float y = (GameManager.instance.PlayerUnit.transform.position.y);
+        if (GameManager.instance.PlayerUnit == null)
+        {
+            x = (GameManager.instance.StayPlayerUnit.transform.position.x);
+            y = (GameManager.instance.StayPlayerUnit.transform.position.y);
+        }else
+        {
+            x = (GameManager.instance.PlayerUnit.transform.position.x);
+            y = (GameManager.instance.PlayerUnit.transform.position.y);
+        }
+            
 
 
 

@@ -77,7 +77,7 @@ public class InteractionUI : MonoBehaviour
         else
         {
             gameObject.SetActive(true);
-            targetObj = GameManager.instance.PlayerUnit.transform;
+            targetObj = GameManager.instance.StayPlayerUnit.transform;
         }
         
 
