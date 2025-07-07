@@ -23,6 +23,10 @@ public class MonsterAIManager : MonoBehaviour
         GameManager.instance.UnitInfoManager.MonsterInfoAdd(monster);
     }
 
+    /// <summary>
+    /// 몬스터가 사망할때 요청합니다
+    /// </summary>
+    /// <param name="monster"></param>
 
     public void MonsterRevmoe(MonsterUnit monster)
     {
@@ -32,8 +36,8 @@ public class MonsterAIManager : MonoBehaviour
         {
             if (GameManager.instance.Stage == 3 & GameManager.instance.Round == 10)
                 GameManager.instance.PlayerWin();
-            else
-                GameManager.instance.GameProsessManager.ProsessSet();
+            //else
+                //GameManager.instance.GameProsessManager.ProsessSet(false);
         }
     }
     /// <summary>

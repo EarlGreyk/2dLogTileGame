@@ -98,6 +98,29 @@ public class GameProsessManager : MonoBehaviour
 
 
 
+    private void Update()
+    {
+        /// 향후 UPdate프레임을 줄이기 위해 몬스터가 처치될때 혹은 플레이어 유닛이 사망할 때로 변경할 수 있습니다.
+        if (prosessType != ProsessType.Battle)
+            return;
+
+
+
+
+        //전투. 플레이어가 패배할 경우 입니다.
+        if (GameManager.instance.StayPlayerUnit != null)
+        {
+            ProsessSet(false);
+        }
+        // 전투 플레이어가 승리 할 경우 입니다.
+        if (GameManager.instance.MonsterAIManager.Monsters.Count <= 0)
+        {
+            ProsessSet(true);
+        }
+
+
+    }
+
 
 
     public void GameEnd(bool win, int stage, int round)
@@ -128,7 +151,22 @@ public class GameProsessManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 플레이어가 전투일때 승리 혹은 패배하면 작동합니다
+    /// </summary>
+    /// <param name="value"><true : 승리 false : 패배.>
+    public void ProsessSet(bool value)
+    {
+        PopUpManager.instance.PopupPush(prosessPop);
+    }
+    public void StayFieldSet()
+    {
+        prosessType = ProsessType.Stay;
+     
+     ;
+    }
 
+    /*
     public void ProsessSet()
     {
         
@@ -140,48 +178,7 @@ public class GameProsessManager : MonoBehaviour
         SaveLoadManager.instance.Save();
 
     }
-    private void VaribleSet(int value)
-    {
-        rewardStep = value;
-        rewardExp = 0;
-        if(value != 1)
-        {
-            PlayerResource.instance.Gold -= rewardMaxExp;
-        }
-        rewardMaxExp = value * 1000;
-        rewardGoldText.text = PlayerResource.instance.Gold.ToString();
-        rewardStepText.text = rewardStep.ToString();
-        rewardExpImage.fillAmount = 0;
-    }
-
-    public void killMonsterAdd(string name,int KillGold)
-    {
-        if(killMonsterDic.ContainsKey(name))
-        {
-            var currentValue = killMonsterDic[name];
-            killMonsterDic[name] = Tuple.Create(currentValue.Item1 + 1, currentValue.Item2 + KillGold); ;
-        }
-        else
-        {
-            killMonsterDic.Add(name, Tuple.Create(1,KillGold));
-        }
-
-    }
-
-
-    public void KillInfoSet()
-    {
-        //
-        foreach(var item in killMonsterDic.Keys)
-        {
-            Debug.Log(item);
-            GameObject killinfo = Instantiate(KillMonsterInfoPrefabs, killMonsterInfoParents);
-            KillMonsterInfo killMonsterInfo = killinfo.GetComponent<KillMonsterInfo>();
-            killMonsterInfo.InfoSet(item, killMonsterDic[item].Item1, killMonsterDic[item].Item2, killMonsterInfoParents);
-        }
-        
-
-    }
+   
 
     public void next(int value)
     {
@@ -247,6 +244,51 @@ public class GameProsessManager : MonoBehaviour
             return;
         }
     }
+    */
+
+    ///몬스터 처치시 결과 패널에 추가시킵니다.
+
+    public void killMonsterAdd(string name, int KillGold)
+    {
+        if (killMonsterDic.ContainsKey(name))
+        {
+            var currentValue = killMonsterDic[name];
+            killMonsterDic[name] = Tuple.Create(currentValue.Item1 + 1, currentValue.Item2 + KillGold); ;
+        }
+        else
+        {
+            killMonsterDic.Add(name, Tuple.Create(1, KillGold));
+        }
+
+    }
+
+    public void KillInfoSet()
+    {
+        //
+        foreach (var item in killMonsterDic.Keys)
+        {
+            Debug.Log(item);
+            GameObject killinfo = Instantiate(KillMonsterInfoPrefabs, killMonsterInfoParents);
+            KillMonsterInfo killMonsterInfo = killinfo.GetComponent<KillMonsterInfo>();
+            killMonsterInfo.InfoSet(item, killMonsterDic[item].Item1, killMonsterDic[item].Item2, killMonsterInfoParents);
+        }
+
+
+    }
+    /// 플레이어의 경험치와 보상을 관리합니다 
+    private void VaribleSet(int value)
+    {
+        rewardStep = value;
+        rewardExp = 0;
+        if (value != 1)
+        {
+            PlayerResource.instance.Gold -= rewardMaxExp;
+        }
+        rewardMaxExp = value * 1000;
+        rewardGoldText.text = PlayerResource.instance.Gold.ToString();
+        rewardStepText.text = rewardStep.ToString();
+        rewardExpImage.fillAmount = 0;
+    }
     /// <summary>
     /// 보상 단계를 증가 시키기 위해 경험치를 주입합니다.
     /// </summary>
@@ -287,28 +329,6 @@ public class GameProsessManager : MonoBehaviour
 
 
 
-    public void rewardRound()
-    {
-        GameManager.instance.RoundUpdate();
-        GameManager.instance.RoundInfo.Add("보상");
-        roundInfo[GameManager.instance.Round -1].color = Color.blue;
-
-    }
-
-    public void fightRound()
-    {
-        GameManager.instance.RoundUpdate();
-        GameManager.instance.RoundInfo.Add("전투");
-        roundInfo[GameManager.instance.Round -1].color = Color.red;
-    }
-
-    public void StageReset()
-    {
-        for(int i =0; i<roundInfo.Count; i++)
-        {
-            roundInfo[i].color = Color.white;
-        }
-    }
 
     //게임진행 상태에 따라 UI를 조절합니다.
     //이는 유닛을 그리는 Tile맵 위치도 동일하게 그립니다.
@@ -325,9 +345,7 @@ public class GameProsessManager : MonoBehaviour
             {
                 restUIList[i].SetActive(false);
             }
-            GameManager.instance.PlayerUnit.boxCollider2D.enabled = true;
-            Destroy(GameManager.instance.PlayerUnit);
-            GameManager.instance.StayPlayerUnit.gameObject.SetActive(true);
+          
             
 
         }

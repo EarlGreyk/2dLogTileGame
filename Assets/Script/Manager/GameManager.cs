@@ -138,16 +138,12 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        
-    }
-
 
 
 
     /// <summary>
     /// 현재 위치를 전투필드로 변경시킵니다.
+    /// 게임 진행이 변동될때 사용하는 함수입니다.
     /// </summary>
     public void setBattleField()
     {
@@ -162,80 +158,117 @@ public class GameManager : MonoBehaviour
         {
             value.Value.SetActive(false);
         }
-
-        //blockModeZone.gameObject.transform.position += offset;
-        //skillZone.gameObject.transform.position += offset;
-        //MoveZone.gameObject.transform.position += offset;
-
-
-
-        // // 전투로 전환시 그에 대응한 UI타일의 좌표를 수정합니다.
-        // int x = (int)grid.transform.localScale.x;
-        // int y = (int)grid.transform.localScale.y;
-
-
-        // Vector3 offset = new Vector3Int(currentPos.x * 15 * x, currentPos.y * 15 * y, 0);
-
-
-
-
-        //// offset.x += grid.transform.localScale.x * -0.5f;
-        // //offset.y += grid.transform.localScale.y * -0.5f;
-        // UnitSpawner.gameObject.transform.position += offset*2;
-        // //
-
+        StayPlayerUnit.gameObject.SetActive(false);
 
     }
     /// <summary>
-    /// 플레이어 의 위치를 조정합니다.
-    /// 전투이동시 위치는 BattleZone에서 플레이어 좌표를 가져옵니다
+    /// 현재 위치를 대기 필드로 변경시킵니다.
+    /// 게임 진행이 변동될때 사용하는 함수입니다.
+    /// 오브젝트의 파괴, 활성 비활성화를 담당합니다.
     /// </summary>
-    public void setPlayer()
+    public void setStayField()
     {
-        if(stayPlayerUnit == null)
+        GameProsessManager.prosessType = GameProsessManager.ProsessType.Stay;
+        if (battleZone != null)
+        {
+            Destroy(battleZone.gameObject);
+            battleZone = null;
+        }
+        foreach (var value in MapGenerator.spawnedTilemaps)
+        {
+            value.Value.SetActive(true);
+        }
+        Destroy(playerUnit);
+        StayPlayerUnit.gameObject.SetActive(true);
+     
+
+    }
+    /// <summary>
+    /// 필드에 생성될 플레이어 유닛을 관리합니다.
+    /// </summary>
+    public void setStayPlayer()
+    {
+        if (stayPlayerUnit == null)
         {
             GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
             stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs);
             CameraSetting.instance.unitFocusSet(stayPlayerUnit.transform.position);
-            return;
         }
+    }
 
 
-        if(playerUnit == null && stayPlayerUnit)
-        {
-            playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15,15,0),stayPlayerUnit.gameObject);
-            CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
-        }
-      
-        int x = GameManager.instance.BattleZone.PlayerSponePos.x;
-        int y = GameManager.instance.BattleZone.PlayerSponePos.y;
 
-        playerUnit.transform.position = unitSpawner.PosUnitSet(new Vector3Int(x, y, 0));
-   
+    /// <summary>
+    /// 플레이어를 초기 관리합니다
+    /// 전투이동시 위치는 BattleZone에서 플레이어 좌표를 가져옵니다
+    /// /// value 가 true라면 생성을 false라면 지웁니다.
+    /// </summary>
+    public void setPlayer(bool value)
+    {
+       if(value)
+       {
+            if (playerUnit == null)
+            {
+                playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), stayPlayerUnit.gameObject);
+                CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
+            }
+
+            int x = GameManager.instance.BattleZone.PlayerSponePos.x;
+            int y = GameManager.instance.BattleZone.PlayerSponePos.y;
+
+            playerUnit.transform.position = unitSpawner.PosUnitSet(new Vector3Int(x, y, 0));
+
+       }
+       else
+       {
+            if (playerUnit != null)
+                Destroy(playerUnit);
+         
+       }
+
+
+
     }
     /// <summary>
-    /// 몬스터를 생성합니다..
-    /// 스테이지 정보값에서 받아온뒤 생성해야합니다.
+    /// 몬스터를 초기 관리합니다.
+    /// 필드 정보값에서 받아온뒤 생성해야합니다.
+    /// value 가 true라면 생성을 false라면 지웁니다.
     /// </summary>
 
-    private void setMonster()
+    private void setMonster(bool value)
     {   
-        monsterRoundInfo = Resources.Load<RoundInfo>("Round/" + stage.ToString()+"/"+round.ToString());
-        if(monsterRoundInfo != null)
+        if(value)
         {
-            for(int i =0;i<monsterRoundInfo.MonsterList.Count;i++)
+            monsterRoundInfo = Resources.Load<RoundInfo>("Round/" + stage.ToString() + "/" + round.ToString());
+            if (monsterRoundInfo != null)
             {
-                int k = Random.Range(0, BattleZone.MonsterSponePosList.Count);
-                Vector3Int SponePos = RandomSpone(BattleZone.MonsterSponePosList[k]);
-                GameObject unitPrefabs = monsterRoundInfo.MonsterList[i];
-              
-                MonsterUnit monster = unitSpawner.SpawnMonster(SponePos, unitPrefabs);
-                monster.transform.position = unitSpawner.PosUnitSet(SponePos);
+                for (int i = 0; i < monsterRoundInfo.MonsterList.Count; i++)
+                {
+                    int k = Random.Range(0, BattleZone.MonsterSponePosList.Count);
+                    Vector3Int SponePos = RandomSpone(BattleZone.MonsterSponePosList[k]);
+                    GameObject unitPrefabs = monsterRoundInfo.MonsterList[i];
+
+                    MonsterUnit monster = unitSpawner.SpawnMonster(SponePos, unitPrefabs);
+                    monster.transform.position = unitSpawner.PosUnitSet(SponePos);
+                }
             }
-        }else
-        {
-            Debug.Log("라운드 정보가 집계되지 않고있습니다.");
+            else
+            {
+                Debug.Log("라운드 정보가 집계되지 않고있습니다.");
+            }
         }
+        else
+        {
+            if (MonsterAIManager.Monsters.Count >= 0)
+            {
+                for(int i =0; i<MonsterAIManager.Monsters.Count;i++)
+                {
+                    MonsterAIManager.MonsterRevmoe(MonsterAIManager.Monsters[i]);
+                }
+                
+            }
+        }
+        
 
     }
     public Vector3Int RandomSpone(Vector3Int center)
@@ -312,19 +345,22 @@ public class GameManager : MonoBehaviour
         roundText.text = this.stage.ToString() + " - " + this.round.ToString();
     }
 
-    ////라운드를 시작합니다.
+    ////전투를 시작합니다.
     ///
-    public void RoundSet()
+    public void BattleSet()
     {
         setBattleField();
         onPlayerAction();
-        setMonster();
-        setPlayer();
+        setMonster(true);
+        setPlayer(true);
 
         GameProsessManager.changeMode("battle");
-       
 
-
+    }
+    public void StaySet()
+    {
+        setStayField();
+        GameProsessManager.changeMode("stay");
     }
 
     

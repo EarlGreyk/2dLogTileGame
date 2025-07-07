@@ -42,7 +42,7 @@ public class ClearUnit : MonoBehaviour
             if (Input.GetKey(KeyCode.G) && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
             {
                 Debug.Log("전투전환");
-                GameManager.instance.RoundSet();
+                GameManager.instance.BattleSet();
 
             }
 

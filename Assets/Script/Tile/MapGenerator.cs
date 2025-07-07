@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviour
 
         LoadTilemapPrefabs();
         GenerateMap();  // ¸Ê »ý¼º
-        GameManager.instance.setPlayer();
+        GameManager.instance.setStayPlayer();
     }
 
     // Å¸ÀÏ¸Ê ÇÁ¸®ÆÕ ·Îµå
