@@ -147,7 +147,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void setBattleField()
     {
-        GameProsessManager.prosessType = GameProsessManager.ProsessType.Battle;
         if (battleZone != null)
         {
             Destroy(battleZone.gameObject);
@@ -161,28 +160,7 @@ public class GameManager : MonoBehaviour
         StayPlayerUnit.gameObject.SetActive(false);
 
     }
-    /// <summary>
-    /// 현재 위치를 대기 필드로 변경시킵니다.
-    /// 게임 진행이 변동될때 사용하는 함수입니다.
-    /// 오브젝트의 파괴, 활성 비활성화를 담당합니다.
-    /// </summary>
-    public void setStayField()
-    {
-        GameProsessManager.prosessType = GameProsessManager.ProsessType.Stay;
-        if (battleZone != null)
-        {
-            Destroy(battleZone.gameObject);
-            battleZone = null;
-        }
-        foreach (var value in MapGenerator.spawnedTilemaps)
-        {
-            value.Value.SetActive(true);
-        }
-        Destroy(playerUnit);
-        StayPlayerUnit.gameObject.SetActive(true);
-     
-
-    }
+ 
     /// <summary>
     /// 필드에 생성될 플레이어 유닛을 관리합니다.
     /// </summary>
@@ -210,6 +188,8 @@ public class GameManager : MonoBehaviour
             if (playerUnit == null)
             {
                 playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), stayPlayerUnit.gameObject);
+                playerUnit.gameObject.SetActive(true);
+
                 CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
             }
 
@@ -345,21 +325,39 @@ public class GameManager : MonoBehaviour
         roundText.text = this.stage.ToString() + " - " + this.round.ToString();
     }
 
-    ////전투를 시작합니다.
-    ///
+    ////전투를 시작합니다. 
+    /// 이 함수는 대기 필드에서 전투 필드로 넘어갈때 작동합니다.
     public void BattleSet()
     {
+
         setBattleField();
         onPlayerAction();
         setMonster(true);
         setPlayer(true);
+       
 
         GameProsessManager.changeMode("battle");
 
+
     }
+
+    /// <summary>
+    /// 대기 필드로 넘어갑니다.
+    /// 이 함수는 전투필드에서 대기 필드로 넘어갈때 작동합니다.
+    /// </summary>
     public void StaySet()
     {
-        setStayField();
+        if (battleZone != null)
+        {
+            Destroy(battleZone.gameObject);
+            battleZone = null;
+        }
+        foreach (var value in MapGenerator.spawnedTilemaps)
+        {
+            value.Value.SetActive(true);
+        }
+        Destroy(playerUnit);
+        StayPlayerUnit.gameObject.SetActive(true);
         GameProsessManager.changeMode("stay");
     }
 

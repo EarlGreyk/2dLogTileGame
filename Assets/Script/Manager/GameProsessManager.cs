@@ -101,22 +101,27 @@ public class GameProsessManager : MonoBehaviour
     private void Update()
     {
         /// 향후 UPdate프레임을 줄이기 위해 몬스터가 처치될때 혹은 플레이어 유닛이 사망할 때로 변경할 수 있습니다.
-        if (prosessType != ProsessType.Battle)
+        if (prosessType == ProsessType.Stay)
             return;
 
 
 
-
-        //전투. 플레이어가 패배할 경우 입니다.
-        if (GameManager.instance.StayPlayerUnit != null)
+        if (prosessType == ProsessType.Battle)
         {
-            ProsessSet(false);
+            //전투. 플레이어가 패배할 경우 입니다.
+            if (GameManager.instance.PlayerUnit == null)
+            {
+                Debug.Log("패배");
+                ProsessSet(false);
+            }
+            // 전투 플레이어가 승리 할 경우 입니다.
+            if (GameManager.instance.MonsterAIManager.Monsters.Count <= 0)
+            {
+                Debug.Log("승리");
+                ProsessSet(true);
+            }
         }
-        // 전투 플레이어가 승리 할 경우 입니다.
-        if (GameManager.instance.MonsterAIManager.Monsters.Count <= 0)
-        {
-            ProsessSet(true);
-        }
+        
 
 
     }
@@ -158,13 +163,9 @@ public class GameProsessManager : MonoBehaviour
     public void ProsessSet(bool value)
     {
         PopUpManager.instance.PopupPush(prosessPop);
-    }
-    public void StayFieldSet()
-    {
         prosessType = ProsessType.Stay;
-     
-     ;
     }
+   
 
     /*
     public void ProsessSet()
@@ -335,6 +336,7 @@ public class GameProsessManager : MonoBehaviour
 
     public void changeMode(string mode)
     {
+        
         if (mode == "stay")
         {
             for (int i = 0; i < battleUIList.Count; i++)
@@ -345,8 +347,9 @@ public class GameProsessManager : MonoBehaviour
             {
                 restUIList[i].SetActive(false);
             }
-          
-            
+            PopUpManager.instance.LastClosePopUp();
+            prosessType = ProsessType.Stay;
+            SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
 
         }
         if (mode == "battle")
@@ -364,6 +367,8 @@ public class GameProsessManager : MonoBehaviour
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
             GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
             CameraSetting.instance.transform.position = new Vector3(15f, 15f, 0);
+
+            prosessType = GameProsessManager.ProsessType.Battle;
         }
         if (mode == "rest")
         {

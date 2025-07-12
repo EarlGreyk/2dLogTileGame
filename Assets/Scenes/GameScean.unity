@@ -15584,7 +15584,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1107026324}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: setStayField
+        m_MethodName: StaySet
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -30743,7 +30743,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 109485698}
   m_HandleRect: {fileID: 109485697}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

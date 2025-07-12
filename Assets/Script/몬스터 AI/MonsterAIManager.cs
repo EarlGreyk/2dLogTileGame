@@ -30,8 +30,10 @@ public class MonsterAIManager : MonoBehaviour
 
     public void MonsterRevmoe(MonsterUnit monster)
     {
+        GameObject obj = monster.gameObject;
         monsters.Remove(monster);
         GameManager.instance.GameProsessManager.killMonsterAdd(monster.Sprite.name,monster.KillGold);
+        Destroy(obj);
         if (monsters.Count == 0)
         {
             if (GameManager.instance.Stage == 3 & GameManager.instance.Round == 10)

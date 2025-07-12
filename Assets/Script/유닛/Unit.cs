@@ -277,7 +277,6 @@ public class Unit :MonoBehaviour
     {
 
         Destroy(hpbar.gameObject);
-        Destroy(gameObject);
     }
 
 }
