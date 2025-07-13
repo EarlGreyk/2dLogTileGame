@@ -13,9 +13,6 @@ public class ClearUnit : MonoBehaviour
 
     //전투의 여부를 따집니다. 전투를 하지 않았다면 false 한번이라도 했다면 true로 전환됩니다
     public bool battle;
-
-    //전투후 승리 여부를 따집니다. 전투를 하고 승리했다면 true로 변경됩니다.
-    public bool victory;
     // Start is called before the first frame update
     public MonsterListScriptableObejct monsterList;
 
@@ -26,14 +23,43 @@ public class ClearUnit : MonoBehaviour
 
     private Transform targetObj;
 
+    //정화에 필요한 수치입니다.
+    public int ClearValue;
+   
 
 
-    void Start()
+
+
+    private void Start()
     {
         clear = false;
         battle = true;
-        victory = false;
+        ClearValue = 50;
     }
+    /// FeilidInfo 해서 해당 함수를 사용
+    /// 선언시 정화 유닛의 몬스터 정보값을 수정합니다. 
+    public void MonsterListSet(int value)
+    {
+        
+    }
+    /// <summary>
+    /// 전투 종료시 상호작용한 정화유닛에게 승리했는지 패배했는지 정보값을 넘겨주기 위한 함수입니다.
+    /// </summary>
+    /// <param name="value"></승패채크>
+    public void BattleCheck(bool value)
+    {
+        if (value)
+        {
+            ClearValue /= 10;
+            battle = false;
+        }
+        else
+        {
+            
+        }
+    }
+
+
 
     private void Update()
     {

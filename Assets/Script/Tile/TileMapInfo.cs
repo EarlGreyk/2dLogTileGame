@@ -39,6 +39,7 @@ public class TileMapInfo : MonoBehaviour
     {
         Clear = false;
         Battle = true;
+        clearUnit.MonsterListSet(5);
     }
 
 }
