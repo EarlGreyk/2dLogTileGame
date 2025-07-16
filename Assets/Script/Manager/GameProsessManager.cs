@@ -350,6 +350,8 @@ public class GameProsessManager : MonoBehaviour
             PopUpManager.instance.LastClosePopUp();
             prosessType = ProsessType.Stay;
             SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
+            GameManager.instance.UnitInfoManager.UnitInfoManagerOff();
+            GameManager.instance.BlockModeZone.ModeSetting(false);
 
         }
         if (mode == "battle")
@@ -366,7 +368,7 @@ public class GameProsessManager : MonoBehaviour
             PlayerResource.instance.BlockReset();
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
             GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
-            CameraSetting.instance.transform.position = new Vector3(15f, 15f, 0);
+            CameraSetting.instance.transform.position = new Vector3(15f, 15f, -1);
 
             prosessType = GameProsessManager.ProsessType.Battle;
         }

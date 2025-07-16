@@ -198,5 +198,19 @@ public class UnitInfoManager : MonoBehaviour
         GameManager.instance.BlockModeZone.unitBlockSet(TargetUnit);
     }
 
+
+
+
+    /// <summary>
+    /// 전투가 종료되어 다음 전투까지 활성화된 모든 UI를 비활성화합니다.
+    /// </summary>
+
+    public void UnitInfoManagerOff()
+    {
+        TargetUnitRemove();
+        UnitInfoActionPanel.gameObject.SetActive(false);
+        UnitInfoInterPanel.gameObject.SetActive(false);
+
+    }
     
 }

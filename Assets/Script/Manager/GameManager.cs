@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour
             {
                 playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), stayPlayerUnit.gameObject);
                 playerUnit.gameObject.SetActive(true);
+                playerUnit.gameObject.transform.localScale *= grid.transform.localScale.x;
 
                 CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
             }

@@ -32,7 +32,9 @@ public class MonsterAIManager : MonoBehaviour
     {
         GameObject obj = monster.gameObject;
         monsters.Remove(monster);
+        GameManager.instance.UnitInfoManager.MonsterInfoRemove(monster);
         GameManager.instance.GameProsessManager.killMonsterAdd(monster.Sprite.name,monster.KillGold);
+        
         Destroy(obj);
         if (monsters.Count == 0)
         {
