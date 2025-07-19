@@ -13,6 +13,10 @@ public class ClearUnit : MonoBehaviour
 
     //전투의 여부를 따집니다. 전투를 하지 않았다면 false 한번이라도 했다면 true로 전환됩니다
     public bool battle;
+
+    
+ 
+    public bool victory;
     // Start is called before the first frame update
     public MonsterListScriptableObejct monsterList;
 
@@ -67,8 +71,17 @@ public class ClearUnit : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.G) && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
             {
-                Debug.Log("전투전환");
-                GameManager.instance.BattleSet();
+                if(battle)
+                {
+                    Debug.Log("전투전환");
+                    GameManager.instance.BattleSet();
+                }else
+                {
+                    Debug.Log("정화시작");
+                    GameManager.instance.ClearSet(ClearValue);
+                }
+                    
+                
 
             }
 

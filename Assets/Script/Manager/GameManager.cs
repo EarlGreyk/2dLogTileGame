@@ -83,6 +83,11 @@ public class GameManager : MonoBehaviour
     private bool isMonster;
     public bool IsMonater { get { return isMonster; } }
 
+
+    /// <summary>
+    /// 불씨
+    /// 해당 수치가 0이되면 게임을 패배합니다.
+    /// </summary>
     private int lampLight = 100;
 
     public int LampLight { get { return lampLight; } set { lampLight = value; } }
@@ -301,8 +306,6 @@ public class GameManager : MonoBehaviour
     //턴종료를 실행하는 함수입니다.
     public void LampUpdate()
     {
-        lampLight -=1;
-        lamptext.text = lampLight.ToString();
         onMonsterAction();
         MonsterAIManager.MonsterCount();
     }
@@ -336,9 +339,7 @@ public class GameManager : MonoBehaviour
         setMonster(true);
         setPlayer(true);
        
-
         GameProsessManager.changeMode("battle");
-
 
     }
 
@@ -362,19 +363,57 @@ public class GameManager : MonoBehaviour
         GameProsessManager.changeMode("stay");
     }
 
+    /// <summary>
+    /// /// 정화유닛을 정화할때 작동하니다.
+    /// 이 함수는 정화를 작동하기 위해 연출시간동안 플레이어의 기타 상호작용을 중지한 이후 원상태로 돌립니다.
+    /// </summary>
+    /// <param name="value"></전투를 승리하거나 패배했음을 넘겨줍니다.>
+
+    public void ClearSet(int value)
+    {
+        stopAction();
+        lampLight -= value;
+        StartCoroutine(Clearing());
+   
+   
+    }
+
+
+
+
+    IEnumerator Clearing()
+    {
+
+        yield return new WaitForSeconds(5f);
+
+        if (lampLight <= 0)
+            PlayerLose();
+        else
+            isPlayer = true;
+
+         
+
+        yield return null;
+    }
+        
+
+
     
 
 
     
 
     /// <summary>
-    /// 라운드에서 승리해서 진행합니다.
+    /// 플레이어가 모든 진행을 완료하고 게임을 승리로 끝마쳤을때 작동합니다.
     /// </summary>
 
     public void PlayerWin()
     {
         GameProsessManager.GameEnd(true,stage,round);
     }
+    /// <summary>
+    /// 플레이어가 모든 진행을 완료하기전 게임을 패배로 끝마쳤을때 작동합니다.
+    /// </summary>
     public void PlayerLose()
     {
         GameProsessManager.GameEnd(false,stage, round);

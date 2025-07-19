@@ -25,6 +25,10 @@ public class PlayerUnit : Unit
         if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
+        if (!GameManager.instance.IsPlayer)
+            return;
+
+
         //아래는 전투가 아닐때만 작동합니다.
         //유닛 기본이동구현
         if (   Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)    )
