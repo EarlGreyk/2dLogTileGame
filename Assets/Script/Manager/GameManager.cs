@@ -135,10 +135,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        ///
-        ///   맵만을 설치해야함.
-        ///
-        //RoundUpdate(SettingData.Stage, SettingData.Round);
+        if(GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay )
+        {
+            isPlayer = true;
+            isMonster = false;
+        }
    
 
     }

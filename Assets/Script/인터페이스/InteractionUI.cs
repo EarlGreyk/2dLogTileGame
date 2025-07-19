@@ -65,9 +65,10 @@ public class InteractionUI : MonoBehaviour
     /// </summary>
     /// <param name="value"></타입을 정수로 받아 비교합니다.>
 
-    public void Set(int value,bool activeSelf)
+    public void Set(bool activeSelf, string text)
     {
 
+        textMesh.text = text;
 
         if (!activeSelf)
         {
@@ -79,18 +80,10 @@ public class InteractionUI : MonoBehaviour
             gameObject.SetActive(true);
             targetObj = GameManager.instance.StayPlayerUnit.transform;
         }
+
+
+
         
-
-            
-
-        if (value < 1)
-        {
-            Debug.Log("상호작용 메세지 할당에 오류가 있습니다.");
-            return;
-        }
-        if(value ==1)
-        {
-            textMesh.text = "전투!";
-        }
+        
     }
 }

@@ -15,8 +15,7 @@ public class ClearUnit : MonoBehaviour
     public bool battle;
 
     
- 
-    public bool victory;
+  
     // Start is called before the first frame update
     public MonsterListScriptableObejct monsterList;
 
@@ -52,16 +51,18 @@ public class ClearUnit : MonoBehaviour
     /// <param name="value"></승패채크>
     public void BattleCheck(bool value)
     {
+        battle = false;
         if (value)
         {
             ClearValue /= 10;
-            battle = false;
+            
         }
         else
         {
-            
+          
         }
     }
+  
 
 
 
@@ -77,8 +78,13 @@ public class ClearUnit : MonoBehaviour
                     GameManager.instance.BattleSet();
                 }else
                 {
-                    Debug.Log("정화시작");
-                    GameManager.instance.ClearSet(ClearValue);
+                    if (!clear)
+                    {
+                        Debug.Log("정화시작");
+                        clear = true;
+                        GameManager.instance.ClearSet(ClearValue);
+                    }
+                    
                 }
                     
                 

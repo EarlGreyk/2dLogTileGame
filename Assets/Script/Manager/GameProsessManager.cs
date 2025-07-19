@@ -14,7 +14,7 @@ public class GameProsessManager : MonoBehaviour
     {
         Stay,
         Battle,
-        Rest
+        Rest,
     }
 
     public ProsessType prosessType;
@@ -164,6 +164,17 @@ public class GameProsessManager : MonoBehaviour
     {
         PopUpManager.instance.PopupPush(prosessPop);
         prosessType = ProsessType.Stay;
+
+
+        // 상호 작용한 정화 유닛을 받아옵니다. 
+        // 현재 저장되어 있는 경로 탐색이 복잡함으로 다른곳에 저장하도록 변경해야합니다.
+        ClearUnit target = GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].clearUnit;
+
+
+        target.BattleCheck(value);
+       
+
+
     }
    
 
@@ -400,29 +411,21 @@ public class GameProsessManager : MonoBehaviour
         if (set)
         {
             ClearUnitInfoPanel.SetActive(true);
-            InteractionPanelSet(true);
+            if (clearUnit.battle)
+                interactionPanel.Set(true,"전투");
+            else
+                interactionPanel.Set(true, "정화");
+
+
         }
         else
         {
             ClearUnitInfoPanel.SetActive(false);
-            InteractionPanelSet(false);
+            interactionPanel.Set(false,"");
         }
         
     }
 
-    //어떠한 유닛이라도 상호작용을 했으면 해당 판넬을 작동시킵니다.
-    private void InteractionPanelSet(bool set)
-    {
-        if (set)
-        {
-            interactionPanel.Set(1, true);
-            
-        }
-        else
-        {
-            interactionPanel.Set(1, false);
-        }
-    }
 
 
 }
