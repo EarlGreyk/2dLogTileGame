@@ -249,9 +249,9 @@ Tilemap:
       e33: 1
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 5.74143e-40, g: 5.74143e-40, b: 5.74143e-40, a: 5.74143e-40}
+    m_Data: {r: 5.60811e-40, g: 5.60811e-40, b: 5.60811e-40, a: 5.60811e-40}
   - m_RefCount: 3
-    m_Data: {r: 0.94426376, g: 0.57173395, b: 0.6948652, a: 1}
+    m_Data: {r: 0.70783955, g: 0.39286226, b: 0.48971173, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1092,9 +1092,9 @@ Tilemap:
   - m_RefCount: 4
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
-    m_Data: {r: 5.74157e-40, g: 5.74157e-40, b: 5.74157e-40, a: 5.74157e-40}
+    m_Data: {r: 5.60825e-40, g: 5.60825e-40, b: 5.60825e-40, a: 5.60825e-40}
   - m_RefCount: 49
-    m_Data: {r: 0.8278691, g: 0.34698632, b: 0.48956358, a: 1}
+    m_Data: {r: 0.80584675, g: 0.4872238, b: 0.58222187, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3687,7 +3687,7 @@ TilemapRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4498425580687099128}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
