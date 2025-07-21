@@ -347,19 +347,19 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 대기 필드로 넘어갑니다.
     /// 이 함수는 전투필드에서 대기 필드로 넘어갈때 작동합니다.
+    /// 전투 개요 UI에서 상호작용을 할시 작동됩니다.
     /// </summary>
     public void StaySet()
     {
         if (battleZone != null)
         {
-            Destroy(battleZone.gameObject);
             battleZone = null;
+            Destroy(MapGenerator.BattleField);
         }
         foreach (var value in MapGenerator.spawnedTilemaps)
         {
             value.Value.SetActive(true);
         }
-        Destroy(playerUnit);
         StayPlayerUnit.gameObject.SetActive(true);
         GameProsessManager.changeMode("stay");
     }

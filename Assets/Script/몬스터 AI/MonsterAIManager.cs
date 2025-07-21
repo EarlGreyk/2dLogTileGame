@@ -36,13 +36,7 @@ public class MonsterAIManager : MonoBehaviour
         GameManager.instance.GameProsessManager.killMonsterAdd(monster.Sprite.name,monster.KillGold);
         
         Destroy(obj);
-        if (monsters.Count == 0)
-        {
-            if (GameManager.instance.Stage == 3 & GameManager.instance.Round == 10)
-                GameManager.instance.PlayerWin();
-            //else
-                //GameManager.instance.GameProsessManager.ProsessSet(false);
-        }
+        
     }
     /// <summary>
     /// 플레이어가 이동, 마법의 행동을 했을때 위치 및 상황이 변동 할 수 있음으로 행동 알고리즘을 재검색합니다.
@@ -85,6 +79,10 @@ public class MonsterAIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 몬스터의 AI를 활성화합니다.
+    /// </summary>
+
     public void AiEnable()
     {
         if (actionMonsters.Count > 0)
@@ -104,6 +102,21 @@ public class MonsterAIManager : MonoBehaviour
             MonsterActionCheck();
         }
 
+
+    }
+
+
+    /// <summary>
+    /// 현재 등록되어 있는 모든 몬스터를 파괴하고 소거합니다.
+    /// </summary>
+
+    public void MonsterReset()
+    {
+        while(monsters.Count>0)
+            MonsterRevmoe(monsters[monsters.Count - 1]);
+
+
+      
 
     }
 

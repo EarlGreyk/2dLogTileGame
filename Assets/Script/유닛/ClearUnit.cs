@@ -82,6 +82,7 @@ public class ClearUnit : MonoBehaviour
                     {
                         Debug.Log("정화시작");
                         clear = true;
+                        GameManager.instance.GameProsessManager.ClearPanelSet(this, false);
                         GameManager.instance.ClearSet(ClearValue);
                     }
                     
@@ -99,6 +100,9 @@ public class ClearUnit : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (clear)
+            return;
+            
         if (other.CompareTag("Player"))
         {
             Debug.Log("플레이어가 정화 유닛에 접근햇습니다.");
@@ -111,6 +115,10 @@ public class ClearUnit : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (clear)
+            return;
+
+
         if (other.CompareTag("Player"))
         {
             Debug.Log("플레이어가 정화 유닛에 나갔습니다.");

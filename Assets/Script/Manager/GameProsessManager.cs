@@ -163,100 +163,15 @@ public class GameProsessManager : MonoBehaviour
     public void ProsessSet(bool value)
     {
         PopUpManager.instance.PopupPush(prosessPop);
-        prosessType = ProsessType.Stay;
-
-
         // 상호 작용한 정화 유닛을 받아옵니다. 
         // 현재 저장되어 있는 경로 탐색이 복잡함으로 다른곳에 저장하도록 변경해야합니다.
         ClearUnit target = GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].clearUnit;
-
-
         target.BattleCheck(value);
        
 
 
     }
    
-
-    /*
-    public void ProsessSet()
-    {
-        
-        PopUpManager.instance.PopupPush(prosessPop);
-        roundText.text = $"{GameManager.instance.Round} 클리어";
-        VaribleSet(1);
-        next(0);
-
-        SaveLoadManager.instance.Save();
-
-    }
-   
-
-    public void next(int value)
-    {
-        if (value == 0)
-        {
-            roundPanel.SetActive(true);
-            rewardPanel.SetActive(false);
-            prosessPanel.SetActive(false);
-            KillInfoSet();
-
-            foreach (var item in killMonsterDic.Keys)
-            {
-                PlayerResource.instance.Gold += killMonsterDic[item].Item2;
-            }
-            return;
-
-        }
-        if (value == 1)
-        {
-            roundPanel.SetActive(false);
-            rewardPanel.SetActive(false);
-            prosessPanel.SetActive(true);
-            playerIcon.transform.position = roundInfo[GameManager.instance.Round - 1].transform.position;
-            killMonsterDic.Clear();
-            return;
-        }
-        if (value == 2 || value == 3)
-        {
-            rewardPanel.SetActive(false);
-            prosessPanel.SetActive(false);
-            if(value ==2 )
-            {
-                rewardRound();
-                //rewardPanel.SetActive(true);
-                PopUpManager.instance.LastClosePopUp();
-                changeMode("rest");
-                return;
-            }    
-            if(value == 3)
-            {
-                fightRound(); 
-                PopUpManager.instance.LastClosePopUp();
-                changeMode("battle");
-                return;
-            }            
-            
-        }
-        if( value == 4)
-        {
-            roundPanel.SetActive(false);
-            rewardPanel.SetActive(false);
-            prosessPanel.SetActive(false);
-            rewardGetPanel.SetActive(false);
-            PopUpManager.instance.LastClosePopUp();
-
-        }
-
-        if(value == 999)
-        {
-            PlayerLevelManager.instance.ExpUp(exp);
-            SaveLoadManager.instance.DeleteLoad();
-            SceanChanger.instance.SceanChange("MainScean");
-            return;
-        }
-    }
-    */
 
     ///몬스터 처치시 결과 패널에 추가시킵니다.
 
@@ -342,14 +257,17 @@ public class GameProsessManager : MonoBehaviour
 
 
 
-    //게임진행 상태에 따라 UI를 조절합니다.
-    //이는 유닛을 그리는 Tile맵 위치도 동일하게 그립니다.
+    /// <summary>
+    /// 게임 진행 상태에 따른 UI제거와 기타 오브젝트의 소거를 실행합니다.
+    /// </summary>
+    /// <param name="mode"></현재 플레이어의 상황을 적습니다 stay = 대기 , rest =휴식 , battle = 전투>
 
     public void changeMode(string mode)
     {
         
         if (mode == "stay")
         {
+            prosessType = ProsessType.Stay;
             for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(false);
@@ -358,8 +276,10 @@ public class GameProsessManager : MonoBehaviour
             {
                 restUIList[i].SetActive(false);
             }
+            GameManager.instance.MonsterAIManager.MonsterReset();
+            Destroy(GameManager.instance.PlayerUnit.gameObject);
+            
             PopUpManager.instance.LastClosePopUp();
-            prosessType = ProsessType.Stay;
             SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
             GameManager.instance.UnitInfoManager.UnitInfoManagerOff();
             GameManager.instance.BlockModeZone.ModeSetting(false);
@@ -367,7 +287,7 @@ public class GameProsessManager : MonoBehaviour
         }
         if (mode == "battle")
         {
-            Debug.Log("배틀");
+            prosessType = GameProsessManager.ProsessType.Battle;
             for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(true);
@@ -381,7 +301,7 @@ public class GameProsessManager : MonoBehaviour
             GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
             CameraSetting.instance.transform.position = new Vector3(15f, 15f, -1);
 
-            prosessType = GameProsessManager.ProsessType.Battle;
+            
         }
         if (mode == "rest")
         {

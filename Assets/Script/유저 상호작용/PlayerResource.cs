@@ -31,7 +31,7 @@ public class PlayerResource : MonoBehaviour
     private List<Block> playerCurBlockList = new List<Block>();
 
    
-
+    // 석판은 수정해야함으로 석판 관련은 폐기해야함
 
     //플레이어 Slate리스트
     private SlateScriptableObejct firstSlate;
@@ -44,6 +44,10 @@ public class PlayerResource : MonoBehaviour
     private SlateScriptableObejct fourthSlate;
     public SlateScriptableObejct FourthSlate { get {return fourthSlate; } }
 
+
+
+
+
     private int firstSlateLevel = 0;
     public int FirstSlateLevel {  get { return firstSlateLevel; } set { firstSlateLevel = value; } }    
     private int secondSlateLevel = 0;
@@ -52,6 +56,12 @@ public class PlayerResource : MonoBehaviour
     public int ThirdSlateLevel { get { return thirdSlateLevel; }set { thirdSlateLevel = value; } }
     private int fourSlateLevel = 0;
     public int FourSlateLevel { get {return fourSlateLevel; } set { fourSlateLevel = value; } }
+
+
+    //
+
+
+    private List<Magic> MagicList;
 
     //플레이어 블록 패널 리스트
     [SerializeField]
