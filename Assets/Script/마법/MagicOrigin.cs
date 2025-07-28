@@ -8,19 +8,18 @@ using UnityEngine;
 /// </summary>
 /// 
 
-
-
-
-public class Magic1 : MonoBehaviour
+public class MagicOrigin: MonoBehaviour
 {
     public enum Type
     {
-        Attack,
-        Defence
+        Attack = 1,
+        Defence = 2,
+        Buff = 3,
+        DeBuff = 4
     }
     /// <summary>
     /// 스킬의 타입을 분류합니다
-    /// 0 : 패시브 . 1 : 액티브(공격) , 2 : 액티브(방어) , 3: 액티브(유틸)
+    /// 1 : 액티브(공격) , 2 : 액티브(방어) , 3: 액티브(유틸)
     /// </summary>
     public Type MagicType;
 
@@ -57,8 +56,14 @@ public class Magic1 : MonoBehaviour
     /// </summary>
     public float MagicDuration;
     
+    /// <summary>
+    /// 마법 아이콘 이미지
+    /// </summary>
     public Sprite MagicSprite;
 
+    /// <summary>
+    /// 마법이 사용될때 적용되는 스킬 이펙트
+    /// </summary>
     public GameObject MagicEffectPrefab;
 
     /// <summary>
@@ -67,10 +72,10 @@ public class Magic1 : MonoBehaviour
     public int Gold;
 
     /// <summary>
-    /// 게임이 처음 시작되었을떄 마법을 생성하기 위해 데이터값을 가져옵니다.
+    /// 게임이 처음 시작되었을떄 마법을 생성합니다.
     /// </summary>
     /// <param name="MagicData"></마법 데이터.>
-    public void MagicSet(MagicScriptableObejct MagicData)
+    public MagicOrigin(MagicScriptableObejct MagicData)
     {
 
     }

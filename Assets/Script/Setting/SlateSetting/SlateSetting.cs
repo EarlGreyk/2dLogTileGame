@@ -25,30 +25,5 @@ public class SlateSetting : MonoBehaviour
     {
         curentSlateUI = slateUI;
     }
-    public void SlateSet(SlateUI slateUI)
-    {
-     
-        if(curentSlateUI != null)
-        {
-            curentSlateUI.SlateSet(slateUI.Slate);
-
-            if(curentSlateUI == firstSlate)
-            {
-                SettingData.firstSlate = slateUI.Slate;
-            }
-            if (curentSlateUI == secondSlate)
-            {
-                SettingData.secondSlate = slateUI.Slate;
-            }
-            if (curentSlateUI == thirdSlate)
-            {
-                SettingData.thirdSlate = slateUI.Slate;
-            }
-            if (curentSlateUI == fourthSlate)
-            {
-                SettingData.fourthSlate = slateUI.Slate;
-            }
-
-        }
-    }
+    
 }

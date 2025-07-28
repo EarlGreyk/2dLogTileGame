@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class SkillSlot : MonoBehaviour
 {
     //
-    private MagicScriptableObejct magic;
-    public MagicScriptableObejct Magic { get { return magic; }}
+    private MagicOrigin magic;
+    public MagicOrigin Magic { get { return magic; }}
 
     [SerializeField]
     private Image magicImage;
@@ -21,7 +21,7 @@ public class SkillSlot : MonoBehaviour
 
 
 
-    public void magicSet(MagicScriptableObejct magic)
+    public void magicSet(MagicOrigin magic)
     {
         this.magic = magic;
         magicImage.sprite = magic.MagicSprite;

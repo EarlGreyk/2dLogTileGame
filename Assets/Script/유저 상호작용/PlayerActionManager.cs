@@ -4,9 +4,13 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// 플레이어가 지시받은 행동을 관리합니다.
+/// </summary>
+
 public class PlayerActionManager : MonoBehaviour
 {
-    private MagicScriptableObejct magic;
+    private MagicOrigin magic;
     private GameObject magicEffect;
     private Vector3Int hitPoint;
     private List<Vector3Int> targetPos;    
@@ -14,7 +18,7 @@ public class PlayerActionManager : MonoBehaviour
    
      
     
-    public void SettingSkillAction(MagicScriptableObejct magic ,GameObject magicEffect,Vector3Int hitPoint ,List<Vector3Int> targetPos)
+    public void SettingSkillAction(MagicOrigin magic ,GameObject magicEffect,Vector3Int hitPoint ,List<Vector3Int> targetPos)
     {
         this.magic = magic;
         this.magicEffect = magicEffect;
@@ -39,7 +43,7 @@ public class PlayerActionManager : MonoBehaviour
             target = GameManager.instance.BattleZone.SerchTileUnit(targetPos[i]);
             if (target != null && target != GameManager.instance.PlayerUnit)
             {
-                target.HitDamage(magic.MagicValue);
+                target.HitDamage(magic.MagicDamage);
             }
             
         }

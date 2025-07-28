@@ -17,6 +17,13 @@ public class PlayerResource : MonoBehaviour
 
     public int MaxDrowCount ;
     public int CurrentDrowCount;
+
+    //플레이어가 장착하고 있는 마법 리스트
+    private List<MagicOrigin> playerMagicList = new List<MagicOrigin>();
+
+    public List<MagicOrigin> PlayerMagicList { get { return playerMagicList; } }
+
+
     //플레이어 장착하고 있는 총 덱 리스트
     private List<Block> playerBlockList = new List<Block>();
     public List<Block> PlayerBlockList {  get { return playerBlockList; } }
@@ -31,33 +38,7 @@ public class PlayerResource : MonoBehaviour
     private List<Block> playerCurBlockList = new List<Block>();
 
    
-    // 석판은 수정해야함으로 석판 관련은 폐기해야함
-
-    //플레이어 Slate리스트
-    private SlateScriptableObejct firstSlate;
-    public SlateScriptableObejct FirstSlate { get { return firstSlate; } }
     
-    private SlateScriptableObejct secondSlate;
-    public SlateScriptableObejct SecondSlate { get { return secondSlate; } }
-    private SlateScriptableObejct thirdSlate;
-    public SlateScriptableObejct ThirdSlate { get { return thirdSlate; } }
-    private SlateScriptableObejct fourthSlate;
-    public SlateScriptableObejct FourthSlate { get {return fourthSlate; } }
-
-
-
-
-
-    private int firstSlateLevel = 0;
-    public int FirstSlateLevel {  get { return firstSlateLevel; } set { firstSlateLevel = value; } }    
-    private int secondSlateLevel = 0;
-    public int SecondSlateLevel { get { return secondSlateLevel; }set { secondSlateLevel = value; } }
-    private int thirdSlateLevel = 0;
-    public int ThirdSlateLevel { get { return thirdSlateLevel; }set { thirdSlateLevel = value; } }
-    private int fourSlateLevel = 0;
-    public int FourSlateLevel { get {return fourSlateLevel; } set { fourSlateLevel = value; } }
-
-
     //
 
 
@@ -125,33 +106,9 @@ public class PlayerResource : MonoBehaviour
 
     public void Start()
     {
-        firstSlate = SettingData.firstSlate;
-        secondSlate = SettingData.secondSlate;
-        thirdSlate  = SettingData.thirdSlate;
-        fourthSlate = SettingData.fourthSlate;
+        //새게임의 여부를 판정하여 시작합니다.
         if(SettingData.Load == false)
         {
-            if (firstSlate != null)
-            {
-                panelSet(firstSlate);
-                MagicSet(firstSlate.SlateMagics[0]);
-            }
-            if (secondSlate != null)
-            {
-                panelSet(secondSlate);
-                MagicSet(secondSlate.SlateMagics[0]);
-            }
-
-            if (thirdSlate != null)
-            {
-                panelSet(thirdSlate);
-                MagicSet(thirdSlate.SlateMagics[0]);
-            }
-            if (fourthSlate != null)
-            {
-                panelSet(fourthSlate);
-                MagicSet(fourthSlate.SlateMagics[0]);
-            }
                 
 
             Gold = 0;
@@ -166,78 +123,25 @@ public class PlayerResource : MonoBehaviour
             mana = SaveLoadManager.instance.PlayerResourceData.mana;
             maxMana = SaveLoadManager.instance.PlayerResourceData.maxMana;
             SlateSaveData savedata = null;
-            if (firstSlate != null)
-            {
-                savedata = SaveLoadManager.instance.PlayerResourceData.firstSlateData;
-                if (savedata != null)
-                {
-                    firstSlateLevel = savedata.slatelevel + 1;
-                    for (int i = 0; i < firstSlateLevel; i++)
-                    {
-                        if (firstSlate.SlateMagics[i].MagicType == 0)
-                            MagicSet(firstSlate.SlateMagics[i]);
-                    }
-                }
-               
-                
-            }
-            if (secondSlate != null)
-            {
-                savedata = SaveLoadManager.instance.PlayerResourceData.secondSlateData;
-                if (savedata != null)
-                {
-                    secondSlateLevel = savedata.slatelevel + 1;
-                    for (int i = 0; i < secondSlateLevel; i++)
-                    {
+        
+        }
 
-                        if (secondSlate.SlateMagics[i].MagicType == 0)
-                            MagicSet(secondSlate.SlateMagics[i]);
-                    }
-                }
-               
+        //플레이어의 마법을 등록합니다.
 
-            }
-            if (thirdSlate != null)
-            {
-                savedata = SaveLoadManager.instance.PlayerResourceData.thirdSlateData;
-                if(savedata != null)
-                {
-                    thirdSlateLevel = savedata.slatelevel + 1;
-                    for (int i = 0; i < thirdSlateLevel; i++)
-                    {
+        for (int i =0; i < SettingData.magicList.Count; i++)
+        {
+            MagicOrigin magic = new MagicOrigin(SettingData.magicList[i]);
 
-                        if (thirdSlate.SlateMagics[i].MagicType == 0)
-                            MagicSet(thirdSlate.SlateMagics[i]);
-                    }
-                }
-                
-
-            }
-            if (fourthSlate != null)
-            {
-                
-                savedata = SaveLoadManager.instance.PlayerResourceData.fourSlateData;
-                if(savedata != null)
-                {
-                    fourSlateLevel = savedata.slatelevel + 1;
-                    for (int i = 0; i < fourSlateLevel; i++)
-                    {
-                        if (fourthSlate.SlateMagics[i].MagicType == 0)
-                            MagicSet(fourthSlate.SlateMagics[i]);
-                    }
-                }
-               
-
-            }
+            playerMagicList.Add(magic);
         }
    
-
+        //플레이어의 손패를 충전합니다.
         for (int i = 0; i < playerBlockPanel.Count; i++)
         {
             BlockDrow(true);
         }
 
-
+        
         
         
        
@@ -453,7 +357,7 @@ public class PlayerResource : MonoBehaviour
     /// <param name="magic"></설정할 마법>
 
 
-    public void MagicSet(MagicScriptableObejct magic)
+    public void MagicSet(MagicOrigin magic)
     {
         for (int i = 0; i < playerSkillPanel.Count; i++)
         {

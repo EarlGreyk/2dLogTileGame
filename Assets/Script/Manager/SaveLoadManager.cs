@@ -50,14 +50,6 @@ public class PlayerResourceSaveData
 
     public PlayerResourceSaveData(PlayerResource playerResource)
     {
-        if(playerResource.FirstSlate !=null)
-            firstSlateData = new SlateSaveData(playerResource.FirstSlate, playerResource.FirstSlateLevel);
-        if(playerResource.SecondSlate !=null)
-            secondSlateData = new SlateSaveData(playerResource.SecondSlate, playerResource.SecondSlateLevel);
-        if (playerResource.ThirdSlate != null)
-            thirdSlateData = new SlateSaveData(playerResource.ThirdSlate, playerResource.ThirdSlateLevel);
-        if (playerResource.FourthSlate != null)
-            fourSlateData = new SlateSaveData(playerResource.FourthSlate, playerResource.FourSlateLevel);
         gold = playerResource.Gold;
         mana = playerResource.Mana;
         maxMana = playerResource.MaxMana;
@@ -304,13 +296,7 @@ public class SaveLoadManager : MonoBehaviour
     public void LoadGame()
     {
 
-        SettingData.firstSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.firstSlateData.slateName);
-        SettingData.secondSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.secondSlateData.slateName);
-        SettingData.thirdSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.secondSlateData.slateName);
-        SettingData.fourthSlate = Resources.Load<SlateScriptableObejct>("Slates/" + playerResourceData.secondSlateData.slateName);
-
-        SettingData.Stage = gameManagerData.stage;
-        SettingData.Round = gameManagerData.round;
+  
 
         SettingData.Load = true;
     }

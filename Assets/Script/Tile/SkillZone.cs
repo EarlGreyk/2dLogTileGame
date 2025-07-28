@@ -12,7 +12,7 @@ public class SkillZone : MonoBehaviour
     private Tilemap tilemap;
     public Tilemap Tilemap { get { return tilemap; } }
 
-    public MagicScriptableObejct currentMagic;
+    public MagicOrigin currentMagic;
 
     public GameObject currentMagicEffect;
 
@@ -89,7 +89,7 @@ public class SkillZone : MonoBehaviour
         }
     }
 
-    public void SettingSkillZone(MagicScriptableObejct magic,GameObject magicEffect)
+    public void SettingSkillZone(MagicOrigin magic,GameObject magicEffect)
     {
         if (GameManager.instance.IsPlayer == false)
         {

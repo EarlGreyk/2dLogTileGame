@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,15 +8,9 @@ public static class SettingData
 {
   
     public static int difficult;
-    public static int Stage = 1;
-    public static int Round = 1;
-    public static SlateScriptableObejct firstSlate;
-    public static SlateScriptableObejct secondSlate;
-    public static SlateScriptableObejct thirdSlate;
-    public static SlateScriptableObejct fourthSlate;
 
-
-
+    public static List<MagicScriptableObejct> magicList = new List<MagicScriptableObejct>();
+  
     public static Dictionary<int, float> difficultPlayer = new Dictionary<int, float>();
 
     public static Dictionary<int, float> difficultMonster = new Dictionary<int, float>();
