@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 /// 
 
-public class MagicOrigin: MonoBehaviour
+public class MagicOrigin
 {
     public enum Type
     {
@@ -77,6 +77,33 @@ public class MagicOrigin: MonoBehaviour
     /// <param name="MagicData"></마법 데이터.>
     public MagicOrigin(MagicScriptableObejct MagicData)
     {
+        MagicGrade = 1;
+        MagicLevel = 1;
 
+
+        MagicName = MagicData.MagicName;
+        MagicDesc = MagicData.MagicDesc;
+        
+        switch(MagicData.MagicType)
+        {
+            case 1:
+                MagicType = Type.Attack;
+                break;
+            case 2:
+                MagicType = Type.Defence; break;
+            case 3:
+                MagicType = Type.Buff; break;
+            case 4:
+                MagicType = Type.DeBuff; break;
+        }    
+        MagicRequiredMana = MagicData.MagicRequiredMana;
+        MagicDamage = MagicData.MagicValue;
+        MagicCastingRange = MagicData.MagicCastingRange;
+        MagicDamageRange = MagicData.MagicDamageRange;
+        MagicDuration = MagicData.MagicDuration;
+        MagicSprite = MagicData.MagicSprite;
+        Gold = MagicData.Gold;
+        
+        
     }
 }

@@ -9,7 +9,8 @@ public static class SettingData
   
     public static int difficult;
 
-    public static List<MagicScriptableObejct> magicList = new List<MagicScriptableObejct>();
+
+    public static Character character;
   
     public static Dictionary<int, float> difficultPlayer = new Dictionary<int, float>();
 

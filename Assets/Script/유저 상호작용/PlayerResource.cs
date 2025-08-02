@@ -39,10 +39,7 @@ public class PlayerResource : MonoBehaviour
 
    
     
-    //
 
-
-    private List<Magic> MagicList;
 
     //플레이어 블록 패널 리스트
     [SerializeField]
@@ -116,47 +113,59 @@ public class PlayerResource : MonoBehaviour
             maxMana = 20;
             MaxDrowCount = 3;
             CurrentDrowCount = MaxDrowCount;
+            List<Block> blocks = new List<Block>();
+            
         }
         else
         {
             Gold = SaveLoadManager.instance.PlayerResourceData.gold;
             mana = SaveLoadManager.instance.PlayerResourceData.mana;
             maxMana = SaveLoadManager.instance.PlayerResourceData.maxMana;
-            SlateSaveData savedata = null;
+           
         
         }
 
-        //플레이어의 마법을 등록합니다.
+        //플레이어의 스킬 을 등록합니다
+  
 
-        for (int i =0; i < SettingData.magicList.Count; i++)
+        for (int i =0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
         {
-            MagicOrigin magic = new MagicOrigin(SettingData.magicList[i]);
+            MagicOrigin magic = new MagicOrigin(SettingData.character.PlayerData.UsingMagics[i]);
+
+            Debug.Log(magic);
 
             playerMagicList.Add(magic);
         }
-   
-        //플레이어의 손패를 충전합니다.
-        for (int i = 0; i < playerBlockPanel.Count; i++)
+
+        for(int i =0;i<PlayerMagicList.Count;i++)
         {
-            BlockDrow(true);
+            playerSkillPanel[i].magicSet(playerMagicList[i]);
         }
 
-        
-        
-        
-       
 
+        //
 
-    }
+  
 
-    private void panelSet(SlateScriptableObejct slate)
-    {
-        for (int i = 0; i < slate.Blocks.Length; i++)
+        //플레이어의 이동 블록을 등록합니다
+
+        for (int i = 0; i < SettingData.character.PlayerData.Blocks.Length; i++)
         {
-            Block block = new Block(slate.Blocks[i]);
-            BlockManage.instance.EquipSet(block);   
-        }  
+            Block block = new Block(SettingData.character.PlayerData.Blocks[i]);
+            playerBlockList.Add(block);
+            BlockManage.instance.EquipSet(block);
+        }
+
+
+
+
+
+
+
+
     }
+
+  
     /// <summary>
     /// 블록을 추가합니다.
     /// BlockManage와 연동되는 함수입니다.

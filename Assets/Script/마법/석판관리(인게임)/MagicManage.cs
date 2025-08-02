@@ -12,11 +12,11 @@ public class MagicManage : MagicManager
 
 
 
-    public override void Set(SlateUI slateUI)
-    {
-        base.Set(slateUI);
-        textGold.text = PlayerResource.instance.Gold.ToString();
-    }
+    //public override void Set(SlateUI slateUI)
+    //{
+    //    base.Set(slateUI);
+    //    textGold.text = PlayerResource.instance.Gold.ToString();
+    //}
 
 
 

@@ -44,8 +44,6 @@ public class MagicUpgrade : MonoBehaviour
             PlayerResource.instance.Gold -= needGold;
             needGoldText.text = PlayerResource.instance.Gold.ToString();
 
-            if (this.magicUI.Magic.MagicType == 0)
-                PlayerResource.instance.MagicSet(this.magicUI.Magic);
             
         }
         

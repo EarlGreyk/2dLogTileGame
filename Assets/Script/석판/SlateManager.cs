@@ -140,16 +140,7 @@ public class SlateManager : MonoBehaviour
         }
        
     }
-    //다시 슬레이트를 받아 올수 있도록 목록에 추가합니다.
-    public void DicSlateAdd(SlateSetting slateSetting)
-    {
-        if (slateSetting.CurrentSlateUI.Slate == null)
-            return;
-        int key = GetCategoryKey(slateSetting.CurrentSlateUI.Slate);
-        Debug.Log(slateSetting.CurrentSlateUI.Slate);
-        slateDic[key].Add(slateSetting.CurrentSlateUI.Slate);
-    
-    }
+  
 
 
     public void OnDisable()
