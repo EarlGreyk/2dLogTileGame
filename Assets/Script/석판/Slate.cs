@@ -10,8 +10,8 @@ public class SlateDumy : ScriptableObject
     private string slateName;
     public string SlateName { get { return slateName; } }
     [SerializeField]
-    private List<Magic> magics;
-    public List<Magic> Magics { get { return magics; } }
+    private List<MagicOrigin> magics;
+    public List<MagicOrigin> Magics { get { return magics; } }
 
     [SerializeField]
     private string tag;

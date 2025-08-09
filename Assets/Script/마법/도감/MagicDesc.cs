@@ -44,11 +44,11 @@ public class MagicDesc : MonoBehaviour
 
     }
 
-    public void DescSet(Magic magic, int level)
+    public void DescSet(MagicOrigin magic, int level)
     {
         if (magic == null)
             return;
-        descImage.sprite = magic.IconSprite;
+        descImage.sprite = magic.MagicSprite;
         descText.text = magic.MagicDesc;
 
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SetPixelsPerUnit : MonoBehaviour
 {
-    [MenuItem("Tools/Change Pixels Per Unit")]
+    //[MenuItem("Tools/Change Pixels Per Unit")]
     static void ChangeAllSpritesPPU()
     {
         string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { "Assets/RafaelMatos" });

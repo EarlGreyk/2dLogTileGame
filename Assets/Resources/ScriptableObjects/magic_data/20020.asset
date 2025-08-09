@@ -13,18 +13,17 @@ MonoBehaviour:
   m_Name: 20020
   m_EditorClassIdentifier: 
   id: 20020
-  MagicName: "\uC9C8\uC8FC"
-  MagicType: 2
-  MagicDesc: "\uD50C\uB808\uC774\uC5B4\uB294 \uC9C8\uC8FC \uC2A4\uD0DD\uC744 \uC5BB\uB294\uB2E4.
-    \uC774\uB3D9\uC2DC \uD589\uB3D9\uC744 \uC18C\uBAA8\uD558\uB294 \uB300\uC2E0 \uC9C8\uC8FC\uC2A4\uD0DD\uC744
-    \uC18C\uBAA8\uD560 \uC218 \uC788\uB2E4"
-  MagicRequiredMana: 15
-  MagicRequiredStep: 1
-  MagicValue: 3
-  MagicCastingRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
-  MagicDamageRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
-  MagicDuration: 5
-  MagicApplies: 01000000
+  MagicName: "\uC5F0\uC1C4\uC804\uB958"
+  MagicType: 0
+  MagicDesc: "\uC801\uC744 \uC5F0\uC1C4\uD574\uC11C \uACF5\uACA9\uD558\uB294 \uC804\uAE30
+    \uC904\uAE30\uB97C \uBC1C\uC0AC\uD55C\uB2E4"
+  MagicRequiredMana: 6
+  MagicSlabSoket: 2
+  MagicValue: 20
+  MagicCastingRange: {fileID: 11400000, guid: 75d008f6edc6b124b90f65e4a841afa3, type: 2}
+  MagicDamageRange: {fileID: 11400000, guid: 7ec30d2e97b16044e817443ad1d8aec4, type: 2}
+  MagicDuration: 0
+  MagicApplies: 00000000
   MagicSprite: {fileID: 0}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0

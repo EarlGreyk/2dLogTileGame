@@ -16,9 +16,9 @@ public class MagicScriptableObejct : BaseScriptableObject
     /// </summary>
     public int MagicRequiredMana;
     /// <summary>
-    /// 스킬을 활성화 하는데 필요한 석판의 단계입니다.
+    /// 스킬에 박을 수 있는 소켓 갯수입니다.
     /// </summary>
-    public int MagicRequiredStep;
+    public int MagicSlabSoket;
     /// <summary>
     /// 스킬이 가하는 값입니다.
     /// </summary>
@@ -33,7 +33,8 @@ public class MagicScriptableObejct : BaseScriptableObject
     /// </summary>
     public float MagicDuration;
     /// <summary>
-    /// 스킬이 패시브일 경우 적용 시켜야하는 id값입니다.
+    /// 대상 구분입니다.
+    /// 0 : 적 (몬스터) , 1 플레이어
     /// </summary>
     public int[] MagicApplies;
 
@@ -55,7 +56,7 @@ public class MagicScriptableObejct : BaseScriptableObject
         MagicName = values[2].Trim();
         MagicDesc = values[3].Trim();
         MagicRequiredMana = int.Parse(values[4].Trim());
-        MagicRequiredStep = int.Parse(values[5].Trim());
+        MagicSlabSoket = int.Parse(values[5].Trim());
         MagicType = int.Parse(values[6].Trim());
         MagicValue = float.Parse(values[7].Trim());
         MagicCastingRange = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + values[8].Trim());

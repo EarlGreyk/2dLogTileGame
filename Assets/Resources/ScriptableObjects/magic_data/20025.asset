@@ -13,18 +13,17 @@ MonoBehaviour:
   m_Name: 20025
   m_EditorClassIdentifier: 
   id: 20025
-  MagicName: "\uC3DC\uACF3 \uB610 \uC3D8\uAE30"
-  MagicType: 3
-  MagicDesc: "\uC18D\uACF5 \uC2A4\uD0DD\uC744 \uAC00\uC9C0\uACE0 \uC788\uC744 \uC2DC
-    \uBAA8\uB4E0 \uACF5\uACA9 \uB9C8\uBC95 \uD06C\uB9AC\uD2F0\uCEEC \uD655\uB960
-    \uC99D\uAC00"
-  MagicRequiredMana: 0
-  MagicRequiredStep: 2
-  MagicValue: 1.05
+  MagicName: "\uACE0\uB3C5"
+  MagicType: 0
+  MagicDesc: "\uB9F5 \uBC94\uC704 \uC804\uCCB4\uC758 \uC801\uC5D0\uAC8C \uC9C0\uC18D\uB418\uB294
+    \uACF5\uACA9\uC744 \uAC00\uD558\uB294 \uB3C5\uC744 \uC911\uB3C5\uC2DC\uD0A8\uB2E4"
+  MagicRequiredMana: 64
+  MagicSlabSoket: 4
+  MagicValue: 60
   MagicCastingRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
   MagicDamageRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
-  MagicDuration: 0
-  MagicApplies: 384e0000
+  MagicDuration: 5
+  MagicApplies: 00000000
   MagicSprite: {fileID: 0}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0

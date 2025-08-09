@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: 20012
   m_EditorClassIdentifier: 
   id: 20012
-  MagicName: "\uBC29\uD328 \uC219\uB828"
-  MagicType: 3
-  MagicDesc: "\uB9C8\uBC95 \uBC29\uD328 \uBCF4\uD638\uB9C9\uB7C9\uC744 \uC99D\uAC00"
-  MagicRequiredMana: 0
-  MagicRequiredStep: 1
-  MagicValue: 1.2
-  MagicCastingRange: {fileID: 0}
-  MagicDamageRange: {fileID: 0}
+  MagicName: "\uBC1C\uAC78\uAE30"
+  MagicType: 2
+  MagicDesc: "\uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uBAAC\uC2A4\uD130\uC758 \uC774\uB3D9\uBE14\uB7ED\uC774
+    1x1\uB85C \uBC14\uB010\uB2E4"
+  MagicRequiredMana: 20
+  MagicSlabSoket: 2
+  MagicValue: 1
+  MagicCastingRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
+  MagicDamageRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
   MagicDuration: 0
-  MagicApplies: 2b4e0000
+  MagicApplies: 00000000
   MagicSprite: {fileID: 0}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0

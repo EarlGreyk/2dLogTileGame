@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: 20004
   m_EditorClassIdentifier: 
   id: 20004
-  MagicName: "\uD654\uC5FC\uD3ED\uBC1C"
-  MagicType: 0
-  MagicDesc: "\uBC94\uC704\uB0B4\uC5D0 \uD654\uC5FC\uD3ED\uBC1C\uC744 \uC77C\uC73C\uD0B4"
-  MagicRequiredMana: 8
-  MagicRequiredStep: 2
-  MagicValue: 22
-  MagicCastingRange: {fileID: 11400000, guid: e8dc369db610c4a468db6ff5fe02d4d7, type: 2}
-  MagicDamageRange: {fileID: 11400000, guid: ffe117e3f5d8b234ea25c99c568cb9d5, type: 2}
+  MagicName: "\uC6B4\uC11D\uB099\uD558"
+  MagicType: 3
+  MagicDesc: "\uC6B4\uC11D\uC744 \uB099\uD558\uC2DC\uCF1C \uAC15\uD55C \uD654\uC5FC\uD3ED\uBC1C\uC744
+    \uC77C\uC73C\uD0B4"
+  MagicRequiredMana: 36
+  MagicSlabSoket: 4
+  MagicValue: 150
+  MagicCastingRange: {fileID: 11400000, guid: 374939d92edc0a64c9cb7862ad17e841, type: 2}
+  MagicDamageRange: {fileID: 11400000, guid: a3ab0152415155a408779959a6b6eb75, type: 2}
   MagicDuration: 0
   MagicApplies: 00000000
   MagicSprite: {fileID: 21300000, guid: 4f32bb2fbe1fc5e479cd95b81f6ab9a0, type: 3}

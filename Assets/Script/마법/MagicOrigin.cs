@@ -86,14 +86,14 @@ public class MagicOrigin
         
         switch(MagicData.MagicType)
         {
-            case 1:
+            case 0:
                 MagicType = Type.Attack;
                 break;
-            case 2:
+            case 1:
                 MagicType = Type.Defence; break;
-            case 3:
+            case 2:     
                 MagicType = Type.Buff; break;
-            case 4:
+            case 3:
                 MagicType = Type.DeBuff; break;
         }    
         MagicRequiredMana = MagicData.MagicRequiredMana;
