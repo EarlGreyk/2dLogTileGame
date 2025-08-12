@@ -4,11 +4,12 @@ using UnityEngine;
 
 public abstract class StatusEffect
 {
-    public abstract float Duration { get; }
+    public int stack;
 
-    public virtual void Apply(GameObject target)
+    public virtual void Apply(GameObject target,int count)
     {
         // 공통적인 적용 로직 (예: 이펙트 시작 처리)
+        stack += count;
     }
 
     public virtual void Remove(GameObject target)
@@ -16,16 +17,63 @@ public abstract class StatusEffect
         // 공통적인 종료 로직 (예: 이펙트 종료 처리)
     }
 }
+ 
 
-public class SpeedBuff : StatusEffect
+public class DamageBuff : StatusEffect
 {
-    public override float Duration => 5f;
 
-    public override void Apply(GameObject target)
+    public override void Apply(GameObject target,int count)
     {
-        base.Apply(target); // 공통 로직 호출
+        base.Apply(target,count); // 공통 로직 호출
+        var stats = target.GetComponent<UnitStatus>();
+        stats.Damage += 0.1f * count;
+    }
+
+    public override void Remove(GameObject target)
+    {
+        var stats = target.GetComponent<UnitStatus>();
+        stats.Damage -= 0.1f * stack;
+    }
+}
+
+public class DamageDeBuFF : StatusEffect
+{
+    public override void Apply(GameObject target,int count)
+    {
+        base.Apply(target, count); // 공통 로직 호출
+        var stats = target.GetComponent<UnitStatus>();
+
+    }
+
+    public override void Remove(GameObject target)
+    {
+        var stats = target.GetComponent<UnitStatus>();
+    }
+}
+
+public class TruDamageDamageBuff : StatusEffect
+{
+
+    public override void Apply(GameObject target, int count)
+    {
+        base.Apply(target, count); // 공통 로직 호출
+        
+    }
+
+    public override void Remove(GameObject target)
+    {
         var stats = target.GetComponent<UnitStatus>();
         
+    }
+}
+
+public class TrueDamageDeBuFF : StatusEffect
+{
+    public override void Apply(GameObject target, int count)
+    {
+        base.Apply(target, count); // 공통 로직 호출
+        var stats = target.GetComponent<UnitStatus>();
+
     }
 
     public override void Remove(GameObject target)
@@ -40,27 +88,26 @@ public class SpeedBuff : StatusEffect
 public class StatusEffectManager: MonoBehaviour
 {
     
-    private List<(StatusEffect effect, float timer)> activeEffects = new List<(StatusEffect, float)>();
+    private List<StatusEffect> activeEffects = new List<StatusEffect>();
 
     void Update()
     {
-        for (int i = activeEffects.Count - 1; i >= 0; i--)
-        {
-            activeEffects[i] = (activeEffects[i].effect, activeEffects[i].timer - Time.deltaTime);
-
-            if (activeEffects[i].timer <= 0)
-            {
-                activeEffects[i].effect.Remove(gameObject);
-                activeEffects.RemoveAt(i);
-            }
-        }
+        
     }
 
-    public void AddEffect(StatusEffect effect)
+    public void AddEffect(StatusEffect effect,int count)
     {
-        effect.Apply(gameObject);
-        activeEffects.Add((effect, effect.Duration));
+        effect.Apply(gameObject,count);
+        activeEffects.Add((effect));
     
     }
+
+    public void RemoveEffect(StatusEffect effect)
+    {
+        effect.Remove(gameObject);
+        activeEffects.Remove(effect);
+    }
+
+   
     
 }
