@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8001474763171313830}
   - component: {fileID: 3882220592335119873}
   - component: {fileID: 360150549573762598}
+  - component: {fileID: -6544254826048334665}
   - component: {fileID: -6424533642964141347}
   - component: {fileID: -4880866411756576667}
   m_Layer: 0
@@ -99,9 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1a3d284590730449933cdcb8c288b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectManager: {fileID: -6544254826048334665}
+  baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
   Sprite: {fileID: 21300000, guid: c8f9ee9f23f8a0c45b04ce0ee2fb287f, type: 3}
-  baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
+  SpriteRenderer: {fileID: 0}
   hpbar: {fileID: 0}
   position: 0
   movePattenData: {fileID: 11400000, guid: 1cf99e06eef531248a5b13e587227d91, type: 2}
@@ -112,6 +115,18 @@ MonoBehaviour:
   currentAction: {fileID: -6424533642964141347}
   maxActionCount: 4
   KillGold: 1000
+--- !u!114 &-6544254826048334665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4118946393443849972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ac521e7ad42b744f812a2749034befc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-6424533642964141347
 MonoBehaviour:
   m_ObjectHideFlags: 0

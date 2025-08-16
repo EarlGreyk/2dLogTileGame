@@ -218,18 +218,29 @@ public class BattleZone : MonoBehaviour
         return serchUnit;
     }
 
-    public Unit SerchTileUnit(Vector3Int pos)
+    public Unit SerchTileUnit(Vector3Int pos , bool scaleCheck = false)
     {
         Vector3 scale = grid.transform.localScale;
+        
         Unit serchUnit = null;
+        int x = 0;
+        int y = 0;
 
+        if(scaleCheck)
+        {
+            x = Mathf.FloorToInt(pos.x / scale.x);
+            y = Mathf.FloorToInt(pos.y / scale.y);
+        }else
+        {
+            x = pos.x;
+            y = pos.y;
+        }
 
-        int x = Mathf.FloorToInt(pos.x / scale.x);
-        int y = Mathf.FloorToInt(pos.y / scale.y);
+        
+        
 
         if (battleTiles[x, y].onUnit != null)
             serchUnit = battleTiles[x, y].onUnit;
-
 
         return serchUnit;
     }

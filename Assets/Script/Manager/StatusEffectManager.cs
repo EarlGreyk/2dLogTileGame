@@ -6,13 +6,13 @@ public abstract class StatusEffect
 {
     public int stack;
 
-    public virtual void Apply(GameObject target,int count)
+    public virtual void Apply(Unit target,int count)
     {
         // 공통적인 적용 로직 (예: 이펙트 시작 처리)
         stack += count;
     }
 
-    public virtual void Remove(GameObject target)
+    public virtual void Remove(Unit target)
     {
         // 공통적인 종료 로직 (예: 이펙트 종료 처리)
     }
@@ -22,61 +22,65 @@ public abstract class StatusEffect
 public class DamageBuff : StatusEffect
 {
 
-    public override void Apply(GameObject target,int count)
+    public override void Apply(Unit target, int count)
     {
         base.Apply(target,count); // 공통 로직 호출
         var stats = target.GetComponent<UnitStatus>();
         stats.Damage += 0.1f * count;
     }
 
-    public override void Remove(GameObject target)
+    public override void Remove(Unit target)
     {
         var stats = target.GetComponent<UnitStatus>();
         stats.Damage -= 0.1f * stack;
     }
 }
 
-public class DamageDeBuFF : StatusEffect
+public class DamageDeBuff : StatusEffect
 {
-    public override void Apply(GameObject target,int count)
+    public override void Apply(Unit target, int count)
     {
         base.Apply(target, count); // 공통 로직 호출
-        var stats = target.GetComponent<UnitStatus>();
+        Debug.Log(target);  
+        var Unit = target.GetComponent<Unit>();
+        Unit.status.Damage -= 0.1f * count;
+        stack += count;
 
     }
 
-    public override void Remove(GameObject target)
+    public override void Remove(Unit target)
     {
-        var stats = target.GetComponent<UnitStatus>();
+        var Unit = target.GetComponent<Unit>();
+        Unit.status.Damage += 0.1f * stack;
     }
 }
 
 public class TruDamageDamageBuff : StatusEffect
 {
 
-    public override void Apply(GameObject target, int count)
+    public override void Apply(Unit target, int count)
     {
         base.Apply(target, count); // 공통 로직 호출
         
     }
 
-    public override void Remove(GameObject target)
+    public override void Remove(Unit target)
     {
         var stats = target.GetComponent<UnitStatus>();
         
     }
 }
 
-public class TrueDamageDeBuFF : StatusEffect
+public class TrueDamageDeBuff : StatusEffect
 {
-    public override void Apply(GameObject target, int count)
+    public override void Apply(Unit target, int count)
     {
         base.Apply(target, count); // 공통 로직 호출
         var stats = target.GetComponent<UnitStatus>();
 
     }
 
-    public override void Remove(GameObject target)
+    public override void Remove(Unit target)
     {
         var stats = target.GetComponent<UnitStatus>();
     }
@@ -92,19 +96,23 @@ public class StatusEffectManager: MonoBehaviour
 
     void Update()
     {
-        
+        if(activeEffects.Count > 0)
+        {
+            Debug.Log($"{gameObject.name} 의 현재 활성화된 상태이상 개수 : {activeEffects.Count}");
+        }
     }
 
-    public void AddEffect(StatusEffect effect,int count)
+    public void AddEffect(StatusEffect effect,int count,Unit target)
     {
-        effect.Apply(gameObject,count);
+        Debug.Log("상태이상 효과 추가");
+        effect.Apply(target,count);
         activeEffects.Add((effect));
     
     }
 
-    public void RemoveEffect(StatusEffect effect)
+    public void RemoveEffect(StatusEffect effect,Unit target)
     {
-        effect.Remove(gameObject);
+        effect.Remove(target);
         activeEffects.Remove(effect);
     }
 

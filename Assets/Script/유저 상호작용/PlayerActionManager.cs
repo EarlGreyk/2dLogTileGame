@@ -46,33 +46,83 @@ public class PlayerActionManager : MonoBehaviour
 
     }
 
+    private void UnitAddBuffToKen(Unit target)
+    {
+        Debug.Log("버프부여 작동");
+        StatusEffectManager EM = target.effectManager;
+
+        if (magic.TokenIndex == 0)
+        {
+            
+            return;
+        }
+        if (magic.TokenIndex == 1)
+        {
+            DamageBuff token = new DamageBuff();
+            EM.AddEffect(token, magic.TokenCount,target);
+            return;
+        }
+
+    }
+    private void UnitAddDeBuffToKen(Unit target)
+    {
+        Debug.Log("디버프부여 작동");
+        StatusEffectManager EM = target.effectManager;
+        if (magic.TokenIndex == 0)
+        {
+            return;
+        }
+        if (magic.TokenIndex == 1)
+        {
+            DamageDeBuff token = new DamageDeBuff();
+            Debug.Log(token);
+            EM.AddEffect(token, magic.TokenCount,target);
+            return;
+        }
+
+    }
+
     //공격 마법을 작동합니다.
     private void AttackMagicStart()
     {
         //스케일에 맞춰 실제값으로 변동 시켜줘야합니다.
         Unit target = null;
         
-        GameObject effect = Instantiate<GameObject>(magicEffect);
-
-        if(effect == null)
+        if(magicEffect != null)
+        {
+            GameObject effect = Instantiate<GameObject>(magicEffect);
+            //// 이펙트생성자에서 변경해주면됨.
+            Vector3 scale = GameManager.instance.Grid.transform.localScale;
+            effect.transform.position = new Vector3(hitPoint.x * scale.x, hitPoint.y * scale.y, 0);
+        }else
         {
             ErrorManager.instance.ErrorSet("Error : 마법 이펙트가 없습니다.");
         }
+       
 
-        
-        //// 이펙트생성자에서 변경해주면됨.
-        Vector3 scale = GameManager.instance.Grid.transform.localScale;
-        effect.transform.position = new Vector3(hitPoint.x * scale.x, hitPoint.y * scale.y, 0);
+
+       
         
         for (int i = 0; i < targetPos.Count; i++)
         {
             target = GameManager.instance.BattleZone.SerchTileUnit(targetPos[i]);
             if (target != null && target != GameManager.instance.PlayerUnit)
             {
+                Debug.Log($"{target},{magic.TokenType}");
+                if(magic.TokenType == 1)
+                {
+                    UnitAddBuffToKen(target);
+                }else if(magic.TokenType == 2)
+                {
+                    UnitAddDeBuffToKen(target);
+                }
+                
                 target.HitDamage(magic.MagicDamage);
             }
             
         }
+
+        
 
     }
 

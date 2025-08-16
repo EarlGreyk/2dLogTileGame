@@ -24,5 +24,8 @@ MonoBehaviour:
   MagicDuration: 0
   MagicApplies: 00000000
   MagicSprite: {fileID: 21300000, guid: 5432821e8efdd9a43b521cac779376b4, type: 3}
-  MagicEffectPrefab: {fileID: 0}
+  MagicEffectPrefab: {fileID: 5224660013903197058, guid: 52e74deb1afea574a8fbd3c2a5164fad, type: 3}
   Gold: 0
+  TokenType: 2
+  ToKenIndex: 1
+  TokenCount: 1

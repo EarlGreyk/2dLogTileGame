@@ -39,7 +39,6 @@ public class BlockModeZone : MonoBehaviour
     public void unitBlockSet(MonsterUnit unit)
     {
         breakTile();
-        Debug.Log("동선 밑 기술 범위 표시");
 
 
 

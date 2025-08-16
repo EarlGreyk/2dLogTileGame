@@ -198,11 +198,13 @@ public class UnitStatus
 public class Unit :MonoBehaviour
 {
 
+    public StatusEffectManager effectManager;
     public UnitStatus status;
+    public UnitStatusObject baseStatus;
     public GameObject HPbar;
     public Sprite Sprite;
     public SpriteRenderer SpriteRenderer;
-    public UnitStatusObject baseStatus;
+    
     public UnitHpBar hpbar;
     private GameObject uicanvas;
     private RectTransform uicanvasRectTransform;

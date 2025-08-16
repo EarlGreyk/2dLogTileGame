@@ -415,13 +415,13 @@ public class MonsterUnit : Unit
     /// <summary>
     /// 해당 지점까지의 최단경로를 찾습니다.
     /// </summary>
-    /// <param name="start"></param>
-    /// <param name="goal"></param>
-    /// <param name="validPositions"></param>
+    /// <param name="start"></시작점>
+    /// <param name="goal"></종료지점>
+    /// <param name="validPositions"></인자>
     /// <returns></returns>
     private List<Vector3Int> FindPathWithBFS(Vector3Int start, Vector3Int goal, List<Vector3Int> validPositions)
     {
-        Debug.Log($"최단경로 탐색 - 시작점 : {start}, 종료지점 {goal}, 인자 {validPositions}");
+        
         int rows = GameManager.instance.BattleZone.BattleTiles.GetLength(0);
         int cols = GameManager.instance.BattleZone.BattleTiles.GetLength(1);
         bool[,] visited = new bool[rows, cols];
@@ -484,6 +484,7 @@ public class MonsterUnit : Unit
     IEnumerator ActionMove()
     {
         yield return new WaitForSeconds(0.5f);
+        Debug.Log($"몬스터이동 유닛여부체크: {targetPosList[0]}");
         if (!GameManager.instance.BattleZone.SerchTileUnit(targetPosList[0]))
         {
             Vector3Int scaledCellPos = new Vector3Int(

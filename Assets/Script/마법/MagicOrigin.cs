@@ -72,6 +72,23 @@ public class MagicOrigin
     public int Gold;
 
     /// <summary>
+    /// 부여할 토큰이 있을 경우 타입.
+    /// 버프 or 디버프 분류
+    /// 0 : None , 1 : Buff , 2:Debuff
+    /// </summary>
+    public int TokenType;
+
+    /// <summary>
+    /// 버프,디버프 종류
+    /// </summary>
+    public int TokenIndex;
+
+    /// <summary>
+    /// 부여할 토큰의 개수
+    /// </summary>
+    public int TokenCount;
+
+    /// <summary>
     /// 게임이 처음 시작되었을떄 마법을 생성합니다.
     /// </summary>
     /// <param name="MagicData"></마법 데이터.>
@@ -103,6 +120,9 @@ public class MagicOrigin
         MagicDuration = MagicData.MagicDuration;
         MagicSprite = MagicData.MagicSprite;
         Gold = MagicData.Gold;
+        TokenType = MagicData.TokenType;
+        TokenIndex = MagicData.ToKenIndex;
+        TokenCount = MagicData.TokenCount;
         
         
     }

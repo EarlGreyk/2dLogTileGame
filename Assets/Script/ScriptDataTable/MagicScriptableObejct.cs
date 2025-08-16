@@ -50,6 +50,11 @@ public class MagicScriptableObejct : BaseScriptableObject
     public int Gold;
 
 
+    public int TokenType;
+    public int ToKenIndex;
+    public int TokenCount;
+
+
     public override void SetValues(string[] values)
     {
         id = int.Parse(values[1].Trim());
@@ -64,6 +69,8 @@ public class MagicScriptableObejct : BaseScriptableObject
         MagicDuration = int.Parse(values[10].Trim());
         MagicApplies = ConversString(values[11].Trim());
         MagicSprite = Resources.Load<Sprite>("Sprite/Magic&Slate/" + id.ToString());
+        TokenType = 0;
+        TokenCount = 0;
     }
 
 

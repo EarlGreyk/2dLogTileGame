@@ -268,8 +268,12 @@ public class GameManager : MonoBehaviour
             int x = Random.Range(-1, 2) * (int)grid.transform.localScale.x;
             int y = Random.Range(-1, 2) * (int)grid.transform.localScale.y;
             pos = new Vector3Int(center.x + x, center.y + y);
+            if(x < 0)
+                x = 0;
+            if (y < 0)
+                y = 0;
 
-            Unit unit = BattleZone.SerchTileUnit(pos);
+            Unit unit = BattleZone.SerchTileUnit(pos,true);
             if (unit == null)
             {
                 check = false;
