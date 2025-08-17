@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class StatusEffect
 {
     public int stack;
+    public Sprite IconSprite;
 
     public virtual void Apply(Unit target,int count)
     {
         // 공통적인 적용 로직 (예: 이펙트 시작 처리)
         stack += count;
+        
     }
 
     public virtual void Remove(Unit target)
@@ -25,8 +28,11 @@ public class DamageBuff : StatusEffect
     public override void Apply(Unit target, int count)
     {
         base.Apply(target,count); // 공통 로직 호출
+        IconSprite = Resources.Load<Sprite>("인터페이스/StatusEffect/Buff/DamageBuff");
         var stats = target.GetComponent<UnitStatus>();
         stats.Damage += 0.1f * count;
+        
+
     }
 
     public override void Remove(Unit target)
@@ -41,7 +47,8 @@ public class DamageDeBuff : StatusEffect
     public override void Apply(Unit target, int count)
     {
         base.Apply(target, count); // 공통 로직 호출
-        Debug.Log(target);  
+        IconSprite = Resources.Load<Sprite>("인터페이스/StatusEffect/DeBuff/DamageDeBuff");
+        Debug.Log(IconSprite);
         var Unit = target.GetComponent<Unit>();
         Unit.status.Damage -= 0.1f * count;
         stack += count;
@@ -94,6 +101,17 @@ public class StatusEffectManager: MonoBehaviour
     
     private List<StatusEffect> activeEffects = new List<StatusEffect>();
 
+    private GameObject EffectPanel;
+
+    private void Start()
+    {
+        GameObject canvas  = GameManager.instance.HPCanvas;
+        EffectPanel = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/StatusEffect/StatusEffectPanel"),canvas.transform);
+        
+    }
+
+
+
     void Update()
     {
         if(activeEffects.Count > 0)
@@ -104,9 +122,21 @@ public class StatusEffectManager: MonoBehaviour
 
     public void AddEffect(StatusEffect effect,int count,Unit target)
     {
+        
         Debug.Log("상태이상 효과 추가");
         effect.Apply(target,count);
         activeEffects.Add((effect));
+
+        if(effect.IconSprite != null)
+        {
+            GameObject EffectIcon = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/StatusEffect/StatusEffectIcon"),EffectPanel.transform);
+            Image IconImage = EffectIcon.GetComponent<Image>();
+            IconImage.sprite = effect.IconSprite;
+
+
+
+        }
+            
     
     }
 
