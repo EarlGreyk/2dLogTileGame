@@ -12,7 +12,12 @@ public class UnitHpBar : MonoBehaviour
 {
 
     public Unit monster;
+
+    //몬스터만 인식하는 생성입니다.
+    //몬스터의 현재 행동이 어떠한 것인지 알려주는 패널입니다.
+
     public GameObject action;
+    
     public GameObject canvas;
     public Image fillImage;
     public TextMeshProUGUI hptext;
@@ -45,6 +50,8 @@ public class UnitHpBar : MonoBehaviour
         canvas = GameManager.instance.HPCanvas;
         canvasRectTransform = canvas.GetComponent<RectTransform>();
         rectHpbar = gameObject.GetComponent<RectTransform>();
+
+
        
         if (action != null)
         {

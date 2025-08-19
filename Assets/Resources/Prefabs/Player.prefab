@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5035448553328220470}
   - component: {fileID: 5035448553328220465}
   - component: {fileID: 4171823342021247732}
+  - component: {fileID: 4206462751626749134}
   - component: {fileID: -6079140699372072975}
   - component: {fileID: 4406794317286423251}
   m_Layer: 0
@@ -99,13 +100,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cabc6d4d6afc6f4996757383197cb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effectManager: {fileID: 4206462751626749134}
+  baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   HPbar: {fileID: 1405926418342992566, guid: 2eb867907a103784686b5e6154986f7f, type: 3}
   Sprite: {fileID: 0}
   SpriteRenderer: {fileID: 0}
-  baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   hpbar: {fileID: 0}
   ColiderCheck: 0
   boxCollider2D: {fileID: 4406794317286423251}
+--- !u!114 &4206462751626749134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5035448553328220471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ac521e7ad42b744f812a2749034befc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetUnit: {fileID: 0}
+  canvas: {fileID: 0}
+  canvasRectTransform: {fileID: 0}
+  rectStatusEffect: {fileID: 0}
 --- !u!50 &-6079140699372072975
 Rigidbody2D:
   serializedVersion: 4

@@ -59,7 +59,7 @@ public class PlayerActionManager : MonoBehaviour
         if (magic.TokenIndex == 1)
         {
             DamageBuff token = new DamageBuff();
-            EM.AddEffect(token, magic.TokenCount,target);
+            EM.AddEffect(token, magic.TokenCount);
             return;
         }
 
@@ -76,7 +76,7 @@ public class PlayerActionManager : MonoBehaviour
         {
             DamageDeBuff token = new DamageDeBuff();
             Debug.Log(token);
-            EM.AddEffect(token, magic.TokenCount,target);
+            EM.AddEffect(token, magic.TokenCount);
             return;
         }
 
@@ -118,6 +118,9 @@ public class PlayerActionManager : MonoBehaviour
                 }
                 
                 target.HitDamage(magic.MagicDamage);
+                target.effectManager.TriggerAttack();
+
+
             }
             
         }

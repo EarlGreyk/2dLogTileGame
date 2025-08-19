@@ -226,8 +226,8 @@ public class Unit :MonoBehaviour
     }
     public virtual void Update()
     {
-        /*   몬스터의 체력바 밑 텍스트 활성화 문구입니다. 
-        if (CheckVisibility())
+        
+        if (CheckVisibility() && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
         {
 
             hpbar.rectHpbar.gameObject.SetActive(true);
@@ -248,7 +248,7 @@ public class Unit :MonoBehaviour
                 hpbar.rectAction.gameObject.SetActive(false);
             }
         }
-        */
+        
 
     }
     private bool CheckVisibility()
@@ -267,13 +267,17 @@ public class Unit :MonoBehaviour
 
     public virtual void HitDamage(float Damage)
     {
-        status.Health -= Damage;
-        hpbar.HpTextSet();
-        if(status.Health <=0)
+        if (status.Health <= Damage)
         {
             UnitDie();
 
         }
+        status.Health -= Damage;
+        hpbar.HpTextSet();
+
+        //데미지 받음 이벤트 호출
+        effectManager.TriggerDamageTaken((int)Damage);
+
     }
     public virtual void UnitDie()
     {

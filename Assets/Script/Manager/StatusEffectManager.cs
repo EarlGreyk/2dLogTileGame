@@ -1,27 +1,63 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
+public interface ISubscribeEvents
+{
+    void Subscribe(StatusEffectManager manager, Unit owner);
+    void Unsubscribe(StatusEffectManager manager, Unit owner);
+}
+
 
 public abstract class StatusEffect
 {
     public int stack;
+    //토큰 : 상태이상이 트리거 몇번 호출까지 지속되는지 를 체크합니다.
+    public int token = 1;
     public Sprite IconSprite;
 
-    public virtual void Apply(Unit target,int count)
+    // UI 참조 보관
+    public GameObject UIIcon;
+    public TextMeshProUGUI stackText; // TMP 사용 권장
+
+    public virtual void Apply(Unit target, int count)
     {
-        // 공통적인 적용 로직 (예: 이펙트 시작 처리)
         stack += count;
-        
+        UpdateStackText();
     }
 
     public virtual void Remove(Unit target)
     {
-        // 공통적인 종료 로직 (예: 이펙트 종료 처리)
+        if (UIIcon != null)
+        {
+            GameObject.Destroy(UIIcon);
+            UIIcon = null;
+            stackText = null;
+        }
+    }
+
+    public void UpdateStackText()
+    {
+        if (stackText != null)
+            stackText.text = stack.ToString();
+    }
+
+    protected void ConsumeToken(Unit owner)
+    {
+        token--;
+        if (token <= 0)
+        {
+            owner.effectManager.RemoveEffect(this);
+        }
     }
 }
- 
-
+/// <summary>
+/// 상태이상 효과 : 데미지 배율 증가
+/// </summary>
 public class DamageBuff : StatusEffect
 {
 
@@ -37,10 +73,17 @@ public class DamageBuff : StatusEffect
 
     public override void Remove(Unit target)
     {
+
+        
         var stats = target.GetComponent<UnitStatus>();
         stats.Damage -= 0.1f * stack;
     }
 }
+
+/// <summary>
+/// 가하는 데미지 배율이 감소합니다.
+/// 소멸 트리거 : 데미지를 줄때 
+/// </summary>
 
 public class DamageDeBuff : StatusEffect
 {
@@ -57,10 +100,36 @@ public class DamageDeBuff : StatusEffect
 
     public override void Remove(Unit target)
     {
+        base.Remove(target);
         var Unit = target.GetComponent<Unit>();
         Unit.status.Damage += 0.1f * stack;
     }
+
+    public void Subscribe(StatusEffectManager manager, Unit target)
+    {
+        manager.OnTurnEnd += HandleTurnEnd;
+    }
+
+    public void Unsubscribe(StatusEffectManager manager, Unit target)
+    {
+        manager.OnTurnEnd -= HandleTurnEnd;
+    }
+
+    private void HandleTurnEnd(Unit target)
+    {
+        stack--;
+        if (stack <= 0)
+            target.effectManager.RemoveEffect(this);
+        else
+            UpdateStackText();
+    }
 }
+
+
+/// <summary>
+/// 데미지가 value 값만큼 증가합니다.
+/// 트리거 : 데미지를 줄때
+/// </summary>
 
 public class TruDamageDamageBuff : StatusEffect
 {
@@ -78,19 +147,34 @@ public class TruDamageDamageBuff : StatusEffect
     }
 }
 
+/// <summary>
+/// 데미지가 value 값만큼 증가합니다.
+/// 트리거 : 데미지를 받을때
+/// </summary>
+
 public class TrueDamageDeBuff : StatusEffect
 {
-    public override void Apply(Unit target, int count)
-    {
-        base.Apply(target, count); // 공통 로직 호출
-        var stats = target.GetComponent<UnitStatus>();
 
+    public void Subscribe(StatusEffectManager manager, Unit owner)
+    {
+        manager.OnDamageTaken += HandleDamageTaken;
     }
 
-    public override void Remove(Unit target)
+    public void Unsubscribe(StatusEffectManager manager, Unit owner)
     {
-        var stats = target.GetComponent<UnitStatus>();
+        manager.OnDamageTaken -= HandleDamageTaken;
     }
+
+
+    private void HandleDamageTaken(Unit owner, int dmg)
+    {
+        int reflect = Mathf.CeilToInt(dmg * 3f * stack);
+
+        Debug.Log($"{owner.name} 데미지 받음: {reflect} 고정피해 추가!");
+
+        ConsumeToken(owner); // 토큰 1 소모 → 0이면 제거
+    }
+
 }
 /// <summary>
 /// 유닛은 해당 상태이상 관리를 반드시 하나 가지고 있어야합니다.
@@ -98,17 +182,39 @@ public class TrueDamageDeBuff : StatusEffect
 /// </summary>
 public class StatusEffectManager: MonoBehaviour
 {
-    
+   
     private List<StatusEffect> activeEffects = new List<StatusEffect>();
+    public Unit targetUnit;
 
+
+    // 이벤트 정의
+    public event Action<Unit> OnTurnEnd;
+    public event Action<Unit, int> OnDamageTaken;
+    public event Action<Unit> OnTurnStart;
+    public event Action<Unit> OnAttack;
+    public event Action<Unit> OnDeath;
+
+    /// <summary>
+    /// UnitHpbar 라는 script 를 인터페이스 위치 이동하는 스크립트로 이름을 변경한후 아래의 있는 변수를 병합 해볼만합니다.
+    /// </summary>
+    public GameObject canvas;
+    public RectTransform canvasRectTransform;
+    public RectTransform rectStatusEffect;
     private GameObject EffectPanel;
+    
 
-    private void Start()
+    private void Awake()
     {
-        GameObject canvas  = GameManager.instance.HPCanvas;
-        EffectPanel = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/StatusEffect/StatusEffectPanel"),canvas.transform);
-        
+        targetUnit = GetComponent<Unit>();
+
+        //UI 초기화
+        canvas = GameManager.instance.HPCanvas;
+        canvasRectTransform = canvas.GetComponent<RectTransform>();
+        EffectPanel = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/StatusEffect/StatusEffectPanel"), canvas.transform);
+        rectStatusEffect = EffectPanel.GetComponent<RectTransform>();
     }
+
+    
 
 
 
@@ -116,28 +222,110 @@ public class StatusEffectManager: MonoBehaviour
     {
         if(activeEffects.Count > 0)
         {
-            Debug.Log($"{gameObject.name} 의 현재 활성화된 상태이상 개수 : {activeEffects.Count}");
+            UpdateStatusPanelPosition();
+            /*
+            foreach (var effect in activeEffects)
+            {
+                if (effect.UIIcon != null)
+                    effect.UpdateStackText();
+            }
+            */
+
         }
     }
 
-    public void AddEffect(StatusEffect effect,int count,Unit target)
+    /// <summary>
+    /// 상태이상 추가
+    /// </summary>
+    /// <param name="effect"></부여될 상태이상 타입>
+    /// <param name="count"></스택값>
+  
+    public void AddEffect(StatusEffect effect,int count)
     {
         
-        Debug.Log("상태이상 효과 추가");
-        effect.Apply(target,count);
-        activeEffects.Add((effect));
+        
 
-        if(effect.IconSprite != null)
+        StatusEffect existingEffect = activeEffects.Find(e => e.GetType() == effect.GetType());
+
+
+        if (existingEffect != null)
         {
-            GameObject EffectIcon = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/StatusEffect/StatusEffectIcon"),EffectPanel.transform);
-            Image IconImage = EffectIcon.GetComponent<Image>();
-            IconImage.sprite = effect.IconSprite;
+            // 2. 이미 있으면 stack만 올리고 Apply 갱신
+            existingEffect.Apply(targetUnit, count);
+        }else
+        {
+            //새로생성
+            effect.Apply(targetUnit, count);
+            activeEffects.Add(effect);
 
 
 
+            // UI 생성
+            if (effect.IconSprite != null)
+            {
+                GameObject icon = Instantiate(
+                    Resources.Load<GameObject>("인터페이스/StatusEffect/StatusEffectIcon"),
+                    EffectPanel.transform
+                );
+                icon.GetComponent<Image>().sprite = effect.IconSprite;
+                //연결후 텍스트 표시
+                effect.UIIcon = icon;
+                effect.stackText = icon.GetComponentInChildren<TextMeshProUGUI>();
+                effect.UpdateStackText();
+            }
+            // 이벤트 구독
+            if (effect is ISubscribeEvents sub)
+                sub.Subscribe(this, targetUnit);
         }
+
+    
             
     
+    }
+
+    public void RemoveEffect(StatusEffect effect)
+    {
+        if (effect is ISubscribeEvents sub)
+            sub.Unsubscribe(this, targetUnit);
+
+        activeEffects.Remove(effect);
+        effect.Remove(targetUnit);
+    }
+
+    // 이벤트 
+
+
+  
+
+  
+
+    /// <summary>
+    /// 트리거 호출함수
+    /// </summary>
+
+    public void TriggerTurnEnd() => OnTurnEnd?.Invoke(targetUnit);
+    public void TriggerTurnStart() => OnTurnStart?.Invoke(targetUnit);
+    public void TriggerDamageTaken(int damage) => OnDamageTaken?.Invoke(targetUnit, damage);
+    public void TriggerAttack() => OnAttack?.Invoke(targetUnit);
+    public void TriggerDeath() => OnDeath?.Invoke(targetUnit);
+
+    /// 
+
+
+
+
+
+
+    private void UpdateEffectIcon(StatusEffect effect)
+    {
+        if (effect.UIIcon != null)
+        {
+            Text stackText = effect.UIIcon.GetComponentInChildren<Text>();
+            if (stackText != null)
+            {
+                stackText.text = effect.stack.ToString();
+            }
+        }
     }
 
     public void RemoveEffect(StatusEffect effect,Unit target)
@@ -146,6 +334,17 @@ public class StatusEffectManager: MonoBehaviour
         activeEffects.Remove(effect);
     }
 
-   
-    
+
+
+
+    public void UpdateStatusPanelPosition()
+    {
+        Vector3 worldPos = new Vector3(targetUnit.transform.position.x, targetUnit.transform.position.y - 2f, targetUnit.transform.position.z);
+        rectStatusEffect.position = worldPos;
+        float scaleMultiplier = 0.5f / Camera.main.orthographicSize;
+        rectStatusEffect.localScale = Vector3.one * (scaleMultiplier / 2);
+    }
+
+
+
 }
