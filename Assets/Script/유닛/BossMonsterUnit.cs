@@ -12,9 +12,9 @@ public class BossMonsterUnit : MonsterUnit
 
     
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
     }
 
 

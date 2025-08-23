@@ -21,7 +21,7 @@ public class MonsterScriptableObject : BaseScriptableObject
     public PatternData[] MovePattern;
     public int DropGold;
     public MonSterMagicScriptableObejct[] UsingMagic;
-
+    public Sprite MonsterIcon;
 
 
     public override void SetValues(string[] values)
@@ -41,6 +41,7 @@ public class MonsterScriptableObject : BaseScriptableObject
         MovePattern = ConversBlocks(values[14]);
         DropGold = int.Parse(values[15].Trim());
         UsingMagic = ConversMagic(values[16].Trim());
+        MonsterIcon = Resources.Load<Sprite>("Sprite/∏ÛΩ∫≈Õ" + id);
 
 
     }

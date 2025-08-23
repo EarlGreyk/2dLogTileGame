@@ -18,7 +18,7 @@ MonoBehaviour:
   MagicDesc: "\uC801\uC5D0\uAC8C \uD654\uC5FC\uAD6C\uB97C \uB0A0\uB9BC"
   MagicRequiredMana: 4
   MagicSlabSoket: 1
-  MagicValue: 12
+  MagicValue: 100
   MagicCastingRange: {fileID: 11400000, guid: 7f0121c215185a743909b30238322eeb, type: 2}
   MagicDamageRange: {fileID: 11400000, guid: 75d008f6edc6b124b90f65e4a841afa3, type: 2}
   MagicDuration: 0

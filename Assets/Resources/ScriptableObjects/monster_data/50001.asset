@@ -19,7 +19,7 @@ MonoBehaviour:
   NonElementalDamageValue: 0.4
   BarrierValue: 0.4
   ReducionValue: 0
-  Level: 1
+  Level: 0
   Type: 0
   Reward: 1
   ActionPoint: 5
@@ -29,3 +29,4 @@ MonoBehaviour:
   DropGold: 1000
   UsingMagic:
   - {fileID: 11400000, guid: 00d7a6944eb0da64c8888f17860d0886, type: 2}
+  MonsterIcon: {fileID: 21300000, guid: c8f9ee9f23f8a0c45b04ce0ee2fb287f, type: 3}

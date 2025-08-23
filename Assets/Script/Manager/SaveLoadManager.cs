@@ -61,7 +61,7 @@ public class GameManagerSaveData
 {
     public int stage;
     public int round;
-    public int lampLight;
+    public float lampLight;
     public List<string> roundInfo = new List<string>();
 
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerUnit : Unit
 {
@@ -9,11 +10,13 @@ public class PlayerUnit : Unit
 
     public BoxCollider2D boxCollider2D;
 
- 
+    private Vector3 previousPosition;
+
+
     // Start is called before the first frame update
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         status.effectAdd(SettingData.LuneStatus);
  
@@ -29,29 +32,37 @@ public class PlayerUnit : Unit
             return;
 
 
+        if(previousPosition != transform.position )
+            previousPosition = transform.position;
+
+
         //아래는 전투가 아닐때만 작동합니다.
         //유닛 기본이동구현
         if (   Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)    )
         {
-            transform.position += Vector3.up*0.1f;
+           
+            transform.position += Vector3.up*0.05f;
         }
 
         // S 키를 눌렀을 때, 카메라를 아래쪽(Y축)으로 이동
         if (Input.GetKey(KeyCode.S))
         {
-            transform.position += Vector3.down * 0.1f;
+            
+            transform.position += Vector3.down * 0.05f;
         }
 
         // A 키를 눌렀을 때, 카메라를 왼쪽으로 이동
         if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * 0.1f;
+           
+            transform.position += Vector3.left * 0.05f;
         }
 
         // D 키를 눌렀을 때, 카메라를 오른쪽으로 이동
         if (Input.GetKey(KeyCode.D))
-        {
-            transform.position += Vector3.right * 0.1f;
+        {   
+            
+            transform.position += Vector3.right * 0.05f;
         }
     }
 
@@ -82,44 +93,44 @@ public class PlayerUnit : Unit
 
             GameObject tilemap = GameManager.instance.MapGenerator.spawnedTilemaps[GameManager.instance.CurrentPos];
             Vector2 comparePos = new Vector2(GameManager.instance.CurrentPos.x*15, GameManager.instance.CurrentPos.y*15) + new Vector2(7.5f, 7.5f);
-            float valueX = transform.position.x - 7.5f;
-            float valueY = transform.position.y - 7.5f;
+          
             if (tilemap == other.gameObject.transform.parent.gameObject)
             {
                 ColiderCheck = true;
-                Debug.Log($"동서 비교 {valueX} : {comparePos.x + 4}");
+                Vector2 moveDirection = (Vector2)transform.position - (Vector2)previousPosition;
+                StartCoroutine(GameManager.instance.PlayerStop(1f)); 
                 //서쪽
-                if (valueX > comparePos.x - 4)
+                if (moveDirection.x>0)
                 {
                     Debug.Log("동쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(1, 0);
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.5f));
+                    transform.position += Vector3.right * 1f;
+                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
-                }
-                    
-                if (valueX < comparePos.x + 4)
+                }else if (moveDirection.x < 0)
                 {
                     Debug.Log("서쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.5f));
+                    transform.position += Vector3.left * 1f;
+                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
 
                 }
 
-                if (valueY > comparePos.y + 4)
+                if (moveDirection.y >0)
                 {
                     Debug.Log("북쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(0, 1);
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.5f));
+                    transform.position += Vector3.up * 1f;
+                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
 
-                }
-
-                if (valueY < comparePos.y + 4)
+                }else if (moveDirection.y < 0)
                 {
                     Debug.Log("남쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(0, -1);
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.5f));
+                    transform.position += Vector3.down * 1f;
+                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
 
                 }
@@ -131,4 +142,10 @@ public class PlayerUnit : Unit
 
 
     }
+
+
+
+
+   
+   
 }

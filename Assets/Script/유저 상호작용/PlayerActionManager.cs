@@ -75,7 +75,6 @@ public class PlayerActionManager : MonoBehaviour
         if (magic.TokenIndex == 1)
         {
             DamageDeBuff token = new DamageDeBuff();
-            Debug.Log(token);
             EM.AddEffect(token, magic.TokenCount);
             return;
         }

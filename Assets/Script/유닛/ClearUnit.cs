@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 /// <summary>
@@ -17,7 +18,7 @@ public class ClearUnit : MonoBehaviour
     
   
     // Start is called before the first frame update
-    public MonsterListScriptableObejct monsterList;
+    public List<MonsterScriptableObject> monsterList = new List<MonsterScriptableObject>();
 
 
 
@@ -26,8 +27,11 @@ public class ClearUnit : MonoBehaviour
 
     private Transform targetObj;
 
-    //정화에 필요한 수치입니다.
-    public int ClearValue;
+    //정화에 필요한 렘프수치입니다.
+    public float LampValue;
+
+    //정화시 증가하는 정화 게이지수치입니다
+    public float ClearValue;
    
 
 
@@ -37,13 +41,46 @@ public class ClearUnit : MonoBehaviour
     {
         clear = false;
         battle = true;
+        LampValue = 20;
         ClearValue = 50;
     }
     /// FeilidInfo 해서 해당 함수를 사용
     /// 선언시 정화 유닛의 몬스터 정보값을 수정합니다. 
     public void MonsterListSet(int value)
     {
+        MonsterScriptableObject[] monsterArray = Resources.LoadAll<MonsterScriptableObject>("ScriptableObjects/monster_data");
+
+        List<MonsterScriptableObject> grade0 = new List<MonsterScriptableObject>();
+
+        foreach (var monster in monsterArray)
+        {
+            if (monster == null) continue; // 타입 불일치 등으로 null 들어온 경우 스킵
+
+            if (monster.Level == 0)
+                grade0.Add(monster);
+        }
+
+     
+        Debug.Log($"grade0.Count = {grade0.Count}");
+        Debug.Log(monsterList.Count);
+        if (grade0.Count > 0)
+        {
+            Debug.Log($"grade0[0] is {(grade0[0] == null ? "NULL" : grade0[0].name)}");
+        }
+
+        if (value<10)
+        {
+            for(int k = 0; k<value /2; k++)
+            {
+                int r = Random.Range(0, grade0.Count);
+
+                monsterList.Add(grade0[r]);
+            }
+            
+        }
+            
         
+            
     }
     /// <summary>
     /// 전투 종료시 상호작용한 정화유닛에게 승리했는지 패배했는지 정보값을 넘겨주기 위한 함수입니다.
@@ -54,7 +91,7 @@ public class ClearUnit : MonoBehaviour
         battle = false;
         if (value)
         {
-            ClearValue /= 10;
+            LampValue *= 0.1f;
             
         }
         else
@@ -75,7 +112,7 @@ public class ClearUnit : MonoBehaviour
                 if(battle)
                 {
                     Debug.Log("전투전환");
-                    GameManager.instance.BattleSet();
+                    GameManager.instance.BattleSet(monsterList);
                 }else
                 {
                     if (!clear)
@@ -83,7 +120,7 @@ public class ClearUnit : MonoBehaviour
                         Debug.Log("정화시작");
                         clear = true;
                         GameManager.instance.GameProsessManager.ClearPanelSet(this, false);
-                        GameManager.instance.ClearSet(ClearValue);
+                        GameManager.instance.ClearSet(LampValue,ClearValue);
                     }
                     
                 }
@@ -106,8 +143,12 @@ public class ClearUnit : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("플레이어가 정화 유닛에 접근햇습니다.");
-            GameManager.instance.GameProsessManager.ClearPanelSet(this, true);
-            targetObj = other.gameObject.transform;
+            if(battle)
+            {
+                GameManager.instance.GameProsessManager.ClearPanelSet(this, true, monsterList);
+                targetObj = other.gameObject.transform;
+            }
+            
 
         }
 

@@ -24,6 +24,10 @@ public class MonsterUnit : Unit
 
     [SerializeField]
     private PatternData movePattenData;
+
+    public PatternData MovePattenData { get { return movePattenData; } set { movePattenData = value; } } 
+
+
     [SerializeField]
     private PatternData attackRangePattenData;
     [SerializeField]
@@ -120,20 +124,32 @@ public class MonsterUnit : Unit
 
 
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         currentAction.Unit = this;
-        status.effectRatio(ratioStatus);
         hpbar.HpTextSet();
-        attackMagicArray = ratioStatus.UsingMagic;
-
-        randomAction = Random.Range(0, attackMagicArray.Length);
-
-
         ActionCheck();
-       
 
+    }
+    public void Init(MonsterScriptableObject data)
+    {
+        
+        ratioStatus = data;
+        if(status == null)
+        {
+            status = new UnitStatus(baseStatus);
+        }
+
+        if(data != null)
+            status.effectRatio(data);
+
+        movePattenData = data.MovePattern[0];
+        
+        attackMagicArray = ratioStatus.UsingMagic;
+        attackRangePattenData = attackMagicArray[0].MagicDamageRange;
+        randomAction = Random.Range(0, attackMagicArray.Length);
+     
     }
     private void OnMouseDown()
     {

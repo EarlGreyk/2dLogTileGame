@@ -3561,9 +3561,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clear: 0
   battle: 0
-  victory: 0
-  monsterList: {fileID: 0}
+  monsterList: []
   canvas: {fileID: 0}
+  LampValue: 0
+  ClearValue: 0
 --- !u!61 &2917581890395557618
 BoxCollider2D:
   m_ObjectHideFlags: 0

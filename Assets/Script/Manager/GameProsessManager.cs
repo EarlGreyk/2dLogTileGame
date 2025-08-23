@@ -26,6 +26,10 @@ public class GameProsessManager : MonoBehaviour
     [SerializeField]
     public GameObject ClearUnitInfoPanel;
 
+    //정화 유닛의 정보를 보여주는 인터페이스를 관리합니다.
+    [SerializeField]
+    public List<GameObject> ClearUnitList;
+
    
     /// 아래의 변수들은 전부 전투(Battel)이후 받는 정보값들을 표시한것입니다.
 
@@ -55,7 +59,8 @@ public class GameProsessManager : MonoBehaviour
 
     [SerializeField]
     private GameObject playerIcon;
-
+    [SerializeField]
+    private List<GameObject> stayUiList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> battleUIList = new List<GameObject>();
     [SerializeField]
@@ -95,6 +100,9 @@ public class GameProsessManager : MonoBehaviour
 
     [SerializeField]
     private InteractionUI interactionPanel;
+
+    
+    
 
 
 
@@ -267,6 +275,10 @@ public class GameProsessManager : MonoBehaviour
         
         if (mode == "stay")
         {
+            for (int i = 0; i < stayUiList.Count; i++)
+            {
+                stayUiList[i].SetActive(true);
+            }
             prosessType = ProsessType.Stay;
             for (int i = 0; i < battleUIList.Count; i++)
             {
@@ -276,6 +288,7 @@ public class GameProsessManager : MonoBehaviour
             {
                 restUIList[i].SetActive(false);
             }
+           
             GameManager.instance.MonsterAIManager.MonsterReset();
             Destroy(GameManager.instance.PlayerUnit.gameObject);
             
@@ -288,13 +301,14 @@ public class GameProsessManager : MonoBehaviour
         if (mode == "battle")
         {
             prosessType = GameProsessManager.ProsessType.Battle;
-            for (int i = 0; i < battleUIList.Count; i++)
-            {
-                battleUIList[i].SetActive(true);
-            }
+            battleUIList[0].SetActive(true);
             for (int i = 0; i < restUIList.Count; i++)
             {
                 restUIList[i].SetActive(false);
+            }
+            for (int i = 0; i < stayUiList.Count; i++)
+            {
+                stayUiList[i].SetActive(false);
             }
             PlayerResource.instance.BlockReset();
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
@@ -306,13 +320,18 @@ public class GameProsessManager : MonoBehaviour
         if (mode == "rest")
         {
             PlayerResource.instance.BlockReset();
+            for (int i = 0; i < restUIList.Count; i++)
+            {
+                restUIList[i].SetActive(true);
+            }
+            
             for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(false);
             }
-            for (int i = 0; i < restUIList.Count; i++)
+            for (int i = 0; i < stayUiList.Count; i++)
             {
-                restUIList[i].SetActive(true);
+                stayUiList[i].SetActive(false);
             }
         }
         //SaveLoadManager.instance.Save();
@@ -320,19 +339,22 @@ public class GameProsessManager : MonoBehaviour
 
 
 
-
+    
 
 
    ////정화 유닛의 정보를 플레이어에게 보여주기 위해 Panel에 갱신합니다. 
    ////해당 데이터 값에 맞게 이미지와 정보를 수정해야합니다.
-   
+
    public void ClearPanelSet(ClearUnit clearUnit, bool set)
     {
         if (set)
         {
-            ClearUnitInfoPanel.SetActive(true);
             if (clearUnit.battle)
-                interactionPanel.Set(true,"전투");
+            {
+                interactionPanel.Set(true, "전투");
+                ClearUnitInfoPanel.SetActive(true);
+            }
+                
             else
                 interactionPanel.Set(true, "정화");
 
@@ -341,9 +363,59 @@ public class GameProsessManager : MonoBehaviour
         else
         {
             ClearUnitInfoPanel.SetActive(false);
+            for (int i = ClearUnitList.Count-1; i >=0; i--)
+            {
+                Destroy(ClearUnitList[i]);
+            }
+            ClearUnitList.Clear();
             interactionPanel.Set(false,"");
+            
         }
         
+   }
+    public void ClearPanelSet(ClearUnit clearUnit, bool set, List<MonsterScriptableObject> monsterListSo)
+    {
+        if (set)
+        {
+            ClearUnitInfoPanel.SetActive(true);
+
+            Dictionary<Sprite,int> Dic = new Dictionary<Sprite, int>();
+
+            for (int i = 0; i < monsterListSo.Count; i++)
+            {
+
+                Sprite key = monsterListSo[i].MonsterIcon;
+                if (Dic.ContainsKey(key))
+                    Dic[key]++;
+                else
+                    Dic[key] = 1;
+
+            }
+
+            foreach (var pair in Dic)
+            {
+                GameObject monsterListObj = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/Monster/MonsterInfo"), ClearUnitInfoPanel.transform);
+                MonsterInfo info = monsterListObj.GetComponent<MonsterInfo>();
+                info.InfoSet(pair.Key,pair.Value);
+                ClearUnitList.Add(monsterListObj);
+            }
+           
+            
+
+
+            if (clearUnit.battle)
+                interactionPanel.Set(true, "전투");
+            else
+                interactionPanel.Set(true, "정화");
+
+
+        }
+        else
+        {
+            ClearUnitInfoPanel.SetActive(false);
+            interactionPanel.Set(false, "");
+        }
+
     }
 
 

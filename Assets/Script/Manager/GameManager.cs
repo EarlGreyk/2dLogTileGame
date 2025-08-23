@@ -88,9 +88,9 @@ public class GameManager : MonoBehaviour
     /// 불씨
     /// 해당 수치가 0이되면 게임을 패배합니다.
     /// </summary>
-    private int lampLight = 100;
+    private float lampLight = 100;
 
-    public int LampLight { get { return lampLight; } set { lampLight = value; } }
+    public float LampLight { get { return lampLight; } set { lampLight = value; } }
 
     private int stage = 1;
     public int Stage { get { return stage; } set { stage = value; } }
@@ -115,8 +115,14 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI lamptext;
 
+
+    private float maxClearValue = 1000;
+
+    private float currentClearValue = 0;
+
     [SerializeField]
-    private TextMeshProUGUI roundText;
+    private Slider ClearSlider;
+
 
     
 
@@ -135,6 +141,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        
         if(GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay )
         {
             isPlayer = true;
@@ -222,26 +229,29 @@ public class GameManager : MonoBehaviour
     /// value 가 true라면 생성을 false라면 지웁니다.
     /// </summary>
 
-    private void setMonster(bool value)
+    private void setMonster(bool value,List<MonsterScriptableObject> monsterList)
     {   
         if(value)
         {
-            monsterRoundInfo = Resources.Load<RoundInfo>("Round/" + stage.ToString() + "/" + round.ToString());
-            if (monsterRoundInfo != null)
+            if (monsterList != null)
             {
-                for (int i = 0; i < monsterRoundInfo.MonsterList.Count; i++)
+                for (int i = 0; i < monsterList.Count; i++)
                 {
                     int k = Random.Range(0, BattleZone.MonsterSponePosList.Count);
                     Vector3Int SponePos = RandomSpone(BattleZone.MonsterSponePosList[k]);
-                    GameObject unitPrefabs = monsterRoundInfo.MonsterList[i];
+                    GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/몬스터/Monster_Prefabs");
 
-                    MonsterUnit monster = unitSpawner.SpawnMonster(SponePos, unitPrefabs);
-                    monster.transform.position = unitSpawner.PosUnitSet(SponePos);
+                    //몬스터 생성 이후 몬스터 데이터 초기화
+                    MonsterUnit unit = unitPrefabs.GetComponent<MonsterUnit>();
+                    unit.Init(monsterList[i]);
+
+                    unitSpawner.SpawnMonster(SponePos, unitPrefabs);
+                    unit.transform.position = unitSpawner.PosUnitSet(SponePos);
                 }
             }
             else
             {
-                Debug.Log("라운드 정보가 집계되지 않고있습니다.");
+                Debug.Log("필드 정보가 집계되지 않고있습니다.");
             }
         }
         else
@@ -314,35 +324,22 @@ public class GameManager : MonoBehaviour
         onMonsterAction();
         MonsterAIManager.MonsterCount();
     }
-    public void RoundUpdate(int stage = 0, int round = 1)
-    {
-        if(stage !=0)
-        {
-            this.stage = stage;
-            this.round = round;
-        }else
-        {
-            this.round += round;
-
-            if (this.round > 10)
-            {
-                this.round = 1;
-                this.stage++;
-                roundInfo.Clear();
-            }
-        }
-        roundText.text = this.stage.ToString() + " - " + this.round.ToString();
-    }
+ 
 
     ////전투를 시작합니다. 
-    /// 이 함수는 대기 필드에서 전투 필드로 넘어갈때 작동합니다.
-    public void BattleSet()
+    /// 이 함수는 대기 필드에서 전투 필드로 넘어갈때 작동합니다. <summary>
+    /// 
+    /// </summary>
+    /// <param name="monsterList"></몬스터 목록을 받아옵니다.>
+    public void BattleSet(List<MonsterScriptableObject> monsterList)
     {
+        Debug.Log(monsterList.Count);
 
         setBattleField();
         onPlayerAction();
-        setMonster(true);
         setPlayer(true);
+        setMonster(true,monsterList);
+        
        
         GameProsessManager.changeMode("battle");
 
@@ -351,7 +348,8 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// 대기 필드로 넘어갑니다.
     /// 이 함수는 전투필드에서 대기 필드로 넘어갈때 작동합니다.
-    /// 전투 개요 UI에서 상호작용을 할시 작동됩니다.
+    /// 전투 개요 UI에서 확인 버튼을 누르면 작동됩니다.
+    /// 
     /// </summary>
     public void StaySet()
     {
@@ -372,21 +370,39 @@ public class GameManager : MonoBehaviour
     /// /// 정화유닛을 정화할때 작동하니다.
     /// 이 함수는 정화를 작동하기 위해 연출시간동안 플레이어의 기타 상호작용을 중지한 이후 원상태로 돌립니다.
     /// </summary>
-    /// <param name="value"></전투를 승리하거나 패배했음을 넘겨줍니다.>
+    /// <param name="lampvalue"></램프감소량을 얼마나 해야하는지 보냅니다>
+    /// /// <param name="clearvalue"></정화 게이지를 얼마나 증가시킬지 보여줍니다.>
 
-    public void ClearSet(int value)
+    public void ClearSet(float lampvalue,float clearvalue)
     {
         stopAction();
-        lampLight -= value;
+        lampLight -= lampvalue;
+        currentClearValue += clearvalue;
         StartCoroutine(Clearing());
    
    
+    }
+    /// <summary>
+    /// 플레이어가 어떠한 상황에서 동작 실행을했을때 
+    /// 행동 불가능 상태로 만들어야할 경우에 사용합니다.
+    /// </summary>
+    /// <returns></returns>
+
+    public IEnumerator PlayerStop(float stopvalue)
+    {
+        yield return new WaitForSeconds(0.05f);
+        isPlayer = false;
+        yield return new WaitForSeconds(stopvalue);
+        isPlayer = true;
+
+
+        yield return null;
     }
 
 
 
 
-    IEnumerator Clearing()
+    private IEnumerator Clearing()
     {
 
         yield return new WaitForSeconds(5f);
@@ -394,7 +410,14 @@ public class GameManager : MonoBehaviour
         if (lampLight <= 0)
             PlayerLose();
         else
+        {
             isPlayer = true;
+         
+
+            ClearSlider.value = (currentClearValue / maxClearValue);
+            
+        }
+            
 
          
 

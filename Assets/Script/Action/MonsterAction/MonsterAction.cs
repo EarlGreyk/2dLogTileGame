@@ -89,6 +89,7 @@ public class MonsterAction : MonoBehaviour
             {
                 if (hitunits[i] == GameManager.instance.PlayerUnit)
                 {
+                    Debug.Log("몬스터 액션 능력액션");
                     hitunits[i].HitDamage(currentMagic.MagicValue * unit.status.Damage);
                     //현재 액션을 하고있는 몬스터의 데미지 가함 트리거를 작동하여 상태이상을 제거합니다.
                     unit.effectManager.TriggerAttack();

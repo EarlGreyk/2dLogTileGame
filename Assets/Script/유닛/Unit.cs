@@ -85,6 +85,7 @@ public class UnitStatus
     }
     /// <summary>
     /// 일반 몬스터 유닛의 스테이터스 배율을 조정하기 위해 사용합니다.
+    /// 시련메달을 적용할때 사용합니다
     /// </summary>
     /// <param name="ratioTemp"></받아올 스테이터스>
     /// <param name="grade"></false = 노말 몬스터 , true = 보스 몬스터  [기본값은 false입니다.]>
@@ -209,10 +210,14 @@ public class Unit :MonoBehaviour
     private GameObject uicanvas;
     private RectTransform uicanvasRectTransform;
 
-
-    public virtual void Start()
+    
+    public virtual void Awake()
     {
-        status = new UnitStatus(baseStatus);
+        if(status ==null)
+        {
+            status = new UnitStatus(baseStatus);
+        }
+            
         GameObject obj = Instantiate(HPbar, GameManager.instance.HPCanvas.transform);
         hpbar = obj.GetComponent<UnitHpBar>();
         hpbar.HpbarSet(this);
@@ -230,11 +235,15 @@ public class Unit :MonoBehaviour
         if (CheckVisibility() && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
         {
 
-            hpbar.rectHpbar.gameObject.SetActive(true);
-            hpbar.UpdateHpbarPosition();
+            if(hpbar.rectHpbar !=null)
+            {
+                hpbar.rectHpbar.gameObject.SetActive(true);
+                hpbar.UpdateHpbarPosition();
+            }
 
             if (hpbar.rectAction != null)
             {
+
                 hpbar.UpdateActionPosition();
                 hpbar.rectAction.gameObject.SetActive(true);
             }

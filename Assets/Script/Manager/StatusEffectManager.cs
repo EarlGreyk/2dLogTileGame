@@ -32,6 +32,7 @@ public abstract class StatusEffect
 
     public virtual void Remove(Unit target)
     {
+        Debug.Log("상태이상제거 완료 UI제거하도록!");
         if (UIIcon != null)
         {
             GameObject.Destroy(UIIcon);
@@ -91,7 +92,6 @@ public class DamageDeBuff : StatusEffect
     {
         base.Apply(target, count); // 공통 로직 호출
         IconSprite = Resources.Load<Sprite>("인터페이스/StatusEffect/DeBuff/DamageDeBuff");
-        Debug.Log(IconSprite);
         var Unit = target.GetComponent<Unit>();
         Unit.status.Damage -= 0.1f * count;
         stack += count;
@@ -105,23 +105,24 @@ public class DamageDeBuff : StatusEffect
         Unit.status.Damage += 0.1f * stack;
     }
 
-    public void Subscribe(StatusEffectManager manager, Unit target)
+    public void Subscribe(StatusEffectManager manager)
     {
-        manager.OnTurnEnd += HandleTurnEnd;
+        manager.OnAttack += HandleAttack;
     }
 
-    public void Unsubscribe(StatusEffectManager manager, Unit target)
+    public void Unsubscribe(StatusEffectManager manager)
     {
-        manager.OnTurnEnd -= HandleTurnEnd;
+        manager.OnAttack -= HandleAttack;
     }
 
-    private void HandleTurnEnd(Unit target)
+    private void HandleAttack(Unit attacker)
     {
+        Debug.Log("핸들 작동 구독접근 스택감소");
         stack--;
         if (stack <= 0)
-            target.effectManager.RemoveEffect(this);
+            attacker.effectManager.RemoveEffect(this);
         else
-            UpdateStackText();
+            ConsumeToken(attacker); // 토큰 1 소모 → 0이면 제거
     }
 }
 
