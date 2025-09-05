@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// 블록 인벤토리 및 강화를 담당합니다.
+/// </summary>
 public class BlockManage : MonoBehaviour
 {
     public static BlockManage instance;

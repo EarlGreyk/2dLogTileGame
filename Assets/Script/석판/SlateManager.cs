@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static SlateScriptableObejct;
 
 /// <summary>
 /// 석판 도감 클래스입니다.
@@ -15,7 +16,7 @@ public class SlateManager : MonoBehaviour
     private ScrollView dictionaryView;
 
 
-    private Dictionary<int,List<SlateScriptableObejct>> slateDic = new Dictionary<int,List<SlateScriptableObejct>>();
+    private Dictionary<StatusType, List<SlateScriptableObejct>> slateDic = new Dictionary<StatusType, List<SlateScriptableObejct>>();
 
     private List<SlateScriptableObejct> slateList = new List<SlateScriptableObejct>();
 
@@ -42,7 +43,7 @@ public class SlateManager : MonoBehaviour
         SlateScriptableObejct[] allSlates = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data");
         foreach (SlateScriptableObejct slate in allSlates)
         {
-            int key = GetCategoryKey(slate); 
+            StatusType key = GetCategoryKey(slate); 
             if (!slateDic.ContainsKey(key))
             {
                 Debug.Log($"생성{key}");
@@ -62,7 +63,7 @@ public class SlateManager : MonoBehaviour
         {
             if (slate.Enable)
             {
-                int key = GetCategoryKey(slate);
+                StatusType key = GetCategoryKey(slate);
                 if (!slateDic.ContainsKey(key))
                 {
                     slateDic[key] = new List<SlateScriptableObejct>();
@@ -73,13 +74,13 @@ public class SlateManager : MonoBehaviour
         }
     }
 
-    private int GetCategoryKey(SlateScriptableObejct slate)
+    private StatusType GetCategoryKey(SlateScriptableObejct slate)
     {
-        return slate.SlateType; 
+        return slate.SlateStatus; 
     }
 
 
-    public void slateSerach(int key)
+    public void slateSerach(StatusType key)
     {
         if (!slateDic.ContainsKey(key))
         {
@@ -128,13 +129,13 @@ public class SlateManager : MonoBehaviour
     //중복된 슬레이트를 받아오지 못하도록 목록에서 제거합니다.
     public void DicSlateRemove(SlateUI slateUi)
     {
-        if (slateUi.Slate == null)
+        if (slateUi.CatalogSlate == null)
             return;
 
-        SlateScriptableObejct removeSlate = slateUi.Slate;
-        if(slateDic.ContainsKey(GetCategoryKey(slateUi.Slate)))
+        SlateScriptableObejct removeSlate = slateUi.CatalogSlate;
+        if(slateDic.ContainsKey(GetCategoryKey(slateUi.CatalogSlate)))
         {
-            var slates = slateDic[GetCategoryKey(slateUi.Slate)];
+            var slates = slateDic[GetCategoryKey(slateUi.CatalogSlate)];
 
             slates.Remove(removeSlate);
         }

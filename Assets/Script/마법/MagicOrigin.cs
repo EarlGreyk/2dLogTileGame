@@ -88,14 +88,21 @@ public class MagicOrigin
     /// </summary>
     public int TokenCount;
 
+
+    public SlateOrigin FisrtSlateOrigin;
+    public SlateOrigin SecondSlateOrigin;
+    public SlateOrigin ThirdSlateOrigin;
+
     /// <summary>
     /// 게임이 처음 시작되었을떄 마법을 생성합니다.
     /// </summary>
     /// <param name="MagicData"></마법 데이터.>
     public MagicOrigin(MagicScriptableObejct MagicData)
     {
-        MagicGrade = 1;
+        
         MagicLevel = 1;
+
+        MagicGrade = 1;
 
 
         MagicName = MagicData.MagicName;
@@ -125,5 +132,42 @@ public class MagicOrigin
         TokenCount = MagicData.TokenCount;
         
         
+    }
+
+
+    public void SlateEquip(SlateOrigin slate)
+    {
+        switch(slate.SlateStatus)
+        {
+            case SlateScriptableObejct.StatusType.Power:
+                MagicDamage += slate.SlateValue;
+                break;
+            case SlateScriptableObejct.StatusType.Duration:
+                if(MagicDuration <=0)
+                {
+                    Debug.Log("장착할수없습니다");
+                    return;
+                }
+                else 
+                {
+                    MagicDuration += slate.SlateValue;
+                }
+                
+
+                break;
+            case SlateScriptableObejct.StatusType.Consumption:
+                MagicRequiredMana -= (int)slate.SlateValue;
+                break;
+        }
+
+        
+    }
+
+    public void MagicUpgrade()
+    {
+        if(MagicLevel <3)
+        {
+            MagicLevel++;
+        }
     }
 }

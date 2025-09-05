@@ -131,20 +131,7 @@ public class LuneEnableData
     }
 }
 
-[System.Serializable]
-public class LightManagerSaveData
-{
-    public List<string> lampFireName = new List<string>();
-    public LightManagerSaveData(LampManage lampManage)
-    {
-        for(int i =0; i < lampManage.EquipLampLight.Count; i++)
-        {
-            lampFireName.Add(lampManage.EquipLampLight[i].FireData.name);
-        }
-        
-    }
 
-}
 
 [System.Serializable]
 public class PlayerLevelManagerSaveData
@@ -196,9 +183,7 @@ public class SaveLoadManager : MonoBehaviour
     
     public LuneEnableData LuneEnableData { get {return luneEnableData; } }
 
-    private LightManagerSaveData lightManagerSaveData;
-
-    public LightManagerSaveData LightManagerSave { get {return lightManagerSaveData; } }
+    
 
     private PlayerLevelManagerSaveData playerLevelManagerSaveData;
     public PlayerLevelManagerSaveData PlayerLevelManagerSaveData { get { return playerLevelManagerSaveData; } }
@@ -234,7 +219,7 @@ public class SaveLoadManager : MonoBehaviour
         SavePlayerResource();
         SaveGameManager();
         SaveBlockManager();
-        SavelightManager();
+    
     }
     public void LuneSave()
     {
@@ -267,13 +252,7 @@ public class SaveLoadManager : MonoBehaviour
         File.WriteAllText(blockManagerPath, json);
     }
 
-    private void SavelightManager()
-    {
-        LightManagerSaveData saveData = new LightManagerSaveData(LampManage.Instance);
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(lightManagerPath, json);
-
-    }
+    
     private void SaveLuneEnable()
     {
         LuneEnableData saveData = new LuneEnableData(LuneManager.instance);
@@ -358,9 +337,7 @@ public class SaveLoadManager : MonoBehaviour
         if (blockManagerSaveData == null)
             return;
 
-        lightManagerSaveData = LoadLightManage();
-        if (lightManagerSaveData == null)
-            return;
+        
 
         LoadGameButton.interactable = true;
         
@@ -450,18 +427,7 @@ public class SaveLoadManager : MonoBehaviour
             return null;
         }
     }
-    private LightManagerSaveData LoadLightManage()
-    {
-        if (File.Exists(lightManagerPath))
-        {
-            string json = File.ReadAllText(lightManagerPath);
-            return JsonUtility.FromJson<LightManagerSaveData>(json);
-        }
-        {
-            Debug.Log("로드할 파일이 없습니다");
-            return null;
-        }
-    }
+   
     private PlayerLevelManagerSaveData LoadPlayerLevelManager()
     {
 

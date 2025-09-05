@@ -82,7 +82,10 @@ public class SettingManager : MonoBehaviour
                 return;
 
             PlaymagicUIs[i].gameObject.SetActive(true);
-            PlaymagicUIs[i].Magic = currentCharacter.PlayerData.ListMagics[i];
+            Debug.Log(currentCharacter.PlayerData.ListMagics[i]);
+            Debug.Log(PlaymagicUIs[i]);
+
+            PlaymagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
         }
 
 
@@ -92,7 +95,7 @@ public class SettingManager : MonoBehaviour
                 return;
 
             ListmagicUIs[i].gameObject.SetActive(true);
-            ListmagicUIs[i].Magic = currentCharacter.PlayerData.ListMagics[i];
+            ListmagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
         }
             
     }

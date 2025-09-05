@@ -88,9 +88,11 @@ public class GameManager : MonoBehaviour
     /// 불씨
     /// 해당 수치가 0이되면 게임을 패배합니다.
     /// </summary>
-    private float lampLight = 100;
+    private float lampLight;
 
     public float LampLight { get { return lampLight; } set { lampLight = value; } }
+
+    public float MaxLampLight;
 
     private int stage = 1;
     public int Stage { get { return stage; } set { stage = value; } }
@@ -141,7 +143,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
+        lampLight = 100;
+        MaxLampLight = lampLight;
         if(GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay )
         {
             isPlayer = true;
@@ -400,7 +403,10 @@ public class GameManager : MonoBehaviour
     }
 
 
-
+    /// <summary>
+    /// 정화 유닛을 정화하고 난후 해당 유닛 값을 지워야합니다.
+    /// </summary>
+    /// <returns></returns>
 
     private IEnumerator Clearing()
     {
@@ -417,9 +423,15 @@ public class GameManager : MonoBehaviour
             ClearSlider.value = (currentClearValue / maxClearValue);
             
         }
-            
 
-         
+        GameObject obj = MapGenerator.tileMapInfo[currentPos].InterObj.gameObject;
+        MapGenerator.tileMapInfo[currentPos].InterObj = null;
+        Destroy(obj);
+
+
+
+
+
 
         yield return null;
     }

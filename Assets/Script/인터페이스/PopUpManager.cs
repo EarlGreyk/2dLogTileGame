@@ -47,11 +47,18 @@ public class PopUpManager : MonoBehaviour
         popUp.Pop.SetActive(false);
 
     }
+    /// <summary>
+    /// esc에 작동하지 않는 UI를 열어야할때 사용합니다.
+    /// 대표적인것 [상점]
+    /// </summary>
+    /// <param name="popGo"></param>
     public void PopupChange(GameObject popGo)
     {
         if(popUpChange!=null)
         {
             popUpChange.gameObject.SetActive(false);
+            popUpChange = null;
+            
         }
         popUpChange = popGo;
         popUpChange.SetActive(true);

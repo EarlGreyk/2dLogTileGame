@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseScriptableObject :ScriptableObject
+public abstract class BaseScriptableObject : ScriptableObject
 {
     public int id;
 
@@ -13,4 +13,7 @@ public abstract class BaseScriptableObject :ScriptableObject
     /// </summary>
     /// <param name="values"></param>
     public abstract void SetValues(string[] values);
+
+
+    
 }

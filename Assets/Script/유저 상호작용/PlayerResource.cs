@@ -18,10 +18,6 @@ public class PlayerResource : MonoBehaviour
     public int MaxDrowCount ;
     public int CurrentDrowCount;
 
-    //플레이어가 장착하고 있는 마법 리스트
-    private List<MagicOrigin> playerMagicList = new List<MagicOrigin>();
-
-    public List<MagicOrigin> PlayerMagicList { get { return playerMagicList; } }
 
 
     //플레이어 장착하고 있는 총 덱 리스트
@@ -68,6 +64,8 @@ public class PlayerResource : MonoBehaviour
     private List<BlockPanel> playerUsePanelList = new List<BlockPanel>();
 
 
+
+
     //플레이어 골드. 
     private int gold;
     public int Gold { get { return gold; } 
@@ -89,9 +87,11 @@ public class PlayerResource : MonoBehaviour
     //goldTExt
     [SerializeField]
     private List<TextMeshProUGUI> goldTextList = new List<TextMeshProUGUI>();
+
+
+
     
-    
-    
+
 
     private void Awake()
     {
@@ -126,21 +126,10 @@ public class PlayerResource : MonoBehaviour
         }
 
         //플레이어의 스킬 을 등록합니다
+        //플레이어가 사용하는 table값을 마법으로 전환한다음에 사용합니다.
   
 
-        for (int i =0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
-        {
-            MagicOrigin magic = new MagicOrigin(SettingData.character.PlayerData.UsingMagics[i]);
-
-            Debug.Log(magic);
-
-            playerMagicList.Add(magic);
-        }
-
-        for(int i =0;i<PlayerMagicList.Count;i++)
-        {
-            playerSkillPanel[i].magicSet(playerMagicList[i]);
-        }
+        
 
 
         //

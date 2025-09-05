@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileMapInfo : MonoBehaviour
@@ -32,15 +33,45 @@ public class TileMapInfo : MonoBehaviour
     /// <summary>
     /// 정화 유닛입니다.
     /// </summary>
-    public ClearUnit clearUnit;
+    public InteractionObject InterObj;
+
+
+    /// <summary>
+    /// 해당 타일맵이 맵 생성시 첫번째에 될수 있는지 없는지를 체크합니다.
+    /// 만약 있다면 interObj을 생성해선 안됩니다.
+    /// </summary>
+    public bool FirstCheck;
 
 
     private void Start()
     {
         Clear = false;
         Battle = true;
-        if(clearUnit!=null)
-            clearUnit.MonsterListSet(5);
+        if(InterObj == null && !FirstCheck)
+        {
+            GameObject obj = null;
+            if (Random.Range(1,10) <= 5)
+            {
+                //정화유닛
+                obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ClearUnit"), gameObject.transform);
+            }
+            else
+            {
+                //상점
+                obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ShopUnit"), gameObject.transform);
+            }
+            Debug.Log(obj);
+            if (obj == null)
+                return;
+            
+            InterObj = obj.GetComponent<InteractionObject>();
+
+            //상호작용 오브젝트는 반드시 0,0좌표에 존재합니다.
+            obj.transform.localPosition = new Vector2(7.5f,7.5f);
+        }
+            
+
+            
     }
 
 }

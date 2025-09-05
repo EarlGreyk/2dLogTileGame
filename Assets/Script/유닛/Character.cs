@@ -17,7 +17,7 @@ public class Character : MonoBehaviour
 
         if (PlayerData == null)
         {
-            Debug.Log($"{gameObject.name}의 플레이어 데이터가 존재하지 않음");
+            //플레이어 캐릭터 데이터가 없다면 리턴.
             return;
         }
         image.sprite = PlayerData.PlayerSprite;

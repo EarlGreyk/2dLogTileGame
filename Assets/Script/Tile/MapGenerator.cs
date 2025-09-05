@@ -154,6 +154,10 @@ public class MapGenerator : MonoBehaviour
         }
 
 
+
+        
+
+
     }
 
     // 타일 생성 함수
@@ -161,7 +165,6 @@ public class MapGenerator : MonoBehaviour
 
     void SpawnTile(Vector2Int pos, Vector2Int incomingDirection, GameObject customTilePrefab)
     {
-        Debug.Log($"해당 좌표에 타일 생성을 시도합니다.: {pos}, 이전 타일 좌표: {incomingDirection}, 생성되는 프리팹 : {customTilePrefab}");
 
         GameObject selectedTilePrefab = null;
         GameObject newTilemapObject = null;
@@ -239,7 +242,7 @@ public class MapGenerator : MonoBehaviour
         BattleField.transform.position = Vector3.zero;
         BattleZone value = BattleField.GetComponentInChildren<BattleZone>();
         TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
-        info.clearUnit.gameObject.SetActive(false);
+        info.InterObj.gameObject.SetActive(false);
 
 
 
@@ -399,7 +402,6 @@ public class MapGenerator : MonoBehaviour
                 foreach (var prefab in eastTileMapPrefabs)
                 {
                     TileMapInfo tilemapDirection = prefab.GetComponent<TileMapInfo>();
-                    Debug.Log(prefab);
                     if (tilemapDirection.Right)
                     {
 

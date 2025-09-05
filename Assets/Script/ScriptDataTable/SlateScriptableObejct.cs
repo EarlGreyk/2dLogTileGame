@@ -1,73 +1,109 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class SlateScriptableObejct : BaseScriptableObject
+
+
+
+
+/// <summary>
+/// 마법에 장착하여 마법을 강화 시킬 수 있습니다.
+/// </summary>
+public class SlateScriptableObejct : BaseScriptableObject, IShopItem
 {
+    /// <summary>
+    /// 해당 타입에 따라 마법의 스테이터스 값을 증가시킵니다.
+    /// </summary>
+    /// 
+
+    public enum StatusType
+    {
+        //소비량
+        Consumption,
+        //스킬 파워값 (데미지)
+        Power,
+        //지속시간
+        Duration
+
+    }
+
     public string SlateName;
-    public int SlateType;
-    public MagicScriptableObejct[] SlateMagics;
-    public BlockScriptableObject[] Blocks;
+    public int SlateGrade;
+    public float SlateMinValue;
+    public float SlateMaxValue;
+
+
+    public bool Enable;
+    public int EnableLevel;
+
+
+    public StatusType SlateStatus;
     /// <summary>
     /// 아래는 추가된값
     /// </summary>
-    public bool Enable = false;
-    public int EnableLevel = 0;
-    public Sprite SlateSprite = null;
+
+
+
+    // 내부 데이터는 private 필드
+    [SerializeField] private int price;
+    [SerializeField] private string description;
+    [SerializeField] private Sprite icon;
+
+    // IShopItem // 읽기 전용
+    public int Price => price;              
+    public string Description => description;
+    public Sprite Icon => icon;
 
     public override void SetValues(string[] values)
     {
         id = int.Parse(values[1].Trim());
         SlateName = values[2].Trim();
-        SlateType = int.Parse((string)values[3].Trim());
-        SlateMagics = ConversMagics(values[4].Trim());
-        Blocks = ConversBlocks(values[5].Trim(), values[6].Trim());
-        SlateSprite = Resources.Load<Sprite>("Sprite/Magic&Slate" + id.ToString());
+        SlateGrade = int.Parse(values[3].Trim());
+        SlateMaxValue = float.Parse(values[4].Trim());
+        SlateMinValue = float.Parse(values[5].Trim());
+        switch (int.Parse(values[6].Trim()))
+        {
+            case 202: SlateStatus = StatusType.Consumption;
+                break;
+            case 205: SlateStatus = StatusType.Power;
+                break;
+            case 208: SlateStatus= StatusType.Duration;
+                break;
+        }
 
-     
-    
-     
+
+        icon = Resources.Load<Sprite>("Sprite/Magic&Slate" + id.ToString());
+        /// 추가로 요청해야하는 사항입니다.
+        Enable = true;
+        EnableLevel = 0;
+
+
+
+
+
     }
 
-    public MagicScriptableObejct[] ConversMagics(string strings)
+
+    public void ApplyToUI(ShopSoket shopSoket)
     {
-        string[] values = strings.Trim().Split(' ');
-        MagicScriptableObejct[] magics = new MagicScriptableObejct[values.Length];
 
-        for (int i = 0; i < values.Length; i++)
-        {
-            magics[i] = Resources.Load<MagicScriptableObejct>("ScriptableObjects/magic_data/" + values[i]);
-        }
+        // 가격
+        shopSoket.sellValue.text = Price.ToString();
 
-        return magics;
+        // 설명
+        shopSoket.sellDesc.text = Description;
+
+        // 아이콘
+        shopSoket.sellIcon.sprite = Icon;
     }
 
-    public BlockScriptableObject[] ConversBlocks(string strings,string count)
+    public void Sell()
     {
-        string[] values = strings.Trim().Split(' ');
-        string[] values2 = count.Trim().Split(' ');
-        int length = 0;
+        //판매될때 가공해서 플레이어에게 SlateOrigin이라는 형태로 넘겨줘야합니다 [마법과동일]
 
-        for(int i =0;i<values.Length;i++)
-        {
-            length+= int.Parse(values2[i].Trim());
-
-        }
-        BlockScriptableObject[] blocks = new BlockScriptableObject[length];
-
-        int l = 0;
-        for (int i = 0; i < values.Length; i++)
-        {
-            for(int k =0; k < int.Parse(values2[i]); k++)
-            {
-                blocks[l] = Resources.Load<BlockScriptableObject>("ScriptableObjects/block_data/" + values[i]);
-                l++;
-            }
-            
-        }
-
-        return blocks;
+        SlateOrigin slateOrigin = new SlateOrigin(this);
     }
-
-
 }

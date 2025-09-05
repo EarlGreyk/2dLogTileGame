@@ -31,21 +31,5 @@ public class MagicUpgrade : MonoBehaviour
         currenntLevel.DescSet(this.magicUI);
 
     }
-    public void MagicEnable()
-    {
-        int gold = PlayerResource.instance.Gold;
-        if(gold > needGold)
-        {
-            Color currentColor = magicUI.MagicImage.color;
-            currentColor.a = 1f;
-            magicUI.MagicImage.color = currentColor;
-
-            //플레이어 자원값 조정 (마법 활성화)
-            PlayerResource.instance.Gold -= needGold;
-            needGoldText.text = PlayerResource.instance.Gold.ToString();
-
-            
-        }
-        
-    }
+    
 }

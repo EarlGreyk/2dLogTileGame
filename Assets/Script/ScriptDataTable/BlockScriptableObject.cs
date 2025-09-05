@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockScriptableObject : BaseScriptableObject
+public class BlockScriptableObject : BaseScriptableObject, IShopItem
 {
     public int BlockGrade;
     /// <summary>
@@ -35,9 +35,19 @@ public class BlockScriptableObject : BaseScriptableObject
     public Sprite sprite;
 
 
+    // 내부 데이터는 private 필드
+    [SerializeField] private int price;
+    [SerializeField] private string description;
+    [SerializeField] private Sprite icon;
+
+    // IShopItem // 읽기 전용 
+    public int Price => price;
+    public string Description => description;
+    public Sprite Icon => icon;
+
+
     public override void SetValues(string[] values)
     {
-        string[] values2;
 
         id = int.Parse(values[1].Trim());
         BlockGrade = int.Parse(values[2].Trim());
@@ -72,5 +82,23 @@ public class BlockScriptableObject : BaseScriptableObject
         }
 
         return ints;
+    }
+
+    public void ApplyToUI(ShopSoket shopSoket)
+    {
+        if (shopSoket == null) return;
+
+        // 가격
+        shopSoket.sellValue.text = Price.ToString();
+
+        // 설명
+        shopSoket.sellDesc.text = Description;
+
+        // 아이콘
+        shopSoket.sellIcon.sprite = Icon;
+    }
+    public void Sell()
+    {
+
     }
 }

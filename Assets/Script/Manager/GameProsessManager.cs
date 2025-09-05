@@ -98,10 +98,15 @@ public class GameProsessManager : MonoBehaviour
 
     private int exp;
 
+    //상호작용 판넬
     [SerializeField]
     private InteractionUI interactionPanel;
 
-    
+    //상점 판넬
+    [SerializeField]
+    public PopUp ShopPopUp;
+
+
     
 
 
@@ -173,8 +178,9 @@ public class GameProsessManager : MonoBehaviour
         PopUpManager.instance.PopupPush(prosessPop);
         // 상호 작용한 정화 유닛을 받아옵니다. 
         // 현재 저장되어 있는 경로 탐색이 복잡함으로 다른곳에 저장하도록 변경해야합니다.
-        ClearUnit target = GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].clearUnit;
-        target.BattleCheck(value);
+        InteractionObject target = GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
+        target.InteractEnd();
+        //target.BattleCheck(value);
        
 
 
@@ -290,7 +296,9 @@ public class GameProsessManager : MonoBehaviour
             }
            
             GameManager.instance.MonsterAIManager.MonsterReset();
-            Destroy(GameManager.instance.PlayerUnit.gameObject);
+
+            if(GameManager.instance.PlayerUnit !=null)
+                Destroy(GameManager.instance.PlayerUnit.gameObject);
             
             PopUpManager.instance.LastClosePopUp();
             SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
@@ -319,20 +327,30 @@ public class GameProsessManager : MonoBehaviour
         }
         if (mode == "rest")
         {
-            PlayerResource.instance.BlockReset();
-            for (int i = 0; i < restUIList.Count; i++)
+            if (GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].InterObj == null)
             {
-                restUIList[i].SetActive(true);
+                PlayerResource.instance.BlockReset();
+                for (int i = 0; i < restUIList.Count; i++)
+                {
+                    restUIList[i].SetActive(true);
+                }
+
+                for (int i = 0; i < battleUIList.Count; i++)
+                {
+                    battleUIList[i].SetActive(false);
+                }
+                for (int i = 0; i < stayUiList.Count; i++)
+                {
+                    stayUiList[i].SetActive(false);
+                }
+            }else
+            {
+                ErrorManager.instance.ErrorSet("상호작용 가능한 오브젝트가 있어 사용이 불가능 합니다.");
             }
+
+
+
             
-            for (int i = 0; i < battleUIList.Count; i++)
-            {
-                battleUIList[i].SetActive(false);
-            }
-            for (int i = 0; i < stayUiList.Count; i++)
-            {
-                stayUiList[i].SetActive(false);
-            }
         }
         //SaveLoadManager.instance.Save();
     }
@@ -345,7 +363,7 @@ public class GameProsessManager : MonoBehaviour
    ////정화 유닛의 정보를 플레이어에게 보여주기 위해 Panel에 갱신합니다. 
    ////해당 데이터 값에 맞게 이미지와 정보를 수정해야합니다.
 
-   public void ClearPanelSet(ClearUnit clearUnit, bool set)
+   public void ClearPanelSet(ClearObject clearUnit, bool set)
     {
         if (set)
         {
@@ -373,7 +391,7 @@ public class GameProsessManager : MonoBehaviour
         }
         
    }
-    public void ClearPanelSet(ClearUnit clearUnit, bool set, List<MonsterScriptableObject> monsterListSo)
+    public void ClearPanelSet(ClearObject clearUnit, bool set, List<MonsterScriptableObject> monsterListSo)
     {
         if (set)
         {
