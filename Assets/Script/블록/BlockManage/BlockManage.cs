@@ -61,7 +61,16 @@ public class BlockManage : MonoBehaviour
     private void Start()
     {
         if (SettingData.Load == false)
+        {
+
+            for (int i = 0; i < SettingData.character.PlayerData.Blocks.Length; i++)
+            {
+                Block block = new Block(SettingData.character.PlayerData.Blocks[i]);
+                EquipSet(block);
+            }
             return;
+        }
+            
 
 
         List<BlockSaveData> equipList = SaveLoadManager.instance.BlockManagerSaveData.equipBlockDatas;
@@ -75,14 +84,13 @@ public class BlockManage : MonoBehaviour
         for (int i =0; i < inventoryList.Count; i++)
         {
             creatBlock = new Block(inventoryList[i]);
-            InventorySet(creatBlock, false);
+           // InventorySet(creatBlock, false);
         }
         
     }
 
     /// <summary>
-    /// 석판을 이용하여 블록을 장착합니다.
-    /// 이후 플레이어 자원에서 추가로 관리해줍니다.
+    /// 게임이 최초로 실행될때 장착되어야 하는 블록을 인벤토리로 보내는 것이 아닌 장착합니다.
     /// </summary>
     /// <param name="block"></장착해야할 블록>
     public void EquipSet(Block block)
@@ -147,7 +155,7 @@ public class BlockManage : MonoBehaviour
             {
                 equipBlocks[i].Clear();
                 enfogeEqipBlocks[i].Clear();
-                InventorySet(removeBlockPanel.Block,false);
+                InventorySet(removeBlockPanel.Block);
                 break;
             }
         }
@@ -161,25 +169,21 @@ public class BlockManage : MonoBehaviour
     /// 장착해제한 블록 , 보상으로 받은 블록이 해당 리스트에 들어갑니다.
     /// </summary>
     /// <param name="block"></param>
-    public void InventorySet(Block block, bool reward = true)
+    public void InventorySet(Block block)
     {
-       if(!reward )
-       {
-            for (int i = 0; i < inventoryBlocks.Count; i++)
+        for (int i = 0; i < inventoryBlocks.Count; i++)
+        {
+            if (inventoryBlocks[i].Block == null)
             {
-                if (inventoryBlocks[i].Block == null)
-                {
-                    inventoryBlocks[i].Set(block);
-                    PlayerResource.instance.BlockRemove(block);
-                    return;
-                }
+                inventoryBlocks[i].Set(block);
+                PlayerResource.instance.BlockRemove(block);
+                return;
             }
-
-       }
-        
+        }
 
 
-       
+
+
     }
    
 

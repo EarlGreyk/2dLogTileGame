@@ -125,32 +125,6 @@ public class PlayerResource : MonoBehaviour
         
         }
 
-        //플레이어의 스킬 을 등록합니다
-        //플레이어가 사용하는 table값을 마법으로 전환한다음에 사용합니다.
-  
-
-        
-
-
-        //
-
-  
-
-        //플레이어의 이동 블록을 등록합니다
-
-        for (int i = 0; i < SettingData.character.PlayerData.Blocks.Length; i++)
-        {
-            Block block = new Block(SettingData.character.PlayerData.Blocks[i]);
-            playerBlockList.Add(block);
-            BlockManage.instance.EquipSet(block);
-        }
-
-
-
-
-
-
-
 
     }
 

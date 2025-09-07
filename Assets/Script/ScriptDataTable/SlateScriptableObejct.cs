@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-
+[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Slate", order = 1)]
 
 
 /// <summary>
@@ -105,5 +105,6 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
         //판매될때 가공해서 플레이어에게 SlateOrigin이라는 형태로 넘겨줘야합니다 [마법과동일]
 
         SlateOrigin slateOrigin = new SlateOrigin(this);
+        SlateInventory.instance.SlateAdd(slateOrigin);
     }
 }

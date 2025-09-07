@@ -99,6 +99,9 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
     }
     public void Sell()
     {
-
+        
+        Block block = new Block(this);
+        Debug.Log(block);
+        BlockManage.instance.InventorySet(block);
     }
 }

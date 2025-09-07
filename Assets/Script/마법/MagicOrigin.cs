@@ -137,6 +137,9 @@ public class MagicOrigin
 
     public void SlateEquip(SlateOrigin slate)
     {
+        //증가시킬 스텟 분류
+        //장착시킬 슬롯에 slate가 있는지 체크하고 제거한후 장착.
+
         switch(slate.SlateStatus)
         {
             case SlateScriptableObejct.StatusType.Power:
@@ -159,6 +162,8 @@ public class MagicOrigin
                 MagicRequiredMana -= (int)slate.SlateValue;
                 break;
         }
+
+
 
         
     }

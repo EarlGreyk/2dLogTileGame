@@ -120,6 +120,7 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
 
     public void Sell()
     {
-
+        MagicOrigin magicOrigin = new MagicOrigin(this);
+        MagicManager.instance.MagicAdd(magicOrigin);
     }
 }

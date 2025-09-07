@@ -30,10 +30,19 @@ public class SlateUI : MonoBehaviour
 
 
 
-    public void SlateSet(SlateOrigin slate)
+    public void SlateSet(SlateOrigin slate = null)
     {
-        SlateImage.sprite = slate.SlateIcon;
-        SlateNameText.text = slate.SlateName;
+
+        if (slate != null)
+        {
+            SlateImage.sprite = slate.SlateIcon;
+            SlateNameText.text = slate.SlateName;
+        }else
+        {
+            SlateImage.sprite = null;
+            SlateNameText.text = "";
+        }
+        
         
 
     }

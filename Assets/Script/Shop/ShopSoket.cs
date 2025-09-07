@@ -28,13 +28,19 @@ public class ShopSoket: MonoBehaviour
 
 
     //판매했는지의 여부
-    bool sellCheck;
+    private Button sellButton; 
 
     private void Start()
     {
-        sellCheck = false;
-
+        sellButton = GetComponent<Button>();
         Set();
+        if(shopItem == null)
+        {
+            sellButton.interactable = false;
+        }else
+        {
+            sellButton.interactable = true;
+        }
     }
 
 
@@ -88,7 +94,13 @@ public class ShopSoket: MonoBehaviour
     {
         if (shopItem is IShopItem sellable)
         {
-            sellable.Sell();   
+            sellable.Sell();
+
+            // 판매된 상품의 이미지. Null값을 베이스로 하는 이미지를 구해서 대체하는것이 좋아보임.
+            sellIcon.sprite = null;
+            sellDesc.text = "";
+            sellValue.text = "";
+            shopItem = null;
         }
         else
         {
