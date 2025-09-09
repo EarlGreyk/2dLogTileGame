@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 /// <summary>
@@ -28,6 +29,9 @@ public class SettingManager : MonoBehaviour
     /// </summary>
     [SerializeField]
     private List<MagicUI> ListmagicUIs = new List<MagicUI>();
+
+    [SerializeField]
+    private Image PlayerImage;
 
 
     private void Start()
@@ -64,39 +68,45 @@ public class SettingManager : MonoBehaviour
             }
             return;
         }
+        else
+        {
+            PlayerImage.sprite = character.PlayerData.PlayerSprite;
+            if (currentCharacter == null)
+            {
+                currentCharacter = character;
+                SettingData.character = currentCharacter;
+            }
+            else if (currentCharacter != character)
+            {
+                currentCharacter = character;
+                SettingData.character = currentCharacter;
+            }
+
+            for (int i = 0; i < currentCharacter.PlayerData.UsingMagics.Length; i++)
+            {
+                if (currentCharacter.PlayerData.UsingMagics.Length <= i)
+                    return;
+
+                PlaymagicUIs[i].gameObject.SetActive(true);
+                Debug.Log(currentCharacter.PlayerData.ListMagics[i]);
+                Debug.Log(PlaymagicUIs[i]);
+
+                PlaymagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
+            }
+
+
+            for (int i = 0; i < currentCharacter.PlayerData.ListMagics.Length; i++)
+            {
+                if (currentCharacter.PlayerData.ListMagics.Length <= i)
+                    return;
+
+                ListmagicUIs[i].gameObject.SetActive(true);
+                ListmagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
+            }
+        }
             
 
-        if(currentCharacter == null)
-        {
-           currentCharacter = character;
-           SettingData.character = currentCharacter;
-        }else if(currentCharacter != character)
-        {
-           currentCharacter = character;
-           SettingData.character = currentCharacter;
-        }
-
-        for (int i = 0; i < currentCharacter.PlayerData.UsingMagics.Length; i++)
-        {
-            if (currentCharacter.PlayerData.UsingMagics.Length <= i)
-                return;
-
-            PlaymagicUIs[i].gameObject.SetActive(true);
-            Debug.Log(currentCharacter.PlayerData.ListMagics[i]);
-            Debug.Log(PlaymagicUIs[i]);
-
-            PlaymagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
-        }
-
-
-        for (int i=0;i <currentCharacter.PlayerData.ListMagics.Length; i++)
-        {
-            if (currentCharacter.PlayerData.ListMagics.Length <= i)
-                return;
-
-            ListmagicUIs[i].gameObject.SetActive(true);
-            ListmagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
-        }
+        
             
     }
 

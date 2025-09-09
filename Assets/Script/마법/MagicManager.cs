@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.Image;
 
 /// <summary>
 /// 게임 도중 플레이어의 마법의 등록과 개조를 담당합니다.
@@ -35,9 +36,10 @@ public class MagicManager : MonoBehaviour
     [SerializeField]
     private Button UpgradeButton;
 
-    [SerializeField]
-    private int selectindex;
+    
+    private int selectMagicindex;
 
+    private int selectSlateindex;
 
     [SerializeField]
     private List<SlateUI> equipSlate = new List<SlateUI>();
@@ -49,6 +51,8 @@ public class MagicManager : MonoBehaviour
 
     [SerializeField]
     private SlateUI selectEquipSlate;
+
+    public SlateUI SelectEquipSlate { get { return selectEquipSlate; } set { selectEquipSlate = value; } }
 
 
     private void Awake()
@@ -118,8 +122,8 @@ public class MagicManager : MonoBehaviour
             {
                 if (currentMagic == MagicsUIList[i])
                 {
-                    selectindex = i;
-                    Debug.Log($"선택된 마법의 번호{selectindex}");
+                    selectMagicindex = i;
+                    Debug.Log($"선택된 마법의 번호{selectMagicindex}");
                     break;
                 }
             }
@@ -141,9 +145,9 @@ public class MagicManager : MonoBehaviour
         slateButton[1].interactable = false;
         slateButton[2].interactable = false;
         //마법 장착된 석판 초기화
-        equipSlate[0].SlateSet();
-        equipSlate[1].SlateSet();
-        equipSlate[2].SlateSet();
+        equipSlate[0].SlateClear();
+        equipSlate[1].SlateClear();
+        equipSlate[2].SlateClear();
 
         if (currentMagic.Magic.MagicLevel == 1)
         {
@@ -180,6 +184,37 @@ public class MagicManager : MonoBehaviour
     public void SelectSlate(SlateUI slateUI)
     {
         selectEquipSlate = slateUI;
+        if(slateUI == equipSlate[0])
+        {
+            selectSlateindex = 1;
+        }else if(slateUI == equipSlate[1])
+        {
+            selectSlateindex = 2;
+        }else if(slateUI== equipSlate[2])
+        {
+            selectSlateindex = 3;
+        }
+
+    }
+    public void SlateActivate(SlateOrigin slate)
+    {
+        selectEquipSlate.SlateSet(slate);
+        switch(selectSlateindex)
+        {
+            case 1:
+                currentMagic.Magic.FisrtSlateOrigin = slate;
+                 break;
+            case 2:
+                currentMagic.Magic.SecondSlateOrigin = slate;
+                break;
+            case 3:
+                currentMagic.Magic.ThirdSlateOrigin = slate;
+                break;
+        }
+
+        MagicOriginChange(currentMagic.Magic);
+
+
     }
 
     public void MagicUpgrade()
@@ -192,12 +227,12 @@ public class MagicManager : MonoBehaviour
 
 
     /// <summary>
-    /// 마법이 Ui상작동으로 인해 어떠한 방식으로든 조금이라도 수정을 가했을 경우 MagicOriginList에서 변동합니다.
+    /// 석판이 변동되었거나 다른방식으로 마법을 변환 시킬떄 작동합니다.
     /// </summary>
     /// <param name="origin"></param>
     public void MagicOriginChange(MagicOrigin origin)
     {
-        magicOriginList[selectindex] = origin;
+        magicOriginList[selectMagicindex] = origin;
     }
 
 

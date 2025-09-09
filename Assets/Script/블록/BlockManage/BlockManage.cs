@@ -119,6 +119,7 @@ public class BlockManage : MonoBehaviour
     public void EquipSet()
     {
         PopUpManager.instance.LastClosePopUp();
+        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.BlockEquipGold;
         /// 해당 블록을 장착 으로 넘깁니다.
         for (int i = 0; i < equipBlocks.Count; i++)
         {
@@ -142,7 +143,10 @@ public class BlockManage : MonoBehaviour
                 break;
             }
         }
-        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.BlockEquipGold;
+        Debug.Log(PlayerResource.instance.Gold);
+        Debug.Log(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+
+      
 
 
     }

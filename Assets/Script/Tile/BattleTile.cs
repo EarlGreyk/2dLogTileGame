@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class BattleTile : TileBase
+public class BattleTile 
 {
     public enum tileType
     {

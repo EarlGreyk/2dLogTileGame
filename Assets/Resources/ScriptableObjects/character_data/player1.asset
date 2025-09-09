@@ -54,4 +54,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4550e179750519a49aff6b43e32f2ff0, type: 2}
   - {fileID: 11400000, guid: 4550e179750519a49aff6b43e32f2ff0, type: 2}
   - {fileID: 11400000, guid: 4550e179750519a49aff6b43e32f2ff0, type: 2}
-  PlayerSprite: {fileID: 0}
+  PlayerSprite: {fileID: 21300000, guid: ce728b70339d468448f3ddf5e280e7d4, type: 3}

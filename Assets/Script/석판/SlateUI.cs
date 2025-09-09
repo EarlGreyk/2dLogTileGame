@@ -24,23 +24,34 @@ public class SlateUI : MonoBehaviour
     private TextMeshProUGUI SlateNameText;
 
     [SerializeField]
-    private TextMeshProUGUI SlateLevelText;
-
-  
+    private Button selectButton;
 
 
+    private void Start()
+    {
+        
+        if(runtimeSlate != null && selectButton != null)
+        {
+            selectButton.interactable = true;
+        }else
+        {
+            selectButton.interactable = false;
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="slate"></param>
 
-    public void SlateSet(SlateOrigin slate = null)
+    public void SlateSet(SlateOrigin slate)
     {
 
         if (slate != null)
         {
+            runtimeSlate = slate;
             SlateImage.sprite = slate.SlateIcon;
             SlateNameText.text = slate.SlateName;
-        }else
-        {
-            SlateImage.sprite = null;
-            SlateNameText.text = "";
+            selectButton.interactable = true;
         }
         
         
@@ -49,8 +60,20 @@ public class SlateUI : MonoBehaviour
 
     public void SlateSet(SlateScriptableObejct slate)
     {
+        catalogSlate = slate;
 
 
+    }
+
+
+    public void SlateClear()
+    {
+        if (selectButton != null)
+        { selectButton.interactable = false; } 
+        runtimeSlate = null;
+        catalogSlate = null;
+        SlateImage.sprite = null;
+        SlateNameText.text = "";
     }
 
 

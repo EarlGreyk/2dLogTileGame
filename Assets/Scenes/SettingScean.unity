@@ -767,7 +767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &63273201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,7 +1192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &135085570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,7 +1340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &145784434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1579,7 +1579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &152432483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,7 +1765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 11400000, guid: e6e9a51d0f306eb4fb8ccb3548bd9f4a, type: 2}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &166074670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4952,7 +4952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &425412968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5448,7 +5448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &472410306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6823,7 +6823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &580282940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9509,7 +9509,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &847490172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12174,7 +12174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &1077725116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13989,7 +13989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &1254526793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16972,6 +16972,7 @@ MonoBehaviour:
   - {fileID: 1164499534}
   - {fileID: 745156877}
   - {fileID: 1113448781}
+  PlayerImage: {fileID: 302888680}
 --- !u!1 &1528865515
 GameObject:
   m_ObjectHideFlags: 0
@@ -19460,7 +19461,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &1746322779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20320,7 +20321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &1818331307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21878,7 +21879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &2021708776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22646,7 +22647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerData: {fileID: 0}
-  image: {fileID: 0}
+  icon: {fileID: 0}
 --- !u!114 &2107937607
 MonoBehaviour:
   m_ObjectHideFlags: 0

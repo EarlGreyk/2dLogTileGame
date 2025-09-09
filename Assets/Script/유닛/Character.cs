@@ -7,20 +7,27 @@ public class Character : MonoBehaviour
 {
     
     public  PlayerScriptableObject PlayerData;
-    public Image image;
+    public Image icon;
+    
 
+
+    private Button selectButton;
 
 
     private void Start()
     {
-        image = GetComponent<Image>();
+        icon = GetComponent<Image>();
+        selectButton = GetComponent<Button>();
 
         if (PlayerData == null)
         {
             //플레이어 캐릭터 데이터가 없다면 리턴.
+            selectButton.interactable = false;
             return;
         }
-        image.sprite = PlayerData.PlayerSprite;
+        icon.sprite = PlayerData.PlayerSprite;
+
+        
 
     }
 }
