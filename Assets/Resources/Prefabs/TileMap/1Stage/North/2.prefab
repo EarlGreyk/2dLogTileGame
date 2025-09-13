@@ -3958,19 +3958,11 @@ Tilemap:
       e33: 1
   m_TileColorArray:
   - m_RefCount: 3
-<<<<<<< Updated upstream
-    m_Data: {r: 0.7013058, g: 0.39149988, b: 0.396613, a: 1}
-  - m_RefCount: 3
-    m_Data: {r: 0.82005966, g: 0.43027803, b: 0.52826893, a: 1}
-  - m_RefCount: 3
-    m_Data: {r: 0.88745373, g: 0.5539074, b: 0.5754071, a: 1}
-=======
     m_Data: {r: 0.8528525, g: 0.47598642, b: 0.500408, a: 1}
   - m_RefCount: 3
     m_Data: {r: 0.80912966, g: 0.46674377, b: 0.54966843, a: 1}
   - m_RefCount: 3
     m_Data: {r: 0.8686254, g: 0.5982871, b: 0.6542904, a: 1}
->>>>>>> Stashed changes
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
