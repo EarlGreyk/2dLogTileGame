@@ -298,7 +298,10 @@ public class GameProsessManager : MonoBehaviour
             GameManager.instance.MonsterAIManager.MonsterReset();
 
             if(GameManager.instance.PlayerUnit !=null)
+            {
                 Destroy(GameManager.instance.PlayerUnit.gameObject);
+            }
+                
             
             PopUpManager.instance.LastClosePopUp();
             SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);

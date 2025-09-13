@@ -83548,7 +83548,7 @@ MonoBehaviour:
   northTileMapPrefabs: []
   southTileMapPrefabs: []
   initialTilePrefab: {fileID: 5913008604598010124, guid: 5ae8cb168414c4945a599c68cf97d906, type: 3}
-  mapSize: 20
+  mapSize: 25
   BattleField: {fileID: 0}
 --- !u!114 &1107026329
 MonoBehaviour:
