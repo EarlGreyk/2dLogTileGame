@@ -16,7 +16,6 @@ public class Character : MonoBehaviour
 
     private void Start()
     {
-        icon = GetComponent<Image>();
         selectButton = GetComponent<Button>();
 
         if (PlayerData == null)
@@ -25,6 +24,7 @@ public class Character : MonoBehaviour
             selectButton.interactable = false;
             return;
         }
+        icon.gameObject.SetActive(true);
         icon.sprite = PlayerData.PlayerSprite;
 
         

@@ -49,6 +49,8 @@ public class ErrorManager : MonoBehaviour
 
     IEnumerator ErrorOpacity()
     {
+        yield return new WaitForSeconds(1f);
+
         float time = 1.5f;
         float delay = 0;
         float a = 0;
@@ -62,7 +64,7 @@ public class ErrorManager : MonoBehaviour
             errorColor.a = a;
             errorImage.color = errorColor;
             errorTextColor.a = a;
-            errorText.color = errorTextColor;
+            errorText.color = errorTextColor;   
 
             yield return new WaitForSeconds(delay);
         }

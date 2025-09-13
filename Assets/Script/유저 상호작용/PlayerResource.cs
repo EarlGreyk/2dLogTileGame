@@ -59,6 +59,10 @@ public class PlayerResource : MonoBehaviour
     [SerializeField]
     private List<SkillSlot> playerSkillPanel = new List<SkillSlot>();
 
+
+    [SerializeField]
+    private List<BlockPanel> playerDrowBlockPanelList = new List<BlockPanel>();
+
     //사용하여 버린 블록 패널 리스트
     [SerializeField]
     private List<BlockPanel> playerUsePanelList = new List<BlockPanel>();
@@ -139,11 +143,28 @@ public class PlayerResource : MonoBehaviour
     {
         playerBlockList.Add(block);
         playerDrowBlockList.Add(block);
+        for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
+        {
+            if (playerDrowBlockPanelList[i].Block == null)
+            {
+                playerDrowBlockPanelList[i].Set(block);
+            }
+            
+        }
+        
     }
     public void BlockRemove(Block block)
     {
         playerBlockList.Remove(block);
         playerDrowBlockList.Remove(block);
+        for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
+        {
+            if (playerDrowBlockPanelList[i].Block == block)
+            {
+                playerDrowBlockPanelList[i].Clear();
+            }
+
+        }
     }
 
     /// <summary>

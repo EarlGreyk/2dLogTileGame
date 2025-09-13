@@ -53,7 +53,10 @@ public class SettingManager : MonoBehaviour
         SettingData.difficult = i;
     }
 
-
+    /// <summary>
+    /// 캐릭터를 선택하면 플레이어가 어떠한 마법을 들고갈 수 있고 처음에 어떤 마법을 주는지를 부여합니다.
+    /// </summary>
+    /// <param name="character"></param>
     public void CharacterSet(Character character)
     {
         if (character.PlayerData == null)
@@ -88,8 +91,6 @@ public class SettingManager : MonoBehaviour
                     return;
 
                 PlaymagicUIs[i].gameObject.SetActive(true);
-                Debug.Log(currentCharacter.PlayerData.ListMagics[i]);
-                Debug.Log(PlaymagicUIs[i]);
 
                 PlaymagicUIs[i].MagicSet(currentCharacter.PlayerData.ListMagics[i]);
             }

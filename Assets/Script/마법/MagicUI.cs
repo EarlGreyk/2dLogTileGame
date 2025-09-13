@@ -18,8 +18,8 @@ public class MagicUI : MonoBehaviour
 
     public Image MagicImage { get { return magicImage; } set { magicImage = value; } }
 
-    
 
+ 
 
 
     /// <summary>
@@ -30,6 +30,7 @@ public class MagicUI : MonoBehaviour
     {
         if (magicOrigin != null)
         {
+            magicImage.gameObject.SetActive(true);
             magic = magicOrigin;
             magicImage.sprite = magicOrigin.MagicSprite;
         }
@@ -42,10 +43,9 @@ public class MagicUI : MonoBehaviour
     /// <param name="magicData"></param>
     public void MagicSet(MagicScriptableObejct magicData)
     {
-        Debug.Log(magicImage);
-        Debug.Log(magicData);
-        if(magicData != null)
+        if (magicData != null)
         {
+            magicImage.gameObject.SetActive(true);
             magicImage.sprite = magicData.MagicSprite;
         }
     }

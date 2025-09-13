@@ -133,7 +133,9 @@ public class MapGenerator : MonoBehaviour
                 break;
 
             //진행해야할 방향을 저장
-            //다음 진행방향을 저장하기 전에 현재 마지막 값을 저장하여 마지막값의 앞의 순서를 확인할수 있도록함.
+            //다음 진행방향을 저장하기 전에 현재 마지막 값을 저장하여 마지막값의 앞의 순서를 확인할수 있도록함.   
+            Debug.Log(tileCount);
+
             lastbeforePos = lastPos;
             lastPos = newTilePosList[RandomCount];
             progressTilemaps[newTilePosList[RandomCount]] = spawnedTilemaps[newTilePosList[RandomCount]];
