@@ -44,6 +44,7 @@ public class SettingManager : MonoBehaviour
         {
             ListmagicUIs[i].gameObject.SetActive(false);
         }
+        PlayerImage.gameObject.SetActive(false);
     }
 
     public void setDifficult(int i) 
@@ -69,10 +70,12 @@ public class SettingManager : MonoBehaviour
             {
                 ListmagicUIs[i].gameObject.SetActive(false);
             }
+            PlayerImage.gameObject.SetActive(false);
             return;
         }
         else
         {
+            PlayerImage.gameObject.SetActive(true);
             PlayerImage.sprite = character.PlayerData.PlayerSprite;
             if (currentCharacter == null)
             {

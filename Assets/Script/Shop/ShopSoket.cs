@@ -37,9 +37,11 @@ public class ShopSoket: MonoBehaviour
         if(shopItem == null)
         {
             sellButton.interactable = false;
+            sellIcon.gameObject.SetActive(false);
         }else
         {
             sellButton.interactable = true;
+            sellIcon.gameObject.SetActive(true);
         }
     }
 
@@ -96,10 +98,11 @@ public class ShopSoket: MonoBehaviour
         {
             sellable.Sell();
 
-            // 판매된 상품의 이미지. Null값을 베이스로 하는 이미지를 구해서 대체하는것이 좋아보임.
             sellIcon.sprite = null;
+            sellIcon.gameObject.SetActive(false);
             sellDesc.text = "";
             sellValue.text = "";
+
             shopItem = null;
         }
         else

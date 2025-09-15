@@ -119,7 +119,7 @@ public class CameraSetting : MonoBehaviour
     public void unitFocusSet(Vector3 unitPos)
     {
         camera.transform.position = unitPos+new Vector3(-1, 0, -1);
-        camera.orthographicSize = 7;
+        camera.orthographicSize = 10;
     }
 
 
@@ -133,7 +133,7 @@ public class CameraSetting : MonoBehaviour
         {
             Vector3 unitPos = GameManager.instance.PlayerUnit.transform.position;
             camera.transform.position = resetPos;
-            camera.orthographicSize = 7;
+            camera.orthographicSize = 10;
             blockModeOff();
             return;
         }else
@@ -225,8 +225,8 @@ public class CameraSetting : MonoBehaviour
         int minX = absoluteX - 4;
 
 
-
-        int maxY = absoluteY + 5;
+        //y의 최상값은 GUI떄문에 더 높아야합니다.
+        int maxY = absoluteY + 8;
         int minY = absoluteY - 5;
 
         float x = 0;

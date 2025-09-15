@@ -17,8 +17,16 @@ public interface IShopItem
     void Sell();
 
 }
+
+/// <summary>
+/// 상점 매니저입니다.
+/// ShopObject에서 상호작용 할 수 잇는 모든것을 담당합니다.
+/// 상점구매, 블록 강화 블록 착용 및 제거
+/// </summary>
+
 public class ShopManager : MonoBehaviour
 {
+
     public List<ShopSoket> Sokets = new List<ShopSoket>();
 
     /// 플레이어가 사용 가능한 목록    
@@ -26,6 +34,8 @@ public class ShopManager : MonoBehaviour
     public SlateScriptableObejct[] ShopSlateList;
     public BlockScriptableObject[] ShopBlockList;
 
+
+    
 
     private void Start()
     {
@@ -45,6 +55,11 @@ public class ShopManager : MonoBehaviour
     public void PlayerLampeRecovery()
     {
         GameManager.instance.LampLight = GameManager.instance.MaxLampLight;
+    }
+
+    public void OpenShop()
+    {
+
     }
    
 }

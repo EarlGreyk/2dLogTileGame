@@ -9,12 +9,21 @@ public class InteractionObject : MonoBehaviour
     public Canvas canvas;
 
     public Transform targetObj;
-
+    /// <summary>
+    /// 1 : 전투
+    /// 2 : 상점
+    /// 3 : 먹깨비
+    /// 4 : 골드넣고 하는 도박.
+    /// 5 : 특수 정화유닛
+    /// </summary>
     public enum Type
     {
-        None,
+        None = 0,
         Clear,
-        Shop
+        Shop,
+        treasure_box,
+        relic,
+        Unique_Clear
     }
 
     public Type interactionType;

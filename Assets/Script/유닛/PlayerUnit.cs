@@ -104,14 +104,14 @@ public class PlayerUnit : Unit
                 {
                     Debug.Log("悼率");
                     GameManager.instance.CurrentPos += new Vector2Int(1, 0);
-                    transform.position += Vector3.right * 1f;
+                    transform.position += Vector3.right * 4f;
                     CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
                 }else if (moveDirection.x < 0)
                 {
                     Debug.Log("辑率");
                     GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
-                    transform.position += Vector3.left * 1f;
+                    transform.position += Vector3.left * 4f;
                     CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
 
@@ -121,7 +121,7 @@ public class PlayerUnit : Unit
                 {
                     Debug.Log("合率");
                     GameManager.instance.CurrentPos += new Vector2Int(0, 1);
-                    transform.position += Vector3.up * 1f;
+                    transform.position += Vector3.up * 4f;
                     CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
 
@@ -129,7 +129,7 @@ public class PlayerUnit : Unit
                 {
                     Debug.Log("巢率");
                     GameManager.instance.CurrentPos += new Vector2Int(0, -1);
-                    transform.position += Vector3.down * 1f;
+                    transform.position += Vector3.down * 4f;
                     CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                     return;
 

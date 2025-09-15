@@ -27,6 +27,8 @@ public class ShopObject : InteractionObject
         if (Input.GetKey(KeyCode.G) && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
         {
             Debug.Log("상점전환");
+            //플레이어와 상호작용 가능한 NPC와 대화하는 기능이 필요합니다.
+
 
 
         }

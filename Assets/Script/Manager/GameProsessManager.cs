@@ -7,8 +7,13 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 비전투 상황에서 플레이어가 진행할떄 필요한 기능들을 담고 있습니다.
+/// </summary>
+
 public class GameProsessManager : MonoBehaviour
 {
+    public static GameProsessManager instance;
 
     public enum ProsessType
     {
@@ -102,12 +107,26 @@ public class GameProsessManager : MonoBehaviour
     [SerializeField]
     private InteractionUI interactionPanel;
 
-    //상점 판넬
     [SerializeField]
-    public PopUp ShopPopUp;
+    private GameObject ShopPanel;
+    [SerializeField]
+    private GameObject MagicPanel;
+    [SerializeField]
+    private GameObject BLockPanel;
 
 
-    
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+
 
 
 

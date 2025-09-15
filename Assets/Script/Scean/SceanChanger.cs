@@ -34,7 +34,7 @@ public class SceanChanger : MonoBehaviour
 
     IEnumerator SceanDelay(string sceanName)
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(sceanName);
         if (sceanName == "GameScean")
         {
