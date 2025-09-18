@@ -24,11 +24,6 @@ public class MagicManager : MonoBehaviour
     [SerializeField]
     private MagicDesc magicDesc;
 
-    [SerializeField]
-    private MagicUpgrade magicUpgrade;
-
-    [SerializeField]
-    private PopUp magicPop;
 
     [SerializeField]
     private MagicUI currentMagic;
@@ -55,6 +50,20 @@ public class MagicManager : MonoBehaviour
     public SlateUI SelectEquipSlate { get { return selectEquipSlate; } set { selectEquipSlate = value; } }
 
 
+    /// <summary>
+    /// 마법 강화시 현재값
+    /// </summary>
+    [SerializeField]
+    private MagicDesc currentMagicDesc;
+    /// <summary>
+    /// 마법 강화시 다음값.
+    /// </summary>
+    [SerializeField]
+    private MagicDesc nextMagicDesc;
+
+
+
+
     private void Awake()
     {
         if (instance != null)
@@ -68,12 +77,18 @@ public class MagicManager : MonoBehaviour
 
     private void Start()
     {
+        for (int i = 0; i < magicUIList.Count; i++)
+        {
+            Button button = magicUIList[i].GetComponentInChildren<Button>();
+            button.interactable = false;
+        }
         //게임 시작시 SettingData에서 데이터를 받아옵니다
+
 
         for (int i = 0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
         {
             MagicOrigin magic = new MagicOrigin(SettingData.character.PlayerData.UsingMagics[i]);
-
+            
 
             MagicAdd(magic);
 
@@ -100,6 +115,7 @@ public class MagicManager : MonoBehaviour
             if(magicUIList[i].Magic == null)
             {
                 magicUIList[i].MagicSet(magic);
+                magicUIList[i].GetComponentInChildren<Button>().interactable = true;
                 break;
             }
         }
@@ -127,7 +143,7 @@ public class MagicManager : MonoBehaviour
                     break;
                 }
             }
-            magicDesc.DescSet(currentMagic);
+            
         }
 
         //마법의 레벨이 3레벨 미만이라면 강화 버튼을 활성화 합니다.
@@ -149,6 +165,10 @@ public class MagicManager : MonoBehaviour
         equipSlate[1].SlateClear();
         equipSlate[2].SlateClear();
 
+        currentMagicDesc.gameObject.SetActive(true);
+        nextMagicDesc.gameObject.SetActive(true);
+
+
         if (currentMagic.Magic.MagicLevel == 1)
         {
             equipSlate[0].SlateSet(currentMagic.Magic.FisrtSlateOrigin);
@@ -168,8 +188,10 @@ public class MagicManager : MonoBehaviour
             slateButton[0].interactable = true;
             slateButton[1].interactable = true;
             slateButton[2].interactable = true;
+            nextMagicDesc.gameObject.SetActive(false);
         }
-
+        currentMagicDesc.DescSet(currentMagic.Magic, currentMagic.Magic.MagicLevel);
+        nextMagicDesc.DescSet(currentMagic.Magic, currentMagic.Magic.MagicLevel + 1);
 
 
 
@@ -211,8 +233,8 @@ public class MagicManager : MonoBehaviour
                 currentMagic.Magic.ThirdSlateOrigin = slate;
                 break;
         }
-
-        MagicOriginChange(currentMagic.Magic);
+        
+        //MagicOriginChange(currentMagic.Magic);
 
 
     }
@@ -228,13 +250,46 @@ public class MagicManager : MonoBehaviour
 
     /// <summary>
     /// 석판이 변동되었거나 다른방식으로 마법을 변환 시킬떄 작동합니다.
+    /// 지금 원본값을 들고 계속 변동하고 있기에 필요없는 함수이나 언제 혹시모를 상황을 대비하여 미리 만들어둔 함수입니다.
     /// </summary>
     /// <param name="origin"></param>
     public void MagicOriginChange(MagicOrigin origin)
     {
+        Debug.Log(magicOriginList[selectMagicindex].MagicDamage);
+        Debug.Log(origin.MagicDamage);
         magicOriginList[selectMagicindex] = origin;
+
+        Debug.Log(magicOriginList[selectMagicindex].MagicDamage);
+
     }
 
 
-    
+    /// <summary>
+    /// 마우스가 MagicUI에 올라오면 상세 정보를 보여줍니다,
+    /// </summary>
+    /// <param name="selectMagic"></param>
+    public void MagicDescSet(MagicUI selectMagic)
+    {
+        if (selectMagic.Magic == null)
+            return;
+
+        magicDesc.DescSet(selectMagic);
+        float x = selectMagic.transform.position.x;
+        float y = selectMagic.transform.position.y + 100f;
+        if (y >= 330)
+            y = selectMagic.transform.position.y - 100f;
+        if (x >= 1200)
+            x = selectMagic.transform.position.x - 250f;
+        else
+            x = selectMagic.transform.position.x + 250f;
+        magicDesc.transform.position = new Vector2(x, y);
+    }
+    public void MagicDescClear()
+    {
+        magicDesc.DescClear();
+    }
+
+
+
+
 }

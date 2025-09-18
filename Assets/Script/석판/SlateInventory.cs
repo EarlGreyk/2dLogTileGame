@@ -71,13 +71,14 @@ public class SlateInventory : MonoBehaviour
 
             if (slateOrigins[i] == slate.RuntimeSlate)
             {
-                Debug.Log(i);
+                MagicManager.instance.SelectEquipSlate.SlateSet(slate.RuntimeSlate);
+                MagicManager.instance.SlateActivate(slate.RuntimeSlate);
                 slateOrigins[i] = null;
                 slateUIPanel[i].SlateClear();
                 break;
             }
         }
-        MagicManager.instance.SlateActivate(slate.RuntimeSlate);
+       
     }
 
 
@@ -85,9 +86,20 @@ public class SlateInventory : MonoBehaviour
     /// 마우스가 Slate에 올라오면 상세 정보를 보여줍니다,
     /// </summary>
     /// <param name="selectSlate"></param>
-    public void SlateDescSet(SlateOrigin selectSlate)
+    public void SlateDescSet(SlateUI selectSlate)
     {
-
+        if (selectSlate.RuntimeSlate == null)
+            return;
+        slateDesc.DescSet(selectSlate.RuntimeSlate);
+        float x = selectSlate.transform.position.x + 150f;
+        float y = selectSlate.transform.position.y + 100f; 
+        if(y>=330)
+            y = selectSlate.transform.position.y -100f;
+        slateDesc.transform.position = new Vector2(x, y);
+    }
+    public void SlateDescClear()
+    {
+        slateDesc.DescClear();
     }
 
 

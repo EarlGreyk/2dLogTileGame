@@ -40,6 +40,9 @@ public class BlockManage : MonoBehaviour
     public List<BlockPanel> InventoryBlocks { get { return inventoryBlocks; } }
 
 
+    private BlockPanel selectBlock;
+
+
     [SerializeField]
     private BlockPanel removeBlockPanel;
     [SerializeField]
@@ -56,6 +59,18 @@ public class BlockManage : MonoBehaviour
     {
         if(instance == null)
             instance = this;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (selectBlock != null)
+            {
+                selectBlock.BlockImage.color = Color.white;
+                selectBlock = null;
+            }
+        }
     }
 
     private void Start()
@@ -119,51 +134,77 @@ public class BlockManage : MonoBehaviour
     public void EquipSet()
     {
         PopUpManager.instance.LastClosePopUp();
-        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.BlockEquipGold;
-        /// 해당 블록을 장착 으로 넘깁니다.
-        for (int i = 0; i < equipBlocks.Count; i++)
-        {
-            if (equipBlocks[i].Block == null)
-            {
-                equipBlocks[i].Set(equipBlockPanel.Block);
-                enfogeEqipBlocks[i].Set(equipBlockPanel.Block);
-                PlayerResource.instance.BlockAdd(equipBlockPanel.Block);
-                equipBlocks[i].gameObject.SetActive(true);
-                enfogeEqipBlocks[i].gameObject.SetActive(true);
-                break;
-            }
-        }
+        
 
-        ///블록을 장착하여 인벤토리에서 지웁니다.
-        for(int i =0; i<inventoryBlocks.Count; i++)
+        if (TalkManager.instance.SellCheck(removeBlockPanel.Block.BlockInfo.BlockEquipGold))
         {
-            if (inventoryBlocks[i].Block == equipBlockPanel.Block)
+            /// 해당 블록을 장착 으로 넘깁니다.
+            for (int i = 0; i < equipBlocks.Count; i++)
             {
-                inventoryBlocks[i].Clear();
-                break;
+                if (equipBlocks[i].Block == null)
+                {
+                    equipBlocks[i].Set(equipBlockPanel.Block);
+                    enfogeEqipBlocks[i].Set(equipBlockPanel.Block);
+                    PlayerResource.instance.BlockAdd(equipBlockPanel.Block);
+                    equipBlocks[i].gameObject.SetActive(true);
+                    enfogeEqipBlocks[i].gameObject.SetActive(true);
+                    break;
+                }
             }
+
+            ///블록을 장착하여 인벤토리에서 지웁니다.
+            for (int i = 0; i < inventoryBlocks.Count; i++)
+            {
+                if (inventoryBlocks[i].Block == equipBlockPanel.Block)
+                {
+                    inventoryBlocks[i].Clear();
+                    break;
+                }
+            }
+            Debug.Log(PlayerResource.instance.Gold);
+            Debug.Log(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+        }else
+        {
+            selectBlock.BlockImage.color = Color.white;
+            selectBlock = null;
         }
-        Debug.Log(PlayerResource.instance.Gold);
-        Debug.Log(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+            
+
+
+       
 
       
 
 
     }
+    /// <summary>
+    /// 장착된 블록창에서 블록을 제거합니다.
+    /// </summary>
     public void EquipRemove()
     {
         PopUpManager.instance.LastClosePopUp();
-        for (int i =0; i< equipBlocks.Count; i++)
+
+        if (TalkManager.instance.SellCheck(removeBlockPanel.Block.BlockInfo.BlockRemovalGold))
         {
-            if (equipBlocks[i].Block == removeBlockPanel.Block)
+            for (int i = 0; i < equipBlocks.Count; i++)
             {
-                equipBlocks[i].Clear();
-                enfogeEqipBlocks[i].Clear();
-                InventorySet(removeBlockPanel.Block);
-                break;
+                if (equipBlocks[i].Block == removeBlockPanel.Block)
+                {
+                    equipBlocks[i].Clear();
+                    enfogeEqipBlocks[i].Clear();
+                    InventorySet(removeBlockPanel.Block);
+                    break;
+                }
             }
+        }else
+        {
+            selectBlock.BlockImage.color = Color.white;
+            selectBlock = null;
         }
-        PlayerResource.instance.Gold -= removeBlockPanel.Block.BlockInfo.BlockRemovalGold;
+            
+
+        
+       
         
     }
     
@@ -185,24 +226,81 @@ public class BlockManage : MonoBehaviour
             }
         }
 
+    }
 
+    //상점 에서 플레이어가 가지고 있는 블록을 팝니다.
+    public void InventorySell()
+    {
+        PopUpManager.instance.LastClosePopUp();
 
+        TalkManager.instance.Buy(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+        ///블록을 장착하여 인벤토리에서 지웁니다.
+        for (int i = 0; i < inventoryBlocks.Count; i++)
+        {
+            if (inventoryBlocks[i].Block == equipBlockPanel.Block)
+            {
+                inventoryBlocks[i].Clear();
+                break;
+            }
+        }
+        Debug.Log(PlayerResource.instance.Gold);
+        Debug.Log(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
 
     }
-   
+
+    /// <summary>
+    /// 플레이어 UI상에 보여주는 장착 블록 패널을 관리합니다.
+    /// 장착된 블록 패널쪽을 관리합니다.
+    /// </summary>
+    /// <param name="blockPanel"></받아온 블록 패널>
 
     public void RemoveBlockPanelSet(BlockPanel blockPanel)
     {
-        removeBlockPanel.Set(blockPanel.Block);
+        Debug.Log(blockPanel);
+
+        float x = blockPanel.transform.position.x+ 250f;
+        float y = blockPanel.transform.position.y;
+
+        if (selectBlock != null)
+        {
+            selectBlock.BlockImage.color = Color.white;
+        }
+        selectBlock = blockPanel;
+        selectBlock.BlockImage.color = Color.red;
+
+        removeBlockPanel.transform.position = new Vector2(x, y);
+        removeBlockPanel.Set(blockPanel.Block, false);
         removeBlockGold.text = blockPanel.Block.BlockInfo.BlockRemovalGold.ToString();
 
     }
-
+    /// <summary>
+    /// 플레이어 UI상에 보여주는 인벤토리 블록 패널을 관리합니다.
+    /// 인벤토리 블록 패널쪽을 관리합니다.
+    /// </summary>
+    /// <param name="blockPanel"></받아온 블록 패널>
     public void EquipBlockPanelSt(BlockPanel blockPanel)
     {
-        equipBlockPanel.Set(blockPanel.Block);
+        Debug.Log(blockPanel);
+
+        float x = blockPanel.transform.position.x + 250f;
+        float y = blockPanel.transform.position.y;
+
+       
+        if (selectBlock != null)
+        {
+            selectBlock.BlockImage.color = Color.white;
+        }
+        selectBlock = blockPanel;
+        selectBlock.BlockImage.color = Color.red;
+
+
+        equipBlockPanel.transform.position = new Vector2(x, y);
+        equipBlockPanel.Set(blockPanel.Block,false);
         equipBlockGold.text = blockPanel.Block.BlockInfo.BlockEquipGold.ToString();
     }   
+
+
+  
    
 
    

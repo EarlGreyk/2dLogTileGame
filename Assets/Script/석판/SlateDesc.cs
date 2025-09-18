@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 석판 UI에 마우스를 올리면 상세사항을 보여줍니다.
@@ -10,15 +11,23 @@ public class SlateDesc : MonoBehaviour
 {
 
     [SerializeField]
-    private Sprite Icon;
+    private Image Icon;
     [SerializeField]
     private TextMeshProUGUI Desc;
- 
+
+    [SerializeField]
+    private TextMeshProUGUI Name;
+
+    [SerializeField]
+    private TextMeshProUGUI Price;
+
 
 
     public void DescSet(SlateOrigin slate)
     {
-        Icon = slate.SlateIcon;
+        Icon.sprite = slate.SlateIcon;
+        Name.text = slate.SlateName;
+        Price.text = slate.SlatePrice.ToString();
 
         string status = ""; ;
 
@@ -37,13 +46,14 @@ public class SlateDesc : MonoBehaviour
                 Desc.text = "스킬의 " + status + "가 [" + slate.SlateValue + "] 만큼 감소합니다.";
                 break;
         }
-      
+        gameObject.SetActive(true);
+
 
     }
 
     public void DescSet(SlateScriptableObejct slate)
     {
-        Icon = slate.Icon;
+        Icon.sprite = slate.Icon;
 
         string status = ""; ;
 
@@ -64,6 +74,14 @@ public class SlateDesc : MonoBehaviour
         }
 
 
+    }
+    public void DescClear()
+    {
+        Icon.sprite = null;
+        Name.text = "";
+        Price.text = ""; 
+        Desc.text = "";
+        gameObject.SetActive(false);
     }
 
 

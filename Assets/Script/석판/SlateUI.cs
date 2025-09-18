@@ -27,7 +27,7 @@ public class SlateUI : MonoBehaviour
     private Button selectButton;
 
 
-    private void Start()
+    private void Awake()
     {
         
         if(runtimeSlate != null && selectButton != null)
@@ -50,8 +50,14 @@ public class SlateUI : MonoBehaviour
         {
             runtimeSlate = slate;
             SlateImage.sprite = slate.SlateIcon;
-            SlateNameText.text = slate.SlateName;
             selectButton.interactable = true;
+
+            //아이콘만 표현되는 Slate가존재합니다.
+            if(SlateNameText != null)
+            {
+                SlateNameText.text = slate.SlateName;
+            }
+            
         }
         
         
@@ -73,7 +79,11 @@ public class SlateUI : MonoBehaviour
         runtimeSlate = null;
         catalogSlate = null;
         SlateImage.sprite = null;
-        SlateNameText.text = "";
+        if(SlateNameText !=null)
+        {
+            SlateNameText.text = "";
+        }
+        
     }
 
 

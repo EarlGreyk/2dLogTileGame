@@ -87,7 +87,6 @@ public class MonsterAIManager : MonoBehaviour
     {
         if (actionMonsters.Count > 0)
         {
-            GameManager.instance.onMonsterAction();
             currentMonster = actionMonsters.Peek();
             actionMonsters.Dequeue();
             currentMonster.ActionStart();
@@ -98,7 +97,7 @@ public class MonsterAIManager : MonoBehaviour
         if (currentMonster == null && actionMonsters.Count == 0)
         {
             
-            GameManager.instance.onPlayerAction();
+            GameManager.instance.PlayerTurnStart();
             MonsterActionCheck();
         }
 

@@ -45,22 +45,10 @@ public class GameProsessManager : MonoBehaviour
     private GameObject roundPanel;
 
     [SerializeField]
-    private GameObject rewardPanel;
-
-    [SerializeField]
-    private GameObject prosessPanel;
-
-    [SerializeField]
     private GameObject rewardGetPanel;
 
-    [SerializeField]
-    private TextMeshProUGUI roundText;
 
 
-
-
-    [SerializeField]
-    private List<Image> roundInfo;
 
     [SerializeField]
     private GameObject playerIcon;
@@ -68,8 +56,7 @@ public class GameProsessManager : MonoBehaviour
     private List<GameObject> stayUiList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> battleUIList = new List<GameObject>();
-    [SerializeField]
-    private List<GameObject> restUIList = new List<GameObject>();
+  
 
     [SerializeField]
     private PopUp prosessPop;
@@ -103,16 +90,38 @@ public class GameProsessManager : MonoBehaviour
 
     private int exp;
 
-    //상호작용 판넬
+    //상호작용 메세지 판넬
     [SerializeField]
     private InteractionUI interactionPanel;
 
+
+    //정화도 (가득차면 플레이어에게 버프를 줍니다)
+    private float maxClearValue = 1000;
+    private float currentClearValue = 0;
     [SerializeField]
-    private GameObject ShopPanel;
+    private Slider ClearSlider;
     [SerializeField]
-    private GameObject MagicPanel;
+    private TextMeshProUGUI clearValueText;
+
+    //위험도 (가득차면 보스를 진행시킵니다)
+    private float maxDangerValue = 1000;
+    private float currentDangerValue = 0;
     [SerializeField]
-    private GameObject BLockPanel;
+    private Slider DangerSlider;
+    [SerializeField]
+    private TextMeshProUGUI DangerValueText;
+
+    /// <summary>
+    /// 불씨
+    /// 해당 수치가 0이되면 게임을 패배합니다.
+    /// </summary>
+    private float lampLight;
+    public float LampLight { get { return lampLight; } set { lampLight = value; } }
+    public float MaxLampLight;
+
+
+
+
 
 
     private void Awake()
@@ -125,6 +134,22 @@ public class GameProsessManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    private void Start()
+    {   
+        // 기타 변수 초기화
+        lampLight = 100;
+        MaxLampLight = lampLight;
+       
+    
+        ClearSlider.value = (currentClearValue / maxClearValue);
+        clearValueText.text = currentClearValue.ToSafeString() + " | " + maxClearValue.ToString();
+    
+        DangerSlider.value = (currentDangerValue / maxDangerValue);
+        DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
+
+
     }
 
 
@@ -157,7 +182,21 @@ public class GameProsessManager : MonoBehaviour
 
 
     }
+    /// <summary>
+    /// 캠프와 상호작용 할때 작동합니다.
+    /// </summary>
+    public void PlayerLampeRecovery()
+    {
+        LampLight = MaxLampLight;
+    }
 
+
+    /// <summary>
+    /// 게임이 종료될때 작동됩니다.
+    /// </summary>
+    /// <param name="win"></param>
+    /// <param name="stage"></param>
+    /// <param name="round"></param>
 
 
     public void GameEnd(bool win, int stage, int round)
@@ -188,22 +227,6 @@ public class GameProsessManager : MonoBehaviour
 
     }
 
-    /// <summary>
-    /// 플레이어가 전투일때 승리 혹은 패배하면 작동합니다
-    /// </summary>
-    /// <param name="value"><true : 승리 false : 패배.>
-    public void ProsessSet(bool value)
-    {
-        PopUpManager.instance.PopupPush(prosessPop);
-        // 상호 작용한 정화 유닛을 받아옵니다. 
-        // 현재 저장되어 있는 경로 탐색이 복잡함으로 다른곳에 저장하도록 변경해야합니다.
-        InteractionObject target = GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
-        target.InteractEnd();
-        //target.BattleCheck(value);
-       
-
-
-    }
    
 
     ///몬스터 처치시 결과 패널에 추가시킵니다.
@@ -236,6 +259,7 @@ public class GameProsessManager : MonoBehaviour
 
     }
     /// 플레이어의 경험치와 보상을 관리합니다 
+    /// <param name="value"></param>
     private void VaribleSet(int value)
     {
         rewardStep = value;
@@ -249,45 +273,7 @@ public class GameProsessManager : MonoBehaviour
         rewardStepText.text = rewardStep.ToString();
         rewardExpImage.fillAmount = 0;
     }
-    /// <summary>
-    /// 보상 단계를 증가 시키기 위해 경험치를 주입합니다.
-    /// </summary>
-    public void Injection()
-    {
-        if(PlayerResource.instance.Gold >= rewardMaxExp)
-        {
-            StartCoroutine(InjectionSet(0));
-        }
-        
-    }
-    IEnumerator InjectionSet(float time)
-    {
-        yield return new WaitForSeconds(0.1f);
-        if(time < 2f)
-        {
-            time += 0.1f;
-            StartCoroutine(InjectionSet(time));
-            rewardExpImage.fillAmount = time / 2f;
-        }
-        else 
-        {
-            VaribleSet(rewardStep + 1);
-        }
-        yield break;
-    }
-
-
-
-    /// <summary>
-    /// 보상 지급 함수입니다.
-    /// </summary>
-    public void Reward()
-    {
-        rewardGetPanel.SetActive(true);
-        //아래에서 획득한 보상에 따른 이미지를 갱신하고 플레이어 에게 집어 넣어줘야합니다.
-    }
-
-
+  
 
 
     /// <summary>
@@ -309,10 +295,7 @@ public class GameProsessManager : MonoBehaviour
             {
                 battleUIList[i].SetActive(false);
             }
-            for (int i = 0; i < restUIList.Count; i++)
-            {
-                restUIList[i].SetActive(false);
-            }
+       
            
             GameManager.instance.MonsterAIManager.MonsterReset();
 
@@ -331,16 +314,15 @@ public class GameProsessManager : MonoBehaviour
         if (mode == "battle")
         {
             prosessType = GameProsessManager.ProsessType.Battle;
-            battleUIList[0].SetActive(true);
-            for (int i = 0; i < restUIList.Count; i++)
+            for( int i =0; i< battleUIList.Count;i++)
             {
-                restUIList[i].SetActive(false);
+                battleUIList[i].SetActive(true);
             }
+          
             for (int i = 0; i < stayUiList.Count; i++)
             {
                 stayUiList[i].SetActive(false);
             }
-            PlayerResource.instance.BlockReset();
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
             GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
             CameraSetting.instance.transform.position = new Vector3(15f, 15f, -1);
@@ -349,28 +331,15 @@ public class GameProsessManager : MonoBehaviour
         }
         if (mode == "rest")
         {
-            if (GameManager.instance.MapGenerator.tileMapInfo[GameManager.instance.CurrentPos].InterObj == null)
+            prosessType = GameProsessManager.ProsessType.Rest;
+            for (int i = 0; i < battleUIList.Count; i++)
             {
-                PlayerResource.instance.BlockReset();
-                for (int i = 0; i < restUIList.Count; i++)
-                {
-                    restUIList[i].SetActive(true);
-                }
-
-                for (int i = 0; i < battleUIList.Count; i++)
-                {
-                    battleUIList[i].SetActive(false);
-                }
-                for (int i = 0; i < stayUiList.Count; i++)
-                {
-                    stayUiList[i].SetActive(false);
-                }
-            }else
-            {
-                ErrorManager.instance.ErrorSet("상호작용 가능한 오브젝트가 있어 사용이 불가능 합니다.");
+                battleUIList[i].SetActive(false);
             }
-
-
+            for (int i = 0; i < stayUiList.Count; i++)
+            {
+                stayUiList[i].SetActive(false);
+            }
 
             
         }
@@ -382,40 +351,69 @@ public class GameProsessManager : MonoBehaviour
     
 
 
-   ////정화 유닛의 정보를 플레이어에게 보여주기 위해 Panel에 갱신합니다. 
+   ////상호 작용 유닛의 정보를 플레이어에게 보여주기 위해 Panel에 갱신합니다. 
    ////해당 데이터 값에 맞게 이미지와 정보를 수정해야합니다.
 
-   public void ClearPanelSet(ClearObject clearUnit, bool set)
+   public void InteractionPanelSet(InteractionObject interaction, bool set)
     {
-        if (set)
+        Debug.Log("상호작용 패널 작동");
+
+        if(set == false)
         {
-            if (clearUnit.battle)
-            {
-                interactionPanel.Set(true, "전투");
-                ClearUnitInfoPanel.SetActive(true);
-            }
-                
-            else
-                interactionPanel.Set(true, "정화");
-
-
+            interactionPanel.Set(false, "");
+            return;
         }
-        else
+
+        if (interaction.interactionType == InteractionObject.Type.Clear)
         {
-            ClearUnitInfoPanel.SetActive(false);
-            for (int i = ClearUnitList.Count-1; i >=0; i--)
+            ClearObject clearObject = interaction.gameObject.GetComponent<ClearObject>();
+            if (set)
             {
-                Destroy(ClearUnitList[i]);
+                if (clearObject.battle)
+                {
+                    interactionPanel.Set(true, "전투");
+                    ClearUnitInfoPanel.SetActive(true);
+                }
+                else
+                    interactionPanel.Set(true, "정화");
+
+
             }
-            ClearUnitList.Clear();
-            interactionPanel.Set(false,"");
+            else
+            {
+                ClearUnitInfoPanel.SetActive(false);
+                for (int i = ClearUnitList.Count - 1; i >= 0; i--)
+                {
+                    Destroy(ClearUnitList[i]);
+                }
+                ClearUnitList.Clear();
+
+            }
+        }
+
+        if (interaction.interactionType == InteractionObject.Type.Shop)
+        {
+            ShopObject shopObject = interaction.gameObject.GetComponent<ShopObject>();
             
+            if (set)
+            {
+                interactionPanel.Set(true, "대화하기");
+            }
         }
         
+        
    }
-    public void ClearPanelSet(ClearObject clearUnit, bool set, List<MonsterScriptableObject> monsterListSo)
+
+
+    /// <summary>
+    /// 정화유닛과 상호작용 하면 정화유닛에 담겨있는 몬스터 정보를 보여줍니다.
+    /// </summary>
+    /// <param name="clearUnit"></상호작용 하는 유닛>
+    /// <param name="set"></활성화 비활성화 여부>
+    /// <param name="monsterListSo"></몬스터 리스트>
+    public void ClearPanelSet(ClearObject clearUnit, bool set, List<MonsterScriptableObject> monsterListSo = null)
     {
-        if (set)
+        if (set && monsterListSo != null)
         {
             ClearUnitInfoPanel.SetActive(true);
 
@@ -452,6 +450,12 @@ public class GameProsessManager : MonoBehaviour
         }
         else
         {
+            for(int i = ClearUnitList.Count-1; i>=0;i--)
+            {
+                GameObject obj = ClearUnitList[i];
+                Destroy(obj);
+            }
+            ClearUnitList.Clear();
             ClearUnitInfoPanel.SetActive(false);
             interactionPanel.Set(false, "");
         }
@@ -459,5 +463,81 @@ public class GameProsessManager : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// /// 정화유닛을 정화할때 작동하니다.
+    /// 이 함수는 정화를 작동하기 위해 연출시간동안 플레이어의 기타 상호작용을 중지한 이후 원상태로 돌립니다.
+    /// </summary>
+    /// <param name="lampvalue"></램프감소량을 얼마나 해야하는지 보냅니다>
+    /// /// <param name="clearvalue"></정화 게이지를 얼마나 증가시킬지 보여줍니다.>
+
+    public void ClearSet(float lampvalue, float clearvalue)
+    {
+        lampLight -= lampvalue;
+        currentClearValue += clearvalue;
+        StartCoroutine(Clearing());
+
+    }
+
+    /// <summary>
+    /// 정화 유닛을 정화하고 난후 해당 유닛 값을 지워야합니다.
+    /// </summary>
+    /// <returns></returns>
+
+    private IEnumerator Clearing()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (lampLight <= 0)
+        {
+            //게임패배 해야함.
+            ProsessSet(false);
+        }
+        else
+        { 
+            ClearSlider.value = (currentClearValue / maxClearValue);
+            clearValueText.text = currentClearValue.ToSafeString() + " | " + maxClearValue.ToString();
+        }
+
+        MapGenerator.Instance.DestroyInteraction(GameManager.instance.CurrentPos);
+        
+        yield return null;
+    }
+
+    private IEnumerator Dangering()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+   
+        if (currentDangerValue <= maxDangerValue)
+        {
+            DangerSlider.value = (currentDangerValue / maxDangerValue);
+            DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
+        }
+        else
+        {
+          
+
+        }
+
+        yield return null;
+    }
+
+    /// <summary>
+    /// 플레이어가 전투일때 승리 혹은 패배하면 작동합니다
+    /// </summary>
+    /// <param name="value"><true : 승리 false : 패배.>
+    public void ProsessSet(bool value)
+    {
+        PopUpManager.instance.PopupPush(prosessPop);
+        // 상호 작용한 정화 유닛을 받아옵니다. 
+        // 현재 저장되어 있는 경로 탐색이 복잡함으로 다른곳에 저장하도록 변경해야합니다.
+        InteractionObject target = MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
+        target.InteractEnd();
+        //target.BattleCheck(value);
+
+
+
+    }
 
 }

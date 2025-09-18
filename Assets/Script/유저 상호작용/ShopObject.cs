@@ -7,10 +7,9 @@ public class ShopObject : InteractionObject
     // Start is called before the first frame update
 
 
-    //상점을 한번이라도 접근하고 나왔을때 true로 반환됩니다.
-    //해당 값에 따라 상점과 접근할 수 있는지 없는지 체크됩니다.
+    
 
-    public bool Sell;
+    
 
 
 
@@ -21,22 +20,13 @@ public class ShopObject : InteractionObject
         interactionType = Type.Shop;
     }
 
-    public override void Update()
-    {
-        base.Update();
-        if (Input.GetKey(KeyCode.G) && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
-        {
-            Debug.Log("상점전환");
-            //플레이어와 상호작용 가능한 NPC와 대화하는 기능이 필요합니다.
-
-
-
-        }
-    }
 
     public override void InteractStart()
     {
-        base.InteractEnd();
+        base.InteractStart();
+        TalkManager.instance.TalkSet(this); 
+
+
     }
 
     public override void InteractEnd()
@@ -44,31 +34,16 @@ public class ShopObject : InteractionObject
         base.InteractEnd();
     }
 
-
-    public override void OnTriggerEnter2D(Collider2D other)
+    public override void PlayerColiderEnter()
     {
-        if (Sell)
-            return;
-
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("플레이어가 상점 유닛에 접근햇습니다.");
-            targetObj = other.gameObject.transform;
-            
-
-
-        }
-
+        base.PlayerColiderEnter();
     }
 
-    public override void OnTriggerExit2D(Collider2D other)
+    public override void PlayerColiderExit()
     {
-
-
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("플레이어가 상점 유닛에 나갔습니다.");
-            targetObj = null;
-        }
+        base.PlayerColiderExit();
     }
+
+
+
 }

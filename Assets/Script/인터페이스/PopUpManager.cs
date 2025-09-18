@@ -44,6 +44,7 @@ public class PopUpManager : MonoBehaviour
             return;
 
         PopUp popUp = popUpStack.Pop();
+        Debug.Log(popUp);
         popUp.Pop.SetActive(false);
 
     }

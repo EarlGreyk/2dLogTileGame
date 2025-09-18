@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// 게임의 흐름을 관장합니다.
+/// 게임에서 전투 흐름을 관리합니다.
 /// 몬스터의 ai. 턴의 진행을 탐당합니다.
 /// </summary>
 
@@ -70,10 +70,7 @@ public class GameManager : MonoBehaviour
 
     public UnitInfoManager UnitInfoManager { get { return unitInfoManager; } }
 
-    [SerializeField]
-    private MapGenerator mapGenerator;
-
-    public MapGenerator MapGenerator { get { return mapGenerator; } }
+   
 
 
 
@@ -84,20 +81,6 @@ public class GameManager : MonoBehaviour
     public bool IsMonater { get { return isMonster; } }
 
 
-    /// <summary>
-    /// 불씨
-    /// 해당 수치가 0이되면 게임을 패배합니다.
-    /// </summary>
-    private float lampLight;
-
-    public float LampLight { get { return lampLight; } set { lampLight = value; } }
-
-    public float MaxLampLight;
-
-    private int stage = 1;
-    public int Stage { get { return stage; } set { stage = value; } }
-    private int round = 1;
-    public int Round { get { return round; } set { round = value; } }
 
     private Vector2Int currentPos = new Vector2Int(0, 0);
 
@@ -118,13 +101,7 @@ public class GameManager : MonoBehaviour
     private TextMeshProUGUI lamptext;
 
 
-    private float maxClearValue = 1000;
-
-    private float currentClearValue = 0;
-
-    [SerializeField]
-    private Slider ClearSlider;
-
+  
 
     
 
@@ -143,8 +120,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        lampLight = 100;
-        MaxLampLight = lampLight;
+        
         if(GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay )
         {
             isPlayer = true;
@@ -154,7 +130,24 @@ public class GameManager : MonoBehaviour
 
     }
 
+    ////전투를 시작합니다. 
+    /// 이 함수는 대기 필드에서 전투 필드로 넘어갈때 작동합니다. <summary>
+    /// 
+    /// </summary>
+    /// <param name="monsterList"></몬스터 목록을 받아옵니다.>
+    public void BattleSet(List<MonsterScriptableObject> monsterList)
+    {
+        Debug.Log(monsterList.Count);
+        PlayerResource.instance.BlockReset();
+        setBattleField();
+        PlayerTurnStart();
+        setPlayer(true);
+        setMonster(true, monsterList);
 
+
+        GameProsessManager.changeMode("battle");
+
+    }
 
 
     /// <summary>
@@ -168,8 +161,8 @@ public class GameManager : MonoBehaviour
             Destroy(battleZone.gameObject);
             battleZone = null;
         }
-        battleZone = MapGenerator.BattleZoneSet();
-        foreach (var value in MapGenerator.spawnedTilemaps)
+        battleZone = MapGenerator.Instance.BattleZoneSet();
+        foreach (var value in MapGenerator.Instance.spawnedTilemaps)
         {
             value.Value.SetActive(false);
         }
@@ -185,7 +178,7 @@ public class GameManager : MonoBehaviour
         if (stayPlayerUnit == null)
         {
             GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
-            stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs);
+            stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs, true);
             CameraSetting.instance.unitFocusSet(stayPlayerUnit.transform.position);
         }
     }
@@ -298,7 +291,34 @@ public class GameManager : MonoBehaviour
 
 
 
-    public void onPlayerAction()
+  
+    public void stopAction()
+    {
+        isMonster = false;
+        isPlayer = false;
+    }
+
+    ///플레이어가 턴 종료 버튼을 누르면 작동합니다.
+    //턴종료를 실행하는 함수입니다.
+    public void PlayerTurnEnd()
+    {
+        onMonsterAction();
+        MonsterAIManager.MonsterCount();
+        SkillZone.SkillStop();
+        MoveZone.breakMoveTile();
+    }
+    /// <summary>
+    /// 플레이어의 턴을 시작합니다.
+    /// MonsterAIManager가 자신의 작동이 끝났으면 해당 함수를 작동합니다.
+    /// </summary>
+    public void PlayerTurnStart()
+    {
+        onPlayerAction();
+        PlayerResource.instance.BlockDrow();
+
+      
+    }
+    private void onPlayerAction()
     {
         isPlayer = true;
         isMonster = false;
@@ -306,47 +326,17 @@ public class GameManager : MonoBehaviour
         blockModeZone.ModeSetting(false);
     }
 
-    public void onMonsterAction()
+    private void onMonsterAction()
     {
         isPlayer = false;
         isMonster = true;
         //플레이어가 행동 불가능함으로써 플레이어의 권한을 일부 뺏어야합니다.
         blockModeZone.ModeSetting(false);
     }
-    public void stopAction()
-    {
-        isMonster = false;
-        isPlayer = false;
-    }
 
-    ////몬스터 행동 관리입니다.
-    ///플레이어가 턴 종료를 누르면 작동합니다.
-    //턴종료를 실행하는 함수입니다.
-    public void LampUpdate()
-    {
-        onMonsterAction();
-        MonsterAIManager.MonsterCount();
-    }
- 
 
-    ////전투를 시작합니다. 
-    /// 이 함수는 대기 필드에서 전투 필드로 넘어갈때 작동합니다. <summary>
-    /// 
-    /// </summary>
-    /// <param name="monsterList"></몬스터 목록을 받아옵니다.>
-    public void BattleSet(List<MonsterScriptableObject> monsterList)
-    {
-        Debug.Log(monsterList.Count);
 
-        setBattleField();
-        onPlayerAction();
-        setPlayer(true);
-        setMonster(true,monsterList);
-        
-       
-        GameProsessManager.changeMode("battle");
-
-    }
+  
 
     /// <summary>
     /// 대기 필드로 넘어갑니다.
@@ -359,9 +349,9 @@ public class GameManager : MonoBehaviour
         if (battleZone != null)
         {
             battleZone = null;
-            Destroy(MapGenerator.BattleField);
+            Destroy(MapGenerator.Instance.BattleField);
         }
-        foreach (var value in MapGenerator.spawnedTilemaps)
+        foreach (var value in MapGenerator.Instance.spawnedTilemaps)
         {
             value.Value.SetActive(true);
         }
@@ -369,22 +359,6 @@ public class GameManager : MonoBehaviour
         GameProsessManager.changeMode("stay");
     }
 
-    /// <summary>
-    /// /// 정화유닛을 정화할때 작동하니다.
-    /// 이 함수는 정화를 작동하기 위해 연출시간동안 플레이어의 기타 상호작용을 중지한 이후 원상태로 돌립니다.
-    /// </summary>
-    /// <param name="lampvalue"></램프감소량을 얼마나 해야하는지 보냅니다>
-    /// /// <param name="clearvalue"></정화 게이지를 얼마나 증가시킬지 보여줍니다.>
-
-    public void ClearSet(float lampvalue,float clearvalue)
-    {
-        stopAction();
-        lampLight -= lampvalue;
-        currentClearValue += clearvalue;
-        StartCoroutine(Clearing());
-   
-   
-    }
     /// <summary>
     /// 플레이어가 어떠한 상황에서 동작 실행을했을때 
     /// 행동 불가능 상태로 만들어야할 경우에 사용합니다.
@@ -403,60 +377,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 정화 유닛을 정화하고 난후 해당 유닛 값을 지워야합니다.
-    /// </summary>
-    /// <returns></returns>
-
-    private IEnumerator Clearing()
-    {
-
-        yield return new WaitForSeconds(5f);
-
-        if (lampLight <= 0)
-            PlayerLose();
-        else
-        {
-            isPlayer = true;
-         
-
-            ClearSlider.value = (currentClearValue / maxClearValue);
-            
-        }
-
-        GameObject obj = MapGenerator.tileMapInfo[currentPos].InterObj.gameObject;
-        MapGenerator.tileMapInfo[currentPos].InterObj = null;
-        Destroy(obj);
-
-
-
-
-
-
-        yield return null;
-    }
-        
-
+  
+      
 
     
-
-
-    
-
-    /// <summary>
-    /// 플레이어가 모든 진행을 완료하고 게임을 승리로 끝마쳤을때 작동합니다.
-    /// </summary>
-
-    public void PlayerWin()
-    {
-        GameProsessManager.GameEnd(true,stage,round);
-    }
-    /// <summary>
-    /// 플레이어가 모든 진행을 완료하기전 게임을 패배로 끝마쳤을때 작동합니다.
-    /// </summary>
-    public void PlayerLose()
-    {
-        GameProsessManager.GameEnd(false,stage, round);
-    }
 
 }

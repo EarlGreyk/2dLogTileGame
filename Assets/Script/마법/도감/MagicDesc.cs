@@ -37,7 +37,7 @@ public class MagicDesc : MonoBehaviour
         {
             return;
         }
-            
+        gameObject.SetActive(true);    
         descImage.sprite = UI.Magic.MagicSprite;
         descText.text = UI.Magic.MagicDesc;
         nameText.text = UI.Magic.MagicName;
@@ -48,8 +48,20 @@ public class MagicDesc : MonoBehaviour
     {
         if (magic == null)
             return;
+        if (level == 4)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         descImage.sprite = magic.MagicSprite;
         descText.text = magic.MagicDesc;
 
+    }
+    public void DescClear()
+    {
+        descImage.sprite = null;
+        descText.text = "";
+        nameText.text = "";
+        gameObject.SetActive(false);
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 314607124724819659}
   m_Layer: 0
   m_Name: ClearUnit
-  m_TagString: Untagged
+  m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,6 +103,7 @@ MonoBehaviour:
   canvas: {fileID: 0}
   targetObj: {fileID: 0}
   interactionType: 0
+  Talk: 0
   clear: 0
   battle: 0
   victory: 0

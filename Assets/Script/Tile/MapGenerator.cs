@@ -9,6 +9,8 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    public static MapGenerator Instance;
+
     public Grid grid;  // Scene에 Grid 할당
     public GameObject[] tilemapPrefabs;  // TileMap Prefabs 리스트
     public GameObject[] westTileMapPrefabs;
@@ -27,6 +29,23 @@ public class MapGenerator : MonoBehaviour
 
     public GameObject BattleField;
 
+
+    private int stage;
+    public int Stage { get { return stage; } set { stage = value; } }
+
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else 
+        {
+            Destroy(this);
+        }
+    }
+
     void Start()
     {
         if (grid == null)
@@ -34,6 +53,7 @@ public class MapGenerator : MonoBehaviour
             Debug.LogError("Grid 오브젝트가 할당되지 않았습니다.");
             return;
         }
+        Stage = 1; ;
 
         LoadTilemapPrefabs();
         GenerateMap();  // 맵 생성
@@ -43,9 +63,9 @@ public class MapGenerator : MonoBehaviour
     // 타일맵 프리팹 로드
     void LoadTilemapPrefabs()
     {
-        int i = GameManager.instance.Stage;
+   
 
-        string stage = i.ToString() + "Stage/";
+        string stage = Stage.ToString() + "Stage/";
 
         eastTileMapPrefabs = Resources.LoadAll<GameObject>("Prefabs/TileMap/" + stage + "East");
         westTileMapPrefabs = Resources.LoadAll<GameObject>("Prefabs/TileMap/" + stage + "West");
@@ -162,6 +182,34 @@ public class MapGenerator : MonoBehaviour
 
     }
 
+
+    //상호작용 가능 유닛을 파괴 합니다.
+    //T
+    public void DestroyInteraction(Vector2Int targetPos)
+    {
+        tileMapInfo[targetPos].InterObj.gameObject.SetActive(false);
+    }
+    /// <summary>
+    /// 전투 타일 생성
+    /// 전투시 전투에 필요한 타일을 현재 상호작용한 지역과 대응되게 생성합니다.
+    /// </summary>
+    /// <returns></returns>
+
+    public BattleZone BattleZoneSet()
+    {
+
+        BattleField = Instantiate<GameObject>(spawnedTilemaps[GameManager.instance.CurrentPos], GameManager.instance.Grid.transform);
+        BattleField.transform.position = Vector3.zero;
+        BattleZone value = BattleField.GetComponentInChildren<BattleZone>();
+        TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
+        info.InterObj.gameObject.SetActive(false);
+
+
+
+
+        return value;
+    }
+
     // 타일 생성 함수
 
 
@@ -236,21 +284,7 @@ public class MapGenerator : MonoBehaviour
 
     }
 
-    
-    public BattleZone BattleZoneSet()
-    {
-
-        BattleField = Instantiate<GameObject>(spawnedTilemaps[GameManager.instance.CurrentPos], GameManager.instance.Grid.transform);
-        BattleField.transform.position = Vector3.zero;
-        BattleZone value = BattleField.GetComponentInChildren<BattleZone>();
-        TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
-        info.InterObj.gameObject.SetActive(false);
-
-
-
-
-        return value;
-    }
+   
 
 
     // 타일이 연결 가능한지 확인하는 함수

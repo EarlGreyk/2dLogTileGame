@@ -106,5 +106,7 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
 
         SlateOrigin slateOrigin = new SlateOrigin(this);
         SlateInventory.instance.SlateAdd(slateOrigin);
+        SlateInventory.instance.SlateDescClear();
+
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 public interface IShopItem
 {
@@ -26,23 +27,39 @@ public interface IShopItem
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance;
 
     public List<ShopSoket> Sokets = new List<ShopSoket>();
 
     /// 플레이어가 사용 가능한 목록    
-    public MagicScriptableObejct[] ShopMagicList;
+    public List<MagicScriptableObejct> ShopMagicList = new List<MagicScriptableObejct>();
     public SlateScriptableObejct[] ShopSlateList;
     public BlockScriptableObject[] ShopBlockList;
 
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }else
+        {
+            Destroy(this);
+        }
+    }
 
-    
+
 
     private void Start()
     {
-        ShopMagicList = SettingData.character.PlayerData.ListMagics;
+        ShopMagicList = SettingData.character.PlayerData.ListMagics.ToList();
         ShopSlateList = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data");
         ShopBlockList = Resources.LoadAll<BlockScriptableObject>("ScriptableObjects/block_data");
+        SoketReroll();
+        for (int i = 0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
+        {
+            MagicListRemove(SettingData.character.PlayerData.UsingMagics[i]);
 
+        }
     }
 
     public void SoketReroll()
@@ -52,14 +69,17 @@ public class ShopManager : MonoBehaviour
             Sokets[i].Set();
         }
     }
-    public void PlayerLampeRecovery()
+    public void MagicListRemove(MagicScriptableObejct magicScriptableObejct)
     {
-        GameManager.instance.LampLight = GameManager.instance.MaxLampLight;
+        for (int i = 0; i < ShopMagicList.Count; i++)
+        {
+            if(ShopMagicList[i] == magicScriptableObejct)
+            {
+                ShopMagicList.RemoveAt(i);
+            }
+        }
     }
 
-    public void OpenShop()
-    {
+ }
 
-    }
    
-}

@@ -15,6 +15,8 @@ public class SlateOrigin
 
     public Sprite SlateIcon;
 
+    public int SlatePrice;
+
     
 
     /// <summary>
@@ -37,6 +39,7 @@ public class SlateOrigin
         SlateValue = Random.Range(SlateData.SlateMinValue, SlateData.SlateMaxValue);
         SlateStatus = SlateData.SlateStatus;
         SlateIcon = SlateData.Icon;
+        SlatePrice = SlateData.Price;
 
 
 

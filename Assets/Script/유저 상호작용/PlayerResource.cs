@@ -168,9 +168,9 @@ public class PlayerResource : MonoBehaviour
     }
 
     /// <summary>
-    /// 드로우
+    /// 카드를 자신의 드로우 가능수 만큼 뽑습니다.
     /// </summary>
-    public void BlockDrow(bool start)
+    public void BlockDrow()
     {
         if (GameManager.instance.IsPlayer == false)
         {
@@ -211,7 +211,7 @@ public class PlayerResource : MonoBehaviour
 
         if(CurrentDrowCount >0)
         {
-            BlockDrow(start);
+            BlockDrow();
             CurrentDrowCount--;
         }else
         {
@@ -222,7 +222,7 @@ public class PlayerResource : MonoBehaviour
     }
 
     /// <summary>
-    /// 라운드를 새로 시작합니다.
+    /// 블록을 초기화시킵니다.
     /// </summary>
     public void BlockReset()
     {
@@ -232,10 +232,6 @@ public class PlayerResource : MonoBehaviour
             playerCurBlockList.Remove(playerCurBlockList[i]);
             playerBlockPanel[i].gameObject.SetActive(false);
 
-        }
-        for (int i = 0; i < playerBlockPanel.Count; i++)
-        {
-            BlockDrow(true);
         }
     }
     /// <summary>

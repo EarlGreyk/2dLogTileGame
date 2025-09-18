@@ -29,21 +29,36 @@ public class InteractionObject : MonoBehaviour
     public Type interactionType;
 
 
-    
-    public virtual void Update()
-    {
-        if (targetObj == null)
-            return;
+    //대화 창을 필요로 하는지 체크합니다.
 
+    private Sprite Icon;
+    
+    public bool Talk;
+
+    private List<string> talkList = new List<string>();
+
+    public List<string> TalkList { get { return talkList; } }
+
+
+
+
+
+    private void Start()
+    {
+        Icon = GetComponent<SpriteRenderer>().sprite;
     }
 
-    //상호 작용하는 오브젝트의 기초적인 셋팅을 시작합니다.
- 
 
+    //상호 작용하는 오브젝트의 기초적인 셋팅을 시작합니다.
     //상호 작용에 접근 혹은 시작할떄 작동합니다.
     public virtual void InteractStart()
     {
         Debug.Log("상호작용 시작");
+        if(Talk)
+        {
+            Debug.Log("대화가능 대화시작 ");
+            TalkManager.instance.TalkSet(this);
+        }
     }
 
     //상호작용이 완료될경우 호출합니다.
@@ -53,14 +68,16 @@ public class InteractionObject : MonoBehaviour
     }
 
 
-    public virtual void OnTriggerEnter2D(Collider2D other)
+    public virtual void PlayerColiderEnter()
     {
         Debug.Log("상호작용 오브젝트 접촉");
+        GameProsessManager.instance.InteractionPanelSet(this, true);
     }
 
-    public virtual void OnTriggerExit2D(Collider2D other)
+    public virtual void PlayerColiderExit()
     {
         Debug.Log("상호작용 오브젝트 나감");
+        GameProsessManager.instance.InteractionPanelSet(this, false);
     }
 
 }

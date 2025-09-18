@@ -78,6 +78,10 @@ public class UnitInfoManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 몬스터 정보 인터페이스에 추가합니다.
+    /// </summary>
+    /// <param name="monster"></param>
   
     public void MonsterInfoAdd(MonsterUnit monster)
     {

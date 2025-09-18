@@ -28,7 +28,7 @@ public class UnitSpawner : MonoBehaviour
         unit.transform.SetParent(UnitMap.transform);
 
     }
-    public PlayerUnit SpawnPlayer(Vector3Int tilePosition, GameObject unitPrefab)
+    public PlayerUnit SpawnPlayer(Vector3Int tilePosition, GameObject unitPrefab, bool stay = false)
     {
         Vector3 scale = grid.transform.localScale;
         // 타일맵의 타일 좌표를 월드 좌표로 변환
@@ -41,7 +41,8 @@ public class UnitSpawner : MonoBehaviour
         GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
         PlayerUnit player = unit.GetComponent<PlayerUnit>();
-        //GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
+        if(!stay)
+            GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
         return player;
     }
 

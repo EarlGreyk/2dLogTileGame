@@ -20,19 +20,20 @@ public class BlockPanel : MonoBehaviour
     public Image BlockImage { get { return blockImage; } }
     [SerializeField]
     private TextMeshProUGUI mana;
-   
+
 
     /// <summary>
     /// 블록을 설정합니다
     /// </summary>
     /// <param name="block"></param>
-    public void Set(Block block)
+    public void Set(Block block, bool activeSelt = true)
     {
  
         blockImage.sprite = block.BlockInfo.sprite; 
         mana.text = block.BlockInfo.BlockChargingMana[block.level - 1].ToString();
         this.block = block;
-        gameObject.SetActive(true);
+        if(activeSelt)
+            gameObject.SetActive(true);
     }
     /// <summary>
     /// 현재 블록의 다음 등급의 가시성을 보여주기 위해 사용됩니다.

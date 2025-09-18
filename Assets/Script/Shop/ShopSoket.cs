@@ -33,7 +33,6 @@ public class ShopSoket: MonoBehaviour
     private void Start()
     {
         sellButton = GetComponent<Button>();
-        Set();
         if(shopItem == null)
         {
             sellButton.interactable = false;
@@ -55,18 +54,26 @@ public class ShopSoket: MonoBehaviour
 
         if(R<=50)
         {
-            MagicScriptableObejct[] data = Resources.LoadAll<MagicScriptableObejct>("ScriptableObjects/magic_data");
-            //판매 :마법
-            int i = Random.Range(0,data.Length);
+            
+            List<MagicScriptableObejct> data = ShopManager.Instance.ShopMagicList;
+            if(data.Count>0)
+            {
+                //판매 :마법
+                int i = Random.Range(0, data.Count);
 
-            shopItem = data[i];
-            data[i].ApplyToUI(this);
+                shopItem = data[i];
+                data[i].ApplyToUI(this);
+            }else
+            {
+                Set();
+            }
+            
 
         }
         else if(R<=85)
         {
             //판매 : 블록
-            BlockScriptableObject[] data = Resources.LoadAll<BlockScriptableObject>("ScriptableObjects/block_data");
+            BlockScriptableObject[] data = ShopManager.Instance.ShopBlockList;
             //판매 :마법
             int i = Random.Range(0, data.Length);
 
@@ -76,7 +83,7 @@ public class ShopSoket: MonoBehaviour
         else
         {
             //판매 : 석판
-            SlateScriptableObejct[] data = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data");
+            SlateScriptableObejct[] data = ShopManager.Instance.ShopSlateList;
             int i = Random.Range(0, data.Length);
 
             shopItem = data[i];
@@ -94,10 +101,13 @@ public class ShopSoket: MonoBehaviour
     /// </summary>
     public void Sell()
     {
+        
         if (shopItem is IShopItem sellable)
         {
-            sellable.Sell();
+            if (!TalkManager.instance.SellCheck(sellable.Price))
+                return; ;
 
+            sellable.Sell();
             sellIcon.sprite = null;
             sellIcon.gameObject.SetActive(false);
             sellDesc.text = "";

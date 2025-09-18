@@ -88,10 +88,16 @@ public class MagicOrigin
     /// </summary>
     public int TokenCount;
 
+    private SlateOrigin firstSlateOrigin;
+    public SlateOrigin FisrtSlateOrigin { get { return firstSlateOrigin; } set { firstSlateOrigin = value; SlateEquip(value); } }
 
-    public SlateOrigin FisrtSlateOrigin;
-    public SlateOrigin SecondSlateOrigin;
-    public SlateOrigin ThirdSlateOrigin;
+    private SlateOrigin secondSlateOrigin;
+    public SlateOrigin SecondSlateOrigin { get { return secondSlateOrigin; }set { secondSlateOrigin = value; SlateEquip(value); } }
+
+    private SlateOrigin thirdSlateOrigin;
+    public SlateOrigin ThirdSlateOrigin { get { return thirdSlateOrigin; }set { thirdSlateOrigin = value; SlateEquip(value); } }
+    
+
 
     /// <summary>
     /// 게임이 처음 시작되었을떄 마법을 생성합니다.
@@ -135,7 +141,7 @@ public class MagicOrigin
     }
 
 
-    public void SlateEquip(SlateOrigin slate)
+    private void SlateEquip(SlateOrigin slate)
     {
         //증가시킬 스텟 분류
         //장착시킬 슬롯에 slate가 있는지 체크하고 제거한후 장착.

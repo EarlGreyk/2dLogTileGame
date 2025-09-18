@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 public class PlayerUnit : Unit
 {
     public bool ColiderCheck = false;
@@ -11,6 +12,8 @@ public class PlayerUnit : Unit
     public BoxCollider2D boxCollider2D;
 
     private Vector3 previousPosition;
+
+    private InteractionObject targetinteraction;
 
 
     // Start is called before the first frame update
@@ -28,11 +31,20 @@ public class PlayerUnit : Unit
         if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
-        if (!GameManager.instance.IsPlayer)
+        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Rest)
             return;
 
 
-        if(previousPosition != transform.position )
+        if (Input.GetKey(KeyCode.G) && targetinteraction != null)
+        {
+            Debug.Log("대상자 :" + targetinteraction);
+            targetinteraction.InteractStart();
+            
+        }
+
+        //아래는 이동
+
+        if (previousPosition != transform.position )
             previousPosition = transform.position;
 
 
@@ -72,7 +84,7 @@ public class PlayerUnit : Unit
         base.HitDamage(Damage);
     }
     /// <summary>
-    /// 지역 이동을 위해 충돌 처리를 하기 위해 만들어진 Ontrigger입니다.
+    /// 지역 이동 + 상호작용 오브젝트 접촉을 체크합니다.
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
@@ -81,17 +93,24 @@ public class PlayerUnit : Unit
         if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
+        if (other.CompareTag("Interaction"))
+        {
+            InteractionObject interaction = other.gameObject.GetComponent<InteractionObject>();
+            targetinteraction = interaction;
+            interaction.PlayerColiderEnter();
+        }
+
         if (other.CompareTag("MoveTrigger") && ColiderCheck == false)
         {
-            if (!GameManager.instance.MapGenerator.spawnedTilemaps.ContainsKey(GameManager.instance.CurrentPos))
+            if (!MapGenerator.Instance.spawnedTilemaps.ContainsKey(GameManager.instance.CurrentPos))
             {
                 Debug.Log("현재 해당 값은 딕셔너리에 없음");
-                Debug.Log($"비교좌표 : {GameManager.instance.CurrentPos} :: 있는여부 {GameManager.instance.MapGenerator.spawnedTilemaps[GameManager.instance.CurrentPos]}");
+                Debug.Log($"비교좌표 : {GameManager.instance.CurrentPos} :: 있는여부 {MapGenerator.Instance.spawnedTilemaps[GameManager.instance.CurrentPos]}");
 
                 return;
             }
 
-            GameObject tilemap = GameManager.instance.MapGenerator.spawnedTilemaps[GameManager.instance.CurrentPos];
+            GameObject tilemap = MapGenerator.Instance.spawnedTilemaps[GameManager.instance.CurrentPos];
             Vector2 comparePos = new Vector2(GameManager.instance.CurrentPos.x*15, GameManager.instance.CurrentPos.y*15) + new Vector2(7.5f, 7.5f);
           
             if (tilemap == other.gameObject.transform.parent.gameObject)
@@ -143,9 +162,25 @@ public class PlayerUnit : Unit
 
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+            return;
+
+        if (other.CompareTag("Interaction"))
+        {
+            InteractionObject interaction = other.gameObject.GetComponent<InteractionObject>();
+            interaction.PlayerColiderExit();
+            targetinteraction = null;
+        }
+
+    }
 
 
 
-   
-   
+
+
+
+
+
 }

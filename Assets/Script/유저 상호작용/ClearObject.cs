@@ -110,71 +110,44 @@ public class ClearObject : InteractionObject
             
         }
     }
-   
-  
 
-
-
-    public override void Update()
+    public override void InteractStart()
     {
-        base.Update();
-        if (Input.GetKey(KeyCode.G) && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
+        base.InteractStart();
+        if (battle)
         {
-            if (battle)
-            {
-                Debug.Log("전투전환");
-                GameManager.instance.BattleSet(monsterList);
-            }
-            else
-            {
-                if (!clear)
-                {
-                    Debug.Log("정화시작");
-                    clear = true;
-                    GameManager.instance.GameProsessManager.ClearPanelSet(this, false);
-                    GameManager.instance.ClearSet(LampValue, ClearValue);
-                }
-
-            }
-
-
-
+            Debug.Log("전투전환");
+            GameManager.instance.BattleSet(monsterList);
         }
-    }
-
-
-    public override void OnTriggerEnter2D(Collider2D other)
-    {
-        if (clear)
-            return;
-            
-        if (other.CompareTag("Player"))
+        else
         {
-            Debug.Log("플레이어가 정화 유닛에 접근햇습니다.");
-            targetObj = other.gameObject.transform;
-            if (battle)
+            if (!clear)
             {
-                GameManager.instance.GameProsessManager.ClearPanelSet(this, true, monsterList);
+                Debug.Log("정화시작");
+                clear = true;
+                GameProsessManager.instance.InteractionPanelSet(this, false);
+                GameProsessManager.instance.ClearSet(LampValue, ClearValue);
             }
-            
-
         }
 
     }
 
-    public override void OnTriggerExit2D(Collider2D other)
+
+    public override void PlayerColiderEnter()
     {
-        if (clear)
-            return;
-
-
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("플레이어가 정화 유닛에 나갔습니다.");
-            GameManager.instance.GameProsessManager.ClearPanelSet(this, false);
-            targetObj = null;
-        }
+        base.PlayerColiderEnter();
+        GameProsessManager.instance.ClearPanelSet(this, true, monsterList);
     }
+
+    public override void PlayerColiderExit()
+    {
+        base.PlayerColiderExit();
+        GameProsessManager.instance.ClearPanelSet(this, false);
+    }
+
+
+
+
 
 
 

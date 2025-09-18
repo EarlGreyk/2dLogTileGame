@@ -122,5 +122,6 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
     {
         MagicOrigin magicOrigin = new MagicOrigin(this);
         MagicManager.instance.MagicAdd(magicOrigin);
+        ShopManager.Instance.MagicListRemove(this);
     }
 }

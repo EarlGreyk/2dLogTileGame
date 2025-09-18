@@ -13,11 +13,20 @@ public class BlockEnforge : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI enforghGold;
 
-    [SerializeField]
-    private List<BlockPanel> enforgeInventoryBlock = new List<BlockPanel>();
-
 
     private BlockPanel enforeceBlockPanel = null;
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (enforeceBlockPanel != null)
+            {
+                enforeceBlockPanel.BlockImage.color = Color.white;
+                enforeceBlockPanel = null;
+            }
+        }
+    }
 
     public void EnforgeSelect(BlockPanel blockpanel)
     {

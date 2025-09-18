@@ -59,17 +59,12 @@ public class PlayerResourceSaveData
 [System.Serializable]
 public class GameManagerSaveData
 {
-    public int stage;
-    public int round;
-    public float lampLight;
+
     public List<string> roundInfo = new List<string>();
 
 
     public GameManagerSaveData(GameManager gameManager)
     {
-        lampLight = gameManager.LampLight;
-        stage = gameManager.Stage;
-        round = gameManager.Round;
         for (int i = 0; i < gameManager.RoundInfo.Count; i++)
         {
             roundInfo.Add(gameManager.RoundInfo[i]);
