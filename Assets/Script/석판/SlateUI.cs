@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
 /// 석판의 단순한 아이콘을 표기해줍니다.
 /// </summary>
-public class SlateUI : MonoBehaviour
+public class SlateUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     private SlateOrigin runtimeSlate;
@@ -15,7 +17,7 @@ public class SlateUI : MonoBehaviour
     [SerializeField]
     private SlateScriptableObejct catalogSlate;
 
-    public SlateScriptableObejct CatalogSlate { get { return CatalogSlate; } set { CatalogSlate = value; } }
+    public SlateScriptableObejct CatalogSlate { get { return catalogSlate; } set { catalogSlate = value; } }
 
     [SerializeField]
     private Image SlateImage;
@@ -27,6 +29,9 @@ public class SlateUI : MonoBehaviour
     private Button selectButton;
 
 
+    private SlateDesc targetDesc;
+
+
     private void Awake()
     {
         
@@ -35,13 +40,14 @@ public class SlateUI : MonoBehaviour
             selectButton.interactable = true;
         }else
         {
-            selectButton.interactable = false;
+            if(selectButton != null)
+                selectButton.interactable = false;
         }
     }
     /// <summary>
-    /// 
+    /// 런타임 설정용 (게임시)
     /// </summary>
-    /// <param name="slate"></param>
+    /// <param name="slate"></가공된 석판>
 
     public void SlateSet(SlateOrigin slate)
     {
@@ -57,16 +63,20 @@ public class SlateUI : MonoBehaviour
             {
                 SlateNameText.text = slate.SlateName;
             }
+           
             
         }
-        
-        
-
+  
     }
 
+    /// <summary>
+    /// 도감설 정용
+    /// </summary>
+    /// <param name="slate"></미가공된 원본값>
     public void SlateSet(SlateScriptableObejct slate)
     {
         catalogSlate = slate;
+        SlateImage.sprite = slate.Icon;
 
 
     }
@@ -84,6 +94,32 @@ public class SlateUI : MonoBehaviour
             SlateNameText.text = "";
         }
         
+    }
+
+
+    public void EventInit(SlateDesc desc)
+    {
+        targetDesc = desc;
+  
+  
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+  
+        if(targetDesc != null)
+        {
+            targetDesc.gameObject.SetActive(true);
+            targetDesc.DescSet(catalogSlate,GetComponent<RectTransform>());
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(targetDesc != null)
+        {
+            targetDesc.DescClear();
+        }
     }
 
 

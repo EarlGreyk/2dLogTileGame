@@ -5,11 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// BlockManage에 사용되는 block 입니다.
+/// 블록 UI에 쓰는 스크립트입니다.
+/// 현재 자원값 class의 이름은 xxUi로 되어있어 해당 클래스의 이름도 수정해야합니다.
 /// </summary>
 public class BlockPanel : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField]
+    private BlockScriptableObject catalogBlock;
+
+    public BlockScriptableObject CatalogBlock { get { return catalogBlock; } set { catalogBlock = value; } }
 
     private Block block = null;
     public Block Block { get { return block; } }
@@ -20,6 +25,17 @@ public class BlockPanel : MonoBehaviour
     public Image BlockImage { get { return blockImage; } }
     [SerializeField]
     private TextMeshProUGUI mana;
+
+    /// <summary>
+    /// 도감에 사용합니다.
+    /// </summary>
+    /// <param name="block"></param>
+    public void Set(BlockScriptableObject block)
+    {
+        catalogBlock = block;
+        blockImage.sprite = block.sprite;
+        mana.text = block.BlockChargingMana[0].ToString();
+    }
 
 
     /// <summary>

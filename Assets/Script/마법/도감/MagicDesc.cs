@@ -29,8 +29,23 @@ public class MagicDesc : MonoBehaviour
         nameText.text = null;
 
     }
+    //도감용
+    public void DescSet(MagicScriptableObejct data,RectTransform rectTransform)
+    {
+        if (data == null)
+        {
+            return;
+        }
+        gameObject.SetActive(true);
+        descImage.sprite = data.MagicSprite;
+        descText.text = data.MagicDesc;
+        nameText.text = data.MagicName;
+        Vector2 posSet = new(200f + rectTransform.position.x, 100f + rectTransform.position.y);
+        gameObject.transform.position = posSet;
 
+    }
 
+    //UI설정용
     public void DescSet(MagicUI UI)
     {
         if (UI== null)
@@ -44,6 +59,7 @@ public class MagicDesc : MonoBehaviour
 
     }
 
+    //가공된 마법 보여주기용
     public void DescSet(MagicOrigin magic, int level)
     {
         if (magic == null)

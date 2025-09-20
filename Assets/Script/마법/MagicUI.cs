@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MagicUI : MonoBehaviour
+public class MagicUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 
+    [SerializeField]
+    private MagicScriptableObejct catalogMagic;
+
+    public MagicScriptableObejct CatalogMagic { get { return catalogMagic; } set { catalogMagic = value; } }
 
     private MagicOrigin magic;
 
@@ -17,6 +21,8 @@ public class MagicUI : MonoBehaviour
     private Image magicImage;
 
     public Image MagicImage { get { return magicImage; } set { magicImage = value; } }
+
+    private MagicDesc targetDesc;
 
 
  
@@ -45,8 +51,38 @@ public class MagicUI : MonoBehaviour
     {
         if (magicData != null)
         {
+            catalogMagic = magicData;
             magicImage.gameObject.SetActive(true);
             magicImage.sprite = magicData.MagicSprite;
+        }
+    }
+
+    /// <summary>
+    /// 포인터 추가값입니다.
+    /// </summary>
+    /// <param name="desc"></param>
+
+    public void EventInit(MagicDesc desc)
+    {
+        targetDesc = desc;
+
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+
+        if (targetDesc != null)
+        {
+            targetDesc.gameObject.SetActive(true);
+            targetDesc.DescSet(catalogMagic, GetComponent<RectTransform>());
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (targetDesc != null)
+        {
+            targetDesc.DescClear();
         }
     }
 

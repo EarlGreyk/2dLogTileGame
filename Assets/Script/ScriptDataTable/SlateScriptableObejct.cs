@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Slate", order = 1)]
 
 
 /// <summary>
@@ -22,11 +21,11 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
     public enum StatusType
     {
         //소비량
-        Consumption,
+        Consumption = 0,
         //스킬 파워값 (데미지)
-        Power,
+        Power = 1,
         //지속시간
-        Duration
+        Duration = 2
 
     }
 

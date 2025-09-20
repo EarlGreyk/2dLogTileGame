@@ -34,6 +34,10 @@ public class MapGenerator : MonoBehaviour
     public int Stage { get { return stage; } set { stage = value; } }
 
 
+    [SerializeField]
+    private MiniMapManager miniMapManager;
+
+
     private void Awake()
     {
         if(Instance == null)
@@ -243,7 +247,8 @@ public class MapGenerator : MonoBehaviour
             spawnedTilemaps[pos] = newTilemapObject;
             progressTilemaps[pos] = newTilemapObject;
             tileMapInfo[pos] = tilemapGetCompnent;
-
+            //생성된 타일 미니맵에 등록
+            miniMapManager.MiniMapSetting(pos, tilemapGetCompnent);
 
             return;
         }
@@ -281,6 +286,8 @@ public class MapGenerator : MonoBehaviour
         }
       
         tileMapInfo[pos] = tilemapGetCompnent;
+        //생성된 타일 미니맵에 등록
+        miniMapManager.MiniMapSetting(pos, tilemapGetCompnent);
 
     }
 
@@ -559,7 +566,12 @@ public class MapGenerator : MonoBehaviour
 
         return Vector2Int.zero;
     }
-
+    /// <summary>
+    /// 연결 되어있는 좌표를 체크합니다.
+    /// GetNextTilePosition : {lastbeforePos - lastTilePos}
+    /// </summary>
+    /// <param name="lastTilePos"></GetNextTilePosition의 비교좌표>
+    /// <returns></returns>
 
     List<Vector2Int> GetNextTilePosition(Vector2Int lastTilePos)
     {
@@ -568,29 +580,27 @@ public class MapGenerator : MonoBehaviour
         TileMapInfo lastTileInfo = lastTile.GetComponent<TileMapInfo>();
         List<Vector2Int> TileDirections = new List<Vector2Int>();
 
-        Debug.Log($"GetNextTilePosition의 비교좌표: {lastTilePos}");
-        Debug.Log($"GetNextTilePosition : {lastbeforePos - lastTilePos}");
         // 이전 타일이 가진 방향에 맞는 위치를 계산하여 반환
         // 타일의 방향에 맞게 연결된 위치를 반환
         if (lastTileInfo.Up)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.up)
-                TileDirections.Add(lastTilePos + new Vector2Int(0, 1)); Debug.Log($"{tileCount}의 북쪽" + (lastTilePos + new Vector2Int(0, 1)));
+                TileDirections.Add(lastTilePos + new Vector2Int(0, 1)); 
         }
         if (lastTileInfo.Down)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.down)
-                TileDirections.Add(lastTilePos + new Vector2Int(0, -1)); Debug.Log($"{tileCount}의 남쪽" + (lastTilePos + new Vector2Int(0, -1)));
+                TileDirections.Add(lastTilePos + new Vector2Int(0, -1)); 
         }
         if (lastTileInfo.Left)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.left)
-                TileDirections.Add(lastTilePos + new Vector2Int(-1, 0)); Debug.Log($"{tileCount}의 서쪽" + (lastTilePos + new Vector2Int(-1, 0)));
+                TileDirections.Add(lastTilePos + new Vector2Int(-1, 0)); 
         }
         if (lastTileInfo.Right)
         {
             if (lastbeforePos - lastTilePos != Vector2Int.right)
-                TileDirections.Add(lastTilePos + new Vector2Int(1, 0)); Debug.Log($"{tileCount}의 동쪽" + (lastTilePos + new Vector2Int(1, 0)));
+                TileDirections.Add(lastTilePos + new Vector2Int(1, 0)); 
         }
 
         return TileDirections;  // 연결 불가능한 경우는 zero 반환
