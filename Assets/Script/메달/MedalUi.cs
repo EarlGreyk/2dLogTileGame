@@ -3,7 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DifficultMedal: MonoBehaviour
+/// <summary>
+/// 메달
+/// 플레이어에게 악영양을 주거나 좋은 효과를 줍니다.
+/// 난이도 설정에서 게임 시작전에 설정 합니다.
+/// MedalManager에서 관리합니다.
+/// </summary>
+public class MedalUi: MonoBehaviour
 {
     [SerializeField]
     public string checkValue;
@@ -13,23 +19,24 @@ public class DifficultMedal: MonoBehaviour
 
     public MedalScriptableObejct medalData;
 
-
-
-
     private void Start()
     {
-        Image = GetComponent<Image>();
+        if (medalData == null)
+            Image.gameObject.SetActive(false);
     }
+
 
     public void MedalSet(MedalScriptableObejct medal)
     {
         medalData = medal;
         Image.sprite = medal.Sprite;
+        Image.gameObject.SetActive(true);
     }
     public void MedalOff()
     {
         medalData = null;
         Image.sprite = null;
+        Image.gameObject.SetActive(false);
     }
 
 
