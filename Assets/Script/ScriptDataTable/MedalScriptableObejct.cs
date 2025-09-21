@@ -7,8 +7,8 @@ public class MedalScriptableObejct : BaseScriptableObject
 {
     public enum MedalTag
     {
-        Player ,
-        Monster 
+        Player = 0,
+        Monster = 1
     }
 
     public MedalTag Tag;

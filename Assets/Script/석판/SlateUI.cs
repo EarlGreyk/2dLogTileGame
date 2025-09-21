@@ -100,8 +100,6 @@ public class SlateUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void EventInit(SlateDesc desc)
     {
         targetDesc = desc;
-  
-  
     }
 
     public void OnPointerEnter(PointerEventData eventData)

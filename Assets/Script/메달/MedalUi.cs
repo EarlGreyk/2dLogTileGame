@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -18,6 +19,8 @@ public class MedalUi: MonoBehaviour
     private Image Image;
 
     public MedalScriptableObejct medalData;
+
+    private MedalDesc targetDesc;
 
     private void Start()
     {
@@ -39,7 +42,14 @@ public class MedalUi: MonoBehaviour
         Image.gameObject.SetActive(false);
     }
 
+    public void EventInit(MedalDesc desc)
+    {
+        targetDesc = desc;
+    }
+
+ 
 
 
-    
+
+
 }
