@@ -43,11 +43,13 @@ public class CameraSetting : MonoBehaviour
 
     public void Update()
     {
+        
         if(GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
         {
 
-            if(moveCoroutine == null)
+            if (moveCoroutine == null)
                 camera.transform.position = transPos(GameManager.instance.CurrentPos.x, GameManager.instance.CurrentPos.y);
+
 
         }
         else
@@ -204,6 +206,7 @@ public class CameraSetting : MonoBehaviour
 
     /// <summary>
     /// 카메라의 위치를 보정하기 위한 함수입니다.
+    /// 지역간 이동, 텔레포트시 사용됩니다.
     /// </summary>
     /// <param name="pos"></해당 벡터를 기점으로 최소와 최대치가 정해집니다.>
 
@@ -242,8 +245,8 @@ public class CameraSetting : MonoBehaviour
             x = (GameManager.instance.PlayerUnit.transform.position.x);
             y = (GameManager.instance.PlayerUnit.transform.position.y);
         }
-            
 
+        Debug.Log($"카메라 최대 값 {maxX} : {maxY} / 카메라 최소 값 {minX} : {minY} / 현재 좌표 {GameManager.instance.CurrentPos}");
 
 
         if (x > maxX)

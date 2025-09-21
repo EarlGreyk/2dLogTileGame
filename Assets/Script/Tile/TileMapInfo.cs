@@ -50,7 +50,8 @@ public class TileMapInfo : MonoBehaviour
         if(InterObj == null && !FirstCheck)
         {
             GameObject obj = null;
-            if (Random.Range(1,10) <= 5)
+            //상호작용 유닛 롤
+            if (Random.Range(1,10) <= 10)
             {
                 //정화유닛
                 obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ClearUnit"), gameObject.transform);

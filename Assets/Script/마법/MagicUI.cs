@@ -25,7 +25,13 @@ public class MagicUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private MagicDesc targetDesc;
 
 
- 
+    private void Start()
+    {
+        if(magic ==null && catalogMagic ==null)
+        {
+
+        }
+    }
 
 
     /// <summary>
@@ -55,6 +61,13 @@ public class MagicUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             magicImage.gameObject.SetActive(true);
             magicImage.sprite = magicData.MagicSprite;
         }
+    }
+    public void MagicClear()
+    {
+        magic = null;
+        catalogMagic = null;
+        magicImage.sprite = null;
+        magicImage.gameObject.SetActive(false);
     }
 
     /// <summary>

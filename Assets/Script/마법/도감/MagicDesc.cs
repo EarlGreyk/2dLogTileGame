@@ -52,10 +52,26 @@ public class MagicDesc : MonoBehaviour
         {
             return;
         }
-        gameObject.SetActive(true);    
-        descImage.sprite = UI.Magic.MagicSprite;
-        descText.text = UI.Magic.MagicDesc;
-        nameText.text = UI.Magic.MagicName;
+        gameObject.SetActive(true); 
+        if(UI.Magic != null)
+        {
+            descImage.sprite = UI.Magic.MagicSprite;
+            descText.text = UI.Magic.MagicDesc;
+            nameText.text = UI.Magic.MagicName;
+        }else if (UI.CatalogMagic != null)
+        {
+            RectTransform rectTransform = UI.GetComponent<RectTransform>();
+            descImage.sprite = UI.CatalogMagic.MagicSprite;
+            descText.text = UI.CatalogMagic.MagicDesc;
+            nameText.text = UI.CatalogMagic.MagicName;
+            Vector2 posSet = new(200f + rectTransform.position.x, 100f + rectTransform.position.y);
+            gameObject.transform.position = posSet;
+        }
+        else
+        {
+            Debug.Log("Error : Ui에할당된 어떠한 값도 존재하지 않습니다.");
+        }
+        
 
     }
 

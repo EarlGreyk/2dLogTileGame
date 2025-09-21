@@ -118,7 +118,7 @@ public class MedalManager : MonoBehaviour
         }
 
         //몬스터 메달
-        medalList = MedalDic[0];
+        medalList = MedalDic[1];
 
         for (int i = 0; i < medalList.Count; i++)
         {
@@ -197,8 +197,12 @@ public class MedalManager : MonoBehaviour
         selectMedal = medal;
         int tag = 0;
 
+
+        
+
         if(selectMedal.medalData !=null)
         {
+            Debug.Log(selectMedal.medalData);
             //메달이 있으면 메달 테크를 가져와서 띄웁니다.
             tag = (int)selectMedal.medalData.Tag;
         }else

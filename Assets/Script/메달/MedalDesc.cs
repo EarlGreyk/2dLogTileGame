@@ -49,6 +49,7 @@ public class MedalDesc : MonoBehaviour
         {
             targetTag.text = "∏ÛΩ∫≈Õ";
         }
+        Icon.gameObject.SetActive(true);
         EnableButton.interactable = true;
     }
 
@@ -58,6 +59,7 @@ public class MedalDesc : MonoBehaviour
         Desc.text = "";
         Name.text = "";
         targetTag.text = "";
+        Icon.gameObject.SetActive(false);
         EnableButton.interactable = false;
     }
 

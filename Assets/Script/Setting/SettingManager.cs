@@ -33,6 +33,9 @@ public class SettingManager : MonoBehaviour
     [SerializeField]
     private Image PlayerImage;
 
+    [SerializeField]
+    private MagicDesc magicDesc;
+
 
     private void Start()
     {

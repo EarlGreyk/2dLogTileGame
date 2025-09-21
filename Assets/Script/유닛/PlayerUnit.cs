@@ -102,6 +102,7 @@ public class PlayerUnit : Unit
 
         if (other.CompareTag("MoveTrigger") && ColiderCheck == false)
         {
+            
             if (!MapGenerator.Instance.spawnedTilemaps.ContainsKey(GameManager.instance.CurrentPos))
             {
                 Debug.Log("현재 해당 값은 딕셔너리에 없음");
@@ -109,13 +110,13 @@ public class PlayerUnit : Unit
 
                 return;
             }
+            ColiderCheck = true;
 
             GameObject tilemap = MapGenerator.Instance.spawnedTilemaps[GameManager.instance.CurrentPos];
-            Vector2 comparePos = new Vector2(GameManager.instance.CurrentPos.x*15, GameManager.instance.CurrentPos.y*15) + new Vector2(7.5f, 7.5f);
           
             if (tilemap == other.gameObject.transform.parent.gameObject)
             {
-                ColiderCheck = true;
+                
                 Vector2 moveDirection = (Vector2)transform.position - (Vector2)previousPosition;
                 StartCoroutine(GameManager.instance.PlayerStop(1f)); 
                 //서쪽
@@ -124,38 +125,34 @@ public class PlayerUnit : Unit
                     Debug.Log("동쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(1, 0);
                     transform.position += Vector3.right * 4f;
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
-                    return;
+                
                 }else if (moveDirection.x < 0)
                 {
                     Debug.Log("서쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
                     transform.position += Vector3.left * 4f;
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
-                    return;
-
-                }
+                                }
 
                 if (moveDirection.y >0)
                 {
                     Debug.Log("북쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(0, 1);
                     transform.position += Vector3.up * 4f;
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
-                    return;
+                
 
                 }else if (moveDirection.y < 0)
                 {
                     Debug.Log("남쪽");
                     GameManager.instance.CurrentPos += new Vector2Int(0, -1);
                     transform.position += Vector3.down * 4f;
-                    CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
-                    return;
+                   
 
                 }
 
+                CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
+                MiniMapManager.instance.SlotShow(GameManager.instance.CurrentPos);
 
-                
+
             }
         }
 
