@@ -170,9 +170,7 @@ public class GameProsessManager : MonoBehaviour
             {
                 Debug.Log("패배");
                 ProsessSet(false);
-            }
-            // 전투 플레이어가 승리 할 경우 입니다.
-            if (GameManager.instance.MonsterAIManager.Monsters.Count <= 0)
+            }else if (GameManager.instance.MonsterAIManager.Monsters.Count <= 0)
             {
                 Debug.Log("승리");
                 ProsessSet(true);
@@ -309,6 +307,7 @@ public class GameProsessManager : MonoBehaviour
             SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
             GameManager.instance.UnitInfoManager.UnitInfoManagerOff();
             GameManager.instance.BlockModeZone.ModeSetting(false);
+            CameraSetting.instance.unitorthographicSizeSet(GameManager.instance.StayPlayerUnit.transform.position);
 
         }
         if (mode == "battle")
@@ -325,9 +324,8 @@ public class GameProsessManager : MonoBehaviour
             }
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
             GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
-            CameraSetting.instance.transform.position = new Vector3(15f, 15f, -1);
+            CameraSetting.instance.unitorthographicSizeSet(new(15f, 15f, -1));
 
-            
         }
         if (mode == "rest")
         {
@@ -476,6 +474,7 @@ public class GameProsessManager : MonoBehaviour
         lampLight -= lampvalue;
         currentClearValue += clearvalue;
         StartCoroutine(Clearing());
+        StartCoroutine(Dangering(2));
 
     }
 
@@ -491,32 +490,51 @@ public class GameProsessManager : MonoBehaviour
         if (lampLight <= 0)
         {
             //게임패배 해야함.
-            ProsessSet(false);
+        
         }
         else
         { 
             ClearSlider.value = (currentClearValue / maxClearValue);
             clearValueText.text = currentClearValue.ToSafeString() + " | " + maxClearValue.ToString();
+            
         }
-
         MapGenerator.Instance.DestroyInteraction(GameManager.instance.CurrentPos);
         
         yield return null;
     }
 
-    private IEnumerator Dangering()
+
+    /// <summary>
+    /// 위험도 증가를 관리합니다.
+    /// </summary>
+    /// <param name="type"></1 전투패배 , 2 정화 , 3 새로운 지역 이동>
+    /// <returns></returns>
+    public IEnumerator Dangering(int type)
     {
         yield return new WaitForSeconds(0.5f);
+        float value = 0;
+
+        if (type == 1)
+        {
+            value = 20f;
+        }else if(type == 2)
+        {
+            value = 20f;
+        }else if(type == 3)
+        {
+            value = 10f;
+        }
 
    
         if (currentDangerValue <= maxDangerValue)
         {
+            currentDangerValue += value;
             DangerSlider.value = (currentDangerValue / maxDangerValue);
             DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
         }
         else
         {
-          
+            //보스 로 가는길을 열어야함.
 
         }
 
@@ -529,13 +547,31 @@ public class GameProsessManager : MonoBehaviour
     /// <param name="value"><true : 승리 false : 패배.>
     public void ProsessSet(bool value)
     {
-        PopUpManager.instance.PopupPush(prosessPop);
-        // 상호 작용한 정화 유닛을 받아옵니다. 
-        // 현재 저장되어 있는 경로 탐색이 복잡함으로 다른곳에 저장하도록 변경해야합니다.
         InteractionObject target = MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
         target.InteractEnd();
+
+        if (value)
+        {
+            
+            PopUpManager.instance.PopupPush(prosessPop);
+            changeMode("stay");
+            // 상호 작용한 정화 유닛을 받아옵니다. 
+
+        }
+        else
+        {
+            StartCoroutine(Dangering(1));
+            //몬스터 초기화
+            GameManager.instance.MonsterAIManager.MonsterReset();
+            
+            changeMode("stay");
+        }
+        GameManager.instance.StaySet();
+        
         //target.BattleCheck(value);
 
+
+        
 
 
     }

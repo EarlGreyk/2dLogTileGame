@@ -103,12 +103,10 @@ public class ClearObject : InteractionObject
         {
             LampValue *= 0.1f;
 
-        } battle = false;
-        if (victory)
-        {
-            LampValue *= 0.1f;
-            
         }
+        GameProsessManager.instance.LampLight -= LampValue;
+        
+
     }
 
     public override void InteractStart()
@@ -136,13 +134,21 @@ public class ClearObject : InteractionObject
     public override void PlayerColiderEnter()
     {
         base.PlayerColiderEnter();
-        GameProsessManager.instance.ClearPanelSet(this, true, monsterList);
+        if(battle)
+        {
+            GameProsessManager.instance.ClearPanelSet(this, true, monsterList);
+        }
+        
     }
 
     public override void PlayerColiderExit()
     {
         base.PlayerColiderExit();
-        GameProsessManager.instance.ClearPanelSet(this, false);
+        if(battle)
+        {
+            GameProsessManager.instance.ClearPanelSet(this, false);
+        }
+        
     }
 
 

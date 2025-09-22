@@ -232,7 +232,7 @@ public class Unit :MonoBehaviour
     public virtual void Update()
     {
         
-        if (CheckVisibility() && GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+        if (CheckVisibility() && GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
         {
 
             if(hpbar.rectHpbar !=null)
@@ -279,7 +279,7 @@ public class Unit :MonoBehaviour
         if (status.Health <= Damage)
         {
             UnitDie();
-
+            return;
         }
         status.Health -= Damage;
         hpbar.HpTextSet();
@@ -290,8 +290,9 @@ public class Unit :MonoBehaviour
     }
     public virtual void UnitDie()
     {
-
+        Debug.Log("À¯´Ö»ç¸Á");
         Destroy(hpbar.gameObject);
+     
     }
 
 }

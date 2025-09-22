@@ -40,7 +40,16 @@ public class MagicDesc : MonoBehaviour
         descImage.sprite = data.MagicSprite;
         descText.text = data.MagicDesc;
         nameText.text = data.MagicName;
-        Vector2 posSet = new(200f + rectTransform.position.x, 100f + rectTransform.position.y);
+        Debug.Log(rectTransform.position.x);
+        Vector2 posSet;
+        if ((rectTransform.position.x) > 1500)
+        {
+            posSet = new(rectTransform.position.x - 200f, 100f + rectTransform.position.y);
+        }
+        else
+        {
+            posSet = new(rectTransform.position.x + 200f, 100f + rectTransform.position.y);
+        }
         gameObject.transform.position = posSet;
 
     }
@@ -64,7 +73,19 @@ public class MagicDesc : MonoBehaviour
             descImage.sprite = UI.CatalogMagic.MagicSprite;
             descText.text = UI.CatalogMagic.MagicDesc;
             nameText.text = UI.CatalogMagic.MagicName;
-            Vector2 posSet = new(200f + rectTransform.position.x, 100f + rectTransform.position.y);
+
+            Vector2 posSet;
+            Debug.Log(rectTransform.position.x);
+            if ((rectTransform.position.x)>1500)
+            {
+                posSet = new( rectTransform.position.x-200f, 100f + rectTransform.position.y);
+            }else
+            {
+                posSet = new(rectTransform.position.x + 200f, 100f + rectTransform.position.y);
+            }
+            
+            
+                
             gameObject.transform.position = posSet;
         }
         else

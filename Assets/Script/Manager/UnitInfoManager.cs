@@ -133,7 +133,7 @@ public class UnitInfoManager : MonoBehaviour
         UnitInfoInterPanel.gameObject.SetActive(true);
 
 
-        CameraSetting.instance.unitFocusSet(TargetUnit.transform.position);
+        CameraSetting.instance.unitorthographicSizeSet(TargetUnit.transform.position,true);
         TargetMonsterActionPredict();
 
 
@@ -147,7 +147,7 @@ public class UnitInfoManager : MonoBehaviour
         this.TargetUnit = MonsterUnitArray[i];
         this.TargetUnit.SpriteRenderer.color = Color.blue;
         UnitInfoInterPanel.gameObject.SetActive(true);
-        CameraSetting.instance.unitFocusSet(TargetUnit.transform.position);
+        CameraSetting.instance.unitorthographicSizeSet(TargetUnit.transform.position, true);
 
         TargetMonsterActionPredict();
     }

@@ -28,10 +28,10 @@ public class PlayerUnit : Unit
     public override void Update()
     {
         base.Update();
-        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
-        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Rest)
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Rest)
             return;
 
 
@@ -90,7 +90,8 @@ public class PlayerUnit : Unit
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("立盟");
-        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
         if (other.CompareTag("Interaction"))
@@ -110,7 +111,6 @@ public class PlayerUnit : Unit
 
                 return;
             }
-            ColiderCheck = true;
 
             GameObject tilemap = MapGenerator.Instance.spawnedTilemaps[GameManager.instance.CurrentPos];
           
@@ -131,9 +131,7 @@ public class PlayerUnit : Unit
                     Debug.Log("辑率");
                     GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
                     transform.position += Vector3.left * 4f;
-                                }
-
-                if (moveDirection.y >0)
+                }else if (moveDirection.y >0)
                 {
                     Debug.Log("合率");
                     GameManager.instance.CurrentPos += new Vector2Int(0, 1);
@@ -152,6 +150,9 @@ public class PlayerUnit : Unit
                 CameraSetting.instance.moveCoroutine = StartCoroutine(CameraSetting.instance.SmoothMoveCoroutine(GameManager.instance.CurrentPos, 0.2f));
                 MiniMapManager.instance.SlotShow(GameManager.instance.CurrentPos);
 
+            
+
+                ColiderCheck = true;
 
             }
         }
@@ -161,7 +162,7 @@ public class PlayerUnit : Unit
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Battle)
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
         if (other.CompareTag("Interaction"))
@@ -173,6 +174,13 @@ public class PlayerUnit : Unit
 
     }
 
+
+    public override void UnitDie()
+    {
+        base.UnitDie();
+        GameManager.instance.RemovePlayer();
+
+    }
 
 
 

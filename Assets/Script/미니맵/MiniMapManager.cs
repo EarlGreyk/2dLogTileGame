@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 미니맵 기능을 총괄합니다.
@@ -17,6 +18,16 @@ public class MiniMapManager : MonoBehaviour
     [SerializeField]
     private Transform slotParent;
 
+    [SerializeField]
+    private RectTransform mapContent;
+
+    //스크롤 범위 초기값
+    private float initX;
+    private float initY;
+
+  
+ 
+
 
     private void Awake()
     {
@@ -29,12 +40,22 @@ public class MiniMapManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        initX = mapContent.sizeDelta.x;
+        initY = mapContent.sizeDelta.y;
+    }
+
+
     public void MiniMapSetting(Vector2 pos,TileMapInfo tileMapInfo)
     {
+        
+        
+
 
         GameObject obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/MiniMap/MiniMapSlot"), slotParent);
-      
-        obj.transform.localPosition = new Vector2(pos.x*75f,pos.y*75f);
+        RectTransform rectTransform = obj.GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector2(pos.x*rectTransform.sizeDelta.x,pos.y*rectTransform.sizeDelta.y);
 
         MiniMapSlot slot = obj.GetComponent<MiniMapSlot>();
 
@@ -46,11 +67,35 @@ public class MiniMapManager : MonoBehaviour
 
         slotDic.Add(pos, slot);
 
+        //타일당 맵 사이즈 크기 증가 설정
+        float x = Mathf.Abs(pos.x)* rectTransform.sizeDelta.x*2 + rectTransform.sizeDelta.x;
+        float y = Mathf.Abs(pos.y)* rectTransform.sizeDelta.y*2 + rectTransform.sizeDelta.y;
+
+        // Content 크기 초기화
+        Vector2 newSize = mapContent.sizeDelta;
+        if (newSize == Vector2.zero)
+        {
+            newSize = new Vector2(initX, initY);
+        }
+
+        // Content 크기 갱신
+        newSize.x = Mathf.Max(newSize.x, x);
+        newSize.y = Mathf.Max(newSize.y, y);
+
+        mapContent.sizeDelta = newSize;
+
+        Debug.Log("Content: " + mapContent.sizeDelta);
 
     }
     public void SlotShow(Vector2 key)
     {
+        if (!slotDic[key].show)
+        {
+            StartCoroutine(GameProsessManager.instance.Dangering(3));
+        }
+
         slotDic[key].Show();
+        
     }
 
     public void MiniMapClear()

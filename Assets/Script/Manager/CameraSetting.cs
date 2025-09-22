@@ -25,6 +25,8 @@ public class CameraSetting : MonoBehaviour
 
     public Coroutine moveCoroutine;
 
+    private Vector2 limitSize;
+
     private void Awake()
     {
         if (instance == null)
@@ -36,6 +38,7 @@ public class CameraSetting : MonoBehaviour
         camera = GetComponent<Camera>();
         hpcanvasRect.position = new Vector2(Screen.width / 2 , Screen.height / 2 + (Screen.height /20));
         hpcanvasRect.sizeDelta = new Vector2(Screen.width, Screen.height/2 + 100);
+        limitSize = new Vector2(15, 17);
 
     }
 
@@ -44,11 +47,9 @@ public class CameraSetting : MonoBehaviour
     public void Update()
     {
         
-        if(GameManager.instance.GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay)
+        if(GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
         {
 
-            if (moveCoroutine == null)
-                camera.transform.position = transPos(GameManager.instance.CurrentPos.x, GameManager.instance.CurrentPos.y);
 
 
         }
@@ -118,10 +119,38 @@ public class CameraSetting : MonoBehaviour
 
     }
 
-    public void unitFocusSet(Vector3 unitPos)
+
+    private void LateUpdate()
     {
-        camera.transform.position = unitPos+new Vector3(-1, 0, -1);
-        camera.orthographicSize = 10;
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
+        {
+
+            if (moveCoroutine == null)
+                camera.transform.position = transPos(GameManager.instance.CurrentPos);
+
+        }
+        
+    }
+
+    public void unitorthographicSizeSet(Vector3 unitPos,bool forCus = false)
+    {
+        if (!forCus)
+        {
+            if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
+                camera.orthographicSize = 8;
+            else if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
+            {
+                camera.orthographicSize = 12;
+                camera.transform.position = unitPos;
+            }
+        }else
+        {
+            camera.transform.position = unitPos + new Vector3(-1, 0, -1);
+            camera.orthographicSize = 8;
+        }
+        
+            
+       
     }
 
 
@@ -192,7 +221,7 @@ public class CameraSetting : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            Vector3 targetPosition = transPos(Position.x, Position.y);
+            Vector3 targetPosition = transPos(Position);
             // 이동하는 동안 Lerp를 사용해서 부드럽게 이동
             transform.position = Vector3.Lerp(startPosition, targetPosition, (elapsedTime / duration));
             elapsedTime += Time.deltaTime;
@@ -210,56 +239,34 @@ public class CameraSetting : MonoBehaviour
     /// </summary>
     /// <param name="pos"></해당 벡터를 기점으로 최소와 최대치가 정해집니다.>
 
-    private Vector3 transPos(int posX , int posY)
+    private Vector3 transPos(Vector2 center)
     {
-        int absoluteX = posX * 15 + 15;
-        int absoluteY = posY * 15 + 15;
-        if (posX < 0)
-            absoluteX -= 14;
-        if (posX >0)
-            absoluteX += 14;
-        if (posY < 0)
-            absoluteY -= 9;
-        if (posY > 0)
-            absoluteY += 9;
-    
-
-        int maxX = absoluteX + 4;
-        int minX = absoluteX - 4;
+        center = new Vector2(center.x * 30f+15, center.y * 30f+15);
 
 
-        //y의 최상값은 GUI떄문에 더 높아야합니다.
-        int maxY = absoluteY + 8;
-        int minY = absoluteY - 5;
+        float limitMinX, limitMaxX;
+        float limitMinY, limitMaxY;
 
-        float x = 0;
-        float y = 0;
+        //영역설정.
+        limitMinX = center.x - limitSize.x;
+        limitMaxX = center.x + limitSize.x;
+        limitMinY = center.y - limitSize.y;
+        limitMaxY = center.y + limitSize.y;
 
+        Vector2 targetPos = GameManager.instance.StayPlayerUnit.transform.position;
 
-        if (GameManager.instance.PlayerUnit == null)
-        {
-            x = (GameManager.instance.StayPlayerUnit.transform.position.x);
-            y = (GameManager.instance.StayPlayerUnit.transform.position.y);
-        }else
-        {
-            x = (GameManager.instance.PlayerUnit.transform.position.x);
-            y = (GameManager.instance.PlayerUnit.transform.position.y);
-        }
+        float halfHeight = camera.orthographicSize;
+        float halfWidth = camera.orthographicSize * camera.aspect;
 
-        Debug.Log($"카메라 최대 값 {maxX} : {maxY} / 카메라 최소 값 {minX} : {minY} / 현재 좌표 {GameManager.instance.CurrentPos}");
+        float clampedX = Mathf.Clamp(targetPos.x, limitMinX + halfWidth, limitMaxX - halfWidth);
+        float clampedY = Mathf.Clamp(targetPos.y, limitMinY + halfHeight, limitMaxY - halfHeight);
 
+       
 
-        if (x > maxX)
-        { x = maxX; }
-        if (y > maxY)
-        { y = maxY; }
-        if (x < minX)
-        { x = minX; }
-        if (y < minY)
-        { y = minY; }
+        return new Vector3(clampedX, clampedY,-1);
 
 
-        return new Vector3(x, y, -1);
+
     }
 
 

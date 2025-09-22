@@ -37,11 +37,7 @@ public class UnitHpBar : MonoBehaviour
     private bool isOnScreen = false;
     public bool IsOnScreent { get { return isOnScreen; } set { isOnScreen = value; } }
     
-    // Start is called before the first frame update
-    
-  
 
-    // Update is called once per frame
    
 
     public void HpbarSet(Unit unit)
@@ -140,14 +136,10 @@ public class UnitHpBar : MonoBehaviour
         }
         
     }
+    
     public void ActionSet(List<string> text)
     {
         actiontext.targetTextSet(text);
     }
-    private void OnDestroy()
-    {
-        if(rectAction != null)
-            Destroy(rectAction.gameObject);
-    }
-
+    
 }

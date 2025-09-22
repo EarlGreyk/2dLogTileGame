@@ -6,7 +6,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 
 
@@ -60,7 +60,7 @@ public class MonsterUnit : Unit
             }
             else
             {
-                List<string> text = new List<string>() { "턴 대기중", ActionCount.ToString() };
+                List<string> text = new List<string>() { "턴 대기중", maxActionCount.ToString() };
                 hpbar.ActionSet(text);
             }
             
@@ -134,25 +134,35 @@ public class MonsterUnit : Unit
     }
     public void Init(MonsterScriptableObject data)
     {
-        
+         
         ratioStatus = data;
         if(status == null)
         {
             status = new UnitStatus(baseStatus);
         }
-
+        //유닛이 공통적으로 적용 받는 스테이터스 적용
         if(data != null)
             status.effectRatio(data);
 
-        movePattenData = data.MovePattern[0];
+
+        //몬스터 유닛만이 가지고 있는 스텟 적용
+        maxActionCount = data.ActionPoint;
         
+        movePattenData = data.MovePattern[0];
         attackMagicArray = ratioStatus.UsingMagic;
         attackRangePattenData = attackMagicArray[0].MagicDamageRange;
         randomAction = Random.Range(0, attackMagicArray.Length);
      
+        
+     
     }
     private void OnMouseDown()
     {
+        
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
         GameManager.instance.UnitInfoManager.TargetUnitSet(this);
     }
 
@@ -161,8 +171,8 @@ public class MonsterUnit : Unit
     {
         //행동 시작
         //몬스터가 행동을 시작하기 위해서 게임 매니저에 보내서 작동을 한다고 선언합니다.
-        ActionCount = maxActionCount;
         isAction = true;
+        ActionCount = maxActionCount;
         monsterAction();
     }
 
@@ -228,7 +238,7 @@ public class MonsterUnit : Unit
         if (move)
         {
             currentAction.currentMagic = null;
-            actionCount -= moveCount;
+            ActionCount -= moveCount;
         }
         else
         {
@@ -526,8 +536,8 @@ public class MonsterUnit : Unit
 
     public void ReAction()
     {
-        actionCount -= disCount;
-        if (actionCount < moveCount)
+        ActionCount -= disCount;
+        if (ActionCount < moveCount)
         {
             isAction = false;
             GameManager.instance.MonsterAIManager.CurrentMonster = null;

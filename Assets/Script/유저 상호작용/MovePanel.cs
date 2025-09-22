@@ -21,9 +21,18 @@ public class MovePanel : MonoBehaviour
     public void BlockSet(Block block)
     {
         this.block = block;
-        gameObject.SetActive(true);
         image.sprite = block.BlockInfo.sprite;
         mana.text = block.mana.ToString();
+        gameObject.SetActive(true);
+    }
+    public void Clear()
+    {
+        block = null;
+        image.sprite = null;
+        mana.text = "";
+        gameObject.SetActive(false);
+
+
     }
     public void onBolckTile()
     {

@@ -142,20 +142,24 @@ public class PlayerResource : MonoBehaviour
     public void BlockAdd(Block block)
     {
         playerBlockList.Add(block);
+        /*
         playerDrowBlockList.Add(block);
         for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
         {
             if (playerDrowBlockPanelList[i].Block == null)
             {
                 playerDrowBlockPanelList[i].Set(block);
+                return;
             }
             
         }
+        */
         
     }
     public void BlockRemove(Block block)
     {
         playerBlockList.Remove(block);
+        /*
         playerDrowBlockList.Remove(block);
         for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
         {
@@ -165,6 +169,49 @@ public class PlayerResource : MonoBehaviour
             }
 
         }
+        */
+    }
+
+    public void BatteSetting()
+    {
+        //초기값 전부 지우기.
+        //뽑을 블록 초기화 (덱)
+        playerDrowBlockList.Clear();
+        for(int i =0; i<playerDrowBlockPanelList.Count;i++)
+        {
+            playerDrowBlockPanelList[i].Clear();
+        }
+        //사용한 블록 초기화 (묘지)
+        playerRemoveBlockList.Clear();
+        for(int i =0; i<playerUsePanelList.Count;i++)
+        {
+            playerUsePanelList[i].Clear();
+        }
+        //사용 가능한 블록 초기화 (손패)
+        playerCurBlockList.Clear();
+
+        for(int i =0; i<playerBlockPanel.Count;i++)
+        {
+            playerBlockPanel[i].Clear();
+        }
+
+
+        for(int i=0; i<playerBlockList.Count;i++)
+        {
+            playerDrowBlockList.Add(playerBlockList[i]);
+            for(int k =0; k < playerDrowBlockPanelList.Count;k++)
+            {
+                if (playerDrowBlockPanelList[k].Block ==null)
+                {
+                    playerDrowBlockPanelList[i].Set(playerBlockList[i]);
+                    break;
+                }
+            }
+            
+        }
+        
+
+        
     }
 
     /// <summary>
@@ -180,24 +227,47 @@ public class PlayerResource : MonoBehaviour
         if (playerCurBlockList.Count >= 7)
         {
             ErrorManager.instance.ErrorSet("손패가 최대치 입니다");
+            CurrentDrowCount = MaxDrowCount;
+            Debug.Log($"드로우 종료 : 남아 있는 드로우 횟수 : {CurrentDrowCount} ");
             return;
         }
         
 
-        Block temp; 
+        Block temp;
+        
+        //현재 드로우 남은게 있는지 체크 만약 없다면 모든 버림패에 있는 카드를 드로우 덱에 추가.
+        //사용한 블록 패널을 깨끗하게 지움
+        //드로우 패널에 추가
         if(playerDrowBlockList.Count < 1) 
         { 
             for(int i = 0; i<playerRemoveBlockList.Count; i++) 
             {
                 playerDrowBlockList.Add(playerRemoveBlockList[i]);
+                playerDrowBlockPanelList[i].Set(playerRemoveBlockList[i]);
                 playerUsePanelList[i].Clear();
 
             }
             playerRemoveBlockList.Clear();
+
         }
-        temp = playerDrowBlockList[playerDrowBlockList.Count-1];
-        playerDrowBlockList.Remove(temp);
+        //드로우시작
+        temp = playerDrowBlockList[Random.Range(0, playerDrowBlockList.Count)];
+
+        //뽑은 카드 드로우 패널에서 제거
+        for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
+        {
+            if (playerDrowBlockPanelList[i].Block == temp)
+            {
+                playerDrowBlockPanelList[i].Clear();
+                playerDrowBlockPanelList.RemoveAt(i);
+                break;
+            }
+        }
+        //뽑은 카드 실제 드로우 리스트에서 제거.
+        //현재 들고 있는 카드 리스트에 추가
         playerCurBlockList.Add(temp);
+        playerDrowBlockList.Remove(temp);
+        //뽑은 카드 사용 패널에 추가
         for (int i = 0; i < playerBlockPanel.Count; i++)
         {
             if (!playerBlockPanel[i].gameObject.activeSelf)
@@ -208,14 +278,18 @@ public class PlayerResource : MonoBehaviour
             }
 
         }
+        //현재 남아있는 드로우 개수 판단 있다면 감소하고 재귀.
+        //없으면 현재 드로우 값을 최대치로 변경하고 종료
 
+        CurrentDrowCount--;
+        Debug.Log($"남아 있는 드로우 횟수 : {CurrentDrowCount} , 남아 있는 덱 개수 : {playerDrowBlockList.Count}");
         if(CurrentDrowCount >0)
         {
             BlockDrow();
-            CurrentDrowCount--;
         }else
         {
             CurrentDrowCount = MaxDrowCount;
+            Debug.Log($"드로우 종료 : 남아 있는 드로우 횟수 : {CurrentDrowCount} ");
         }
        
         

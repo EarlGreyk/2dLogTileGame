@@ -68,8 +68,13 @@ public class MiniMapSlot : MonoBehaviour
     //비활성화 되어있다가 보여줍니다.
     public void Show()
     {
-        showEnableImage.enabled = false;
-        teleportButton.interactable = true;
+        if(!show)
+        {
+            showEnableImage.enabled = false;
+            teleportButton.interactable = true;
+            show = true;
+        }
+        
     }
 
 

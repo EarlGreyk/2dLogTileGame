@@ -62,10 +62,6 @@ public class GameManager : MonoBehaviour
     public UnitSpawner UnitSpawner { get { return unitSpawner; } }
 
     [SerializeField]
-    private GameProsessManager gameProsessManager;
-
-    public GameProsessManager GameProsessManager {  get { return gameProsessManager; } }
-    [SerializeField]
     private UnitInfoManager unitInfoManager;
 
     public UnitInfoManager UnitInfoManager { get { return unitInfoManager; } }
@@ -120,13 +116,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
-        if(GameProsessManager.prosessType == GameProsessManager.ProsessType.Stay )
-        {
-            isPlayer = true;
-            isMonster = false;
-        }
-   
+
+        isPlayer = true;
+        isMonster = false;
+
 
     }
 
@@ -138,14 +131,14 @@ public class GameManager : MonoBehaviour
     public void BattleSet(List<MonsterScriptableObject> monsterList)
     {
         Debug.Log(monsterList.Count);
-        PlayerResource.instance.BlockReset();
+        PlayerResource.instance.BatteSetting();
         setBattleField();
         PlayerTurnStart();
         setPlayer(true);
         setMonster(true, monsterList);
 
 
-        GameProsessManager.changeMode("battle");
+        GameProsessManager.instance.changeMode("battle");
 
     }
 
@@ -179,7 +172,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
             stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs, true);
-            CameraSetting.instance.unitFocusSet(stayPlayerUnit.transform.position);
+            CameraSetting.instance.unitorthographicSizeSet(stayPlayerUnit.transform.position);
         }
     }
 
@@ -200,7 +193,7 @@ public class GameManager : MonoBehaviour
                 playerUnit.gameObject.SetActive(true);
                 playerUnit.gameObject.transform.localScale *= grid.transform.localScale.x;
 
-                CameraSetting.instance.unitFocusSet(playerUnit.transform.position);
+                CameraSetting.instance.unitorthographicSizeSet(playerUnit.transform.position);
             }
 
             int x = GameManager.instance.BattleZone.PlayerSponePos.x;
@@ -218,6 +211,13 @@ public class GameManager : MonoBehaviour
 
 
 
+    }
+
+    public void RemovePlayer()
+    {
+        GameObject obj = playerUnit.gameObject;
+        playerUnit = null;
+        Destroy(obj);
     }
     /// <summary>
     /// 몬스터를 초기 관리합니다.
@@ -356,7 +356,6 @@ public class GameManager : MonoBehaviour
             value.Value.SetActive(true);
         }
         StayPlayerUnit.gameObject.SetActive(true);
-        GameProsessManager.changeMode("stay");
     }
 
     /// <summary>

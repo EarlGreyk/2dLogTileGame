@@ -31,10 +31,14 @@ public class MonsterAIManager : MonoBehaviour
     public void MonsterRevmoe(MonsterUnit monster)
     {
         GameObject obj = monster.gameObject;
+        //유닛을 지우기 전에 유닛과 관련된 GUI를 제거합니다
+        Destroy(monster.hpbar.actiontext.gameObject);
+        Destroy(monster.hpbar.gameObject);
+        //유닛을 제거하기전에 리스트에서 제거합니다
         monsters.Remove(monster);
         GameManager.instance.UnitInfoManager.MonsterInfoRemove(monster);
-        GameManager.instance.GameProsessManager.killMonsterAdd(monster.Sprite.name,monster.KillGold);
-        
+        GameProsessManager.instance.killMonsterAdd(monster.Sprite.name,monster.KillGold);
+        //유닛제거
         Destroy(obj);
         
     }
@@ -53,7 +57,7 @@ public class MonsterAIManager : MonoBehaviour
     private void Update()
     {
 
-        if (currentMonster == null && actionMonsters.Count >= 0 && GameManager.instance.IsMonater)
+        if (currentMonster == null && actionMonsters.Count >= 0 && GameManager.instance.IsMonater && GameManager.instance.PlayerUnit !=null)
         {
             AiEnable();
         }
