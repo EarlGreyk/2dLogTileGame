@@ -15,6 +15,8 @@ public class MiniMapManager : MonoBehaviour
     private List<MiniMapSlot> slots = new List<MiniMapSlot>();
 
     private Dictionary<Vector2,MiniMapSlot> slotDic = new Dictionary<Vector2, MiniMapSlot>();
+
+    public Dictionary<Vector2,MiniMapSlot> SlotDic { get { return slotDic; } }
     [SerializeField]
     private Transform slotParent;
 
@@ -47,13 +49,13 @@ public class MiniMapManager : MonoBehaviour
     }
 
 
-    public void MiniMapSetting(Vector2 pos,TileMapInfo tileMapInfo)
+    public void MiniMapSetting(Vector2 pos,TileMapInfo tileMapInfo,bool show = false)
     {
         
         
 
 
-        GameObject obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/MiniMap/MiniMapSlot"), slotParent);
+        GameObject obj = Instantiate<GameObject>(Resources.Load<GameObject>("인터페이스/MiniMap/MiniMapSlot"), slotParent);
         RectTransform rectTransform = obj.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = new Vector2(pos.x*rectTransform.sizeDelta.x,pos.y*rectTransform.sizeDelta.y);
 
@@ -63,9 +65,11 @@ public class MiniMapManager : MonoBehaviour
         if(pos == Vector2.zero)
             slot.SlotSet(tileMapInfo.Up, tileMapInfo.Down, tileMapInfo.Left, tileMapInfo.Right,pos,true);
         else
-            slot.SlotSet(tileMapInfo.Up, tileMapInfo.Down, tileMapInfo.Left, tileMapInfo.Right, pos);
+            slot.SlotSet(tileMapInfo.Up, tileMapInfo.Down, tileMapInfo.Left, tileMapInfo.Right, pos,show);
 
         slotDic.Add(pos, slot);
+
+        Debug.Log(slot.show);
 
         //타일당 맵 사이즈 크기 증가 설정
         float x = Mathf.Abs(pos.x)* rectTransform.sizeDelta.x*2 + rectTransform.sizeDelta.x;
@@ -84,7 +88,6 @@ public class MiniMapManager : MonoBehaviour
 
         mapContent.sizeDelta = newSize;
 
-        Debug.Log("Content: " + mapContent.sizeDelta);
 
     }
     public void SlotShow(Vector2 key)

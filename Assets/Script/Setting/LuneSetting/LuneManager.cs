@@ -51,7 +51,7 @@ public class LuneManager : MonoBehaviour
         if(playerStatus != null)
         {
             luneTotalStatus = new UnitStatus(playerStatus);
-            SaveLoadManager.instance.LuneNodeLoad();
+            //SaveLoadManager.instance.LuneNodeLoad();
         }
 
     }
@@ -61,7 +61,7 @@ public class LuneManager : MonoBehaviour
         SettingData.LuneStatus.effectCopy(luneTotalStatus);
 
         ///적용한 룬들을 저장합니다.
-        SaveLoadManager.instance.LuneSave();
+        //SaveLoadManager.instance.LuneSave();
     }
     /// <summary>
     /// UI와 상호작용 하여 활성화하는 기능입니다.

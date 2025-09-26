@@ -26,18 +26,24 @@ public class MonsterAIManager : MonoBehaviour
     /// <summary>
     /// 몬스터가 사망할때 요청합니다
     /// </summary>
-    /// <param name="monster"></param>
+    /// <param name="monster"></사망하는 몬스터 대상>
+    /// /// <param name="infoAdd"></보상을 위해 몬스터 킬 정보를 넣을지 체크>
 
-    public void MonsterRevmoe(MonsterUnit monster)
+    public void MonsterRevmoe(MonsterUnit monster, bool infoAdd = true)
     {
         GameObject obj = monster.gameObject;
         //유닛을 지우기 전에 유닛과 관련된 GUI를 제거합니다
         Destroy(monster.hpbar.actiontext.gameObject);
         Destroy(monster.hpbar.gameObject);
         //유닛을 제거하기전에 리스트에서 제거합니다
+        
         monsters.Remove(monster);
         GameManager.instance.UnitInfoManager.MonsterInfoRemove(monster);
-        GameProsessManager.instance.killMonsterAdd(monster.Sprite.name,monster.KillGold);
+        if(infoAdd)
+        {
+            GameProsessManager.instance.killMonsterAdd(monster.Sprite.name, monster.KillGold);
+        }
+        
         //유닛제거
         Destroy(obj);
         
@@ -116,7 +122,7 @@ public class MonsterAIManager : MonoBehaviour
     public void MonsterReset()
     {
         while(monsters.Count>0)
-            MonsterRevmoe(monsters[monsters.Count - 1]);
+            MonsterRevmoe(monsters[monsters.Count - 1] , false);
 
 
       

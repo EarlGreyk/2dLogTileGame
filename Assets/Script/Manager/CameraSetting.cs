@@ -31,6 +31,11 @@ public class CameraSetting : MonoBehaviour
     {
         if (instance == null)
             instance = this;
+        else
+            Destroy(instance);
+
+
+        Debug.Log(instance);
     }
 
     private void Start()

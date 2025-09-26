@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: 20012
   m_EditorClassIdentifier: 
   id: 20012
-  MagicName: "\uBC1C\uAC78\uAE30"
-  MagicType: 2
-  MagicDesc: "\uAC00\uC7A5 \uAC00\uAE4C\uC6B4 \uBAAC\uC2A4\uD130\uC758 \uC774\uB3D9\uBE14\uB7ED\uC774
-    1x1\uB85C \uBC14\uB010\uB2E4"
-  MagicRequiredMana: 20
-  MagicSlabSoket: 2
-  MagicValue: 1
+  MagicName: "\uC815\uC804\uAE30"
+  MagicType: 0
+  MagicDesc: "\uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C \uAC00\uC7A5 \uAC00\uAE4C\uC6B4
+    \uC801\uC5D0\uAC8C \uC804\uAE30 \uACF5\uACA9\uC744 \uD55C\uB2E4"
+  MagicRequiredMana: 4
+  MagicSlabSoket: 1
+  MagicValue: 8
   MagicCastingRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
   MagicDamageRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
   MagicDuration: 0
@@ -27,3 +27,9 @@ MonoBehaviour:
   MagicSprite: {fileID: 0}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0
+  TokenType: 0
+  ToKenIndex: 0
+  TokenCount: 0
+  price: 0
+  description: 
+  icon: {fileID: 0}

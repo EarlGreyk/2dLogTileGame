@@ -56,6 +56,8 @@ public class GameProsessManager : MonoBehaviour
     private List<GameObject> stayUiList = new List<GameObject>();
     [SerializeField]
     private List<GameObject> battleUIList = new List<GameObject>();
+    [SerializeField]
+    private List<GameObject> battleActiveUiList = new List<GameObject>();
   
 
     [SerializeField]
@@ -69,6 +71,7 @@ public class GameProsessManager : MonoBehaviour
     [SerializeField]
     private Image rewardExpImage;
 
+    //전투시 몬스터를 처치하면 넣습니다.
 
     private Dictionary<string, Tuple<int, int>> killMonsterDic = new Dictionary<string, Tuple<int, int>>();
 
@@ -78,6 +81,8 @@ public class GameProsessManager : MonoBehaviour
 
     [SerializeField]
     private Transform killMonsterInfoParents;
+
+    private List<KillMonsterInfo> KillMonsterInfos = new List<KillMonsterInfo>();
 
     [SerializeField]
     private GameObject GameEndPanel;
@@ -97,15 +102,25 @@ public class GameProsessManager : MonoBehaviour
 
     //정화도 (가득차면 플레이어에게 버프를 줍니다)
     private float maxClearValue = 1000;
+    public float MaxClearValue { get { return maxClearValue; } }
+
     private float currentClearValue = 0;
+    public float CurrentClearValue { get { return currentClearValue; } }
+
     [SerializeField]
     private Slider ClearSlider;
     [SerializeField]
     private TextMeshProUGUI clearValueText;
 
     //위험도 (가득차면 보스를 진행시킵니다)
-    private float maxDangerValue = 1000;
-    private float currentDangerValue = 0;
+    private float maxDangerValue;
+
+    public float MaxDangerValue {  get { return maxDangerValue; } }
+
+    private float currentDangerValue;
+
+    public float CurrentDangerValue { get {return currentDangerValue; } }
+
     [SerializeField]
     private Slider DangerSlider;
     [SerializeField]
@@ -116,8 +131,22 @@ public class GameProsessManager : MonoBehaviour
     /// 해당 수치가 0이되면 게임을 패배합니다.
     /// </summary>
     private float lampLight;
-    public float LampLight { get { return lampLight; } set { lampLight = value; } }
+    public float LampLight { get { return lampLight; } set 
+                { 
+                    lampLight = value; 
+                    lamptext.text = lampLight.ToString();
+                    if(lampLight<=0)
+                    {
+
+                    }
+            
+                } 
+    }
     public float MaxLampLight;
+
+
+    [SerializeField]
+    private TextMeshProUGUI lamptext;
 
 
 
@@ -138,16 +167,48 @@ public class GameProsessManager : MonoBehaviour
 
     private void Start()
     {   
-        // 기타 변수 초기화
-        lampLight = 100;
-        MaxLampLight = lampLight;
-       
-    
-        ClearSlider.value = (currentClearValue / maxClearValue);
-        clearValueText.text = currentClearValue.ToSafeString() + " | " + maxClearValue.ToString();
-    
-        DangerSlider.value = (currentDangerValue / maxDangerValue);
-        DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
+        if(SettingData.Load == false)
+        {
+            // 기타 변수 초기화
+            LampLight = 100;
+            MaxLampLight = LampLight;
+
+
+            currentClearValue = 0;
+            maxClearValue = 1000;
+
+
+
+            ClearSlider.value = (currentClearValue / maxClearValue);
+            clearValueText.text = currentClearValue.ToSafeString() + " | " + maxClearValue.ToString();
+
+
+            currentDangerValue = 0;
+            maxDangerValue = 100;
+
+            DangerSlider.value = (currentDangerValue / maxDangerValue);
+            DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
+        }else
+        {
+            LampLight = SaveLoadManager.instance.GameProsessManagerSaveData.lampLight;
+            MaxLampLight = LampLight;
+
+
+            currentClearValue = SaveLoadManager.instance.GameProsessManagerSaveData.currentClearValue;
+            maxClearValue = SaveLoadManager.instance.GameProsessManagerSaveData.maxClearValue;
+
+
+            ClearSlider.value = (currentClearValue / maxClearValue);
+            clearValueText.text = currentClearValue.ToSafeString() + " | " + maxClearValue.ToString();
+
+
+            currentDangerValue = SaveLoadManager.instance.GameProsessManagerSaveData.currentDangerValue;
+            maxDangerValue = SaveLoadManager.instance.GameProsessManagerSaveData.maxDangerValue;
+
+            DangerSlider.value = (currentDangerValue / maxDangerValue);
+            DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
+        }
+        
 
 
     }
@@ -242,34 +303,40 @@ public class GameProsessManager : MonoBehaviour
         }
 
     }
+    /// <summary>
+    /// 승패에 관게없이 플레이어가 처치한 킬정보 값을 올려줍니다.
+    /// 추가적으로 해당 정보값을 넘김과 동시에 플레이어에게 보상을 지급합니다.
+    /// </summary>
 
     public void KillInfoSet()
     {
-        //
+        int addGold = 0;
+        for (int i = KillMonsterInfos.Count-1; i >=0;i--)
+        {
+            var info = KillMonsterInfos[i];
+            KillMonsterInfos.RemoveAt(i);
+            Destroy(info.gameObject);
+        }
         foreach (var item in killMonsterDic.Keys)
         {
             Debug.Log(item);
             GameObject killinfo = Instantiate(KillMonsterInfoPrefabs, killMonsterInfoParents);
             KillMonsterInfo killMonsterInfo = killinfo.GetComponent<KillMonsterInfo>();
             killMonsterInfo.InfoSet(item, killMonsterDic[item].Item1, killMonsterDic[item].Item2, killMonsterInfoParents);
+            addGold += killMonsterDic[item].Item2;
+            KillMonsterInfos.Add(killMonsterInfo);
         }
+        killMonsterDic.Clear();
 
-
+        RewardSet(addGold);
     }
-    /// 플레이어의 경험치와 보상을 관리합니다 
+    /// 플레이어의 보상을 관리합니다 
     /// <param name="value"></param>
-    private void VaribleSet(int value)
+    private void RewardSet(int value)
     {
-        rewardStep = value;
-        rewardExp = 0;
-        if (value != 1)
-        {
-            PlayerResource.instance.Gold -= rewardMaxExp;
-        }
-        rewardMaxExp = value * 1000;
-        rewardGoldText.text = PlayerResource.instance.Gold.ToString();
-        rewardStepText.text = rewardStep.ToString();
-        rewardExpImage.fillAmount = 0;
+
+        PlayerResource.instance.Gold += value;
+        rewardGoldText.text = value.ToString();
     }
   
 
@@ -293,6 +360,10 @@ public class GameProsessManager : MonoBehaviour
             {
                 battleUIList[i].SetActive(false);
             }
+            for(int i =0; i<battleActiveUiList.Count; i++)
+            {
+                battleActiveUiList[i].SetActive(false);
+            }
        
            
             GameManager.instance.MonsterAIManager.MonsterReset();
@@ -303,7 +374,7 @@ public class GameProsessManager : MonoBehaviour
             }
                 
             
-            PopUpManager.instance.LastClosePopUp();
+            
             SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
             GameManager.instance.UnitInfoManager.UnitInfoManagerOff();
             GameManager.instance.BlockModeZone.ModeSetting(false);
@@ -321,6 +392,10 @@ public class GameProsessManager : MonoBehaviour
             for (int i = 0; i < stayUiList.Count; i++)
             {
                 stayUiList[i].SetActive(false);
+            }
+            for (int i = 0; i < battleActiveUiList.Count; i++)
+            {
+                battleActiveUiList[i].SetActive(false);
             }
             GameManager.instance.PlayerUnit.boxCollider2D.enabled = false;
             GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
@@ -341,7 +416,6 @@ public class GameProsessManager : MonoBehaviour
 
             
         }
-        //SaveLoadManager.instance.Save();
     }
 
 
@@ -471,7 +545,7 @@ public class GameProsessManager : MonoBehaviour
 
     public void ClearSet(float lampvalue, float clearvalue)
     {
-        lampLight -= lampvalue;
+        LampLight -= lampvalue;
         currentClearValue += clearvalue;
         StartCoroutine(Clearing());
         StartCoroutine(Dangering(2));
@@ -480,6 +554,7 @@ public class GameProsessManager : MonoBehaviour
 
     /// <summary>
     /// 정화 유닛을 정화하고 난후 해당 유닛 값을 지워야합니다.
+    /// 정화도가 오르면 반드시 위험도도 증가합니다.
     /// </summary>
     /// <returns></returns>
 
@@ -499,7 +574,8 @@ public class GameProsessManager : MonoBehaviour
             
         }
         MapGenerator.Instance.DestroyInteraction(GameManager.instance.CurrentPos);
-        
+
+
         yield return null;
     }
 
@@ -537,23 +613,26 @@ public class GameProsessManager : MonoBehaviour
             //보스 로 가는길을 열어야함.
 
         }
+        //중요값 변동이후 저장.
+        SaveLoadManager.instance.Save();
 
         yield return null;
     }
 
     /// <summary>
     /// 플레이어가 전투일때 승리 혹은 패배하면 작동합니다
+    /// 이는 보스전투를 제외한 판정으로 일반적인 전투에서 작동합니다.
     /// </summary>
     /// <param name="value"><true : 승리 false : 패배.>
     public void ProsessSet(bool value)
     {
         InteractionObject target = MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
         target.InteractEnd();
+        KillInfoSet();
+        PopUpManager.instance.PopupPush(prosessPop);
 
         if (value)
         {
-            
-            PopUpManager.instance.PopupPush(prosessPop);
             changeMode("stay");
             // 상호 작용한 정화 유닛을 받아옵니다. 
 
@@ -568,11 +647,29 @@ public class GameProsessManager : MonoBehaviour
         }
         GameManager.instance.StaySet();
         
-        //target.BattleCheck(value);
 
+    }
 
-        
+    /// <summary>
+    /// 게임의 승리 와 패배를 관리합니다.
+    /// 게임의 패배는 보슺전투에서 패배하거나 Stay존해서 Lamp가 0이하로 내려갔을때 패배로 판정합니다.
+    /// </summary>
+    /// <param name="value"></param>
+    
+    public void GameEnd(bool value)
+    {
+        //일단 플레이어 비활성화
+        GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
 
+        if(value)
+        {
+
+        }else
+        {
+
+        }
+
+        SceanChanger.instance.SceanChange("MainScean");
 
     }
 

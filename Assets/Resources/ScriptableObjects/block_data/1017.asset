@@ -20,3 +20,6 @@ MonoBehaviour:
   BlockRemovalGold: 300
   BlockEquipGold: 0
   BlockPatternData: {fileID: 11400000, guid: bc949025ca7f0474084197d71b6ba673, type: 2}
+  price: 0
+  description: 
+  icon: {fileID: 21300000, guid: f7b746dfacfe4a54d84ca3d1140653f2, type: 3}

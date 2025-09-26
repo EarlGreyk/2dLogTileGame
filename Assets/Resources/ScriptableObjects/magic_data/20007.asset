@@ -19,7 +19,7 @@ MonoBehaviour:
     \uC788\uB294 \uBAAC\uC2A4\uD130\uC5D0\uAC8C \uD50C\uB808\uC774\uC5B4 \uD589\uB3D9\uB2F9
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD798"
   MagicRequiredMana: 0
-  MagicSlabSoket: 4
+  MagicSlabSoket: 2
   MagicValue: 1
   MagicCastingRange: {fileID: 0}
   MagicDamageRange: {fileID: 11400000, guid: 2d5974dd890b3624a9c967b1ff40e3e8, type: 2}
@@ -28,3 +28,9 @@ MonoBehaviour:
   MagicSprite: {fileID: 21300000, guid: 2a30117fbb3711742aef9ccda18f01a2, type: 3}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0
+  TokenType: 0
+  ToKenIndex: 0
+  TokenCount: 0
+  price: 0
+  description: 
+  icon: {fileID: 0}

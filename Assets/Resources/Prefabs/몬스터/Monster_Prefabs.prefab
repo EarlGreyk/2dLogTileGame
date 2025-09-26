@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: c8f9ee9f23f8a0c45b04ce0ee2fb287f, type: 3}
   m_Color: {r: 0.9245283, g: 0.91929513, b: 0.91929513, a: 1}
   m_FlipX: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
   baseStatus: {fileID: 11400000, guid: aabd7daea7db2404db3e748f76277591, type: 2}
   HPbar: {fileID: 1405926418342992566, guid: 6499157a175b9ba449b6cb02b2789415, type: 3}
   Sprite: {fileID: 21300000, guid: c8f9ee9f23f8a0c45b04ce0ee2fb287f, type: 3}
-  SpriteRenderer: {fileID: 0}
+  SpriteRenderer: {fileID: 3882220592335119873}
   hpbar: {fileID: 0}
   position: 0
   movePattenData: {fileID: 0}

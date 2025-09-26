@@ -28,7 +28,15 @@ public class MonsterScriptableObject : BaseScriptableObject
     {
         id = int.Parse(values[1].Trim());
         MosterName = values[2].Trim();
-        HpValue = float.Parse(floatCheck(values[3].Trim()));
+        if (float.TryParse(values[3].Trim(), out float hp))
+        {
+            HpValue = hp;
+        }
+        else
+        {
+            HpValue = 0f; // 기본값 or 예외 처리
+            Debug.LogWarning($"HpValue 변환 실패: {values[3]}");
+        }
         ElementalDamageValue = float.Parse(values[4].Trim());
         NonElementalDamageValue = float.Parse(values[5].Trim());
         BarrierValue = float.Parse(values[6].Trim());
@@ -39,9 +47,17 @@ public class MonsterScriptableObject : BaseScriptableObject
         ActionPoint = int.Parse(values[11].Trim());
         MutationRate = float.Parse(values[12].Trim());
         MovePattern = ConversBlocks(values[14]);
-        DropGold = int.Parse(values[15].Trim());
+        if (int.TryParse(values[15].Trim(), out int gold))
+        {
+            DropGold = gold;
+        }
+        else
+        {
+            DropGold = 0; // 기본값 or 예외 처리
+            Debug.LogWarning($"HpValue 변환 실패: {values[15].Trim()}");
+        }
         UsingMagic = ConversMagic(values[16].Trim());
-        MonsterIcon = Resources.Load<Sprite>("Sprite/몬스터" + id);
+        MonsterIcon = Resources.Load<Sprite>("Art/Monster/" + id);
 
 
     }

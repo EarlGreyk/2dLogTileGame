@@ -18,14 +18,17 @@ MonoBehaviour:
   MagicDesc: "\uC801\uC5D0\uAC8C \uD654\uC5FC\uAD6C\uB97C \uB0A0\uB9BC"
   MagicRequiredMana: 4
   MagicSlabSoket: 1
-  MagicValue: 100
+  MagicValue: 12
   MagicCastingRange: {fileID: 11400000, guid: 7f0121c215185a743909b30238322eeb, type: 2}
   MagicDamageRange: {fileID: 11400000, guid: 75d008f6edc6b124b90f65e4a841afa3, type: 2}
   MagicDuration: 0
   MagicApplies: 00000000
   MagicSprite: {fileID: 21300000, guid: 5432821e8efdd9a43b521cac779376b4, type: 3}
-  MagicEffectPrefab: {fileID: 5224660013903197058, guid: 52e74deb1afea574a8fbd3c2a5164fad, type: 3}
+  MagicEffectPrefab: {fileID: 0}
   Gold: 0
-  TokenType: 2
-  ToKenIndex: 1
-  TokenCount: 1
+  TokenType: 0
+  ToKenIndex: 0
+  TokenCount: 0
+  price: 0
+  description: 
+  icon: {fileID: 0}

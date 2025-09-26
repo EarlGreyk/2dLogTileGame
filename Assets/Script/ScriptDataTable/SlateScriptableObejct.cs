@@ -74,7 +74,7 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
         }
 
 
-        icon = Resources.Load<Sprite>("Sprite/Magic&Slate" + id.ToString());
+        icon = Resources.Load<Sprite>("Art/Slate" + id.ToString());
         /// 추가로 요청해야하는 사항입니다.
         Enable = true;
         EnableLevel = 0;

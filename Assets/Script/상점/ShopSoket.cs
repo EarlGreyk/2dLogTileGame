@@ -73,9 +73,9 @@ public class ShopSoket: MonoBehaviour
         else if(R<=85)
         {
             //판매 : 블록
-            BlockScriptableObject[] data = ShopManager.Instance.ShopBlockList;
+            List<BlockScriptableObject> data = ShopManager.Instance.ShopBlockList;
             //판매 :마법
-            int i = Random.Range(0, data.Length);
+            int i = Random.Range(0, data.Count);
 
             shopItem = data[i];
             data[i].ApplyToUI(this);
@@ -83,8 +83,8 @@ public class ShopSoket: MonoBehaviour
         else
         {
             //판매 : 석판
-            SlateScriptableObejct[] data = ShopManager.Instance.ShopSlateList;
-            int i = Random.Range(0, data.Length);
+            List<SlateScriptableObejct> data = ShopManager.Instance.ShopSlateList;
+            int i = Random.Range(0, data.Count);
 
             shopItem = data[i];
             data[i].ApplyToUI(this);

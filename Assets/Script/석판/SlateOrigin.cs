@@ -33,7 +33,6 @@ public class SlateOrigin
     /// <param name="MagicData"></마법 데이터.>
     public SlateOrigin(SlateScriptableObejct SlateData)
     {
-
         SlateName = SlateData.SlateName;
         SlateDesc = SlateData.Description;
         SlateValue = Random.Range(SlateData.SlateMinValue, SlateData.SlateMaxValue);
@@ -41,8 +40,15 @@ public class SlateOrigin
         SlateIcon = SlateData.Icon;
         SlatePrice = SlateData.Price;
 
-
-
-
+    }
+    public SlateOrigin(SlateSaveData slateData)
+    {
+        SlateName = slateData.Name;
+        SlateDesc = slateData.Desc;
+        SlateValue = slateData.Value;
+        SlateStatus = slateData.statusType;
+        SlateIcon = Resources.Load<Sprite>("Art/Slate/" + slateData.SpriteName);
+        SlatePrice = slateData.Price;
+        
     }
 }

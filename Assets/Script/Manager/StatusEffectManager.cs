@@ -348,4 +348,10 @@ public class StatusEffectManager: MonoBehaviour
 
 
 
+
+    public void OnDestroy()
+    {
+        Destroy(EffectPanel);
+    }
+
 }

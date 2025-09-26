@@ -55,6 +55,8 @@ public class UnitInfoManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI targetHpText;
 
+    [SerializeField]
+    private TextMeshProUGUI targetMaxAction;
 
 
     private void Update()
@@ -90,7 +92,7 @@ public class UnitInfoManager : MonoBehaviour
             if (MonsterImageArray[i].gameObject.activeSelf == false)
             {
                 MonsterImageArray[i].gameObject.SetActive(true);
-                MonsterImageArray[i].sprite = monster.Sprite;
+                MonsterImageArray[i].sprite = monster.SpriteRenderer.sprite;
                 MonsterUnitArray.Add(monster);
                 break;
             }
@@ -199,6 +201,7 @@ public class UnitInfoManager : MonoBehaviour
         targetName.text = TargetUnit.RatioStatus.MosterName;
         targetHpbar.fillAmount = TargetUnit.status.Health / TargetUnit.status.MaxHealth;
         targetHpText.text = TargetUnit.status.Health.ToString() + " / " + TargetUnit.status.MaxHealth.ToString();
+        targetMaxAction.text = TargetUnit.maxActionCount.ToString();
         GameManager.instance.BlockModeZone.unitBlockSet(TargetUnit);
     }
 

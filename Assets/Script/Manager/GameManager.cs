@@ -78,23 +78,17 @@ public class GameManager : MonoBehaviour
 
 
 
-    private Vector2Int currentPos = new Vector2Int(0, 0);
+    private Vector2Int currentPos;
 
-    public Vector2Int CurrentPos { get { return currentPos; } set { currentPos = value; } }
+    public Vector2Int CurrentPos { get { return currentPos; } set { currentPos = value; Debug.Log(currentPos); } }
 
 
-    private List<string> roundInfo = new List<string>();
-    public List<string> RoundInfo { get { return roundInfo; } set {roundInfo = value;} }
-
-    private RoundInfo monsterRoundInfo = null;
-
+   
     [SerializeField]
     private GameObject hpCanvas;
 
     public GameObject HPCanvas { get { return hpCanvas; } }
 
-    [SerializeField]
-    private TextMeshProUGUI lamptext;
 
 
   
@@ -107,6 +101,7 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+           
         }
         else
         {
@@ -116,9 +111,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-
+        
         isPlayer = true;
         isMonster = false;
+        if(SettingData.Load == false)
+        {
+            currentPos = new Vector2Int(0, 0);
+        }
+        else
+        {
+            currentPos = new Vector2Int(SaveLoadManager.instance.GameManagerData.currentX, SaveLoadManager.instance.GameManagerData.currentY);
+        }
 
 
     }
@@ -135,7 +138,7 @@ public class GameManager : MonoBehaviour
         setBattleField();
         PlayerTurnStart();
         setPlayer(true);
-        setMonster(true, monsterList);
+        setMonster(monsterList);
 
 
         GameProsessManager.instance.changeMode("battle");
@@ -168,12 +171,27 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void setStayPlayer()
     {
-        if (stayPlayerUnit == null)
+        GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
+        if (!SettingData.Load )
         {
-            GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/Player");
-            stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs, true);
-            CameraSetting.instance.unitorthographicSizeSet(stayPlayerUnit.transform.position);
+            if (stayPlayerUnit == null)
+            {
+                
+                stayPlayerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), unitPrefabs, true);
+                CameraSetting.instance.unitorthographicSizeSet(stayPlayerUnit.transform.position);
+            }
+        }else
+        {
+            if (stayPlayerUnit == null)
+            {
+                Vector3Int pos = new(SaveLoadManager.instance.GameManagerData.stayUnitX, SaveLoadManager.instance.GameManagerData.stayUnitY, 0);
+                Debug.Log(pos);
+                stayPlayerUnit = unitSpawner.SpawnPlayer(pos, unitPrefabs, true);
+                CameraSetting.instance.unitorthographicSizeSet(stayPlayerUnit.transform.position);
+            }
         }
+
+        
     }
 
 
@@ -216,6 +234,7 @@ public class GameManager : MonoBehaviour
     public void RemovePlayer()
     {
         GameObject obj = playerUnit.gameObject;
+        Destroy(PlayerUnit.hpbar.gameObject);
         playerUnit = null;
         Destroy(obj);
     }
@@ -225,42 +244,39 @@ public class GameManager : MonoBehaviour
     /// value 가 true라면 생성을 false라면 지웁니다.
     /// </summary>
 
-    private void setMonster(bool value,List<MonsterScriptableObject> monsterList)
-    {   
-        if(value)
+    private void setMonster(List<MonsterScriptableObject> monsterList)
+    {
+        //생성전 초기화를 위해 지웁니다.
+        if (MonsterAIManager.Monsters.Count >= 0)
         {
-            if (monsterList != null)
-            {
-                for (int i = 0; i < monsterList.Count; i++)
-                {
-                    int k = Random.Range(0, BattleZone.MonsterSponePosList.Count);
-                    Vector3Int SponePos = RandomSpone(BattleZone.MonsterSponePosList[k]);
-                    GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/몬스터/Monster_Prefabs");
+        for (int i = 0; i < MonsterAIManager.Monsters.Count; i++)
+        {
+            MonsterAIManager.MonsterRevmoe(MonsterAIManager.Monsters[i], false);
+        }
 
-                    //몬스터 생성 이후 몬스터 데이터 초기화
-                    MonsterUnit unit = unitPrefabs.GetComponent<MonsterUnit>();
-                    unit.Init(monsterList[i]);
-
-                    unitSpawner.SpawnMonster(SponePos, unitPrefabs);
-                    unit.transform.position = unitSpawner.PosUnitSet(SponePos);
-                }
-            }
-            else
+        }
+        if (monsterList != null)
+        {
+            for (int i = 0; i < monsterList.Count; i++)
             {
-                Debug.Log("필드 정보가 집계되지 않고있습니다.");
+                int k = Random.Range(0, BattleZone.MonsterSponePosList.Count);
+                Vector3Int SponePos = RandomSpone(BattleZone.MonsterSponePosList[k]);
+                GameObject unitPrefabs = Resources.Load<GameObject>("Prefabs/몬스터/Monster_Prefabs");
+
+                //몬스터 생성 이후 몬스터 데이터 초기화
+                MonsterUnit unit = unitPrefabs.GetComponent<MonsterUnit>();
+                unit.Init(monsterList[i]);
+
+                unitSpawner.SpawnMonster(SponePos, unitPrefabs);
+                unit.transform.position = unitSpawner.PosUnitSet(SponePos);
             }
         }
         else
         {
-            if (MonsterAIManager.Monsters.Count >= 0)
-            {
-                for(int i =0; i<MonsterAIManager.Monsters.Count;i++)
-                {
-                    MonsterAIManager.MonsterRevmoe(MonsterAIManager.Monsters[i]);
-                }
-                
-            }
+            Debug.Log("필드 정보가 집계되지 않고있습니다.");
         }
+      
+        
         
 
     }

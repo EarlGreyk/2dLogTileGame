@@ -30,9 +30,6 @@ public class ClearObject : InteractionObject
     public float ClearValue;
 
 
-    //생성 될때 차지하는 값입니다.
-    //최대 인구수 라고 생각하면됩니다.
-    public int value;
 
 
 
@@ -41,21 +38,24 @@ public class ClearObject : InteractionObject
         interactionType = Type.Clear;
     }
 
-    private void Start()
+    
+    public void Start()
     {
-        clear = false;
-        battle = true;
-        LampValue = 20;
-        ClearValue = 50;
+        if(!SettingData.Load)
+        {
+            clear = false;
+            battle = true;
+            LampValue = 20;
+            ClearValue = 50;
 
-        //임시값
-        value = 5;
-        InteractSet();
+
+        }
     }
     /// FeilidInfo 해서 해당 함수를 사용
     /// 선언시 정화 유닛의 몬스터 정보값을 수정합니다. 
-    private void InteractSet()
+    public override void InteractSet()
     {
+        base.InteractSet();
         MonsterScriptableObject[] monsterArray = Resources.LoadAll<MonsterScriptableObject>("ScriptableObjects/monster_data");
 
         List<MonsterScriptableObject> grade0 = new List<MonsterScriptableObject>();
@@ -64,28 +64,26 @@ public class ClearObject : InteractionObject
         {
             if (monster == null) continue; // 타입 불일치 등으로 null 들어온 경우 스킵
 
-            if (monster.Level == 0)
+            if (monster.Level == 1)
                 grade0.Add(monster);
         }
 
      
-        Debug.Log($"grade0.Count = {grade0.Count}");
-        Debug.Log(monsterList.Count);
+       
         if (grade0.Count > 0)
         {
-            Debug.Log($"grade0[0] is {(grade0[0] == null ? "NULL" : grade0[0].name)}");
+
+            //Debug.Log($"grade0[0] is {(grade0[0] == null ? "NULL" : grade0[0].name)}"); // 등급몬스터 가 있는지 없는지 체크하고 이름을반환
         }
 
-        if (value<10)
+        while(value>0)
         {
-            for(int k = 0; k<value /2; k++)
-            {
-                int r = Random.Range(0, grade0.Count);
-
-                monsterList.Add(grade0[r]);
-            }
-            
+            int r = Random.Range(0, grade0.Count);
+            monsterList.Add(grade0[r]);
+            value -= grade0[r].Reward * 10;
         }
+
+        
             
         
             
@@ -123,7 +121,10 @@ public class ClearObject : InteractionObject
             {
                 Debug.Log("정화시작");
                 clear = true;
+         
+                //상호작용 패널 닫기
                 GameProsessManager.instance.InteractionPanelSet(this, false);
+                //상호작용한 유닛의 램프감소와 정화수치 증가값 넘기기
                 GameProsessManager.instance.ClearSet(LampValue, ClearValue);
             }
         }

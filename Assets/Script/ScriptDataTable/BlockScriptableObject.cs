@@ -28,11 +28,7 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
 
     public PatternData BlockPatternData;
 
-    /// <summary>
-    /// 추가된값
-    /// </summary>
-    /// <param name="values"></param>
-    public Sprite sprite;
+  
 
 
     // 내부 데이터는 private 필드
@@ -66,6 +62,8 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
 
         BlockPatternData = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + values[8].Trim());
 
+        icon = Resources.Load<Sprite>("Art/Block/" + values[8].Trim());
+
 
     }
 
@@ -95,7 +93,7 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
         shopSoket.sellDesc.text = Description;
 
         // 아이콘
-        shopSoket.sellIcon.sprite = Icon;
+        shopSoket.sellIcon.sprite = icon;
     }
     public void Sell()
     {

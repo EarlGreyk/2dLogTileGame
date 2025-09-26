@@ -83,24 +83,27 @@ public class BlockManage : MonoBehaviour
                 Block block = new Block(SettingData.character.PlayerData.Blocks[i]);
                 EquipSet(block);
             }
-            return;
+            
+        }else
+        {
+            List<BlockSaveData> equipList = SaveLoadManager.instance.BlockManagerSaveData.equipBlockDatas;
+            List<BlockSaveData> inventoryList = SaveLoadManager.instance.BlockManagerSaveData.inventoryBlockDatas;
+            Block creatBlock = null;
+            for (int i = 0; i < equipList.Count; i++)
+            {
+                creatBlock = new Block(equipList[i]);
+                EquipSet(creatBlock);   
+            }
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                creatBlock = new Block(inventoryList[i]);
+                InventorySet(creatBlock);
+            }
         }
             
 
 
-        List<BlockSaveData> equipList = SaveLoadManager.instance.BlockManagerSaveData.equipBlockDatas;
-        List<BlockSaveData> inventoryList = SaveLoadManager.instance.BlockManagerSaveData.inventoryBlockDatas;
-        Block creatBlock = null;
-        for (int i =0; i < equipList.Count; i++)
-        {
-            creatBlock = new Block(equipList[i]);
-            EquipSet(creatBlock);
-        }
-        for (int i =0; i < inventoryList.Count; i++)
-        {
-            creatBlock = new Block(inventoryList[i]);
-           // InventorySet(creatBlock, false);
-        }
+        
         
     }
 

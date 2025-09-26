@@ -13,6 +13,9 @@ using Random = UnityEngine.Random;
 
 public class MonsterUnit : Unit
 {
+
+
+
     public enum Position
     {
         Melee,
@@ -127,14 +130,17 @@ public class MonsterUnit : Unit
     public override void Awake()
     {
         base.Awake();
+
         currentAction.Unit = this;
         hpbar.HpTextSet();
         ActionCheck();
+        
 
     }
     public void Init(MonsterScriptableObject data)
     {
-         
+        SpriteRenderer.sprite = data.MonsterIcon;
+
         ratioStatus = data;
         if(status == null)
         {

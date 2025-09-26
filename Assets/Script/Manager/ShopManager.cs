@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 public interface IShopItem
 {
@@ -33,8 +34,8 @@ public class ShopManager : MonoBehaviour
 
     /// 플레이어가 사용 가능한 목록    
     public List<MagicScriptableObejct> ShopMagicList = new List<MagicScriptableObejct>();
-    public SlateScriptableObejct[] ShopSlateList;
-    public BlockScriptableObject[] ShopBlockList;
+    public List<SlateScriptableObejct> ShopSlateList;
+    public List<BlockScriptableObject> ShopBlockList;
 
     private void Awake()
     {
@@ -45,21 +46,52 @@ public class ShopManager : MonoBehaviour
         {
             Destroy(this);
         }
+        if (!SettingData.Load)
+        {
+            ShopMagicList = SettingData.character.PlayerData.ListMagics.ToList();
+            ShopSlateList = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data").ToList();
+            ShopBlockList = Resources.LoadAll<BlockScriptableObject>("ScriptableObjects/block_data").ToList();
+            for (int i = 0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
+            {
+                MagicListRemove(SettingData.character.PlayerData.UsingMagics[i]);
+
+            }
+        }
+        else
+        {
+            for (int i = 0; i < SaveLoadManager.instance.ShopManagerSaveData.magicNameList.Count; i++)
+            {
+                MagicScriptableObejct magic = Resources.Load<MagicScriptableObejct>("ScriptableObjects/magic_data/" + SaveLoadManager.instance.ShopManagerSaveData.magicNameList[i]);
+                if (magic != null)
+                {
+                    ShopMagicList.Add(magic);
+                }
+            }
+            for (int i = 0; i < SaveLoadManager.instance.ShopManagerSaveData.slateNameList.Count; i++)
+            {
+                SlateScriptableObejct slate = Resources.Load<SlateScriptableObejct>("ScriptableObjects/slate_data/" + SaveLoadManager.instance.ShopManagerSaveData.slateNameList[i]);
+                if (slate != null)
+                {
+                    ShopSlateList.Add(slate);
+                }
+            }
+            for (int i = 0; i < SaveLoadManager.instance.ShopManagerSaveData.blockNameList.Count; i++)
+            {
+                BlockScriptableObject block = Resources.Load<BlockScriptableObject>("ScriptableObjects/block_data/" + SaveLoadManager.instance.ShopManagerSaveData.blockNameList[i]);
+                ShopBlockList.Add(block);
+            }
+        }
     }
 
 
 
     private void Start()
     {
-        ShopMagicList = SettingData.character.PlayerData.ListMagics.ToList();
-        ShopSlateList = Resources.LoadAll<SlateScriptableObejct>("ScriptableObjects/slate_data");
-        ShopBlockList = Resources.LoadAll<BlockScriptableObject>("ScriptableObjects/block_data");
-        SoketReroll();
-        for (int i = 0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
-        {
-            MagicListRemove(SettingData.character.PlayerData.UsingMagics[i]);
+        
 
-        }
+        
+        SoketReroll();
+
     }
 
     public void SoketReroll()

@@ -13,16 +13,24 @@ MonoBehaviour:
   m_Name: 20015
   m_EditorClassIdentifier: 
   id: 20015
-  MagicName: "\uC5BC\uC74C\uCC3D"
+  MagicName: "\uB1CC\uC6B4"
   MagicType: 0
-  MagicDesc: "\uC801\uC5D0\uAC8C \uC5BC\uC74C\uCC3D\uC744 \uB0A0\uB9B0\uB2E4"
-  MagicRequiredMana: 3
-  MagicSlabSoket: 1
-  MagicValue: 10
-  MagicCastingRange: {fileID: 11400000, guid: e8dc369db610c4a468db6ff5fe02d4d7, type: 2}
-  MagicDamageRange: {fileID: 11400000, guid: 75d008f6edc6b124b90f65e4a841afa3, type: 2}
-  MagicDuration: 0
+  MagicDesc: "\uC9C0\uC18D\uC2DC\uAC04\uB3D9\uC548 \uB9E4 \uD589\uB3D9\uB9C8\uB2E4
+    \uB79C\uB364\uD55C \uC801\uC5D0\uAC8C \uBC88\uAC1C\uB97C \uB5A8\uC5B4\uD2B8\uB9AC\uBA70
+    \uAC10\uC804 \uD1A0\uD070\uC744 \uC9C0\uAE09\uD55C\uB2E4"
+  MagicRequiredMana: 55
+  MagicSlabSoket: 3
+  MagicValue: 40
+  MagicCastingRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
+  MagicDamageRange: {fileID: 11400000, guid: 2d5974dd890b3624a9c967b1ff40e3e8, type: 2}
+  MagicDuration: 5
   MagicApplies: 00000000
   MagicSprite: {fileID: 0}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0
+  TokenType: 0
+  ToKenIndex: 0
+  TokenCount: 0
+  price: 0
+  description: 
+  icon: {fileID: 0}

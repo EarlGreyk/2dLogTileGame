@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MedalManager : MonoBehaviour
 {
+    private MedalManager instance;
     /// <summary>
     /// 플레이어에게 적용되는 모든 메달을 보여줍니다.
     ///  </summary>
@@ -52,6 +52,18 @@ public class MedalManager : MonoBehaviour
     //정화 메달은 반드시 1개의 기초 데이터가 있어야 함으로 필요한 데이터 입니다.
     [SerializeField]
     private MedalScriptableObejct InitClearMedalData;
+
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }else
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {

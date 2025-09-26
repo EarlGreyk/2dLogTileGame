@@ -25,8 +25,9 @@ MonoBehaviour:
   ActionPoint: 7
   MutationRate: 0
   MovePattern:
-  - {fileID: 11400000, guid: 1cf99e06eef531248a5b13e587227d91, type: 2}
+  - {fileID: 11400000, guid: bc949025ca7f0474084197d71b6ba673, type: 2}
   DropGold: 2000
   UsingMagic:
   - {fileID: 11400000, guid: 00d7a6944eb0da64c8888f17860d0886, type: 2}
   - {fileID: 11400000, guid: f782af77e9e5bc24a925988614cf370f, type: 2}
+  MonsterIcon: {fileID: 21300000, guid: e87c1b933c0966f4a815e40fa6e05799, type: 3}

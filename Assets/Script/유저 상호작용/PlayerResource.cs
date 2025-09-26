@@ -105,6 +105,8 @@ public class PlayerResource : MonoBehaviour
         }
     }
 
+    
+
     public void Start()
     {
         //새게임의 여부를 판정하여 시작합니다.
@@ -125,6 +127,7 @@ public class PlayerResource : MonoBehaviour
             Gold = SaveLoadManager.instance.PlayerResourceData.gold;
             mana = SaveLoadManager.instance.PlayerResourceData.mana;
             maxMana = SaveLoadManager.instance.PlayerResourceData.maxMana;
+            MaxDrowCount = SaveLoadManager.instance.PlayerResourceData.maxDrowCount;
            
         
         }
@@ -142,34 +145,13 @@ public class PlayerResource : MonoBehaviour
     public void BlockAdd(Block block)
     {
         playerBlockList.Add(block);
-        /*
-        playerDrowBlockList.Add(block);
-        for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
-        {
-            if (playerDrowBlockPanelList[i].Block == null)
-            {
-                playerDrowBlockPanelList[i].Set(block);
-                return;
-            }
-            
-        }
-        */
+       
         
     }
     public void BlockRemove(Block block)
     {
         playerBlockList.Remove(block);
-        /*
-        playerDrowBlockList.Remove(block);
-        for (int i = 0; i < playerDrowBlockPanelList.Count; i++)
-        {
-            if (playerDrowBlockPanelList[i].Block == block)
-            {
-                playerDrowBlockPanelList[i].Clear();
-            }
-
-        }
-        */
+       
     }
 
     public void BatteSetting()

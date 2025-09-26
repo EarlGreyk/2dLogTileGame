@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5742674d9fd04a84e87a89bf5ecd7b11, type: 3}
+  m_Name: 25011
+  m_EditorClassIdentifier: 
+  id: 25011
+  MagicName: "\uBD84\uC1C4"
+  MagicType: 0
+  MagicDesc: "\uD50C\uB808\uC774\uC5B4 \uC8FC\uBCC0\uC758 \uC801\uB4E4\uC744 \uBD84\uC1C4\uD55C\uB2E4"
+  MagicRequiredMana: 50
+  MagicSlabSoket: 3
+  MagicValue: 200
+  MagicCastingRange: {fileID: 11400000, guid: 05def85b7ae663e4c8f2aef583a48b52, type: 2}
+  MagicDamageRange: {fileID: 11400000, guid: 374939d92edc0a64c9cb7862ad17e841, type: 2}
+  MagicDuration: 0
+  MagicApplies: 00000000
+  MagicSprite: {fileID: 0}
+  MagicEffectPrefab: {fileID: 0}
+  Gold: 0
+  TokenType: 0
+  ToKenIndex: 0
+  TokenCount: 0
+  price: 0
+  description: 
+  icon: {fileID: 0}

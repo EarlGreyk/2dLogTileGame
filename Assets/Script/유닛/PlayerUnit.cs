@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 
 public class PlayerUnit : Unit
 {
+
     public bool ColiderCheck = false;
 
     public BoxCollider2D boxCollider2D;
@@ -15,6 +17,8 @@ public class PlayerUnit : Unit
 
     private InteractionObject targetinteraction;
 
+    private Rigidbody2D rb;
+
 
     // Start is called before the first frame update
     public override void Awake()
@@ -22,6 +26,8 @@ public class PlayerUnit : Unit
         base.Awake();
 
         status.effectAdd(SettingData.LuneStatus);
+        rb = GetComponent<Rigidbody2D>();
+
  
     }
 
@@ -42,39 +48,49 @@ public class PlayerUnit : Unit
             
         }
 
+      
+    }
+    private void FixedUpdate()
+    {
         //아래는 이동
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
+            return;
 
-        if (previousPosition != transform.position )
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Rest)
+            return;
+
+
+        if (previousPosition != transform.position)
             previousPosition = transform.position;
 
 
         //아래는 전투가 아닐때만 작동합니다.
         //유닛 기본이동구현
-        if (   Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)    )
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
-           
-            transform.position += Vector3.up*0.05f;
+
+            rb.MovePosition(rb.position+(5f * Time.fixedDeltaTime * Vector2.up));
         }
 
         // S 키를 눌렀을 때, 카메라를 아래쪽(Y축)으로 이동
         if (Input.GetKey(KeyCode.S))
         {
-            
-            transform.position += Vector3.down * 0.05f;
+
+            rb.MovePosition(rb.position + (5f * Time.fixedDeltaTime * Vector2.down));
         }
 
         // A 키를 눌렀을 때, 카메라를 왼쪽으로 이동
         if (Input.GetKey(KeyCode.A))
         {
-           
-            transform.position += Vector3.left * 0.05f;
+
+            rb.MovePosition(rb.position + (5f * Time.fixedDeltaTime * Vector2.left));
         }
 
         // D 키를 눌렀을 때, 카메라를 오른쪽으로 이동
         if (Input.GetKey(KeyCode.D))
-        {   
-            
-            transform.position += Vector3.right * 0.05f;
+        {
+
+            rb.MovePosition(rb.position + (5f * Time.fixedDeltaTime * Vector2.right));
         }
     }
 
@@ -90,7 +106,7 @@ public class PlayerUnit : Unit
     private void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log("접촉");
-
+        Debug.Log(ColiderCheck);
         if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
@@ -100,10 +116,12 @@ public class PlayerUnit : Unit
             targetinteraction = interaction;
             interaction.PlayerColiderEnter();
         }
+        
+
 
         if (other.CompareTag("MoveTrigger") && ColiderCheck == false)
         {
-            
+            Debug.Log("이동준비 슈우우웃!");
             if (!MapGenerator.Instance.spawnedTilemaps.ContainsKey(GameManager.instance.CurrentPos))
             {
                 Debug.Log("현재 해당 값은 딕셔너리에 없음");
@@ -118,31 +136,70 @@ public class PlayerUnit : Unit
             {
                 
                 Vector2 moveDirection = (Vector2)transform.position - (Vector2)previousPosition;
-                StartCoroutine(GameManager.instance.PlayerStop(1f)); 
+                StartCoroutine(GameManager.instance.PlayerStop(1f));
+       
                 //서쪽
                 if (moveDirection.x>0)
                 {
                     Debug.Log("동쪽");
-                    GameManager.instance.CurrentPos += new Vector2Int(1, 0);
-                    transform.position += Vector3.right * 4f;
+
+
+                    if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(1, 0)].show)
+                    {
+                        GameManager.instance.CurrentPos += new Vector2Int(1, 0);
+                        transform.position += Vector3.right * 4f;
+                    }else
+                    {
+                        transform.position -= Vector3.right * 4f;
+                        return;
+                    }
+                    
                 
                 }else if (moveDirection.x < 0)
                 {
                     Debug.Log("서쪽");
-                    GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
-                    transform.position += Vector3.left * 4f;
+                    if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck || 
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(-1, 0)].show)
+                    {
+                        GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
+                        transform.position += Vector3.left * 4f;
+                    }else
+                    {
+                        transform.position -= Vector3.left * 4f;
+                        return;
+                    }
                 }else if (moveDirection.y >0)
                 {
                     Debug.Log("북쪽");
-                    GameManager.instance.CurrentPos += new Vector2Int(0, 1);
-                    transform.position += Vector3.up * 4f;
+                    if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(0, 1)].show)
+                    {
+                        GameManager.instance.CurrentPos += new Vector2Int(0, 1);
+                        transform.position += Vector3.up * 4f;
+                    }
+                    else
+                    {
+                        transform.position -= Vector3.up * 4f;
+                        return;
+                    }
                 
 
                 }else if (moveDirection.y < 0)
                 {
                     Debug.Log("남쪽");
-                    GameManager.instance.CurrentPos += new Vector2Int(0, -1);
-                    transform.position += Vector3.down * 4f;
+                    if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(0, -1)].show)
+                    {
+                        GameManager.instance.CurrentPos += new Vector2Int(0, -1);
+                        transform.position += Vector3.down * 4f;
+                    }
+                    else
+                    {
+                        transform.position -= Vector3.down * 4f;
+                        return;
+                    }
+                        
                    
 
                 }
@@ -151,8 +208,6 @@ public class PlayerUnit : Unit
                 MiniMapManager.instance.SlotShow(GameManager.instance.CurrentPos);
 
             
-
-                ColiderCheck = true;
 
             }
         }
@@ -179,7 +234,12 @@ public class PlayerUnit : Unit
     {
         base.UnitDie();
         GameManager.instance.RemovePlayer();
+    }
 
+    public void OnDestroy()
+    {
+        if(hpbar != null)
+            Destroy(hpbar.gameObject);
     }
 
 

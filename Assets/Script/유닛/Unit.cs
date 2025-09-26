@@ -292,7 +292,6 @@ public class Unit :MonoBehaviour
     {
         Debug.Log("À¯´Ö»ç¸Á");
         Destroy(hpbar.gameObject);
-     
     }
 
 }

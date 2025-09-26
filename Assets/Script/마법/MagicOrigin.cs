@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MonsterMagic;
 
 /// <summary>
 /// 플레이어 혹은 몬스터가 사용하는 마법입니다.
@@ -140,6 +141,39 @@ public class MagicOrigin
         
     }
 
+    public MagicOrigin(MagicSaveData MagicData)
+    {
+        MagicLevel = MagicData.Level;
+
+        MagicGrade = MagicData.Grade;
+
+
+        MagicName = MagicData.Name;
+        MagicDesc = MagicData.Desc;
+        MagicType = MagicData.Type;
+        MagicRequiredMana = MagicData.RequiredMana;
+        MagicDamage = MagicData.Damage;
+        MagicCastingRange = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + MagicData.CastingRangeName);
+        MagicDamageRange = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + MagicData.DamageRangeName);
+        MagicSprite = Resources.Load<Sprite>("Art/Magic/" + MagicData.SpriteName);
+        Gold = MagicData.Gold;
+        TokenType = MagicData.TokenType;
+        TokenIndex = MagicData.TokenIndex;
+        TokenCount = MagicData.TokenCount;
+        if(MagicData.FirstSlateData != null && MagicData.FirstSlateData.Name != "")
+        {
+            firstSlateOrigin = new SlateOrigin(MagicData.FirstSlateData);
+        }
+        if(MagicData.SecondSlateData != null && MagicData.SecondSlateData.Name != "")
+        {
+            secondSlateOrigin = new SlateOrigin(MagicData.SecondSlateData);
+        }
+        if(MagicData.ThirdSlateData != null && MagicData.ThirdSlateData.Name != "")
+        {
+            thirdSlateOrigin = new SlateOrigin(MagicData.ThirdSlateData);
+        }
+    }
+
 
     private void SlateEquip(SlateOrigin slate)
     {
@@ -179,6 +213,7 @@ public class MagicOrigin
         if(MagicLevel <3)
         {
             MagicLevel++;
+
         }
     }
 }

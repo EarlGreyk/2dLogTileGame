@@ -40,7 +40,6 @@ public class MiniMapSlot : MonoBehaviour
         {
             path += "Right";
         }
-        Debug.Log(path);
 
         sprite = Resources.Load<Sprite>(path);
 

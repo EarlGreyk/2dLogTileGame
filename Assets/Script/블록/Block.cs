@@ -17,9 +17,11 @@ public class Block
     }
     public Block(BlockSaveData saveData)
     {
+        
         level = saveData.level;
-        BlockInfo = Resources.Load<BlockScriptableObject>("ScriptableObject/block_data"+saveData.blockInfoName);
-        if(BlockInfo !=null)
+        BlockInfo = Resources.Load<BlockScriptableObject>("ScriptableObjects/block_data/" + saveData.blockInfoName);
+        
+        if (BlockInfo !=null)
         {
             mana = BlockInfo.BlockChargingMana[level - 1];
             cost = BlockInfo.BlockEnforceGold[level - 1];

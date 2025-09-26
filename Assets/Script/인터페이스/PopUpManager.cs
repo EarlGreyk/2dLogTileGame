@@ -33,6 +33,7 @@ public class PopUpManager : MonoBehaviour
     }
     public void PopupPush(PopUp pop)
     {
+        Debug.Log(pop);
         popUpStack.Push(pop);
         pop.Pop.SetActive(true);
 

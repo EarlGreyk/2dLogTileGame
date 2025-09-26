@@ -10,6 +10,9 @@ public class SlateInventory : MonoBehaviour
     private List<SlateOrigin> slateOrigins = new List<SlateOrigin>();
 
 
+    public List<SlateOrigin> SlateOrigins { get { return slateOrigins; } }
+
+
     //플레이어에게 UI상으로 들고있는 slate를 보여주기 위해 넣어줍니다.
     //장착할 경우 해당 SlateUI에서 제거해줘야합니다.
     [SerializeField]
@@ -33,10 +36,20 @@ public class SlateInventory : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < slateUIPanel.Count; i++)
+        if (SettingData.Load == false)
         {
-            slateOrigins.Add(null);
+            
+        }else
+        {
+            for (int i =0; i< SaveLoadManager.instance.SlateInventorySaveData.slateSaveDatas.Count; i++)
+            {
+
+                SlateSaveData data = SaveLoadManager.instance.SlateInventorySaveData.slateSaveDatas[i];
+                SlateOrigin slate = new SlateOrigin(data);
+                SlateAdd(slate);
+            }
         }
+        
     }
 
     /// <summary>

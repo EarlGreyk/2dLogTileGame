@@ -33,7 +33,7 @@ public class BlockPanel : MonoBehaviour
     public void Set(BlockScriptableObject block)
     {
         catalogBlock = block;
-        blockImage.sprite = block.sprite;
+        blockImage.sprite = block.Icon;
         mana.text = block.BlockChargingMana[0].ToString();
     }
 
@@ -45,7 +45,7 @@ public class BlockPanel : MonoBehaviour
     public void Set(Block block, bool activeSelt = true)
     {
  
-        blockImage.sprite = block.BlockInfo.sprite; 
+        blockImage.sprite = block.BlockInfo.Icon; 
         mana.text = block.BlockInfo.BlockChargingMana[block.level - 1].ToString();
         this.block = block;
         if(activeSelt)

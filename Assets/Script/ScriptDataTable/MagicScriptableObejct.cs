@@ -80,7 +80,7 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
         MagicDamageRange = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + values[9].Trim());
         MagicDuration = int.Parse(values[10].Trim());
         MagicApplies = ConversString(values[11].Trim());
-        MagicSprite = Resources.Load<Sprite>("Sprite/Magic&Slate/" + id.ToString());
+        MagicSprite = Resources.Load<Sprite>("Art/Magic/" + id.ToString());
         TokenType = 0;
         TokenCount = 0;
     }

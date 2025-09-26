@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 
 public class UnitSpawner : MonoBehaviour
 {
@@ -36,13 +36,17 @@ public class UnitSpawner : MonoBehaviour
         int x = Mathf.FloorToInt(worldPosition.x / scale.x);
         int y = Mathf.FloorToInt(worldPosition.y / scale.y);
         Vector3Int unitPos = new Vector3Int(x, y, 0);
-
+        Debug.Log(unitPos);
         // 유닛 생성
         GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
         PlayerUnit player = unit.GetComponent<PlayerUnit>();
         if(!stay)
             GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
+        //로드라면 유닛 좌표를 다시 수정해줘야함.
+        if (SettingData.Load)
+            unit.transform.localPosition = unitPos;
+
         return player;
     }
 

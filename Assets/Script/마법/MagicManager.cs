@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.UI.Image;
@@ -61,6 +63,12 @@ public class MagicManager : MonoBehaviour
     [SerializeField]
     private MagicDesc nextMagicDesc;
 
+    /// <summary>
+    /// 마법 강화시 필요한 골드값
+    /// </summary>
+    [SerializeField]
+    private TextMeshProUGUI magicUpgradeGold;
+
 
 
 
@@ -82,24 +90,40 @@ public class MagicManager : MonoBehaviour
             Button button = magicUIList[i].GetComponentInChildren<Button>();
             button.interactable = false;
         }
-        //게임 시작시 SettingData에서 데이터를 받아옵니다
 
-
-        for (int i = 0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
+        if (SettingData.Load == false)
         {
-            MagicOrigin magic = new MagicOrigin(SettingData.character.PlayerData.UsingMagics[i]);
+            //게임 시작시 SettingData에서 데이터를 받아옵니다
+
+
+            for (int i = 0; i < SettingData.character.PlayerData.UsingMagics.Length; i++)
+            {
+                MagicOrigin magic = new MagicOrigin(SettingData.character.PlayerData.UsingMagics[i]);
+                MagicAdd(magic);
+                //전투 관리용 PlayerRe에 마법을 넣어줍니다.
+
+                PlayerResource.instance.MagicSet(magic);
+
+            }
             
+        }else
+        {
+            //게임 시작시 SaveLoadManager에서 데이터를 받아옵니다
 
-            MagicAdd(magic);
+            for (int i = 0; i < SaveLoadManager.instance.MagicManagerSaveData.magicSaveDatas.Count; i++)
+            {
+                MagicSaveData data = SaveLoadManager.instance.MagicManagerSaveData.magicSaveDatas[i];
+                MagicOrigin magic = new MagicOrigin(data);
+                MagicAdd(magic);
+                //전투 관리용 PlayerRe에 마법을 넣어줍니다.
 
+                PlayerResource.instance.MagicSet(magic);
 
-            //전투 관리용 PlayerRe에 마법을 넣어줍니다.
-
-            PlayerResource.instance.MagicSet(magic);
-            
+            }
         }
 
-      
+
+
     }
     /// <summary>
     /// 마법을 등록합니다.
@@ -120,6 +144,7 @@ public class MagicManager : MonoBehaviour
             }
         }
     }
+    
 
     /// <summary>
     /// 마법을 선택하여 마법의 강화 및 개조를 준비합니다.
@@ -190,6 +215,7 @@ public class MagicManager : MonoBehaviour
             slateButton[2].interactable = true;
             nextMagicDesc.gameObject.SetActive(false);
         }
+        magicUpgradeGold.text = currentMagic.Magic.Gold.ToString();
         currentMagicDesc.DescSet(currentMagic.Magic, currentMagic.Magic.MagicLevel);
         nextMagicDesc.DescSet(currentMagic.Magic, currentMagic.Magic.MagicLevel + 1);
 
@@ -241,8 +267,13 @@ public class MagicManager : MonoBehaviour
 
     public void MagicUpgrade()
     {
-        currentMagic.Magic.MagicUpgrade();
-        SelectMagic(currentMagic);
+        if (TalkManager.instance.SellCheck(currentMagic.Magic.Gold))
+        {
+            currentMagic.Magic.MagicUpgrade();
+            SelectMagic(currentMagic);
+        }
+        
+        
 
        
     }

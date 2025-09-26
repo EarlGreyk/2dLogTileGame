@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
@@ -21,7 +22,7 @@ public class MovePanel : MonoBehaviour
     public void BlockSet(Block block)
     {
         this.block = block;
-        image.sprite = block.BlockInfo.sprite;
+        image.sprite = block.BlockInfo.Icon;
         mana.text = block.mana.ToString();
         gameObject.SetActive(true);
     }

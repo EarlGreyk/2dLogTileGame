@@ -12,8 +12,11 @@ public static class SettingData
 
     public static Character character;
   
+    //메달 플레이어
     public static Dictionary<int, float> difficultPlayer = new Dictionary<int, float>();
 
+
+    //메달 몬스터
     public static Dictionary<int, float> difficultMonster = new Dictionary<int, float>();
 
     public static UnitStatus LuneStatus = new UnitStatus();

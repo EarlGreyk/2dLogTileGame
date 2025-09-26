@@ -19,13 +19,13 @@ MonoBehaviour:
   NonElementalDamageValue: 0.4
   BarrierValue: 0.4
   ReducionValue: 0
-  Level: 0
+  Level: 1
   Type: 0
   Reward: 1
   ActionPoint: 5
   MutationRate: 0
   MovePattern:
-  - {fileID: 11400000, guid: b6149a6f637b4fa41b8bf7ad618b90dd, type: 2}
+  - {fileID: 11400000, guid: bc949025ca7f0474084197d71b6ba673, type: 2}
   DropGold: 1000
   UsingMagic:
   - {fileID: 11400000, guid: 00d7a6944eb0da64c8888f17860d0886, type: 2}

@@ -40,13 +40,23 @@ public class InteractionObject : MonoBehaviour
     public List<string> TalkList { get { return talkList; } }
 
 
-
+    //상호 작용 유닛이 가지고 있는 롤값입니다.
+    //해당 수치가 크면 클수록 해당 상호 작용 유닛이 기능 하는 효과가 극대화됩니다.
+    public int value;
 
 
     private void Start()
     {
         Icon = GetComponent<SpriteRenderer>().sprite;
     }
+
+    //상호 작용 되는 대상의 설정을 초기화합니다
+
+    public virtual void InteractSet()
+    {
+
+    }
+
 
 
     //상호 작용하는 오브젝트의 기초적인 셋팅을 시작합니다.

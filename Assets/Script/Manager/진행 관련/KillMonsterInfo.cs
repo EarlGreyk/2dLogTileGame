@@ -21,7 +21,7 @@ public class KillMonsterInfo : MonoBehaviour
 
     public void InfoSet(string Iconpath,int Count,int Gold, Transform parent)
     {
-        monsterIcon.sprite = Resources.Load<Sprite>("Sprite/∏ÛΩ∫≈Õ/" + Iconpath);
+        monsterIcon.sprite = Resources.Load<Sprite>("Art/Monster/" + Iconpath);
         killCount.text = Count.ToString();
         killGold.text = Gold.ToString();
         gameObject.transform.parent = parent;  
