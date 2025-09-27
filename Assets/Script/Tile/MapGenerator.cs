@@ -126,6 +126,8 @@ public class MapGenerator : MonoBehaviour
             BattleField.transform.position = Vector3.zero;
             value = BattleField.GetComponentInChildren<BattleZone>();
             TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
+            if(info.InterObj != null)
+                info.InterObj.gameObject.SetActive(false);
         }else
         {
             
@@ -134,6 +136,9 @@ public class MapGenerator : MonoBehaviour
             Debug.Log(BattleField);
             BattleField.transform.position = Vector3.zero;
             value = BattleField.GetComponentInChildren<BattleZone>(true);
+            TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
+            if (info.InterObj != null)
+                info.InterObj.gameObject.SetActive(false);
         }
      
 

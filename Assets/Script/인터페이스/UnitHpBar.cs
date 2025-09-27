@@ -133,7 +133,8 @@ public class UnitHpBar : MonoBehaviour
         {
             hptext.text = monster.status.Health.ToString() + " / " + monster.status.MaxHealth.ToString();
             fillImage.fillAmount = monster.status.Health / monster.status.MaxHealth;
-        }else
+        }
+        else
         {
             Debug.Log(monster);
         }

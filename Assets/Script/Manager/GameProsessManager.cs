@@ -189,7 +189,7 @@ public class GameProsessManager : MonoBehaviour
 
 
             currentClearValue = 0;
-            maxClearValue = 1000;
+            maxClearValue = 300;
 
 
 
@@ -198,7 +198,7 @@ public class GameProsessManager : MonoBehaviour
 
 
             currentDangerValue = 0;
-            maxDangerValue = 100;
+            maxDangerValue = 300;
 
             DangerSlider.value = (currentDangerValue / maxDangerValue);
             DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
@@ -282,6 +282,7 @@ public class GameProsessManager : MonoBehaviour
 
     public void killMonsterAdd(string name, int KillGold)
     {
+        Debug.Log(name);
         if (killMonsterDic.ContainsKey(name))
         {
             var currentValue = killMonsterDic[name];
@@ -599,7 +600,7 @@ public class GameProsessManager : MonoBehaviour
 
     public void ClearSet(float lampvalue, float clearvalue)
     {
-        LampLight -= lampvalue;
+        LampLight -= (int)lampvalue;
         currentClearValue += clearvalue;
         StartCoroutine(Clearing());
         StartCoroutine(Dangering((int)lampvalue));
@@ -644,14 +645,16 @@ public class GameProsessManager : MonoBehaviour
     public IEnumerator Dangering(int value)
     {
         yield return new WaitForSeconds(0.5f);
-        
 
-       
 
-   
+        currentDangerValue += value;
+        if (currentDangerValue > maxDangerValue)
+            currentDangerValue = maxDangerValue;
+
+
         if (currentDangerValue <= maxDangerValue)
         {
-            currentDangerValue += value;
+           
             DangerSlider.value = (currentDangerValue / maxDangerValue);
             DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
         }
@@ -659,7 +662,16 @@ public class GameProsessManager : MonoBehaviour
         {
             //보스 로 가는길을 열어야함.
             //추가적으로 플레이어는 0,0좌표로 이동해야함.
-            MiniMapManager.instance.SlotDic[Vector2.zero].MapTeleport();
+            //미니맵 매니저를 이용하면 좋으니 미니맵 매니저에 있는 슬롯이 비활성화 되어있는 상태라 사용하기힘듬.
+            Vector2 pos = new Vector2( 7.5f, 7.5f);
+            Debug.Log(pos);
+            //yield return new WaitForSeconds(0.5f);
+
+            GameManager.instance.StayPlayerUnit.transform.localPosition = pos;
+
+           
+            GameManager.instance.CurrentPos = new Vector2Int(0, 0);
+        
 
         }
         //중요값 변동이후 저장.

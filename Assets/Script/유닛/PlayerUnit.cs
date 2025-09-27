@@ -27,8 +27,6 @@ public class PlayerUnit : Unit
 
         status.effectAdd(SettingData.LuneStatus);
         rb = GetComponent<Rigidbody2D>();
-
- 
     }
 
     public override void Update()
@@ -114,6 +112,8 @@ public class PlayerUnit : Unit
     public override void HitDamage(float Damage)
     {
         base.HitDamage(Damage);
+        if(status.Health >0)
+            PlayerResource.instance.hpbarUpdate();
     }
     /// <summary>
     /// 지역 이동 + 상호작용 오브젝트 접촉을 체크합니다.

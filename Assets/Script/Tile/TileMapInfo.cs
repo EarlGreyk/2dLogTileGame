@@ -37,7 +37,7 @@ public class TileMapInfo : MonoBehaviour
     public InteractionObject InterObj;
 
 
-    public Vector2 interPos;
+ 
 
 
     /// <summary>
@@ -86,10 +86,8 @@ public class TileMapInfo : MonoBehaviour
 
 
                 InterObj.value = difficult * 10 + 15;
-                //상호작용 오브젝트는 반드시 0,0좌표에 존재합니다.
-                if (interPos == Vector2.zero)
-                    interPos = new(7.5f, 7.5f);
-                obj.transform.localPosition = interPos;
+                //상호작용 오브젝트는 반드시 중앙 좌표에 존재합니다.
+                obj.transform.localPosition = new(7.5f, 7.5f);
                 //모든 상호작용 설치 준비가 완료되었음으로 해당 상호작용 유닛을 초기화합니다
 
                 InterObj.InteractSet();
@@ -103,10 +101,9 @@ public class TileMapInfo : MonoBehaviour
                 InterObj = obj.GetComponent<InteractionObject>();
                 Debug.Log(InterObj);
                 InterObj.value = -1;
-                //상호작용 오브젝트는 반드시 0,0좌표에 존재합니다.
-                if (interPos == Vector2.zero)
-                    interPos = new(7.5f, 7.5f);
-                obj.transform.localPosition = interPos;
+                //상호작용 오브젝트는 반드시 중앙좌표에 존재합니다.
+            
+                obj.transform.localPosition = new(7.5f, 7.5f);
                 //모든 상호작용 설치 준비가 완료되었음으로 해당 상호작용 유닛을 초기화합니다
 
                 InterObj.InteractSet();

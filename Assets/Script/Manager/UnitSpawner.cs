@@ -37,11 +37,13 @@ public class UnitSpawner : MonoBehaviour
         int y = Mathf.FloorToInt(worldPosition.y / scale.y);
         Vector3Int unitPos = new Vector3Int(x, y, 0);
         // 유닛 생성
-        GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
+        GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);    
         unit.transform.SetParent(UnitMap.transform);
         PlayerUnit player = unit.GetComponent<PlayerUnit>();
         if(!stay)
+        {
             GameManager.instance.BattleZone.setTileUnit(tilePosition, player);
+        }
         //로드라면 유닛 좌표를 다시 수정해줘야함.
         if (SettingData.Load)
             unit.transform.localPosition = unitPos;

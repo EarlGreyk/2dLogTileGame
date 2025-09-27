@@ -180,19 +180,22 @@ public class MedalManager : MonoBehaviour
     }
 
 
-    //정화 메달은 비어있을수 없습니다.
+    
     //초기에 메달을 초기화합니다.
+    //현재 정화도 개념을 제대로 잡지 못해 어떻게 할지 의문인 상황임으로
+    //임시적으로 비활성화합니다.
 
     private void MedalInit()
     {
         
-        
+        /*
         for(int i=0; i < playerMedalUi.Count;i++)
         {
             currentMedalData = InitClearMedalData;
             selectMedal = playerMedalUi[i];
             EnableDisableMedal();
         }
+        */
         selectMedal = null;
         currentMedalData = null;
     }

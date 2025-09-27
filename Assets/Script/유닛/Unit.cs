@@ -219,12 +219,11 @@ public class Unit :MonoBehaviour
         {
 
             status = new UnitStatus(baseStatus);
-            Debug.Log(this.name);
-            Debug.Log(status.MaxHealth);
         }
             
         GameObject obj = Instantiate(HPbar, GameManager.instance.HPCanvas.transform);
         hpbar = obj.GetComponent<UnitHpBar>();
+        Debug.Log(hpbar == null);
         hpbar.HpbarSet(this);
         
         uicanvas = GameManager.instance.HPCanvas;
@@ -281,14 +280,13 @@ public class Unit :MonoBehaviour
 
     public virtual void HitDamage(float Damage)
     {
-        if (status.Health <= Damage)
+        status.Health -= Damage;
+        if (status.Health <= 0)
         {
             UnitDie();
             return;
         }
-        status.Health -= Damage;
         hpbar.HpTextSet();
-        PlayerResource.instance.hpbarUpdate();
 
         //데미지 받음 이벤트 호출
         effectManager.TriggerDamageTaken((int)Damage);

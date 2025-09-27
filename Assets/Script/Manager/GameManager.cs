@@ -207,13 +207,14 @@ public class GameManager : MonoBehaviour
     {
        if(value)
        {
+            //생성시 초기화
             if (playerUnit == null)
             {
                 playerUnit = unitSpawner.SpawnPlayer(new Vector3Int(15, 15, 0), stayPlayerUnit.gameObject);
                 playerUnit.gameObject.SetActive(true);
                 playerUnit.gameObject.transform.localScale *= grid.transform.localScale.x;
-
                 CameraSetting.instance.unitorthographicSizeSet(playerUnit.transform.position);
+                PlayerResource.instance.hpbarUpdate();
             }
 
             int x = GameManager.instance.BattleZone.PlayerSponePos.x;

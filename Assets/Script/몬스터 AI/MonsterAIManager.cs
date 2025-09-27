@@ -41,7 +41,7 @@ public class MonsterAIManager : MonoBehaviour
         GameManager.instance.UnitInfoManager.MonsterInfoRemove(monster);
         if(infoAdd)
         {
-            GameProsessManager.instance.killMonsterAdd(monster.Sprite.name, monster.KillGold);
+            GameProsessManager.instance.killMonsterAdd(monster.SpriteRenderer.sprite.name, monster.KillGold);
         }
         
         //¿Ø¥÷¡¶∞≈

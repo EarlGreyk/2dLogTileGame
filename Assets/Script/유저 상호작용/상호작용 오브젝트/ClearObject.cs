@@ -124,12 +124,14 @@ public class ClearObject : InteractionObject
     {
         base.InteractEnd();
         battle = false;
+        if (!gameObject.activeSelf)
+            gameObject.SetActive(true);
         if (victory)
         {
             LampValue *= 0.1f;
 
         }
-        GameProsessManager.instance.LampLight -= LampValue;
+        GameProsessManager.instance.LampLight -= (int)LampValue;
         
 
     }

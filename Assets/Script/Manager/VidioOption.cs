@@ -19,7 +19,10 @@ public class VidioOption : MonoBehaviour
 
     private void Start()
     {
-        Init();
+        //Init();
+        StartCoroutine(InitCoroutine());
+        //StartCoroutine(ApplyResolutionDeferred());
+     
     }
 
     private void Init()
@@ -43,23 +46,64 @@ public class VidioOption : MonoBehaviour
             optionvalue++;
 
         }
-        _FullScreenBtn.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow) ? true : false;
         _ResolutionDropdown.RefreshShownValue();
+
+    }
+    
+
+    // 옵션 초기화 + TMP_Dropdown 설정
+    private IEnumerator InitCoroutine()
+    {
+        // 해상도를 높은 순서대로 가져오기
+        _Resolutions.AddRange(Enumerable.Reverse(Screen.resolutions));
+
+        // 드롭다운 옵션 초기화
+        _ResolutionDropdown.options.Clear();
+
+        foreach (Resolution res in _Resolutions)
+        {
+            TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData();
+            option.text = $"{res.width} x {res.height} {res.refreshRate}hz";
+            _ResolutionDropdown.options.Add(option);
+        }
+
+        // 한 프레임 기다리기 (Dropdown 내부 초기화 안정화)
+        yield return null;
+
+        // 현재 화면 해상도와 일치하는 옵션 찾기
+        _ResolutionValue = _Resolutions.FindIndex(r => r.width == Screen.width && r.height == Screen.height);
+        if (_ResolutionValue < 0) _ResolutionValue = 0; // 없으면 첫 옵션
+        _ResolutionDropdown.value = _ResolutionValue;
+
+        // 드롭다운 이벤트 연결
+        _ResolutionDropdown.onValueChanged.AddListener(OnResolutionChange);
     }
 
-    //해상도 버튼클릭
-    public void OptionChange(int x)
+    private IEnumerator ApplyResolutionDeferred()
     {
-        _ResolutionValue = x;
+        yield return null; // 한 프레임 대기
+        Screen.SetResolution(_Resolutions[_ResolutionValue].width, _Resolutions[_ResolutionValue].height, screenMode);
+    }
+
+
+    //해상도 버튼클릭
+    public void OnResolutionChange(int index)
+    {
+        _ResolutionValue = index;
+
+
     }
     //전체 화면 설정
-    public void FullScreenBtn(bool isFull)
-    {
-        screenMode = isFull ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-    }
-    //실제 적용
+    //실제 적용 
     public void VidioBtnClick()
     {
+        if(_FullScreenBtn.isOn)
+        {
+            screenMode = FullScreenMode.FullScreenWindow;
+        }else
+        {
+            screenMode = FullScreenMode.Windowed;
+        }
         Screen.SetResolution(_Resolutions[_ResolutionValue].width, _Resolutions[_ResolutionValue].height, screenMode);
     }
 }
