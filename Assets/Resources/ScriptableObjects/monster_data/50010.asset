@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87cf55a26127dad44a5e555bd1608f64, type: 3}
+  m_Name: 50010
+  m_EditorClassIdentifier: 
+  id: 50010
+  MosterName: "\uB178\uC608\uB4E4\uC758 \uC8FC\uC778 \uC0E4\uC0E4"
+  HpValue: 3
+  ElementalDamageValue: 1.5
+  NonElementalDamageValue: 1.5
+  BarrierValue: 1.5
+  ReducionValue: 0
+  Level: 4
+  Type: 3
+  Reward: 5
+  ActionPoint: 5
+  MutationRate: 0
+  MovePattern:
+  - {fileID: 11400000, guid: 95e337687537da749869c982c6997ba3, type: 2}
+  - {fileID: 11400000, guid: 3b69cfcccbe18874d825568e3aaddd4c, type: 2}
+  - {fileID: 11400000, guid: b9d1ae0383c21da43a82e706c046e8e8, type: 2}
+  DropGold: 20000
+  UsingMagic:
+  - {fileID: 11400000, guid: f68c23432353762438b97edc2f311d2e, type: 2}
+  - {fileID: 11400000, guid: 35054f02d5102a84cb4207cdebb67071, type: 2}
+  - {fileID: 11400000, guid: d7ad0aceef077bd4d92ab190b1bb0ea1, type: 2}
+  - {fileID: 11400000, guid: 128b14dd8c4b333429d3b0194ac7b8fd, type: 2}
+  - {fileID: 11400000, guid: cec8e09fa1cf0dc408aa12817e18a118, type: 2}
+  - {fileID: 11400000, guid: 92da3fb34d42619499a283e2cc2749f4, type: 2}
+  - {fileID: 11400000, guid: 3f0c3d8f5af6e1040a9f08f435428c77, type: 2}
+  - {fileID: 11400000, guid: 25cdd7a009a08874e970a9a3369f5a3e, type: 2}
+  - {fileID: 11400000, guid: bef6331a9797e32478ace17e46a75bbb, type: 2}
+  - {fileID: 11400000, guid: c152970ba6fa30a448a84b2d582f26b4, type: 2}
+  MonsterIcon: {fileID: 21300000, guid: 0a69f19da7b21db479e158723e0d5ee2, type: 3}

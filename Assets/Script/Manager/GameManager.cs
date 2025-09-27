@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(monsterList.Count);
         PlayerResource.instance.BatteSetting();
         setBattleField();
+        Debug.Log(battleZone);
         PlayerTurnStart();
         setPlayer(true);
         setMonster(monsterList);
@@ -158,6 +159,7 @@ public class GameManager : MonoBehaviour
             battleZone = null;
         }
         battleZone = MapGenerator.Instance.BattleZoneSet();
+        Debug.Log(battleZone);
         foreach (var value in MapGenerator.Instance.spawnedTilemaps)
         {
             value.Value.SetActive(false);
@@ -265,10 +267,9 @@ public class GameManager : MonoBehaviour
 
                 //몬스터 생성 이후 몬스터 데이터 초기화
                 MonsterUnit unit = unitPrefabs.GetComponent<MonsterUnit>();
-                unit.Init(monsterList[i]);
-
-                unitSpawner.SpawnMonster(SponePos, unitPrefabs);
-                unit.transform.position = unitSpawner.PosUnitSet(SponePos);
+                //unit.Init(monsterList[i]);
+                unitSpawner.SpawnMonster(SponePos, unitPrefabs, monsterList[i]);
+                
             }
         }
         else

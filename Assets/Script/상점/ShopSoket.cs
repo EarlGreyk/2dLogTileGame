@@ -84,10 +84,19 @@ public class ShopSoket: MonoBehaviour
         {
             //판매 : 석판
             List<SlateScriptableObejct> data = ShopManager.Instance.ShopSlateList;
-            int i = Random.Range(0, data.Count);
+            if (data.Count > 0)
+            {
+                int i = Random.Range(0, data.Count);
 
-            shopItem = data[i];
-            data[i].ApplyToUI(this);
+
+                shopItem = data[i];
+                data[i].ApplyToUI(this);
+            }
+            else
+            {
+                Set();
+            }
+            
         }
 
 

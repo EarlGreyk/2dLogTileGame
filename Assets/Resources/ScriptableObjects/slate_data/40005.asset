@@ -21,5 +21,5 @@ MonoBehaviour:
   EnableLevel: 0
   SlateStatus: 0
   price: 0
-  description: 
-  icon: {fileID: 0}
+  description: "\uB9C8\uB098 \uC18C\uBE44\uB7C9 1 ~ 1 \uAC10\uC18C"
+  icon: {fileID: 21300000, guid: 4b5fccd436df6224384320eff2e057f2, type: 3}

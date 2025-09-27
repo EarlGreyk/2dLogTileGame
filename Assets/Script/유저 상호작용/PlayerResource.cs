@@ -80,6 +80,12 @@ public class PlayerResource : MonoBehaviour
                 goldTextList[i].text = gold.ToString();
         } }
 
+    //hpbar
+    [SerializeField]
+    private TextMeshProUGUI hpText;
+
+    [SerializeField]
+    private Image hpFillImage;
 
 
     // Manabar
@@ -177,7 +183,7 @@ public class PlayerResource : MonoBehaviour
             playerBlockPanel[i].Clear();
         }
 
-
+        //덱에 모든 블록 넣기.
         for(int i=0; i<playerBlockList.Count;i++)
         {
             playerDrowBlockList.Add(playerBlockList[i]);
@@ -188,6 +194,22 @@ public class PlayerResource : MonoBehaviour
                     playerDrowBlockPanelList[i].Set(playerBlockList[i]);
                     break;
                 }
+            }
+            
+        }
+
+        //모든 마법 UI 리스트 내부에서 지우기
+
+        for(int i =0; i<playerSkillPanel.Count;i++)
+        {
+            playerSkillPanel[i].Clear();
+        }
+        //다시 마법등록
+        for (int i = 0; i < MagicManager.instance.MagicOriginList.Count; i++)
+        {
+            if(i<playerSkillPanel.Count)
+            {
+                playerSkillPanel[i].magicSet(MagicManager.instance.MagicOriginList[i]);
             }
             
         }
@@ -264,14 +286,14 @@ public class PlayerResource : MonoBehaviour
         //없으면 현재 드로우 값을 최대치로 변경하고 종료
 
         CurrentDrowCount--;
-        Debug.Log($"남아 있는 드로우 횟수 : {CurrentDrowCount} , 남아 있는 덱 개수 : {playerDrowBlockList.Count}");
+        //Debug.Log($"남아 있는 드로우 횟수 : {CurrentDrowCount} , 남아 있는 덱 개수 : {playerDrowBlockList.Count}");
         if(CurrentDrowCount >0)
         {
             BlockDrow();
         }else
         {
             CurrentDrowCount = MaxDrowCount;
-            Debug.Log($"드로우 종료 : 남아 있는 드로우 횟수 : {CurrentDrowCount} ");
+            //Debug.Log($"드로우 종료 : 남아 있는 드로우 횟수 : {CurrentDrowCount} ");
         }
        
         
@@ -424,6 +446,12 @@ public class PlayerResource : MonoBehaviour
 
         float fill = mana / maxMana;
         manaFillImage.fillAmount = fill;
+    }
+    public void hpbarUpdate()
+    {
+        hpText.text = GameManager.instance.PlayerUnit.status.Health.ToString() + " / " + GameManager.instance.PlayerUnit.status.MaxHealth.ToString();
+        float fill = GameManager.instance.PlayerUnit.status.Health / GameManager.instance.PlayerUnit.status.MaxHealth;
+        hpFillImage.fillAmount = fill;
     }
 
 }

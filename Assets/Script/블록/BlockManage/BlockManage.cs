@@ -45,10 +45,12 @@ public class BlockManage : MonoBehaviour
 
     [SerializeField]
     private BlockPanel removeBlockPanel;
+    public BlockPanel RemoveBlockPanel { get { return removeBlockPanel; } }
     [SerializeField]
     private TextMeshProUGUI removeBlockGold;
     [SerializeField]
     private BlockPanel equipBlockPanel;
+    public BlockPanel EquipBlockPanel { get { return equipBlockPanel; } }
     [SerializeField]
     private TextMeshProUGUI equipBlockGold;
 

@@ -21,5 +21,5 @@ MonoBehaviour:
   EnableLevel: 0
   SlateStatus: 1
   price: 0
-  description: 
-  icon: {fileID: 0}
+  description: "\uD30C\uC6CC 0.4 ~ 0.8 \uC99D\uAC00"
+  icon: {fileID: 21300000, guid: 49ffacbd4df74bd47bb4d95cd702a55f, type: 3}

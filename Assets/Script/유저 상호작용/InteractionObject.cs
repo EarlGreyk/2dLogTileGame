@@ -15,6 +15,8 @@ public class InteractionObject : MonoBehaviour
     /// 3 : ¸Ô±úºñ
     /// 4 : °ñµå³Ö°í ÇÏ´Â µµ¹Ú.
     /// 5 : Æ¯¼ö Á¤È­À¯´Ö
+    /// 6 : º¸½º
+    /// 7 : ÈÞ½Ä;
     /// </summary>
     public enum Type
     {
@@ -23,7 +25,10 @@ public class InteractionObject : MonoBehaviour
         Shop,
         treasure_box,
         relic,
-        Unique_Clear
+        Unique_Clear,
+        Boss,
+        Rest
+            
     }
 
     public Type interactionType;

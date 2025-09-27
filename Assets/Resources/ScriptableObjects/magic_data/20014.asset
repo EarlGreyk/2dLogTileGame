@@ -24,11 +24,12 @@ MonoBehaviour:
   MagicCastingRange: {fileID: 11400000, guid: 017f9d684606cbb43880ec3f23001fda, type: 2}
   MagicDamageRange: {fileID: 11400000, guid: 2d5974dd890b3624a9c967b1ff40e3e8, type: 2}
   MagicDuration: 0
-  MagicApplies: 00000000
-  MagicSprite: {fileID: 0}
+  MagicApplies: 0
+  MagicPublic: 0
+  MagicSprite: {fileID: 21300000, guid: af1a71cbdfce466478f63bc39e43a433, type: 3}
   MagicEffectPrefab: {fileID: 0}
   Gold: 0
-  TokenType: 0
+  TokenType: 8017
   ToKenIndex: 0
   TokenCount: 0
   price: 0

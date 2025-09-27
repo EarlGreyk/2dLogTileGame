@@ -94,7 +94,7 @@ public class MiniMapManager : MonoBehaviour
     {
         if (!slotDic[key].show)
         {
-            StartCoroutine(GameProsessManager.instance.Dangering(3));
+            StartCoroutine(GameProsessManager.instance.Dangering(10));
         }
 
         slotDic[key].Show();

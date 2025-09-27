@@ -40,6 +40,7 @@ public class SlateUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             selectButton.interactable = true;
         }else
         {
+            SlateImage.gameObject.SetActive(false);
             if(selectButton != null)
                 selectButton.interactable = false;
         }
@@ -56,6 +57,7 @@ public class SlateUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             runtimeSlate = slate;
             SlateImage.sprite = slate.SlateIcon;
+            SlateImage.gameObject.SetActive(false);
             selectButton.interactable = true;
 
             //아이콘만 표현되는 Slate가존재합니다.

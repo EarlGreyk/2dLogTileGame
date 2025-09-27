@@ -119,12 +119,23 @@ public class MapGenerator : MonoBehaviour
 
     public BattleZone BattleZoneSet()
     {
-
-        BattleField = Instantiate<GameObject>(spawnedTilemaps[GameManager.instance.CurrentPos], GameManager.instance.Grid.transform);
-        BattleField.transform.position = Vector3.zero;
-        BattleZone value = BattleField.GetComponentInChildren<BattleZone>();
-        TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
-        info.InterObj.gameObject.SetActive(false);
+        BattleZone value;
+        if (GameManager.instance.CurrentPos != Vector2.zero)
+        {
+            BattleField = Instantiate<GameObject>(spawnedTilemaps[GameManager.instance.CurrentPos], GameManager.instance.Grid.transform);
+            BattleField.transform.position = Vector3.zero;
+            value = BattleField.GetComponentInChildren<BattleZone>();
+            TileMapInfo info = BattleField.GetComponentInChildren<TileMapInfo>();
+        }else
+        {
+            
+            string path = "Prefabs/TileMap/" + Stage.ToString() + "Stage/Boss";
+            BattleField = Instantiate<GameObject>(Resources.Load<GameObject>(path), GameManager.instance.Grid.transform);
+            Debug.Log(BattleField);
+            BattleField.transform.position = Vector3.zero;
+            value = BattleField.GetComponentInChildren<BattleZone>(true);
+        }
+     
 
 
 
@@ -175,7 +186,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
     /// <summary>
-    /// 맵 생성 함수. 로드하여 데이터를 받아서 생성할때가 아닌 직접 생성하는 방식입ㄴ다.
+    /// 맵 생성 함수. 로드하여 데이터를 받아서 생성할때가 아닌 직접 생성하는 방식입니다.
     /// </summary>
     private void GenerateMap()
     {

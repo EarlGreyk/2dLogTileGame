@@ -210,6 +210,8 @@ public class TalkManager : MonoBehaviour
     private void CloseBlockManage()
     {
         blockManagePanel.SetActive(false);
+        BlockManage.instance.RemoveBlockPanel.gameObject.SetActive(false);
+        BlockManage.instance.EquipBlockPanel.gameObject.SetActive(false);
     }
 
     private void OpenMagicManage()

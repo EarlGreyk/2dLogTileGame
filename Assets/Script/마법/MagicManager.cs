@@ -102,7 +102,6 @@ public class MagicManager : MonoBehaviour
                 MagicAdd(magic);
                 //전투 관리용 PlayerRe에 마법을 넣어줍니다.
 
-                PlayerResource.instance.MagicSet(magic);
 
             }
             
@@ -116,8 +115,6 @@ public class MagicManager : MonoBehaviour
                 MagicOrigin magic = new MagicOrigin(data);
                 MagicAdd(magic);
                 //전투 관리용 PlayerRe에 마법을 넣어줍니다.
-
-                PlayerResource.instance.MagicSet(magic);
 
             }
         }

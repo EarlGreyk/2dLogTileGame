@@ -5990,3 +5990,9 @@ MonoBehaviour:
   Down: 0
   Left: 1
   Right: 0
+  Clear: 0
+  difficult: 0
+  InterObj: {fileID: 0}
+  interPos: {x: 0, y: 0}
+  FirstCheck: 0
+  MoveCheck: 0

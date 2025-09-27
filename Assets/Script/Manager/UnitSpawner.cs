@@ -36,7 +36,6 @@ public class UnitSpawner : MonoBehaviour
         int x = Mathf.FloorToInt(worldPosition.x / scale.x);
         int y = Mathf.FloorToInt(worldPosition.y / scale.y);
         Vector3Int unitPos = new Vector3Int(x, y, 0);
-        Debug.Log(unitPos);
         // À¯´Ö »ý¼º
         GameObject unit = Instantiate(unitPrefab, unitPos, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
@@ -50,7 +49,7 @@ public class UnitSpawner : MonoBehaviour
         return player;
     }
 
-    public MonsterUnit SpawnMonster(Vector3Int tilePosition, GameObject unitPrefab)
+    public MonsterUnit SpawnMonster(Vector3Int tilePosition, GameObject unitPrefab, MonsterScriptableObject monsterdata)
     {
         Vector3 worldPosition = UnitMap.CellToWorld(tilePosition);
         Debug.Log($"À¯´Ö »ý¼º ÁÂÇ¥ : {tilePosition}      :   º¯È¯ ÁÂÇ¥ : {worldPosition}");
@@ -58,8 +57,11 @@ public class UnitSpawner : MonoBehaviour
         GameObject unit = Instantiate(unitPrefab, tilePosition, Quaternion.identity);
         unit.transform.SetParent(UnitMap.transform);
         MonsterUnit monster = unit.GetComponent<MonsterUnit>();
+        monster.Init(monsterdata);
+        monster.transform.position = PosUnitSet(tilePosition);
         GameManager.instance.MonsterAIManager.MonsterSet(monster);
         GameManager.instance.BattleZone.setTileUnit(tilePosition, monster);
+
         return monster;
     }
 

@@ -37,16 +37,21 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
     /// 대상 구분입니다.
     /// 0 : 적 (몬스터) , 1 플레이어
     /// </summary>
-    public int[] MagicApplies;
+    public int MagicApplies;
+
+
+    /// <summary>
+    /// 해당 마법이 공용마법인지를 체크합니다.
+    /// </summary>
+    public int MagicPublic;
+
+
 
     public Sprite MagicSprite;
 
     public GameObject MagicEffectPrefab;
 
-    /// <summary>
-    /// 아래들은 전부 추가된값
-    /// </summary>
-    /// <param name="values"></param>
+
     
     public int Gold;
 
@@ -54,12 +59,14 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
     public int TokenType;
     public int ToKenIndex;
     public int TokenCount;
+   
 
 
     // 내부 데이터는 private 필드
     [SerializeField] private int price;
     [SerializeField] private string description;
     [SerializeField] private Sprite icon;
+    
 
     // IShopItem // 읽기 전용 
     public int Price => price;
@@ -79,28 +86,18 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
         MagicCastingRange = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + values[8].Trim());
         MagicDamageRange = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + values[9].Trim());
         MagicDuration = int.Parse(values[10].Trim());
-        MagicApplies = ConversString(values[11].Trim());
-        MagicSprite = Resources.Load<Sprite>("Art/Magic/" + id.ToString());
-        TokenType = 0;
+        MagicApplies = int.Parse(values[11].Trim());
+        MagicPublic = int.Parse(values[12].Trim());
+        TokenType = int.Parse(values[13].Trim());
+        Debug.Log(int.Parse(values[14].Trim()));
+        MagicSprite = Resources.Load<Sprite>("Art/Magic/" + values[14].Trim());
+        icon = MagicSprite = Resources.Load<Sprite>("Art/Magic/" + values[14].Trim());
         TokenCount = 0;
     }
 
 
 
-    public int[] ConversString(string strings)
-    {
-        Debug.Log(id + strings);
-        string[] values = strings.Trim().Split(' ');
-        int[] ints = new int[values.Length];
-
-        for (int i = 0; i < values.Length; i++)
-        {
-            ints[i] = int.Parse(values[i]);
-            Debug.Log(ints[i]);
-        }
-
-        return ints;
-    }
+   
 
     public void ApplyToUI(ShopSoket shopSoket)
     {

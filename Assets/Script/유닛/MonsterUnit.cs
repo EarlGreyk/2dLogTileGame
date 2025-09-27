@@ -130,37 +130,34 @@ public class MonsterUnit : Unit
     public override void Awake()
     {
         base.Awake();
-
         currentAction.Unit = this;
-        hpbar.HpTextSet();
         ActionCheck();
-        
 
     }
+    
     public void Init(MonsterScriptableObject data)
     {
         SpriteRenderer.sprite = data.MonsterIcon;
 
         ratioStatus = data;
-        if(status == null)
-        {
-            status = new UnitStatus(baseStatus);
-        }
-        //유닛이 공통적으로 적용 받는 스테이터스 적용
+        
         if(data != null)
             status.effectRatio(data);
 
 
         //몬스터 유닛만이 가지고 있는 스텟 적용
         maxActionCount = data.ActionPoint;
-        
         movePattenData = data.MovePattern[0];
         attackMagicArray = ratioStatus.UsingMagic;
         attackRangePattenData = attackMagicArray[0].MagicDamageRange;
         randomAction = Random.Range(0, attackMagicArray.Length);
-     
-        
-     
+
+        hpbar.HpTextSet();
+
+
+
+
+
     }
     private void OnMouseDown()
     {

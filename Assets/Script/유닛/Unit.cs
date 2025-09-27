@@ -100,7 +100,7 @@ public class UnitStatus
                 value += SettingData.difficultMonster[5009];
             if (SettingData.difficultMonster.ContainsKey(5011))
                 value += SettingData.difficultMonster[5011];
-
+        
             Health *= ratioTemp.HpValue * value;
             MaxHealth = Health;
 
@@ -213,9 +213,14 @@ public class Unit :MonoBehaviour
     
     public virtual void Awake()
     {
+        
+        
         if(status ==null)
         {
+
             status = new UnitStatus(baseStatus);
+            Debug.Log(this.name);
+            Debug.Log(status.MaxHealth);
         }
             
         GameObject obj = Instantiate(HPbar, GameManager.instance.HPCanvas.transform);
@@ -283,6 +288,7 @@ public class Unit :MonoBehaviour
         }
         status.Health -= Damage;
         hpbar.HpTextSet();
+        PlayerResource.instance.hpbarUpdate();
 
         //데미지 받음 이벤트 호출
         effectManager.TriggerDamageTaken((int)Damage);

@@ -59,40 +59,63 @@ public class TileMapInfo : MonoBehaviour
     {
         Clear = false;
         MoveCheck = true;
-        if(InterObj == null && !FirstCheck)
+        if(InterObj == null )
         {
             GameObject obj = null;
-            //상호작용 유닛 롤
-            if (Random.Range(1,10) <= 10)
+            //첫번쨰 지역 (베이스지역)
+            if(!FirstCheck)
             {
-                //정화유닛
+                //상호작용 유닛 롤
+                if (Random.Range(1, 10) <= 10)
+                {
+                    //정화유닛
+                    obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ClearUnit"), gameObject.transform);
+                    MoveCheck = false;
+                }
+                else
+                {
+                    //상점
+                    obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ShopUnit"), gameObject.transform);
+                }
+                Debug.Log(obj);
+                if (obj == null)
+                    return;
+
+                InterObj = obj.GetComponent<InteractionObject>();
+                Debug.Log(InterObj);
+
+
+                InterObj.value = difficult * 10 + 15;
+                //상호작용 오브젝트는 반드시 0,0좌표에 존재합니다.
+                if (interPos == Vector2.zero)
+                    interPos = new(7.5f, 7.5f);
+                obj.transform.localPosition = interPos;
+                //모든 상호작용 설치 준비가 완료되었음으로 해당 상호작용 유닛을 초기화합니다
+
+                InterObj.InteractSet();
+            }else
+            {
                 obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ClearUnit"), gameObject.transform);
-                MoveCheck = false;
+                MoveCheck = true;
+                if (obj == null)
+                    return;
+
+                InterObj = obj.GetComponent<InteractionObject>();
+                Debug.Log(InterObj);
+                InterObj.value = -1;
+                //상호작용 오브젝트는 반드시 0,0좌표에 존재합니다.
+                if (interPos == Vector2.zero)
+                    interPos = new(7.5f, 7.5f);
+                obj.transform.localPosition = interPos;
+                //모든 상호작용 설치 준비가 완료되었음으로 해당 상호작용 유닛을 초기화합니다
+
+                InterObj.InteractSet();
             }
-            else
-            {
-                //상점
-                obj = Instantiate<GameObject>(Resources.Load<GameObject>("Prefabs/Interaction/ShopUnit"), gameObject.transform);
-            }
-            Debug.Log(obj);
-            if (obj == null)
-                return;
             
-            InterObj = obj.GetComponent<InteractionObject>();
-            Debug.Log(InterObj);
-
-
-            InterObj.value = difficult * 10 + 15;
-            //상호작용 오브젝트는 반드시 0,0좌표에 존재합니다.
-            if (interPos == Vector2.zero)
-                interPos = new(7.5f, 7.5f);
-            obj.transform.localPosition = interPos;
-            //모든 상호작용 설치 준비가 완료되었음으로 해당 상호작용 유닛을 초기화합니다
-
-            InterObj.InteractSet();
 
 
         }
+        
     }
 
     /// <summary>

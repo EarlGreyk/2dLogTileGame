@@ -64,6 +64,7 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
 
         icon = Resources.Load<Sprite>("Art/Block/" + values[8].Trim());
 
+        description = BlockGrade.ToString() + "등급 블록";
 
     }
 

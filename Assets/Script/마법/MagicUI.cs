@@ -29,7 +29,7 @@ public class MagicUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if(magic ==null && catalogMagic ==null)
         {
-
+            MagicImage.gameObject.SetActive(false);
         }
     }
 

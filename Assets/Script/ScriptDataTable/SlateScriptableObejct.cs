@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -59,6 +58,8 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
     public override void SetValues(string[] values)
     {
         id = int.Parse(values[1].Trim());
+        
+        Debug.Log(values[2].Trim());
         SlateName = values[2].Trim();
         SlateGrade = int.Parse(values[3].Trim());
         SlateMaxValue = float.Parse(values[4].Trim());
@@ -66,18 +67,23 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
         switch (int.Parse(values[6].Trim()))
         {
             case 202: SlateStatus = StatusType.Consumption;
+                description = "마나 소비량 " + SlateMinValue.ToString() + " ~ " + SlateMaxValue.ToString() + " 감소";
                 break;
             case 205: SlateStatus = StatusType.Power;
+                description = "파워 " + SlateMinValue.ToString() + " ~ " + SlateMaxValue.ToString() + " 증가";
                 break;
             case 208: SlateStatus= StatusType.Duration;
+                description = "지속시간 " + SlateMinValue.ToString() + " ~ " + SlateMaxValue.ToString() + " 증가";
                 break;
         }
 
-
-        icon = Resources.Load<Sprite>("Art/Slate" + id.ToString());
+       
+        icon = Resources.Load<Sprite>("Art/Slate/" + values[7].Trim());
         /// 추가로 요청해야하는 사항입니다.
         Enable = true;
         EnableLevel = 0;
+        //
+        
 
 
 

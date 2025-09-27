@@ -37,14 +37,30 @@ public class PlayerUnit : Unit
         if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
-        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Rest)
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.End)
             return;
 
 
-        if (Input.GetKey(KeyCode.G) && targetinteraction != null)
+        if (Input.GetKeyDown(KeyCode.G) && targetinteraction != null)
         {
             Debug.Log("대상자 :" + targetinteraction);
-            targetinteraction.InteractStart();
+            if(GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
+            {
+                targetinteraction.InteractStart();
+                return;
+            }
+            if(GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Boss)
+            {
+                if (targetinteraction.interactionType == InteractionObject.Type.Boss)
+                {
+                    targetinteraction.InteractStart();
+                }else
+                {
+                    ErrorManager.instance.ErrorSet("위험이 가득차 불가능 합니다.");
+                }
+            }
+            
+            
             
         }
 
@@ -56,7 +72,7 @@ public class PlayerUnit : Unit
         if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
             return;
 
-        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Rest)
+        if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.End)
             return;
 
 
@@ -69,28 +85,28 @@ public class PlayerUnit : Unit
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
 
-            rb.MovePosition(rb.position+(5f * Time.fixedDeltaTime * Vector2.up));
+            rb.MovePosition(rb.position+(10f * Time.fixedDeltaTime * Vector2.up));
         }
 
         // S 키를 눌렀을 때, 카메라를 아래쪽(Y축)으로 이동
         if (Input.GetKey(KeyCode.S))
         {
 
-            rb.MovePosition(rb.position + (5f * Time.fixedDeltaTime * Vector2.down));
+            rb.MovePosition(rb.position + (10f * Time.fixedDeltaTime * Vector2.down));
         }
 
         // A 키를 눌렀을 때, 카메라를 왼쪽으로 이동
         if (Input.GetKey(KeyCode.A))
         {
 
-            rb.MovePosition(rb.position + (5f * Time.fixedDeltaTime * Vector2.left));
+            rb.MovePosition(rb.position + (10f * Time.fixedDeltaTime * Vector2.left));
         }
 
         // D 키를 눌렀을 때, 카메라를 오른쪽으로 이동
         if (Input.GetKey(KeyCode.D))
         {
 
-            rb.MovePosition(rb.position + (5f * Time.fixedDeltaTime * Vector2.right));
+            rb.MovePosition(rb.position + (10f * Time.fixedDeltaTime * Vector2.right));
         }
     }
 
@@ -105,6 +121,7 @@ public class PlayerUnit : Unit
     /// <param name="other"></param>
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other.gameObject.name);
         Debug.Log("접촉");
         Debug.Log(ColiderCheck);
         if (GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Battle)
@@ -117,6 +134,7 @@ public class PlayerUnit : Unit
             interaction.PlayerColiderEnter();
         }
         
+
 
 
         if (other.CompareTag("MoveTrigger") && ColiderCheck == false)
@@ -137,30 +155,33 @@ public class PlayerUnit : Unit
                 
                 Vector2 moveDirection = (Vector2)transform.position - (Vector2)previousPosition;
                 StartCoroutine(GameManager.instance.PlayerStop(1f));
-       
+
                 //서쪽
-                if (moveDirection.x>0)
+                if (moveDirection.x > 0)
                 {
                     Debug.Log("동쪽");
 
 
                     if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
-                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(1, 0)].show)
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(1, 0)].show ||
+                        GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
+
                     {
                         GameManager.instance.CurrentPos += new Vector2Int(1, 0);
                         transform.position += Vector3.right * 4f;
-                    }else
+                    } else
                     {
                         transform.position -= Vector3.right * 4f;
                         return;
                     }
-                    
-                
-                }else if (moveDirection.x < 0)
+
+
+                } else if (moveDirection.x < 0)
                 {
                     Debug.Log("서쪽");
-                    if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck || 
-                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(-1, 0)].show)
+                    if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(-1, 0)].show ||
+                        GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
                     {
                         GameManager.instance.CurrentPos += new Vector2Int(-1, 0);
                         transform.position += Vector3.left * 4f;
@@ -173,7 +194,8 @@ public class PlayerUnit : Unit
                 {
                     Debug.Log("북쪽");
                     if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
-                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(0, 1)].show)
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(0, 1)].show ||
+                        GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
                     {
                         GameManager.instance.CurrentPos += new Vector2Int(0, 1);
                         transform.position += Vector3.up * 4f;
@@ -189,7 +211,8 @@ public class PlayerUnit : Unit
                 {
                     Debug.Log("남쪽");
                     if (MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].MoveCheck ||
-                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(0, -1)].show)
+                        MiniMapManager.instance.SlotDic[GameManager.instance.CurrentPos + new Vector2Int(0, -1)].show ||
+                        GameProsessManager.instance.prosessType == GameProsessManager.ProsessType.Stay)
                     {
                         GameManager.instance.CurrentPos += new Vector2Int(0, -1);
                         transform.position += Vector3.down * 4f;

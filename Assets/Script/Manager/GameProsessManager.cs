@@ -19,7 +19,8 @@ public class GameProsessManager : MonoBehaviour
     {
         Stay,
         Battle,
-        Rest,
+        End,
+        Boss
     }
 
     public ProsessType prosessType;
@@ -36,7 +37,7 @@ public class GameProsessManager : MonoBehaviour
     public List<GameObject> ClearUnitList;
 
    
-    /// 아래의 변수들은 전부 전투(Battel)이후 받는 정보값들을 표시한것입니다.
+    /// 아래의 변수들은 전투(Battel)이후 받는 정보값들을 표시한것입니다.
 
     private int rewardStep;
     private int rewardExp;
@@ -44,14 +45,8 @@ public class GameProsessManager : MonoBehaviour
     [SerializeField]
     private GameObject roundPanel;
 
-    [SerializeField]
-    private GameObject rewardGetPanel;
+    //전투 비전투 현재 타입에 따른 GUI활성화 보괂용입니다
 
-
-
-
-    [SerializeField]
-    private GameObject playerIcon;
     [SerializeField]
     private List<GameObject> stayUiList = new List<GameObject>();
     [SerializeField]
@@ -65,11 +60,7 @@ public class GameProsessManager : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI rewardGoldText;
-    [SerializeField]
-    private TextMeshProUGUI rewardStepText;
 
-    [SerializeField]
-    private Image rewardExpImage;
 
     //전투시 몬스터를 처치하면 넣습니다.
 
@@ -84,16 +75,7 @@ public class GameProsessManager : MonoBehaviour
 
     private List<KillMonsterInfo> KillMonsterInfos = new List<KillMonsterInfo>();
 
-    [SerializeField]
-    private GameObject GameEndPanel;
-    [SerializeField]
-    private TextMeshProUGUI GameEndText;
-    [SerializeField]
-    private TextMeshProUGUI GameStageText;
-    [SerializeField]
-    private TextMeshProUGUI GameExpText;
-
-    private int exp;
+  
 
     //상호작용 메세지 판넬
     [SerializeField]
@@ -119,7 +101,7 @@ public class GameProsessManager : MonoBehaviour
 
     private float currentDangerValue;
 
-    public float CurrentDangerValue { get {return currentDangerValue; } }
+    public float CurrentDangerValue { get {return currentDangerValue; }  }
 
     [SerializeField]
     private Slider DangerSlider;
@@ -137,7 +119,7 @@ public class GameProsessManager : MonoBehaviour
                     lamptext.text = lampLight.ToString();
                     if(lampLight<=0)
                     {
-
+                      GameWinLose(false);
                     }
             
                 } 
@@ -150,7 +132,39 @@ public class GameProsessManager : MonoBehaviour
 
 
 
+    //게임 종료 관리 Manager Class로 만들어서 해당 자원을 관리해도 되나 어차피 한번만 사용하는거 
+    //얘가 관리해도 되는거 같다.
 
+    [SerializeField]
+    private GameObject GameEndPanel;
+    [SerializeField]
+    private TextMeshProUGUI GameEndText;
+    [SerializeField]
+    private TextMeshProUGUI GameStageText;
+    [SerializeField]
+    private TextMeshProUGUI GameExpText;
+    [SerializeField]
+    private Slider GameEndDangerSlider;
+
+    [SerializeField]
+    private Slider GameEndClearSlider;
+
+    [SerializeField]
+    private Image GameEndPlayerIcon;
+
+    [SerializeField]
+    private TextMeshProUGUI GameEndMagicCount;
+
+    [SerializeField]
+    private TextMeshProUGUI GameEndSlateCount;
+
+    [SerializeField]
+    private TextMeshProUGUI GameEndBlockCOunt;
+
+    [SerializeField]
+    private int Exp;
+
+    
 
 
     private void Awake()
@@ -250,31 +264,7 @@ public class GameProsessManager : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 게임이 종료될때 작동됩니다.
-    /// </summary>
-    /// <param name="win"></param>
-    /// <param name="stage"></param>
-    /// <param name="round"></param>
-
-
-    public void GameEnd(bool win, int stage, int round)
-    {
-        StartCoroutine(ObjectDelay());
     
-        
-        exp = stage * round * 30;
-        if (win)
-        {
-            GameEndText.text = "승리";
-        }else
-        {
-            GameEndText.text = "패배";
-        }
-        GameStageText.text = "진행한 스테이지 : " + stage + " - " + round;
-        GameExpText.text = "획득한 경험치 : " + exp;
-    }
-
     IEnumerator ObjectDelay()
     {
         yield return new WaitForSeconds(1f);
@@ -351,11 +341,12 @@ public class GameProsessManager : MonoBehaviour
         
         if (mode == "stay")
         {
+            prosessType = ProsessType.Stay;
             for (int i = 0; i < stayUiList.Count; i++)
             {
                 stayUiList[i].SetActive(true);
             }
-            prosessType = ProsessType.Stay;
+            
             for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(false);
@@ -383,7 +374,7 @@ public class GameProsessManager : MonoBehaviour
         }
         if (mode == "battle")
         {
-            prosessType = GameProsessManager.ProsessType.Battle;
+            prosessType = ProsessType.Battle;
             for( int i =0; i< battleUIList.Count;i++)
             {
                 battleUIList[i].SetActive(true);
@@ -402,19 +393,72 @@ public class GameProsessManager : MonoBehaviour
             CameraSetting.instance.unitorthographicSizeSet(new(15f, 15f, -1));
 
         }
-        if (mode == "rest")
+        if(mode == "boss")
         {
-            prosessType = GameProsessManager.ProsessType.Rest;
+            //stay 셋팅을 그대로 가져온후 추가적으로 모든 이동과 텔레포트 및 플레이어 상호작용을 막아야합니다.
+            prosessType = ProsessType.Stay;
+           
+            for (int i = 0; i < stayUiList.Count; i++)
+            {
+                stayUiList[i].SetActive(true);
+            }
+
             for (int i = 0; i < battleUIList.Count; i++)
             {
                 battleUIList[i].SetActive(false);
             }
+            for (int i = 0; i < battleActiveUiList.Count; i++)
+            {
+                battleActiveUiList[i].SetActive(false);
+            }
+
+
+            GameManager.instance.MonsterAIManager.MonsterReset();
+
+            if (GameManager.instance.PlayerUnit != null)
+            {
+                Destroy(GameManager.instance.PlayerUnit.gameObject);
+            }
+
+            SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
+            GameManager.instance.UnitInfoManager.UnitInfoManagerOff();
+            GameManager.instance.BlockModeZone.ModeSetting(false);
+            CameraSetting.instance.unitorthographicSizeSet(GameManager.instance.StayPlayerUnit.transform.position);
+
+
+
+        }
+        if (mode == "end")
+        {
+            prosessType = ProsessType.Stay;
             for (int i = 0; i < stayUiList.Count; i++)
             {
                 stayUiList[i].SetActive(false);
             }
+            prosessType = ProsessType.Stay;
+            for (int i = 0; i < battleUIList.Count; i++)
+            {
+                battleUIList[i].SetActive(false);
+            }
+            for (int i = 0; i < battleActiveUiList.Count; i++)
+            {
+                battleActiveUiList[i].SetActive(false);
+            }
 
-            
+
+            GameManager.instance.MonsterAIManager.MonsterReset();
+
+            if (GameManager.instance.PlayerUnit != null)
+            {
+                Destroy(GameManager.instance.PlayerUnit.gameObject);
+            }
+
+
+
+            SoundManager.instance.AudioPlay("Sound/Bgm/Bgm_Stage1", Sound.SoundType.Bgm);
+            GameManager.instance.UnitInfoManager.UnitInfoManagerOff();
+            GameManager.instance.BlockModeZone.ModeSetting(false);
+
         }
     }
 
@@ -472,9 +516,19 @@ public class GameProsessManager : MonoBehaviour
                 interactionPanel.Set(true, "대화하기");
             }
         }
-        
-        
-   }
+
+        if (interaction.interactionType == InteractionObject.Type.Rest)
+        {
+            ShopObject shopObject = interaction.gameObject.GetComponent<ShopObject>();
+
+            if (set)
+            {
+                interactionPanel.Set(true, "휴식하기 \n [위험도 20]증가");
+            }
+        }
+
+
+    }
 
 
     /// <summary>
@@ -548,7 +602,7 @@ public class GameProsessManager : MonoBehaviour
         LampLight -= lampvalue;
         currentClearValue += clearvalue;
         StartCoroutine(Clearing());
-        StartCoroutine(Dangering(2));
+        StartCoroutine(Dangering((int)lampvalue));
 
     }
 
@@ -564,7 +618,7 @@ public class GameProsessManager : MonoBehaviour
 
         if (lampLight <= 0)
         {
-            //게임패배 해야함.
+            GameWinLose(false);
         
         }
         else
@@ -582,24 +636,17 @@ public class GameProsessManager : MonoBehaviour
 
     /// <summary>
     /// 위험도 증가를 관리합니다.
+    /// 특정 타입으로 받아와서 관리합니다.
+    /// 위험도는 평균적으로 램프가 감소한만큼 증가합니다.
     /// </summary>
-    /// <param name="type"></1 전투패배 , 2 정화 , 3 새로운 지역 이동>
+    /// <param name="type"></1 전투패배 , 2 정화 , 3 새로운 지역 이동 >
     /// <returns></returns>
-    public IEnumerator Dangering(int type)
+    public IEnumerator Dangering(int value)
     {
         yield return new WaitForSeconds(0.5f);
-        float value = 0;
+        
 
-        if (type == 1)
-        {
-            value = 20f;
-        }else if(type == 2)
-        {
-            value = 20f;
-        }else if(type == 3)
-        {
-            value = 10f;
-        }
+       
 
    
         if (currentDangerValue <= maxDangerValue)
@@ -608,9 +655,11 @@ public class GameProsessManager : MonoBehaviour
             DangerSlider.value = (currentDangerValue / maxDangerValue);
             DangerValueText.text = currentDangerValue.ToSafeString() + " | " + maxDangerValue.ToString();
         }
-        else
+        if (currentDangerValue >= maxDangerValue) 
         {
             //보스 로 가는길을 열어야함.
+            //추가적으로 플레이어는 0,0좌표로 이동해야함.
+            MiniMapManager.instance.SlotDic[Vector2.zero].MapTeleport();
 
         }
         //중요값 변동이후 저장.
@@ -619,6 +668,8 @@ public class GameProsessManager : MonoBehaviour
         yield return null;
     }
 
+
+
     /// <summary>
     /// 플레이어가 전투일때 승리 혹은 패배하면 작동합니다
     /// 이는 보스전투를 제외한 판정으로 일반적인 전투에서 작동합니다.
@@ -626,26 +677,36 @@ public class GameProsessManager : MonoBehaviour
     /// <param name="value"><true : 승리 false : 패배.>
     public void ProsessSet(bool value)
     {
-        InteractionObject target = MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
-        target.InteractEnd();
-        KillInfoSet();
-        PopUpManager.instance.PopupPush(prosessPop);
+       
 
-        if (value)
+        if (CurrentDangerValue<100)
         {
             changeMode("stay");
-            // 상호 작용한 정화 유닛을 받아옵니다. 
 
-        }
-        else
+            InteractionObject target = MapGenerator.Instance.tileMapInfo[GameManager.instance.CurrentPos].InterObj;
+            target.InteractEnd();
+            KillInfoSet();
+            PopUpManager.instance.PopupPush(prosessPop);
+
+            if (value)
+            {
+                // 상호 작용한 정화 유닛을 받아옵니다. 
+
+            }
+            else
+            {
+                LampLight -= MaxLampLight / 3;
+                StartCoroutine(Dangering((int)MaxLampLight));
+                //몬스터 초기화
+                GameManager.instance.MonsterAIManager.MonsterReset();
+
+            }
+            GameManager.instance.StaySet();
+        }else
         {
-            StartCoroutine(Dangering(1));
-            //몬스터 초기화
-            GameManager.instance.MonsterAIManager.MonsterReset();
-            
-            changeMode("stay");
+            GameWinLose(value);
         }
-        GameManager.instance.StaySet();
+       
         
 
     }
@@ -656,21 +717,84 @@ public class GameProsessManager : MonoBehaviour
     /// </summary>
     /// <param name="value"></param>
     
-    public void GameEnd(bool value)
+    public void GameWinLose(bool value)
     {
+        changeMode("end");
         //일단 플레이어 비활성화
+
+        //게임이 종료 되었음으로 이제 강제로 MainScean으로 돌아가야 하기 떄문에 그어떠한 조작도 불가능하게 앞으로 덮습니다.
         GameManager.instance.StayPlayerUnit.gameObject.SetActive(false);
-
-        if(value)
+        prosessPop.gameObject.SetActive(true);
+        GameEndPanel.gameObject.SetActive(true);
+        if (value)
         {
-
-        }else
+            GameEndText.text = "승리";
+            Exp += MapGenerator.Instance.Stage * 1000;
+        }
+        else
         {
+            GameEndText.text = "패배";
+        }
+        GameEndPlayerIcon.sprite = GameManager.instance.StayPlayerUnit.SpriteRenderer.sprite;
+        GameStageText.text = MapGenerator.Instance.Stage.ToString();
+        Exp += (int)currentDangerValue;
+        Exp += (int)currentClearValue;
+        GameExpText.text = Exp.ToString();
+        GameEndClearSlider.value = ClearSlider.value;
+        GameEndDangerSlider.value = DangerSlider.value;
 
+        int magicCount = MagicManager.instance.MagicOriginList.Count;
+        int slateCount = SlateInventory.instance.SlateOrigins.Count;
+        for(int i =0; i<MagicManager.instance.MagicOriginList.Count;i++)
+        {
+            if (MagicManager.instance.MagicOriginList[i].FisrtSlateOrigin != null)
+                slateCount++;
+            if (MagicManager.instance.MagicOriginList[i].SecondSlateOrigin != null)
+                slateCount++;
+            if (MagicManager.instance.MagicOriginList[i].ThirdSlateOrigin != null)
+                slateCount++;
+        }
+        int blockCount = 0;
+
+        for(int i =0; i< BlockManage.instance.EquipBlocks.Count;i++)
+        {
+            if (BlockManage.instance.EquipBlocks[i].Block != null)
+            {
+                blockCount++;
+            }else
+            {
+                break;
+            }
         }
 
-        SceanChanger.instance.SceanChange("MainScean");
+        for (int i = 0; i < BlockManage.instance.InventoryBlocks.Count; i++)
+        {
+            if (BlockManage.instance.InventoryBlocks[i].Block != null)
+            {
+                blockCount++;
+            }
+            else
+            {
+                break;
+            }
+        }
 
+        GameEndMagicCount.text = "획득한 마법 : " + magicCount.ToString();
+        GameEndSlateCount.text = "획득한 석판 : " + slateCount.ToString();
+        GameEndBlockCOunt.text = "획득한 블록 : " + blockCount.ToString();
+
+
+        PlayerLevelManager.instance.ExpUp(Exp);
+        SaveLoadManager.instance.DeleteLoad();
+
+    }
+    /// <summary>
+    /// 메인으로 돌아갑니다.
+    /// </summary>
+    public void GameChange()
+    {
+      
+        SceanChanger.instance.SceanChange("MainScean");
     }
 
 }

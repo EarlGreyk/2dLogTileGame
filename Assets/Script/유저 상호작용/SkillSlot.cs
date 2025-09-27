@@ -29,6 +29,14 @@ public class SkillSlot : MonoBehaviour
         magicEffect = magic.MagicEffectPrefab;
         gameObject.SetActive( true );
     }
+    public void Clear()
+    {
+        magic = null;
+        magicImage.sprite = null;
+        magicCost.text = "";
+        magicEffect = null;
+        gameObject.SetActive( false );
+    }
 
     public void magicUseCheck()
     {
