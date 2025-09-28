@@ -43,12 +43,6 @@ public class ScriptableObjectEditor : EditorWindow
                         savepath = "rune_data";
                     }
                     break;
-                case "lantern_data":
-                    {
-                        newBso = ScriptableObject.CreateInstance<LanternPerkScriptableObejct>();
-                        savepath = "lantern_data";
-                    }
-                    break;
                 case "magic_data":
                     {
                         newBso = ScriptableObject.CreateInstance<MagicScriptableObejct>();
