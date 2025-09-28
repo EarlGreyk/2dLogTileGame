@@ -196,6 +196,7 @@ public class MedalManager : MonoBehaviour
             EnableDisableMedal();
         }
         */
+        
         selectMedal = null;
         currentMedalData = null;
     }
@@ -213,17 +214,38 @@ public class MedalManager : MonoBehaviour
         int tag = 0;
 
 
-        
+        foreach(var ui in ClearMedalList)
+        {
+            if(ui == medal)
+            {
+                if (selectMedal.medalData != null)
+                {
+                    Debug.Log(selectMedal.medalData);
+                    //메달이 있으면 메달 테크를 가져와서 띄웁니다.
+                    tag = (int)selectMedal.medalData.Tag;
+                }else
+                {
+                    tag = 0;
+                }
+            }
+        }
 
-        if(selectMedal.medalData !=null)
+
+        foreach(var ui in DifficultMedalList)
         {
-            Debug.Log(selectMedal.medalData);
-            //메달이 있으면 메달 테크를 가져와서 띄웁니다.
-            tag = (int)selectMedal.medalData.Tag;
-        }else
-        {
-            //메달이 없다면 몬스터 메달임으로 tag를 몬스터 메달로 고정합니다.
-            tag = 1;
+            if(ui == medal)
+            {
+                if(selectMedal.medalData != null)
+                {
+                    Debug.Log(selectMedal.medalData);
+                    //메달이 있으면 메달 테크를 가져와서 띄웁니다.
+                    tag = (int)selectMedal.medalData.Tag;
+                }else
+                {
+
+                    tag = 1;
+                }
+            }
         }
 
 
