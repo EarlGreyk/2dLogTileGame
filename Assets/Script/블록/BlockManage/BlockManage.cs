@@ -138,10 +138,9 @@ public class BlockManage : MonoBehaviour
     /// </summary>
     public void EquipSet()
     {
-        PopUpManager.instance.LastClosePopUp();
-        
 
-        if (TalkManager.instance.SellCheck(removeBlockPanel.Block.BlockInfo.BlockEquipGold))
+
+        if (TalkManager.instance.SellCheck(EquipBlockPanel.Block.BlockInfo.BlockEquipGold))
         {
             /// 해당 블록을 장착 으로 넘깁니다.
             for (int i = 0; i < equipBlocks.Count; i++)
@@ -166,19 +165,18 @@ public class BlockManage : MonoBehaviour
                     break;
                 }
             }
-            Debug.Log(PlayerResource.instance.Gold);
-            Debug.Log(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+            
         }else
         {
             selectBlock.BlockImage.color = Color.white;
             selectBlock = null;
         }
-            
+
+        PopUpManager.instance.LastClosePopUp();
 
 
-       
 
-      
+
 
 
     }
@@ -226,7 +224,7 @@ public class BlockManage : MonoBehaviour
             if (inventoryBlocks[i].Block == null)
             {
                 inventoryBlocks[i].Set(block);
-                PlayerResource.instance.BlockRemove(block);
+                //PlayerResource.instance.BlockRemove(block);
                 return;
             }
         }
@@ -238,7 +236,7 @@ public class BlockManage : MonoBehaviour
     {
         PopUpManager.instance.LastClosePopUp();
 
-        TalkManager.instance.Buy(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+        TalkManager.instance.Buy(EquipBlockPanel.Block.BlockInfo.BlockEquipGold);
         ///블록을 장착하여 인벤토리에서 지웁니다.
         for (int i = 0; i < inventoryBlocks.Count; i++)
         {
@@ -248,8 +246,7 @@ public class BlockManage : MonoBehaviour
                 break;
             }
         }
-        Debug.Log(PlayerResource.instance.Gold);
-        Debug.Log(removeBlockPanel.Block.BlockInfo.BlockEquipGold);
+
 
     }
 

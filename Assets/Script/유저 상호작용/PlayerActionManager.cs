@@ -94,10 +94,6 @@ public class PlayerActionManager : MonoBehaviour
             Debug.Log("Error : 마법 이펙트가 없습니다.");
         }
        
-
-
-       
-        
         for (int i = 0; i < targetPos.Count; i++)
         {
             target = GameManager.instance.BattleZone.SerchTileUnit(targetPos[i]);

@@ -269,6 +269,9 @@ public class GameManager : MonoBehaviour
                 unitSpawner.SpawnMonster(SponePos, unitPrefabs, monsterList[i]);
                 
             }
+
+           //몬스터 생성이 완료되면 몬스터의 행동 을 체크합니다.
+            MonsterAIManager.MonsterActionCheck();
         }
         else
         {

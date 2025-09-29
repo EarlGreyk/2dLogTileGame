@@ -149,6 +149,7 @@ public class SoundManager : MonoBehaviour
     {
         _AudioSources[(int)Sound.SoundType.Bgm].volume = slider.value;
         SettingData.BgmVolumeSave(slider.value);
+        Debug.Log($" Slider Value: {bgmSlider.value}");
     }
     public void EffectVolumnSet(Slider slider)
     {

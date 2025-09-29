@@ -131,7 +131,7 @@ public class MonsterUnit : Unit
     {
         base.Awake();
         currentAction.Unit = this;
-        ActionCheck();
+        //ActionCheck();
 
     }
     
@@ -153,8 +153,6 @@ public class MonsterUnit : Unit
         randomAction = Random.Range(0, attackMagicArray.Length);
 
         hpbar.HpTextSet();
-
-
 
 
 

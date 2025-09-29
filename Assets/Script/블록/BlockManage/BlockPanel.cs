@@ -44,7 +44,7 @@ public class BlockPanel : MonoBehaviour
     /// <param name="block"></param>
     public void Set(Block block, bool activeSelt = true)
     {
- 
+        this.block = block;
         blockImage.sprite = block.BlockInfo.Icon; 
         mana.text = block.BlockInfo.BlockChargingMana[block.level - 1].ToString();
         this.block = block;

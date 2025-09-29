@@ -304,13 +304,6 @@ public class StatusEffectManager: MonoBehaviour
         effect.Remove(targetUnit);
     }
 
-    // 이벤트 
-
-
-  
-
-  
-
     /// <summary>
     /// 트리거 호출함수
     /// </summary>
@@ -318,19 +311,10 @@ public class StatusEffectManager: MonoBehaviour
     public void TriggerTurnEnd() => OnTurnEnd?.Invoke(targetUnit);
     public void TriggerTurnStart() => OnTurnStart?.Invoke(targetUnit);
     public void TriggerDamageTaken(int damage) => OnDamageTaken?.Invoke(targetUnit, damage);
-    public void TriggerAttack()
-    {
-        Debug.Log($"[StatusEffectManager] TriggerAttack called on {targetUnit.name}. Subscribers: {(OnAttack == null ? 0 : OnAttack.GetInvocationList().Length)}");
-        OnAttack?.Invoke(targetUnit);
-    }
-    
+    public void TriggerAttack() => OnAttack?.Invoke(targetUnit);
     public void TriggerDeath() => OnDeath?.Invoke(targetUnit);
 
     /// 
-
-
-
-
 
 
     private void UpdateEffectIcon(StatusEffect effect)
