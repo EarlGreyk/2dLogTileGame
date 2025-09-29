@@ -25,12 +25,26 @@ public class MagicUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private MagicDesc targetDesc;
 
 
-    private void Start()
+    private void Awake()
     {
-        if(magic ==null && catalogMagic ==null)
+        if (magic != null)
         {
-            MagicImage.gameObject.SetActive(false);
+            MagicImage.gameObject.SetActive(true);
+            return;
         }
+            
+
+        if (catalogMagic != null)
+        {
+            MagicImage.gameObject.SetActive(true);
+            return;
+        }
+
+
+        Debug.Log(gameObject.name);
+
+        MagicImage.gameObject.SetActive(false);
+
     }
 
 
@@ -40,9 +54,10 @@ public class MagicUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// <param name="magicOrigin"></param>
     public void MagicSet(MagicOrigin magicOrigin)
     {
+        Debug.Log("마법 보여주기! UI");
         if (magicOrigin != null)
         {
-            magicImage.gameObject.SetActive(true);
+            MagicImage.gameObject.SetActive(true);
             magic = magicOrigin;
             magicImage.sprite = magicOrigin.MagicSprite;
         }

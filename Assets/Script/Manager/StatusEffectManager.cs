@@ -5,6 +5,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public interface ISubscribeEvents
 {
@@ -86,14 +87,18 @@ public class DamageBuff : StatusEffect
 /// 소멸 트리거 : 데미지를 줄때 
 /// </summary>
 
-public class DamageDeBuff : StatusEffect
+public class DamageDeBuff : StatusEffect, ISubscribeEvents
 {
+    private Unit owner;
+    private float value = 0.2f;
     public override void Apply(Unit target, int count)
     {
         base.Apply(target, count); // 공통 로직 호출
-        IconSprite = Resources.Load<Sprite>("인터페이스/StatusEffect/DeBuff/DamageDeBuff");
+        IconSprite = Resources.Load<Sprite>("Art/Token/12");
         var Unit = target.GetComponent<Unit>();
-        Unit.status.Damage -= 0.1f * count;
+        owner = target;
+        owner.status.Damage -= value * count;
+        Debug.Log(owner.status.Damage);
         stack += count;
 
     }
@@ -102,21 +107,27 @@ public class DamageDeBuff : StatusEffect
     {
         base.Remove(target);
         var Unit = target.GetComponent<Unit>();
-        Unit.status.Damage += 0.1f * stack;
+        Unit.status.Damage += value * stack;
+        Debug.Log(owner.status.Damage);
     }
 
-    public void Subscribe(StatusEffectManager manager)
+    public void Subscribe(StatusEffectManager manager,Unit ownr)
     {
+        Debug.Log(ownr.name);
         manager.OnAttack += HandleAttack;
     }
 
-    public void Unsubscribe(StatusEffectManager manager)
+    public void Unsubscribe(StatusEffectManager manager, Unit ownr)
     {
+        Debug.Log(ownr.name);
         manager.OnAttack -= HandleAttack;
     }
 
     private void HandleAttack(Unit attacker)
     {
+        if (attacker != owner)
+            return;
+
         Debug.Log("핸들 작동 구독접근 스택감소");
         stack--;
         if (stack <= 0)
@@ -307,7 +318,12 @@ public class StatusEffectManager: MonoBehaviour
     public void TriggerTurnEnd() => OnTurnEnd?.Invoke(targetUnit);
     public void TriggerTurnStart() => OnTurnStart?.Invoke(targetUnit);
     public void TriggerDamageTaken(int damage) => OnDamageTaken?.Invoke(targetUnit, damage);
-    public void TriggerAttack() => OnAttack?.Invoke(targetUnit);
+    public void TriggerAttack()
+    {
+        Debug.Log($"[StatusEffectManager] TriggerAttack called on {targetUnit.name}. Subscribers: {(OnAttack == null ? 0 : OnAttack.GetInvocationList().Length)}");
+        OnAttack?.Invoke(targetUnit);
+    }
+    
     public void TriggerDeath() => OnDeath?.Invoke(targetUnit);
 
     /// 

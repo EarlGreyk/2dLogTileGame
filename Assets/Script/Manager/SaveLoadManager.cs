@@ -62,8 +62,6 @@ public class MagicSaveData
     public string EffectName;
     public int Gold;
     public int TokenType;
-    public int TokenIndex;
-    public int TokenCount;
     public SlateSaveData FirstSlateData;
     public SlateSaveData SecondSlateData;
     public SlateSaveData ThirdSlateData;
@@ -85,8 +83,6 @@ public class MagicSaveData
             EffectName = magic.MagicEffectPrefab.name;
         Gold = magic.Gold;
         TokenType = magic.TokenType;
-        TokenIndex = magic.TokenIndex;
-        TokenCount =  magic.TokenCount;
         
         if(magic.FisrtSlateOrigin != null && magic.FisrtSlateOrigin.SlateName != "")
         {

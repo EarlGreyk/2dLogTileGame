@@ -120,7 +120,7 @@ public class PlayerResource : MonoBehaviour
         {
                 
 
-            Gold = 0;
+            Gold = 5000;
             mana = 20;
             maxMana = 20;
             MaxDrowCount = 3;

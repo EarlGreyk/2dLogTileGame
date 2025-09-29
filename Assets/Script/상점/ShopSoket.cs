@@ -15,9 +15,9 @@ public class ShopSoket: MonoBehaviour
 {
     // Start is called before the first frame update
     public BaseScriptableObject shopItem;
+
+
     
-
-
     //판매가격
     public TextMeshProUGUI sellValue;
 
@@ -26,6 +26,7 @@ public class ShopSoket: MonoBehaviour
     //판매 아이콘
     public Image sellIcon;
 
+    
 
     //판매했는지의 여부
     private Button sellButton; 
@@ -92,10 +93,7 @@ public class ShopSoket: MonoBehaviour
                 shopItem = data[i];
                 data[i].ApplyToUI(this);
             }
-            else
-            {
-                Set();
-            }
+           
             
         }
 
@@ -110,9 +108,9 @@ public class ShopSoket: MonoBehaviour
     /// </summary>
     public void Sell()
     {
-        
         if (shopItem is IShopItem sellable)
         {
+            Debug.Log(sellable.Price);
             if (!TalkManager.instance.SellCheck(sellable.Price))
                 return; ;
 
@@ -123,6 +121,7 @@ public class ShopSoket: MonoBehaviour
             sellValue.text = "";
 
             shopItem = null;
+
         }
         else
         {

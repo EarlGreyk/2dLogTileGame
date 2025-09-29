@@ -73,21 +73,11 @@ public class MagicOrigin
     public int Gold;
 
     /// <summary>
-    /// 부여할 토큰이 있을 경우 타입.
-    /// 버프 or 디버프 분류
-    /// 0 : None , 1 : Buff , 2:Debuff
+    /// 부여할 토큰의 종류
     /// </summary>
     public int TokenType;
 
-    /// <summary>
-    /// 버프,디버프 종류
-    /// </summary>
-    public int TokenIndex;
-
-    /// <summary>
-    /// 부여할 토큰의 개수
-    /// </summary>
-    public int TokenCount;
+   
 
     private SlateOrigin firstSlateOrigin;
     public SlateOrigin FisrtSlateOrigin { get { return firstSlateOrigin; } set { firstSlateOrigin = value; SlateEquip(value); } }
@@ -133,10 +123,8 @@ public class MagicOrigin
         MagicDamageRange = MagicData.MagicDamageRange;
         MagicDuration = MagicData.MagicDuration;
         MagicSprite = MagicData.MagicSprite;
-        Gold = MagicData.Gold;
+        Gold = MagicData.Price;
         TokenType = MagicData.TokenType;
-        TokenIndex = MagicData.ToKenIndex;
-        TokenCount = MagicData.TokenCount;
         
         
     }
@@ -158,8 +146,6 @@ public class MagicOrigin
         MagicSprite = Resources.Load<Sprite>("Art/Magic/" + MagicData.SpriteName);
         Gold = MagicData.Gold;
         TokenType = MagicData.TokenType;
-        TokenIndex = MagicData.TokenIndex;
-        TokenCount = MagicData.TokenCount;
         if(MagicData.FirstSlateData != null && MagicData.FirstSlateData.Name != "")
         {
             firstSlateOrigin = new SlateOrigin(MagicData.FirstSlateData);
@@ -201,11 +187,7 @@ public class MagicOrigin
             case SlateScriptableObejct.StatusType.Consumption:
                 MagicRequiredMana -= (int)slate.SlateValue;
                 break;
-        }
-
-
-
-        
+        }        
     }
 
     public void MagicUpgrade()

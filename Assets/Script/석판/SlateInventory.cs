@@ -59,12 +59,14 @@ public class SlateInventory : MonoBehaviour
 
     public void SlateAdd(SlateOrigin slate)
     {
+        Debug.Log(slate);
 
         for(int i =0;i<slateUIPanel.Count;i++)
         {
+            Debug.Log(i);
             if(slateUIPanel[i].RuntimeSlate == null )
             {
-                slateOrigins[i] = slate;
+                slateOrigins.Add(slate);
                 slateUIPanel[i].SlateSet(slate);
                 break;
             }

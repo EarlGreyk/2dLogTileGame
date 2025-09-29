@@ -52,20 +52,20 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
     public GameObject MagicEffectPrefab;
 
 
-    
-    public int Gold;
-
-
     public int TokenType;
-    public int ToKenIndex;
-    public int TokenCount;
-   
+
+    public int parchasPrice;
+    // public int ToKenIndex;
+    // public int TokenCount;
+
 
 
     // 내부 데이터는 private 필드
     [SerializeField] private int price;
     [SerializeField] private string description;
     [SerializeField] private Sprite icon;
+
+    
     
 
     // IShopItem // 읽기 전용 
@@ -89,10 +89,10 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
         MagicApplies = int.Parse(values[11].Trim());
         MagicPublic = int.Parse(values[12].Trim());
         TokenType = int.Parse(values[13].Trim());
-        Debug.Log(int.Parse(values[14].Trim()));
         MagicSprite = Resources.Load<Sprite>("Art/Magic/" + values[14].Trim());
         icon = MagicSprite = Resources.Load<Sprite>("Art/Magic/" + values[14].Trim());
-        TokenCount = 0;
+        parchasPrice = int.Parse(values[15].Trim());
+        price = parchasPrice;
     }
 
 
@@ -101,18 +101,20 @@ public class MagicScriptableObejct : BaseScriptableObject,IShopItem
 
     public void ApplyToUI(ShopSoket shopSoket)
     {
-        price = Gold;
+        price = parchasPrice;
         description = MagicDesc;
         icon = MagicSprite;
 
         // 가격
         shopSoket.sellValue.text = Price.ToString();
+        Debug.Log(Price);
 
         // 설명
         shopSoket.sellDesc.text = Description;
 
         // 아이콘
         shopSoket.sellIcon.sprite = Icon;
+        shopSoket.sellIcon.gameObject.SetActive(true);
     }
 
     public void Sell()

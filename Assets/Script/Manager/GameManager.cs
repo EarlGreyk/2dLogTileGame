@@ -133,10 +133,9 @@ public class GameManager : MonoBehaviour
     /// <param name="monsterList"></몬스터 목록을 받아옵니다.>
     public void BattleSet(List<MonsterScriptableObject> monsterList)
     {
-        Debug.Log(monsterList.Count);
+       
         PlayerResource.instance.BatteSetting();
         setBattleField();
-        Debug.Log(battleZone);
         PlayerTurnStart();
         setPlayer(true);
         setMonster(monsterList);
@@ -195,8 +194,6 @@ public class GameManager : MonoBehaviour
 
         
     }
-
-
 
     /// <summary>
     /// 플레이어를 초기 관리합니다

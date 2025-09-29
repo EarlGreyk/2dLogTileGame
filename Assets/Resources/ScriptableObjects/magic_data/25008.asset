@@ -26,10 +26,8 @@ MonoBehaviour:
   MagicPublic: 1
   MagicSprite: {fileID: 21300000, guid: 0e91da5f94c3a634ab5a7fe2c1e70bb1, type: 3}
   MagicEffectPrefab: {fileID: 0}
-  Gold: 0
   TokenType: 0
-  ToKenIndex: 0
-  TokenCount: 0
-  price: 0
+  parchasPrice: 2400
+  price: 2400
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0e91da5f94c3a634ab5a7fe2c1e70bb1, type: 3}

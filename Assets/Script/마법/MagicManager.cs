@@ -216,10 +216,6 @@ public class MagicManager : MonoBehaviour
         currentMagicDesc.DescSet(currentMagic.Magic, currentMagic.Magic.MagicLevel);
         nextMagicDesc.DescSet(currentMagic.Magic, currentMagic.Magic.MagicLevel + 1);
 
-
-
-
-
     }
 
 
@@ -289,7 +285,7 @@ public class MagicManager : MonoBehaviour
 
         Debug.Log(magicOriginList[selectMagicindex].MagicDamage);
 
-    }
+    }   
 
 
     /// <summary>

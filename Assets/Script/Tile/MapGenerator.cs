@@ -200,10 +200,6 @@ public class MapGenerator : MonoBehaviour
         {
             SpawnTile(Vector2Int.zero, Vector2Int.zero, initialTilePrefab);
         }
-
-
-
-
         while (tileCount < mapSize)
         {
 
@@ -256,10 +252,7 @@ public class MapGenerator : MonoBehaviour
 
                     }
                 }
-
-
             }
-
             if (endcheck)
                 break;
 
@@ -269,7 +262,6 @@ public class MapGenerator : MonoBehaviour
             lastbeforePos = lastPos;
             lastPos = newTilePosList[RandomCount];
             progressTilemaps[newTilePosList[RandomCount]] = spawnedTilemaps[newTilePosList[RandomCount]];
-
 
             if (progressTilemaps[newTilePosList[RandomCount]])
             {
@@ -281,13 +273,7 @@ public class MapGenerator : MonoBehaviour
                 break;
             }
 
-
         }
-
-
-
-
-
 
     }
     /// <summary>

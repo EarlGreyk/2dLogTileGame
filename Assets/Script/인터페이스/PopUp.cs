@@ -13,11 +13,6 @@ public class PopUp : MonoBehaviour
     private Animation ani;
 
 
-    private void Start()
-    {
-        
-    }
-
 
     public void EnablePop()
     {

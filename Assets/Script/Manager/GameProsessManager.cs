@@ -543,18 +543,14 @@ public class GameProsessManager : MonoBehaviour
         if (set && monsterListSo != null)
         {
             ClearUnitInfoPanel.SetActive(true);
-
             Dictionary<Sprite,int> Dic = new Dictionary<Sprite, int>();
-
             for (int i = 0; i < monsterListSo.Count; i++)
             {
-
                 Sprite key = monsterListSo[i].MonsterIcon;
                 if (Dic.ContainsKey(key))
                     Dic[key]++;
                 else
                     Dic[key] = 1;
-
             }
 
             foreach (var pair in Dic)
@@ -564,15 +560,11 @@ public class GameProsessManager : MonoBehaviour
                 info.InfoSet(pair.Key,pair.Value);
                 ClearUnitList.Add(monsterListObj);
             }
-           
-            
-
-
+  
             if (clearUnit.battle)
                 interactionPanel.Set(true, "전투");
             else
                 interactionPanel.Set(true, "정화");
-
 
         }
         else

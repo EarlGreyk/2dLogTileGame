@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: 5009
   m_EditorClassIdentifier: 
   id: 5009
-  Tag: 1
-  Name: "\uB3C4\uC804\uC790\uC758 \uBA54\uB2EC"
-  Description: "\uBCF4\uC2A4 \uBAAC\uC2A4\uD130\uB97C \uC81C\uC678\uD55C \uBAAC\uC2A4\uD130\uB4E4\uC758
-    \uCCB4\uB825\uC774 20% \uC0C1\uC2B9\uD55C\uB2E4"
-  value: 0.2
+  Tag: 0
+  Name: "\uC9C0\uD61C\uC758 \uBA54\uB2EC"
+  Description: "\uD50C\uB808\uC774\uC5B4\uC758 \uC601\uAC10(\uBE14\uB85D \uCD94\uAC00\uC810\uC218)\uAC00
+    2\uC810 \uC0C1\uC2B9\uD55C\uB2E4"
+  value: 2
   Sprite: {fileID: 21300000, guid: f808d904fdefe6b4f985e9a5d915e5e0, type: 3}

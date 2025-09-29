@@ -28,7 +28,8 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
 
     public PatternData BlockPatternData;
 
-  
+    public int parchasPrice;
+
 
 
     // 내부 데이터는 private 필드
@@ -63,6 +64,7 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
         BlockPatternData = Resources.Load<PatternData>("ScriptableObjects/pattern_data/" + values[8].Trim());
 
         icon = Resources.Load<Sprite>("Art/Block/" + values[8].Trim());
+        parchasPrice = int.Parse(values[9].Trim());
 
         description = BlockGrade.ToString() + "등급 블록";
 
@@ -87,14 +89,17 @@ public class BlockScriptableObject : BaseScriptableObject, IShopItem
     {
         if (shopSoket == null) return;
 
+        price = parchasPrice;
         // 가격
         shopSoket.sellValue.text = Price.ToString();
+        Debug.Log(Price);
 
         // 설명
         shopSoket.sellDesc.text = Description;
 
         // 아이콘
         shopSoket.sellIcon.sprite = icon;
+        shopSoket.sellIcon.gameObject.SetActive(true);
     }
     public void Sell()
     {

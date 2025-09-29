@@ -46,40 +46,36 @@ public class PlayerActionManager : MonoBehaviour
 
     }
 
-    private void UnitAddBuffToKen(Unit target)
+    private void UnitEffectToKen(Unit target)
     {
-        Debug.Log("버프부여 작동");
+        Debug.Log("t상태이상 부여 작동");
         StatusEffectManager EM = target.effectManager;
 
-        if (magic.TokenIndex == 0)
+        if (magic.TokenType == 0)
         {
-            
+
+            Debug.Log("부여할 상태이상 없음!");
             return;
         }
-        if (magic.TokenIndex == 1)
+        if (magic.TokenType == 8001)
         {
+            //데미지 증가 버프.
             DamageBuff token = new DamageBuff();
-            EM.AddEffect(token, magic.TokenCount);
+            EM.AddEffect(token, 1);
             return;
         }
-
-    }
-    private void UnitAddDeBuffToKen(Unit target)
-    {
-        Debug.Log("디버프부여 작동");
-        StatusEffectManager EM = target.effectManager;
-        if (magic.TokenIndex == 0)
+        if (magic.TokenType == 8012)
         {
-            return;
-        }
-        if (magic.TokenIndex == 1)
-        {
+            //데미지 감소 버프.
+            Debug.Log("데미지 감소 추가");
             DamageDeBuff token = new DamageDeBuff();
-            EM.AddEffect(token, magic.TokenCount);
+            EM.AddEffect(token, 1);
             return;
         }
 
+                
     }
+  
 
     //공격 마법을 작동합니다.
     private void AttackMagicStart()
@@ -95,7 +91,7 @@ public class PlayerActionManager : MonoBehaviour
             effect.transform.position = new Vector3(hitPoint.x * scale.x, hitPoint.y * scale.y, 0);
         }else
         {
-            ErrorManager.instance.ErrorSet("Error : 마법 이펙트가 없습니다.");
+            Debug.Log("Error : 마법 이펙트가 없습니다.");
         }
        
 
@@ -108,16 +104,9 @@ public class PlayerActionManager : MonoBehaviour
             if (target != null && target != GameManager.instance.PlayerUnit)
             {
                 Debug.Log($"{target},{magic.TokenType}");
-                if(magic.TokenType == 1)
-                {
-                    UnitAddBuffToKen(target);
-                }else if(magic.TokenType == 2)
-                {
-                    UnitAddDeBuffToKen(target);
-                }
-                
+                UnitEffectToKen(target);
                 target.HitDamage(magic.MagicDamage);
-                target.effectManager.TriggerAttack();
+                GameManager.instance.PlayerUnit.effectManager.TriggerAttack();
 
 
             }

@@ -20,6 +20,7 @@ MonoBehaviour:
   Enable: 1
   EnableLevel: 0
   SlateStatus: 1
+  parchasPrice: 4000
   price: 0
   description: "\uD30C\uC6CC 0.3 ~ 0.6 \uC99D\uAC00"
   icon: {fileID: 21300000, guid: 812a912c207205a49af25d51535e31d7, type: 3}

@@ -39,6 +39,7 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
 
 
     public StatusType SlateStatus;
+    public int parchasPrice;
     /// <summary>
     /// 아래는 추가된값
     /// </summary>
@@ -79,7 +80,8 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
 
        
         icon = Resources.Load<Sprite>("Art/Slate/" + values[7].Trim());
-        /// 추가로 요청해야하는 사항입니다.
+        parchasPrice = int.Parse(values[8].Trim());
+        /// 로그라이크 성 해금 방식을 기획이 완전히 정립하면 수정해야합니다. 일단 임시적으로 모든 석판은 해금되어 있습니다.
         Enable = true;
         EnableLevel = 0;
         //
@@ -94,15 +96,21 @@ public class SlateScriptableObejct : BaseScriptableObject, IShopItem
 
     public void ApplyToUI(ShopSoket shopSoket)
     {
+        if (shopSoket == null)
+            return;
 
+        price = parchasPrice;
         // 가격
         shopSoket.sellValue.text = Price.ToString();
+        Debug.Log(Price);
 
         // 설명
         shopSoket.sellDesc.text = Description;
 
         // 아이콘
         shopSoket.sellIcon.sprite = Icon;
+        shopSoket.sellIcon.gameObject.SetActive(true);
+
     }
 
     public void Sell()

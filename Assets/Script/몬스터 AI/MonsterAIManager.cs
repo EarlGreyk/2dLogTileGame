@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MonsterAIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     private List<MonsterUnit> monsters = new List< MonsterUnit>();
     public List<MonsterUnit> Monsters { get { return monsters; } }
 

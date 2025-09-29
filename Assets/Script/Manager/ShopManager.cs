@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,13 +91,19 @@ public class ShopManager : MonoBehaviour
         
 
         
-        SoketReroll();
+        SoketReroll(true);
 
     }
 
-    public void SoketReroll()
+    public void SoketReroll(bool first)
     {
-        for(int i =0;i<Sokets.Count;i++)
+        if(!TalkManager.instance.SellCheck(1000) && !first)
+        {
+            return;
+        }
+                
+
+        for (int i =0;i<Sokets.Count;i++)
         {
             Sokets[i].Set();
         }

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: UnitBase_Player
   m_EditorClassIdentifier: 
   health: 100
-  damage: 10
-  elementalDamage: 5
-  defense: 5
+  damage: 1
+  elementalDamage: 1
+  defense: 1
